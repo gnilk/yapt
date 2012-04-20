@@ -1,0 +1,184 @@
+18.08.2009 14:07:30.606 [00000000]    DEBUG                             main - YAPT2 - running tests
+18.08.2009 14:07:30.616 [00000000]    DEBUG              PluginScanner_Win32 - Scanning: .\*.*
+18.08.2009 14:07:30.616 [00000000]    DEBUG              PluginScanner_Win32 - Trying '.\\libexpat.dll'
+18.08.2009 14:07:30.616 [00000000]     WARN              PluginScanner_Win32 - Library failed, skipping...
+18.08.2009 14:07:30.616 [00000000]    DEBUG              PluginScanner_Win32 - Scanning: .\plugins\*.*
+18.08.2009 14:07:30.616 [00000000]    DEBUG              PluginScanner_Win32 - Trying '.\plugins\\FxPluginSample.dll'
+18.08.2009 14:07:30.656 [00000000]     INFO              PluginScanner_Win32 - Library ok, 'yaptInitializePlugin'
+18.08.2009 14:07:30.666 [00000000]    DEBUG                           System - Registered Object for 'name=MyEffect_p1;identifier=MyEffect_p1'
+18.08.2009 14:07:30.666 [00000000]    DEBUG                           System - Registered Object for 'name=MyEffect_p2;identifier=MyEffect_p2'
+18.08.2009 14:07:30.666 [00000000]    DEBUG                           System - Registered Object for 'name=MyEffect_p3;identifier=MyEffect_p3'
+18.08.2009 14:07:30.666 [00000000]    DEBUG                             main - Initializing built in functionality
+18.08.2009 14:07:30.666 [00000000]    DEBUG                  InternalPlugins - Registering Test plugins
+18.08.2009 14:07:30.666 [00000000]    DEBUG                           System - Registered Object for 'name=MyResource;identifier=MyResource'
+18.08.2009 14:07:30.676 [00000000]    DEBUG                           System - Registered Object for 'name=MyEffect;identifier=MyEffect'
+18.08.2009 14:07:30.676 [00000000]    DEBUG                           System - Registered Object for 'name=MyEffect2;identifier=MyEffect2'
+18.08.2009 14:07:30.676 [00000000]    DEBUG                           System - Registered Object for 'name=MyEffect3;identifier=MyEffect3'
+18.08.2009 14:07:30.676 [00000000]    DEBUG                  InternalPlugins - Registering IO Library
+18.08.2009 14:07:30.676 [00000000]     INFO                           System - Registered I/O Handler for URI 'file'
+18.08.2009 14:07:30.676 [00000000]    DEBUG                             main - key1=value1
+18.08.2009 14:07:30.676 [00000000]    DEBUG                             main - key2=value2
+18.08.2009 14:07:30.676 [00000000]    DEBUG                             main - key1=value1_2
+18.08.2009 14:07:30.676 [00000000]    DEBUG                             main - Testing Expat XML Parser
+18.08.2009 14:07:30.676 [00000000]    DEBUG                         Document - AddNode, node=00367C38 for object=003679F4
+18.08.2009 14:07:30.676 [00000000]    DEBUG                         Document - AddNode, node=00368128 for object=00367FB8
+18.08.2009 14:07:30.676 [00000000]    DEBUG                             main - Loading XML from: file://example2.xml
+yapt2
+	resources
+		object
+18.08.2009 14:07:30.686 [00000000]    DEBUG                          Factory - Creating 'MyResource'
+18.08.2009 14:07:30.686 [00000000]    DEBUG                          Factory - Ok
+18.08.2009 14:07:30.686 [00000000]    DEBUG                         Document - AddNode, node=00369C60 for object=00369774
+18.08.2009 14:07:30.686 [00000000]    DEBUG                         Document - Initialize: (3) doc.resources.image1
+18.08.2009 14:07:30.686 [00000000]    DEBUG                         Document - AddNode, node=0036A3B8 for object=0036A0C4
+18.08.2009 14:07:30.696 [00000000]    DEBUG                         Document - Initialize: (1) doc.resources.image1.filename
+			property
+cdata>data/image.png<cdata
+18.08.2009 14:07:30.696 [00000000]    DEBUG                         Document - Initialize: (1) doc.resources.image1.filename
+18.08.2009 14:07:30.696 [00000000]    DEBUG                         Document - Initialize: (3) doc.resources.image1
+	render
+		object
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Factory - Creating 'MyEffect2'
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Effect2 - CTOR
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Factory - Ok
+18.08.2009 14:07:30.696 [00000000]    DEBUG                         Document - AddNode, node=0036AB08 for object=0036A544
+18.08.2009 14:07:30.696 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Effect2 - Initialize
+18.08.2009 14:07:30.696 [00000000]    DEBUG                         Document - AddNode, node=0036AF98 for object=0036ABEC
+18.08.2009 14:07:30.696 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.my_int
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Effect2 - Created 'my_int' property with value=1
+			object
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Factory - Creating 'MyEffect3'
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Effect3 - CTOR
+18.08.2009 14:07:30.696 [00000000]    DEBUG                          Factory - Ok
+18.08.2009 14:07:30.706 [00000000]    DEBUG                         Document - AddNode, node=0036B628 for object=0036B064
+18.08.2009 14:07:30.706 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname
+18.08.2009 14:07:30.706 [00000000]    DEBUG                          Effect3 - Initialize
+18.08.2009 14:07:30.706 [00000000]    DEBUG                         Document - AddNode, node=0036BA90 for object=0036B744
+18.08.2009 14:07:30.706 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname.my_int
+18.08.2009 14:07:30.706 [00000000]    DEBUG                          Effect3 - Created 'my_int' property with value=1
+				property
+cdata>26<cdata
+18.08.2009 14:07:30.706 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname.my_int
+18.08.2009 14:07:30.706 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname
+			object
+18.08.2009 14:07:30.706 [00000000]    DEBUG                          Factory - Creating 'MyEffect3'
+18.08.2009 14:07:30.706 [00000000]    DEBUG                          Effect3 - CTOR
+18.08.2009 14:07:30.706 [00000000]    DEBUG                          Factory - Ok
+18.08.2009 14:07:30.706 [00000000]    DEBUG                         Document - AddNode, node=0036BEE0 for object=0036BB5C
+18.08.2009 14:07:30.716 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname1
+18.08.2009 14:07:30.716 [00000000]    DEBUG                          Effect3 - Initialize
+18.08.2009 14:07:30.716 [00000000]    DEBUG                         Document - AddNode, node=0036C350 for object=0036BFFC
+18.08.2009 14:07:30.716 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname1.my_int
+18.08.2009 14:07:30.716 [00000000]    DEBUG                          Effect3 - Created 'my_int' property with value=1
+				property
+cdata>27<cdata
+18.08.2009 14:07:30.716 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname1.my_int
+18.08.2009 14:07:30.716 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname1
+			object
+18.08.2009 14:07:30.716 [00000000]    DEBUG                          Factory - Creating 'MyEffect3'
+18.08.2009 14:07:30.716 [00000000]    DEBUG                          Effect3 - CTOR
+18.08.2009 14:07:30.716 [00000000]    DEBUG                          Factory - Ok
+18.08.2009 14:07:30.716 [00000000]    DEBUG                         Document - AddNode, node=0036C7C8 for object=0036C4D4
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname2
+18.08.2009 14:07:30.726 [00000000]    DEBUG                          Effect3 - Initialize
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - AddNode, node=0036CC40 for object=0036C8EC
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname2.my_int
+18.08.2009 14:07:30.726 [00000000]    DEBUG                          Effect3 - Created 'my_int' property with value=1
+				property
+cdata>28<cdata
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname2.my_int
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname2
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.my_int
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname.my_int
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname1.my_int
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname1
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TestSpline.noname2.my_int
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline.noname2
+18.08.2009 14:07:30.726 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TestSpline
+18.08.2009 14:07:30.726 [00000000]    DEBUG                          Effect2 - PostInitialized
+18.08.2009 14:07:30.726 [00000000]    DEBUG                          Effect2 - nChildren 3
+18.08.2009 14:07:30.726 [00000000]    DEBUG                          Effect2 -   Child lookup through name ok, v = 26
+18.08.2009 14:07:30.726 [00000000]    DEBUG                          Effect2 -   nProperties 1
+18.08.2009 14:07:30.726 [00000000]    DEBUG                          Effect2 -    0:26
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Effect2 -   Child lookup through name ok, v = 27
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Effect2 -   nProperties 1
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Effect2 -    0:27
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Effect2 -   Child lookup through name ok, v = 28
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Effect2 -   nProperties 1
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Effect2 -    0:28
+		object
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Factory - Creating 'MyEffect'
+18.08.2009 14:07:30.736 [00000000]    DEBUG                           Effect - CTOR
+18.08.2009 14:07:30.736 [00000000]    DEBUG                          Factory - Ok
+18.08.2009 14:07:30.736 [00000000]    DEBUG                         Document - AddNode, node=0036D338 for object=0036CDC4
+18.08.2009 14:07:30.736 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TriRotation
+18.08.2009 14:07:30.736 [00000000]    DEBUG                           Effect - Initialize
+18.08.2009 14:07:30.736 [00000000]    DEBUG                         Document - AddNode, node=0036D7A0 for object=0036D454
+18.08.2009 14:07:30.736 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TriRotation.my_int
+18.08.2009 14:07:30.736 [00000000]    DEBUG                           Effect - Setting 'my_int' property with value=16
+			property
+cdata>29<cdata
+18.08.2009 14:07:30.736 [00000000]    DEBUG                         Document - Initialize: (1) doc.render.TriRotation.my_int
+18.08.2009 14:07:30.736 [00000000]    DEBUG                         Document - Initialize: (3) doc.render.TriRotation
+18.08.2009 14:07:30.736 [00000000]    DEBUG                             main - Expat ok
+18.08.2009 14:07:30.736 [00000000]    DEBUG                         Document - Dumping Document
+18.08.2009 14:07:30.736 [00000000]    DEBUG                             Dump - Inst: 0036784C,2,doc
+18.08.2009 14:07:30.736 [00000000]    DEBUG                             Dump -   Inst: 003679F4,5,doc.resources
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -     Inst: 00369774,3,doc.resources.image1
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -       Inst: 0036A0C4,1,doc.resources.image1.filename
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -   Inst: 00367FB8,6,doc.render
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -     Inst: 0036A544,3,doc.render.TestSpline
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -       Inst: 0036ABEC,1,doc.render.TestSpline.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -       Inst: 0036B064,3,doc.render.TestSpline.noname
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -         Inst: 0036B744,1,doc.render.TestSpline.noname.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -       Inst: 0036BB5C,3,doc.render.TestSpline.noname1
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -         Inst: 0036BFFC,1,doc.render.TestSpline.noname1.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -       Inst: 0036C4D4,3,doc.render.TestSpline.noname2
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -         Inst: 0036C8EC,1,doc.render.TestSpline.noname2.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -     Inst: 0036CDC4,3,doc.render.TriRotation
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             Dump -       Inst: 0036D454,1,doc.render.TriRotation.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Dump done
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             main - Rendering resources
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (5) doc.resources
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (3) doc.resources.image1
+18.08.2009 14:07:30.746 [00000000]    DEBUG                       MyResource - Rendering, loading file from: data/image.png
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (1) doc.resources.image1.filename
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             main - Rendering nodes
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (6) doc.render
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (3) doc.render.TestSpline
+18.08.2009 14:07:30.746 [00000000]    DEBUG                          Effect2 - Render, my_int=1 (sourced)
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (1) doc.render.TestSpline.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (3) doc.render.TestSpline.noname
+18.08.2009 14:07:30.746 [00000000]    DEBUG                          Effect3 - Render, my_int=26
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (1) doc.render.TestSpline.noname.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (3) doc.render.TestSpline.noname1
+18.08.2009 14:07:30.746 [00000000]    DEBUG                          Effect3 - Render, my_int=27
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (1) doc.render.TestSpline.noname1.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (3) doc.render.TestSpline.noname2
+18.08.2009 14:07:30.746 [00000000]    DEBUG                          Effect3 - Render, my_int=28
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (1) doc.render.TestSpline.noname2.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (3) doc.render.TriRotation
+18.08.2009 14:07:30.746 [00000000]    DEBUG                           Effect - Render, my_int=29
+18.08.2009 14:07:30.746 [00000000]    DEBUG                           Effect - Render, result=my_int * 2 = 58
+18.08.2009 14:07:30.746 [00000000]    DEBUG                         Document - Render: (1) doc.render.TriRotation.my_int
+18.08.2009 14:07:30.746 [00000000]    DEBUG                             main - Swapping: doc.render.TestSpline - doc.render.TriRotation
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             main - Dumping
+18.08.2009 14:07:30.756 [00000000]    DEBUG                         Document - Dumping Document
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump - Inst: 0036784C,2,doc
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -   Inst: 003679F4,5,doc.resources
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -     Inst: 00369774,3,doc.resources.image1
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -       Inst: 0036A0C4,1,doc.resources.image1.filename
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -   Inst: 00367FB8,6,doc.render
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -     Inst: 0036CDC4,3,doc.render.TriRotation
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -       Inst: 0036D454,1,doc.render.TriRotation.my_int
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -     Inst: 0036A544,3,doc.render.TestSpline
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -       Inst: 0036ABEC,1,doc.render.TestSpline.my_int
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -       Inst: 0036B064,3,doc.render.TestSpline.noname
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -         Inst: 0036B744,1,doc.render.TestSpline.noname.my_int
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -       Inst: 0036BB5C,3,doc.render.TestSpline.noname1
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -         Inst: 0036BFFC,1,doc.render.TestSpline.noname1.my_int
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -       Inst: 0036C4D4,3,doc.render.TestSpline.noname2
+18.08.2009 14:07:30.756 [00000000]    DEBUG                             Dump -         Inst: 0036C8EC,1,doc.render.TestSpline.noname2.my_int
+18.08.2009 14:07:30.756 [00000000]    DEBUG                         Document - Dump done

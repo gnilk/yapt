@@ -1,0 +1,57 @@
+<yapt2>
+<!--
+	<resources>
+		<object class="System.Config" name="Config">
+			<property name="Resolution.Width">640</property>
+		</object>
+	</resources>
+-->	
+	
+	<render>
+		<object class="Animation.GenericCurve" name="TestSpline">
+			<property name="channels">3</property>
+			<property name="type">hold</property>
+			<property name="vector">1.000,3.00,6.000</property>
+<!--
+			<object class="Animation.VectorKey">
+				<property name="T">0</property>
+				<property name="Tension">0</property>
+				<property name="Bias">0</property>
+				<property name="Continity">0</property>
+				<property name="Values">4,6,5</property>
+			</object>
+			<object class="Animation.VectorKey">
+				<property name="t">1</property>
+				<property name="Tension">0</property>
+				<property name="Bias">0</property>
+				<property name="Continity">0</property>
+				<property name="Values">4,0,5</property>
+			</object>
+			<object class="Animation.VectorKey">
+				<property name="T">2</property>
+				<property name="Tension">0</property>
+				<property name="Bias">0</property>
+				<property name="Continity">0</property>
+				<property name="Values">4,5,5</property>
+			</object>
+			<object class="Animation.VectorKey">
+				<property name="T">4</property>
+				<property name="Tension">0</property>
+				<property name="Bias">0</property>
+				<property name="Continity">0</property>
+				<property name="Values">4,3,5</property>
+			</object>
+			<object class="Animation.VectorKey">
+				<property name="T">5</property>
+				<property name="Tension">0</property>
+				<property name="Bias">0</property>
+				<property name="Continity">0</property>
+				<property name="Values">4,3,5</property>
+			</object>
+			-->
+		</object>
+		<object class="Animation.VectorKey" name="mytestkey">
+			<property name="Values" source="TestSpline" />
+		</object>
+	</render>
+</yapt2>

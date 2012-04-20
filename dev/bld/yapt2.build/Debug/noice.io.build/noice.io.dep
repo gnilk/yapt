@@ -1,0 +1,7 @@
+00000000062402a80000000000007237 cbbabd8aafadf9d945419fa7535d8cbe ffffffffffffffffffffffffffffffff 22076 /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/URLParser.o
+00000000000000000000000000007945 32bf44d279d2fbba339eed28924d9be5 ffffffffffffffffffffffffffffffff 24176 /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/TextReader.o
+0000000000000000000000000000148d 7ae9bdb936f737e9cc40cd2c1b469e7f ffffffffffffffffffffffffffffffff 245348 /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceManager.o
+00000000000000000000000000000104 d218553daa8a6e20e45f81c465932ee1 ffffffffffffffffffffffffffffffff 21252 /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceFactoryHolder.o
+00000000000000000000000000000936 1d07e0787bc6d66203a2d58daad49076 ffffffffffffffffffffffffffffffff 25380 /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileStream.o
+00000000000000000000000000000fec 19ca3a9b6a9d6bf2056fd350fa478f94 ffffffffffffffffffffffffffffffff 38924 /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileDevice.o
+5539cb3f5d7de492580d38baef56a006 e2d8b6638a439c86fc468425fe6a7aed ffffffffffffffffffffffffffffffff 398160 /Users/gnilk/src/yapt2/dev/bld/Debug/libnoice.io.a

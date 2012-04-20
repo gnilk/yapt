@@ -1,0 +1,68 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libyapt", "libyapt\libyapt.vcproj", "{78EC1861-52FD-49E1-B995-A664E17F45CE}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat", "..\..\ext\expat\lib\expat.vcproj", "{1E5A6F59-05AD-4B19-9B3D-78029E31A6C7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdCurve", "StdCurve\StdCurve.vcproj", "{BAE79B6D-B75A-4DF6-A87B-AB5109C84780}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE} = {FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yapt", "yapt\yapt.vcproj", "{5F9ED5AA-C8C1-49FA-92F0-85B3A08B066F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1E5A6F59-05AD-4B19-9B3D-78029E31A6C7} = {1E5A6F59-05AD-4B19-9B3D-78029E31A6C7}
+		{78EC1861-52FD-49E1-B995-A664E17F45CE} = {78EC1861-52FD-49E1-B995-A664E17F45CE}
+		{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE} = {FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcommon", "libcommon\libcommon.vcproj", "{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcproj", "{50F8804D-40B9-4B27-9FFF-0CA78A630136}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1E5A6F59-05AD-4B19-9B3D-78029E31A6C7} = {1E5A6F59-05AD-4B19-9B3D-78029E31A6C7}
+		{78EC1861-52FD-49E1-B995-A664E17F45CE} = {78EC1861-52FD-49E1-B995-A664E17F45CE}
+		{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE} = {FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{78EC1861-52FD-49E1-B995-A664E17F45CE}.Debug.ActiveCfg = Debug|Win32
+		{78EC1861-52FD-49E1-B995-A664E17F45CE}.Debug.Build.0 = Debug|Win32
+		{78EC1861-52FD-49E1-B995-A664E17F45CE}.Release.ActiveCfg = Release|Win32
+		{78EC1861-52FD-49E1-B995-A664E17F45CE}.Release.Build.0 = Release|Win32
+		{1E5A6F59-05AD-4B19-9B3D-78029E31A6C7}.Debug.ActiveCfg = Debug|Win32
+		{1E5A6F59-05AD-4B19-9B3D-78029E31A6C7}.Debug.Build.0 = Debug|Win32
+		{1E5A6F59-05AD-4B19-9B3D-78029E31A6C7}.Release.ActiveCfg = Release|Win32
+		{1E5A6F59-05AD-4B19-9B3D-78029E31A6C7}.Release.Build.0 = Release|Win32
+		{BAE79B6D-B75A-4DF6-A87B-AB5109C84780}.Debug.ActiveCfg = Debug|Win32
+		{BAE79B6D-B75A-4DF6-A87B-AB5109C84780}.Debug.Build.0 = Debug|Win32
+		{BAE79B6D-B75A-4DF6-A87B-AB5109C84780}.Release.ActiveCfg = Release|Win32
+		{BAE79B6D-B75A-4DF6-A87B-AB5109C84780}.Release.Build.0 = Release|Win32
+		{5F9ED5AA-C8C1-49FA-92F0-85B3A08B066F}.Debug.ActiveCfg = Debug|Win32
+		{5F9ED5AA-C8C1-49FA-92F0-85B3A08B066F}.Debug.Build.0 = Debug|Win32
+		{5F9ED5AA-C8C1-49FA-92F0-85B3A08B066F}.Release.ActiveCfg = Release|Win32
+		{5F9ED5AA-C8C1-49FA-92F0-85B3A08B066F}.Release.Build.0 = Release|Win32
+		{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}.Debug.ActiveCfg = Debug|Win32
+		{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}.Debug.Build.0 = Debug|Win32
+		{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}.Release.ActiveCfg = Release|Win32
+		{FFCB2272-BDD9-4A27-9A6E-3FAA85B994EE}.Release.Build.0 = Release|Win32
+		{50F8804D-40B9-4B27-9FFF-0CA78A630136}.Debug.ActiveCfg = Debug|Win32
+		{50F8804D-40B9-4B27-9FFF-0CA78A630136}.Debug.Build.0 = Debug|Win32
+		{50F8804D-40B9-4B27-9FFF-0CA78A630136}.Release.ActiveCfg = Release|Win32
+		{50F8804D-40B9-4B27-9FFF-0CA78A630136}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

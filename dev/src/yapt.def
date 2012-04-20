@@ -1,0 +1,7 @@
+LIBRARY	yapt
+VERSION 2.0.0
+EXPORTS
+    GetYaptSystemInstance	@1
+	SetYaptLastError		@10
+	GetYaptLastError		@11
+	GetYaptErrorTranslation	@12

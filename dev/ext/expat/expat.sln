@@ -1,0 +1,72 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "elements", "examples\elements.vcproj", "{EF24926C-BE39-4E6A-AF72-A6139209E02D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1114F8D7-BA66-4116-8FDE-E88A7A4E98C7} = {1114F8D7-BA66-4116-8FDE-E88A7A4E98C7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat", "lib\expat.vcproj", "{0FB4C98B-E28B-442E-8977-04D44222D352}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat_static", "lib\expat_static.vcproj", "{1114F8D7-BA66-4116-8FDE-E88A7A4E98C7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expatw", "lib\expatw.vcproj", "{7575C1BF-4126-4CEF-AB4B-7AB4D0080652}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expatw_static", "lib\expatw_static.vcproj", "{89F0F9EB-3DD3-4177-844B-48634E357C6C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "outline", "examples\outline.vcproj", "{9250CB6C-AE79-4180-8F14-6A43D2480187}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0FB4C98B-E28B-442E-8977-04D44222D352} = {0FB4C98B-E28B-442E-8977-04D44222D352}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmlwf", "xmlwf\xmlwf.vcproj", "{38BD9E2F-E847-490B-916D-41F9B255680F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0FB4C98B-E28B-442E-8977-04D44222D352} = {0FB4C98B-E28B-442E-8977-04D44222D352}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{EF24926C-BE39-4E6A-AF72-A6139209E02D}.Debug.ActiveCfg = Debug|Win32
+		{EF24926C-BE39-4E6A-AF72-A6139209E02D}.Debug.Build.0 = Debug|Win32
+		{EF24926C-BE39-4E6A-AF72-A6139209E02D}.Release.ActiveCfg = Release|Win32
+		{EF24926C-BE39-4E6A-AF72-A6139209E02D}.Release.Build.0 = Release|Win32
+		{0FB4C98B-E28B-442E-8977-04D44222D352}.Debug.ActiveCfg = Debug|Win32
+		{0FB4C98B-E28B-442E-8977-04D44222D352}.Debug.Build.0 = Debug|Win32
+		{0FB4C98B-E28B-442E-8977-04D44222D352}.Release.ActiveCfg = Release|Win32
+		{0FB4C98B-E28B-442E-8977-04D44222D352}.Release.Build.0 = Release|Win32
+		{1114F8D7-BA66-4116-8FDE-E88A7A4E98C7}.Debug.ActiveCfg = Debug|Win32
+		{1114F8D7-BA66-4116-8FDE-E88A7A4E98C7}.Debug.Build.0 = Debug|Win32
+		{1114F8D7-BA66-4116-8FDE-E88A7A4E98C7}.Release.ActiveCfg = Release|Win32
+		{1114F8D7-BA66-4116-8FDE-E88A7A4E98C7}.Release.Build.0 = Release|Win32
+		{7575C1BF-4126-4CEF-AB4B-7AB4D0080652}.Debug.ActiveCfg = Debug|Win32
+		{7575C1BF-4126-4CEF-AB4B-7AB4D0080652}.Debug.Build.0 = Debug|Win32
+		{7575C1BF-4126-4CEF-AB4B-7AB4D0080652}.Release.ActiveCfg = Release|Win32
+		{7575C1BF-4126-4CEF-AB4B-7AB4D0080652}.Release.Build.0 = Release|Win32
+		{89F0F9EB-3DD3-4177-844B-48634E357C6C}.Debug.ActiveCfg = Debug|Win32
+		{89F0F9EB-3DD3-4177-844B-48634E357C6C}.Debug.Build.0 = Debug|Win32
+		{89F0F9EB-3DD3-4177-844B-48634E357C6C}.Release.ActiveCfg = Release|Win32
+		{89F0F9EB-3DD3-4177-844B-48634E357C6C}.Release.Build.0 = Release|Win32
+		{9250CB6C-AE79-4180-8F14-6A43D2480187}.Debug.ActiveCfg = Debug|Win32
+		{9250CB6C-AE79-4180-8F14-6A43D2480187}.Debug.Build.0 = Debug|Win32
+		{9250CB6C-AE79-4180-8F14-6A43D2480187}.Release.ActiveCfg = Release|Win32
+		{9250CB6C-AE79-4180-8F14-6A43D2480187}.Release.Build.0 = Release|Win32
+		{38BD9E2F-E847-490B-916D-41F9B255680F}.Debug.ActiveCfg = Debug|Win32
+		{38BD9E2F-E847-490B-916D-41F9B255680F}.Debug.Build.0 = Debug|Win32
+		{38BD9E2F-E847-490B-916D-41F9B255680F}.Release.ActiveCfg = Release|Win32
+		{38BD9E2F-E847-490B-916D-41F9B255680F}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

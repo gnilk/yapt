@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd='http://www.w3.org/2003/XMLSchema'>
+
+	<xsd:complexType name="PropertyType">
+		<!-- define attributes -->
+	</xsd:complexType>
+	
+	<xsd:complexType name="ObjectType">
+		<!-- define attributes -->
+		<xsd:sequence>
+			<xsd:element name="property" type="PropertyType" minOccurs="0" maxOccurs="unbound" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ResourceType">
+		<!-- define attributes -->
+		<xsd:sequence>
+			<xsd:element name="object" type="ObjectType" minOccurs="0" maxOccurs="unbound" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="RenderType">
+		<!-- define attributes -->
+		<xsd:sequence>
+			<xsd:element name="object" type="ObjectType" minOccurs="0" maxOccurs="unbound" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="yapt">
+		<xsd:sequence>
+			<xsd:element name="resources" type="ResourceType" minOccurs="0" maxOccurs="unbound" />
+			<xsd:element name="render" type="RenderType" minOccurs="0" maxOccurs="unbound" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

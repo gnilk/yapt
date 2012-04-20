@@ -1,0 +1,24 @@
+<yapt2>
+	<resources service="file://">
+		<object class="Test.MyResource" name="image1">
+			<property name="filename">data/file.txt</property>
+		</object>
+	</resources>
+		
+	<render>
+		<object class="Plugin.MyEffect2" name="TestSpline">
+			<object class="Test.MyEffect3" name="a">
+				<property name="my_int">26</property>
+			</object>
+			<object class="Test.MyEffect3" name="b">
+				<property name="my_int">27</property>			
+			</object>			
+			<object class="Test.MyEffect3" name="c">
+				<property name="my_int">28</property>
+			</object>			
+		</object>
+		<object class="Plugin.MyEffect1" name="TriRotation">
+			<property name="my_int">29</property>
+		</object>	
+	</render>
+</yapt2>

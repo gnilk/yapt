@@ -1,0 +1,23 @@
+<yapt2>
+	<resources base="dir:data">
+		<object class="MyEffect" name="image1">
+			<property name="my_int">25</property>
+		</object>
+	</resources>
+	<render>
+		<object class="MyEffect2" name="TestSpline">
+			<object class="MyEffect3">
+				<property name="my_int">26</property>
+			</object>
+			<object class="MyEffect3">
+				<property name="my_int">27</property>			
+			</object>			
+			<object class="MyEffect3">
+				<property name="my_int">28</property>
+			</object>			
+		</object>
+		<object class="MyEffect" name="TriRotation">
+			<property name="my_int">29</property>
+		</object>	
+	</render>
+</yapt2>

@@ -1,0 +1,244 @@
+Tnoice.io
+v7
+r0
+t311547790.046051
+cCheck dependencies
+cCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileDevice.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileStream.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileStream.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceFactoryHolder.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceFactoryHolder.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceManager.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceManager.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/TextReader.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/TextReader.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/URLParser.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/URLParser.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cLibtool /Users/gnilk/src/yapt2/dev/bld/Debug/libnoice.io.a normal i386
+
+N/Developer/SDKs/MacOSX10.5.sdk
+c000000004C445C5F00000000000000EE
+t1279548511
+s238
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdio.h
+c0000000047BA99310000000000003D1D
+t1203411249
+s15645
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdlib.h
+c0000000047BA99310000000000002A79
+t1203411249
+s10873
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/string.h
+c0000000047BA99320000000000001731
+t1203411250
+s5937
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/libnoice.io.a
+t1289854990
+s386760
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileDevice.o
+t1289854989
+s38996
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileStream.o
+t1289854989
+s25660
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceFactoryHolder.o
+t1289854989
+s21516
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceManager.o
+t1289854989
+s233504
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/TextReader.o
+t1289854989
+s24352
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/URLParser.o
+t1289854990
+s22252
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/noice.io.LinkFileList
+c000000004CE1A00C000000000000025B
+t1289854988
+s603
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/TextReader.h
+c000000004CE19E2A0000000000000462
+t1289854506
+s1122
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/io.h
+c000000004CE19E2A0000000000000818
+t1289854506
+s2072
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/ioclasses.h
+c000000004CE19E2A000000000000075E
+t1289854506
+s1886
+i<string>
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/ioutils.h
+c000000004CE19E2A0000000000000909
+t1289854506
+s2313
+i<string>
+i<map>
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp
+c000000004CE19E2A00000000000009A3
+t1289854506
+s2467
+i<string>
+i"noice/io/io.h"
+i"noice/io/ioclasses.h"
+i"noice/io/ioutils.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileStream.cpp
+c000000004CE19E2A0000000000000E68
+t1289854506
+s3688
+i<string>
+i"noice/io/io.h"
+i"noice/io/ioclasses.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceFactoryHolder.cpp
+c000000004CE19E2A000000000000074B
+t1289854506
+s1867
+i"noice/io/io.h"
+i"noice/io/ioclasses.h"
+i"noice/io/ioutils.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceManager.cpp
+c000000004CE19E2A00000000000012C2
+t1289854506
+s4802
+i<string>
+i<map>
+i"noice/io/io.h"
+i"noice/io/ioclasses.h"
+i"noice/io/ioutils.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/TextReader.cpp
+c000000004CE19E2A00000000000010B7
+t1289854506
+s4279
+i<stdlib.h>
+i<stdio.h>
+i<malloc.h>
+i<windows.h>
+i"noice/io/io.h"
+i"noice/io/ioutils.h"
+i"noice/io/TextReader.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/URLParser.cpp
+c000000004CE19E2A0000000000000896
+t1289854506
+s2198
+i<stdio.h>
+i<string.h>
+i<stdlib.h>
+i<malloc.h>
+i"noice/io/ioutils.h"
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies311547788#311547788#0(0"0(0#1#0"8607371168#0"0#
+
+CCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileDevice.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547788.712118
+e311547789.096586
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileDevice.o
+x/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+o/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp:59:22: warning: multi-character character constant
+o/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp: In member function 'virtual noice::io::IStream* noice::io::BasicFileStreamDevice::CreateStream(const char*, unsigned int)':
+o/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp:59: warning: comparison is always true due to limited range of data type
+lSLF07#2@75"Compile /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp311547788#311547789#0(453"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp:59:22: warning: multi-character character constant/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp: In member function 'virtual noice::io::IStream* noice::io::BasicFileStreamDevice::CreateStream(const char*, unsigned int)':/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp:59: warning: comparison is always true due to limited range of data type2(22@34"Multi-character character constant311547788#0#119#0(6@67"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp311547306#59#0#59#0#0"0(22@59"Comparison is always true due to limited range of data type311547789#312#141#0(6@67"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp311547306#59#0#59#0#59"comparison is always true due to limited range of data type0(0#0#67"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp8607280320#1170"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileDevice.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileDevice.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileStream.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileStream.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547788.717423
+e311547789.038592
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileStream.o
+x/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileStream.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@75"Compile /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileStream.cpp311547788#311547789#0(0"0(0#0#67"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileStream.cpp8607163872#1170"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/BasicFileStream.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/BasicFileStream.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceFactoryHolder.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceFactoryHolder.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547789.038728
+e311547789.393200
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceFactoryHolder.o
+x/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceFactoryHolder.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@79"Compile /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceFactoryHolder.cpp311547789#311547789#0(0"0(0#0#71"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceFactoryHolder.cpp8606192704#1178"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceFactoryHolder.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceFactoryHolder.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceManager.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceManager.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547789.096717
+e311547789.701491
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceManager.o
+x/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceManager.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@73"Compile /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceManager.cpp311547789#311547789#0(0"0(0#0#65"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceManager.cpp8604582112#1166"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/DeviceManager.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/DeviceManager.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/TextReader.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/TextReader.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547789.393329
+e311547789.772182
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/TextReader.o
+x/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/TextReader.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@70"Compile /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/TextReader.cpp311547789#311547789#0(0"0(0#0#62"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/TextReader.cpp8596406176#1160"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/TextReader.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/TextReader.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/URLParser.o /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/URLParser.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547789.701681
+e311547790.035243
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/URLParser.o
+x/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/URLParser.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@69"Compile /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/URLParser.cpp311547789#311547790#0(0"0(0#0#61"/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/URLParser.cpp8605930816#1158"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/noice.io-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/ext/noice.io/dev/src/URLParser.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/URLParser.o0#
+
+CLibtool /Users/gnilk/src/yapt2/dev/bld/Debug/libnoice.io.a normal i386
+s311547790.035373
+e311547790.045992
+r1
+xLibtool
+x/Users/gnilk/src/yapt2/dev/bld/Debug/libnoice.io.a
+xnormal
+xi386
+lSLF07#2@47"Libtool dev/bld/Debug/libnoice.io.a normal i386311547790#311547790#0(0"0(0#0#0"8606913952#378"    cd /Users/gnilk/src/yapt2    setenv MACOSX_DEPLOYMENT_TARGET 10.5    /Developer/usr/bin/libtool -static -arch_only i386 -syslibroot /Developer/SDKs/MacOSX10.5.sdk -L/Users/gnilk/src/yapt2/dev/bld/Debug -filelist /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/noice.io.build/Objects-normal/i386/noice.io.LinkFileList -o /Users/gnilk/src/yapt2/dev/bld/Debug/libnoice.io.a0#
+

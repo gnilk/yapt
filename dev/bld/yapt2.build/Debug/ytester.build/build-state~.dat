@@ -1,0 +1,73 @@
+Tytester
+v7
+r0
+t311547790.664393
+cCheck dependencies
+cCompileC dev/bld/yapt2.build/Debug/ytester.build/Objects-normal/i386/main.o /Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+
+N/Developer/SDKs/MacOSX10.5.sdk
+c000000004C445C5F00000000000000EE
+t1279548511
+s238
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/lib/libexpat.dylib
+c000000004B760CFE0000000000008374
+t1266027774
+s33652
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib
+c000000004CE1A005000000000000E7EC
+t1289854981
+s59372
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/libnoice.io.a
+c000000004CE1A00E000000000005E6C8
+t1289854990
+s386760
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/libyapt2.a
+c000000004CE1A00C000000000036CB88
+t1289854988
+s3591048
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/ytester
+t2
+s0
+
+N/Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp
+c00000000000000000000000000000000
+t2
+s0
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/Objects-normal/i386/main.o
+t2
+s0
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/Objects-normal/i386/ytester.LinkFileList
+c000000004CE1A00E000000000000005A
+t1289854990
+s90
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies311547790#311547790#0(0"0(0#1#0"8607329216#0"0#
+
+CCompileC dev/bld/yapt2.build/Debug/ytester.build/Objects-normal/i386/main.o /Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547790.656812
+e311547790.664299
+r0
+xCompileC
+xdev/bld/yapt2.build/Debug/ytester.build/Objects-normal/i386/main.o
+x/Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+oi686-apple-darwin10-gcc-4.2.1: /Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp: No such file or directory
+oi686-apple-darwin10-gcc-4.2.1: warning: '-x c++' after last input file has no effect
+oi686-apple-darwin10-gcc-4.2.1: no input files
+lSLF07#2@53"Compile /Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp311547790#311547790#0(294"i686-apple-darwin10-gcc-4.2.1: /Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp: No such file or directoryi686-apple-darwin10-gcc-4.2.1: warning: '-x c++' after last input file has no effecti686-apple-darwin10-gcc-4.2.1: no input filesCommand /Developer/usr/bin/gcc-4.2 failed with exit code 11(4@58"Command /Developer/usr/bin/gcc-4.2 failed with exit code 1311547790#18446744073709551615#0#0(1@0"0(0#0#45"/Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp8606813248#1248"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/ytester-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/ytester-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/ytester-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/ytester-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/inc -Idev/inc/yapt -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/bld/xcode/main.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/ytester.build/Objects-normal/i386/main.o1#
+
+CLd /Users/gnilk/src/yapt2/dev/bld/Debug/ytester normal i386
+r0
+

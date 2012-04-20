@@ -1,0 +1,181 @@
+Tcommon
+v7
+r0
+t311547781.148696
+cCheck dependencies
+cCompileC dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/Timer.o /Users/gnilk/src/yapt2/dev/src/Timer.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/logger.o /Users/gnilk/src/yapt2/dev/src/logger.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cLd /Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib normal i386
+
+N/Developer/SDKs/MacOSX10.5.sdk
+c000000004C445C5F00000000000000EE
+t1279548511
+s238
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/assert.h
+c0000000047BA99300000000000000DCB
+t1203411248
+s3531
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/pthread.h
+c0000000047BA9932000000000000380F
+t1203411250
+s14351
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdio.h
+c0000000047BA99310000000000003D1D
+t1203411249
+s15645
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdlib.h
+c0000000047BA99310000000000002A79
+t1203411249
+s10873
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/string.h
+c0000000047BA99320000000000001731
+t1203411250
+s5937
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/sys/time.h
+c0000000047E883D20000000000001E18
+t1206420434
+s7704
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/time.h
+c0000000047BA9932000000000000178E
+t1203411250
+s6030
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/stdarg.h
+c000000004AC59D9300000000000010DD
+t1254464915
+s4317
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib
+t1289854981
+s59372
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/Timer.o
+t1289854981
+s19580
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/common.LinkFileList
+c000000004CE1A00400000000000000B5
+t1289854980
+s181
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/logger.o
+t1289854980
+s134552
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/io.h
+c000000004CE19E2A0000000000000818
+t1289854506
+s2072
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/logger.h
+c000000004CE19DFB00000000000012EA
+t1289854459
+s4842
+i<stdlib.h>
+i<stdio.h>
+i<list>
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/ySystem.h
+c000000004CE19DFB00000000000042B9
+t1289854459
+s17081
+i"yapt/logger.h"
+i<vector>
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/ySystem_internal.h
+c000000004CE19DFB0000000000005BAA
+t1289854459
+s23466
+i<vector>
+i<map>
+i<stack>
+i<string>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/src/Timer.cpp
+c000000004CE19DFB000000000000043F
+t1289854459
+s1087
+i<assert.h>
+i<string>
+i<stack>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/logger.cpp
+c000000004CE19DFB000000000000252B
+t1289854459
+s9515
+i<stdlib.h>
+i<stdio.h>
+i<string.h>
+i<stdarg.h>
+i<windows.h>
+i<time.h>
+i<pthread.h>
+i<sys/time.h>
+i<list>
+i"yapt/logger.h"
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies311547780#311547780#0(0"0(0#1#0"3343187568374212096#0"0#
+
+CCompileC dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/Timer.o /Users/gnilk/src/yapt2/dev/src/Timer.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547780.518021
+e311547781.079893
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/Timer.o
+x/Users/gnilk/src/yapt2/dev/src/Timer.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@48"Compile /Users/gnilk/src/yapt2/dev/src/Timer.cpp311547780#311547781#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547781#0#87#0(6@22"dev/inc/yapt/ySystem.h311547781#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547781#87#91#0(6@22"dev/inc/yapt/ySystem.h311547781#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547781#178#89#0(6@22"dev/inc/yapt/ySystem.h311547781#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547781#267#89#0(6@22"dev/inc/yapt/ySystem.h311547781#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547781#356#91#0(6@22"dev/inc/yapt/ySystem.h311547781#65#0#65#0#24"'*' defined but not used0(0#0#40"/Users/gnilk/src/yapt2/dev/src/Timer.cpp7883925184438612992#1233"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/Timer.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/Timer.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/logger.o /Users/gnilk/src/yapt2/dev/src/logger.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547780.525486
+e311547780.986307
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/logger.o
+x/Users/gnilk/src/yapt2/dev/src/logger.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+o/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'
+lSLF07#2@49"Compile /Users/gnilk/src/yapt2/dev/src/logger.cpp311547780#311547780#0(660"/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/logger.cpp:324: warning: deprecated conversion from string constant to 'char*'6(22@53"Deprecated conversion from string constant to 'char*'311547780#0#110#0(6@41"/Users/gnilk/src/yapt2/dev/src/logger.cpp311547259#324#0#324#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547780#110#110#0(6@41"/Users/gnilk/src/yapt2/dev/src/logger.cpp311547259#324#0#324#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547780#220#110#0(6@41"/Users/gnilk/src/yapt2/dev/src/logger.cpp311547259#324#0#324#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547780#330#110#0(6@41"/Users/gnilk/src/yapt2/dev/src/logger.cpp311547259#324#0#324#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547780#440#110#0(6@41"/Users/gnilk/src/yapt2/dev/src/logger.cpp311547259#324#0#324#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547780#550#110#0(6@41"/Users/gnilk/src/yapt2/dev/src/logger.cpp311547259#324#0#324#0#49"deprecated conversion from string constant to '*'0(0#0#41"/Users/gnilk/src/yapt2/dev/src/logger.cpp8606223488#1235"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/common-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/logger.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/logger.o0#
+
+CLd /Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib normal i386
+s311547781.080022
+e311547781.148617
+r1
+xLd
+x/Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib
+xnormal
+xi386
+lSLF07#2@57"Link /Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib311547781#311547781#0(0"0(0#0#0"8603950848#542"    cd /Users/gnilk/src/yapt2    setenv MACOSX_DEPLOYMENT_TARGET 10.5    /Developer/usr/bin/g++-4.2 -arch i386 -dynamiclib -isysroot /Developer/SDKs/MacOSX10.5.sdk -L/Users/gnilk/src/yapt2/dev/bld/Debug -F/Users/gnilk/src/yapt2/dev/bld/Debug -filelist /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/common.build/Objects-normal/i386/common.LinkFileList -install_name /usr/local/lib/libcommon.dylib -mmacosx-version-min=10.5 -single_module -compatibility_version 1 -current_version 1 -o /Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib0#
+

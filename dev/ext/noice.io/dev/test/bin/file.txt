@@ -1,0 +1,17 @@
+02.10.2009 16:23:01.169 [00000000]    DEBUG                             main - YAPT2 - running tests
+02.10.2009 16:23:01.169 [00000000]    DEBUG                         TopLevel - Creating System singleton instance
+02.10.2009 16:23:01.179 [00000000]    DEBUG                         TopLevel - Creating system default hook handler
+02.10.2009 16:23:01.179 [00000000]    DEBUG                         TopLevel - Initialize IO Library
+02.10.2009 16:23:01.179 [00000000]     INFO              DeviceFactoryHolder - I/O Device for 'file' created ok
+02.10.2009 16:23:01.179 [00000000]    DEBUG                         TopLevel - Reading default settings
+02.10.2009 16:23:01.179 [00000000]    DEBUG                           System - 'Resolution.Width' = '320'
+02.10.2009 16:23:01.179 [00000000]    DEBUG                           System - 'Resolution.Height' = '240'
+02.10.2009 16:23:01.179 [00000000]    DEBUG                           System - 'yapt.casesensitive' = 'true'
+02.10.2009 16:23:01.179 [00000000]    DEBUG                         TopLevel - Registering built in plugin types
+02.10.2009 16:23:01.179 [00000000]    DEBUG                           System - Register ok, initializing plugin
+02.10.2009 16:23:01.179 [00000000]     INFO                           System - In lib 'System' registered Object 'System.Config'
+02.10.2009 16:23:01.179 [00000000]    DEBUG                           System - Plugin ok!
+02.10.2009 16:23:01.179 [00000000]    DEBUG                         TopLevel - Ok, everything initialized..
+02.10.2009 16:23:01.179 [00000000]    DEBUG                             main - L: line 1
+02.10.2009 16:23:01.179 [00000000]    DEBUG                             main - L: line 2
+02.10.2009 16:23:01.179 [00000000]    DEBUG                             main - L: line 3

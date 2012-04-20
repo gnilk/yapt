@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libio", "libio\libio.vcproj", "{616CBAFF-8A4C-46DA-9981-9A5DCC00707A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vs2003_test", "..\..\test\vs2003_test\vs2003_test.vcproj", "{5BFEC7B1-B201-48F8-85A4-C7D728B3E9DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{616CBAFF-8A4C-46DA-9981-9A5DCC00707A} = {616CBAFF-8A4C-46DA-9981-9A5DCC00707A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{616CBAFF-8A4C-46DA-9981-9A5DCC00707A}.Debug.ActiveCfg = Debug|Win32
+		{616CBAFF-8A4C-46DA-9981-9A5DCC00707A}.Debug.Build.0 = Debug|Win32
+		{616CBAFF-8A4C-46DA-9981-9A5DCC00707A}.Release.ActiveCfg = Release|Win32
+		{616CBAFF-8A4C-46DA-9981-9A5DCC00707A}.Release.Build.0 = Release|Win32
+		{5BFEC7B1-B201-48F8-85A4-C7D728B3E9DB}.Debug.ActiveCfg = Debug|Win32
+		{5BFEC7B1-B201-48F8-85A4-C7D728B3E9DB}.Debug.Build.0 = Debug|Win32
+		{5BFEC7B1-B201-48F8-85A4-C7D728B3E9DB}.Release.ActiveCfg = Release|Win32
+		{5BFEC7B1-B201-48F8-85A4-C7D728B3E9DB}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

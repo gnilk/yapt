@@ -1,0 +1,135 @@
+TODO: [- not done, + in progress, ! finished]
+---------------------------------------------
+! Make interface for BaseInstance
+! Factory function for "PluginObjectInstance"
+! Research up-case problem (compile with RTTI)
+! Remove object dependencies for XML parser (should be possible with only interfaces)
+! System should return interfaces only (except for property!)
+! Interfaces should accept/return interfaces only
+! Write some serious objects in order to test XML parser
++ Write Object Registration parser and define attributes
+  + attributes note yet well defined [do they need to be?]
+! Finalize Expat XML parser
+- Multiple resource containers
+! URI parser
+! System should register stream handlers for specific URI parsers
+! [Deprecated] Add flags to DOC:Nodes in order to support MetaNodes which are only place-holders for information
+  This will enable support for preserving comments from XML and preserve other types of parse statements
+! rename 'kObjectAttribute_Identifier', not good enough - call "kDefinitionAttribute_Identifier"
+  Better information that the developer did not declare proper attributes during obj registration
++ Callback interface for error messages/notifications/events
+- Should external objects be able to set error codes in the system (SetYaptError)?
+! Add hash based lookup routines to Document
+! Add "fully-qualified-names" to objects (full-tree-search-path), if leafs have a name clash they are appended with a counter..
+! PluginObjectInstance::GetProperty should have property name as "const char *"
+! EXPAT parser, Can't add objects before the attributes have been given to it.
+! Add configuration object, string = string using map<std::string, std::string>
+! Get rid of YHANDLE it is an ugly artifact, use IPluginObject instead
+  YHANDLE is currently need unless the complete object construction is considered [fixed]
+! Get rid of YHANDLE for property <-> PropertyInstance lookup, use hash table instead
+! [deprecated] Supply a second set of functions mapping the YHANDLE which works with IBaseInstance
+! Start with rendering path
++ Consolidate lookup routines in to the "Lookup" class
+! Ability to move nodes between branches in the tree
+! Ability to swap nodes in the tree
+! Qualified name lookup
+  [FIXED] TODO: Has a bug with nested objects and properties
+! Store (atleast) input property instances in the tree
+  [Note: Causes problem since it is assumed that all children have external instances]
+! Clean up system in order to keep it lean, try to factor code out of there
+  Note: Can't factor out the properties code since they depend on lookup not bound to a document
+! Define rendering interface
+	! add timers
+	! Extend with Postfunctions
++ Check so we can support a UI
+	! Need enumeration routines
+		! EnumeratePlugins
+		! EnumerateDefinitions
+		! EnumerateURIHanlders
+	! Ability to traverse a node from a specific point
+- Define common object attributes
+	- Timer values (t_start, t_end/duration)
+	- ???
+- Write a tree-verification routine (check all attributes and so forth)
+! Get rid of the warnings
+! Split up in two libraries (one for IO one for the effects)
+! Define a PluginClass object holder which holds the DLL's must inherit from BaseInstance
+! All object definitions should link to the plugin instance they belong to [the plugin links to the definition]
++ define and implement resource containers
+! Add resource container rendering to the system
+- Extend plugin interface with dispose/delete functionality (editor must be able to delete)
+! A resource must be able to re-render its data [reload an image when the image path changes]
+- Need to write support library which adheres to the IStream interface for loading of objects (promote IStream to GOAT as lowlevel interface would help alot)
+! Fix stream handling, should always return number of bytes read. Error codes should not be returned
+! Ensure Mac OsX port
++ Define timers and rules for objects and timers
+! Fix so all strings are checked for case/localization and others before used (esp. for comparision)
+  Separate definition strings and comparasion strings - DO NOT OVERRIDE USER DEFINED STRINGS!
+- Move the logger to an external library (due to code linkage we create an out of sync issue in the output)
+! Add tuple support in properties for both float and int's
+- Add property converters - 2d->3d mapper, 3d->2d projection, int <-> float, make assignment dynamic?
+- Solve notifications through system from external sources (like importers)
+! Refactoring needed if we want to render multiple documents through the system interface
+- Introduce flags to the base instance in order to affect rendering, debug and other
+? Should timers be able to callback all the way to the external object who created it?
++ Add functions to set/get the most common properties in an object
+! Add ability to delete an object [node from document, object in the lookup]
+! Refactoring of Document, splitting rendering/execution logic out of there into "ExecutionEngine"
+! New toplevel data object "WorkBench" automatically creates an ExecutionEngine and holds the Document (should also hold the Lookup)
+! Write serializer (exporter)
+- Consider new name for: "Plugin" in order to get rid of "IPluginDefinition" and "IPluginObjectInstance"
+  something like: "Effect" or "Execution",  "Machine", "wef", "Widget"
+! Write TextWriter/TextReader classes with ability to handle formatted output/input
+! [Deprecated] Includes should get junction node (with base instance) in tree. No, it would cause
+  the rendering to be complex. Rendering should be simple (speed)!
+  Sideeffect: Documents imported to editor will be flattened.
+! Verify the stream handling and/or device/factory, need another layer. Ideas in BasicFileStream.cpp
+! Refactored I/O handling, IStreamDevice introduced
+! Refactor use of IPluginObject/IPluginObjectInstance, remove sending ySys directly to the plugins instead send the IPluginObjectInstance
+! Solve setting property at ExpatXMLImport line 374
+! Remove Render artifcats from System
+! Rename "Workbench" to "Context" make all instances part of a context, i.e. IBaseInstance should be able to lookup its context
+  The context should have Document, DocumentController and the other "global" stuff
+! Remove "ySys" from render calls in IPluginObject
+! Add "Time" to Render call's
+! Verify if the global active document/context is a bottle neck or just something nice
+  how to synchronize multiple documents in multiple threads?
+  ? Rules: Allow only one render thread at each time
+         * User _must_ set the active document when doing cross-document-operations
+	   cross-document-operations are quite seldom
+	   no problem if user has to actively toggle between documents
+  ? Code: Allow only one document (this is a rendering machine after all)
+          Keep everything together and interlink (problem in cross-document-operations)
+! Change the way objects gets created through system
++ Solve import through system interface	   
++ Solve export through system interface
+! Configuration section in XML
+! System global configuration file - current configuration is not very nice
+  copy the JAVA properties idea instead
+! Solve player specific variables to be pushed to effects (GOAT need frustum
+  pixmap and a few others)
+- Bool property type
+- Vector2D property type
+! Add property default values
++ Review property bindings
+  - Check order of binding
+  - Solve unresolveable bindings (target object not found)
+  - Make a few test XML's to test the various cases
+  - Multiple objects with same name
+  - Bind against FullyQualified name, construct name from a schema and try bind
++ Suggest merging Goat/Yapt I/O handling into separate library
+	- Goat devices needs to be enhanced (for abstraction purposes)
+	- Yapt streams can be improved
+	+ Build separate handling on top (URL parser, device selection and so
+	  forth) -> Currently inside IOUtils.h
+	- Should have same structure as all other projects
+	- Should be referenced through "ext"
+! Use the new moved IO library in YAPT
+! Add prefix option to include directive when importing
+! Add prefix option to system so that each name get's prefixed
+	! this can be done when adding attributes to a base instance
+	! Need ability to override attributes before they get created
+- Review YAPT namespace, suggestion "noice::yapt" instead
+- Write per-frame allocator
+	  
+	  

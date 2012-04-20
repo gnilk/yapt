@@ -1,0 +1,858 @@
+Tyapt2
+v7
+r0
+t311547788.701847
+cCheck dependencies
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Attribute.o /Users/gnilk/src/yapt2/dev/src/Attribute.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/BaseInstance.o /Users/gnilk/src/yapt2/dev/src/BaseInstance.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ConfigObject.o /Users/gnilk/src/yapt2/dev/src/ConfigObject.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Context.o /Users/gnilk/src/yapt2/dev/src/Context.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocNode.o /Users/gnilk/src/yapt2/dev/src/DocNode.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Document.o /Users/gnilk/src/yapt2/dev/src/Document.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocumentController.o /Users/gnilk/src/yapt2/dev/src/DocumentController.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExpatXMLImporter.o /Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExportXML.o /Users/gnilk/src/yapt2/dev/src/ExportXML.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Lookup.o /Users/gnilk/src/yapt2/dev/src/Lookup.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectDefinition.o /Users/gnilk/src/yapt2/dev/src/ObjectDefinition.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectInstance.o /Users/gnilk/src/yapt2/dev/src/ObjectInstance.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginContainer.o /Users/gnilk/src/yapt2/dev/src/PluginContainer.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginScanner_nix.o /Users/gnilk/src/yapt2/dev/src/PluginScanner_nix.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Property.o /Users/gnilk/src/yapt2/dev/src/Property.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/RenderVars.o /Users/gnilk/src/yapt2/dev/src/RenderVars.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ResourceContainer.o /Users/gnilk/src/yapt2/dev/src/ResourceContainer.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/System.o /Users/gnilk/src/yapt2/dev/src/System.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/SystemHookHandler.o /Users/gnilk/src/yapt2/dev/src/SystemHookHandler.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/TopLevel.o /Users/gnilk/src/yapt2/dev/src/TopLevel.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+cLibtool /Users/gnilk/src/yapt2/dev/bld/Debug/libyapt2.a normal i386
+
+N/Developer/SDKs/MacOSX10.5.sdk
+c000000004C445C5F00000000000000EE
+t1279548511
+s238
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/assert.h
+c0000000047BA99300000000000000DCB
+t1203411248
+s3531
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/dirent.h
+c0000000047BA993100000000000014E4
+t1203411249
+s5348
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/dlfcn.h
+c00000000487581E60000000000000AC7
+t1215660518
+s2759
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/expat.h
+c0000000047BAB8BB0000000000009D79
+t1203419323
+s40313
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdio.h
+c0000000047BA99310000000000003D1D
+t1203411249
+s15645
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdlib.h
+c0000000047BA99310000000000002A79
+t1203411249
+s10873
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/sys/stat.h
+c0000000047E883D100000000000047CE
+t1206420433
+s18382
+
+N/Developer/SDKs/MacOSX10.5.sdk/usr/include/sys/types.h
+c0000000047E883D2000000000000290F
+t1206420434
+s10511
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib
+c000000004CE1A005000000000000E7EC
+t1289854981
+s59372
+
+N/Users/gnilk/src/yapt2/dev/bld/Debug/libyapt2.a
+t1289854988
+s3591048
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Attribute.o
+t1289854981
+s21916
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/BaseInstance.o
+t1289854981
+s101188
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ConfigObject.o
+t1289854982
+s43800
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Context.o
+t1289854982
+s227560
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocNode.o
+t1289854982
+s101152
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Document.o
+t1289854983
+s288500
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocumentController.o
+t1289854983
+s98504
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExpatXMLImporter.o
+t1289854984
+s247904
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExportXML.o
+t1289854984
+s232868
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Lookup.o
+t1289854985
+s373028
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectDefinition.o
+t1289854985
+s158616
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectInstance.o
+t1289854985
+s172284
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginContainer.o
+t1289854985
+s99492
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginScanner_nix.o
+t1289854986
+s60932
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Property.o
+t1289854986
+s183580
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/RenderVars.o
+t1289854987
+s166328
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ResourceContainer.o
+t1289854987
+s65328
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/System.o
+t1289854988
+s475108
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/SystemHookHandler.o
+t1289854988
+s172860
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/TopLevel.o
+t1289854988
+s137440
+
+N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/yapt2.LinkFileList
+c000000004CE1A0050000000000000778
+t1289854981
+s1912
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/TextReader.h
+c000000004CE19E2A0000000000000462
+t1289854506
+s1122
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/io.h
+c000000004CE19E2A0000000000000818
+t1289854506
+s2072
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/ioclasses.h
+c000000004CE19E2A000000000000075E
+t1289854506
+s1886
+i<string>
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/ioutils.h
+c000000004CE19E2A0000000000000909
+t1289854506
+s2313
+i<string>
+i<map>
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/ExpatXMLImporter.h
+c000000004CE19DFB00000000000005A0
+t1289854459
+s1440
+i<stack>
+i<string>
+i"expat/lib/expat.h"
+i<expat.h>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/ExportXML.h
+c000000004CE19DFB0000000000000304
+t1289854459
+s772
+i<stack>
+i<string>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/logger.h
+c000000004CE19DFB00000000000012EA
+t1289854459
+s4842
+i<stdlib.h>
+i<stdio.h>
+i<list>
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/ySystem.h
+c000000004CE19DFB00000000000042B9
+t1289854459
+s17081
+i"yapt/logger.h"
+i<vector>
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/inc/yapt/ySystem_internal.h
+c000000004CE19DFB0000000000005BAA
+t1289854459
+s23466
+i<vector>
+i<map>
+i<stack>
+i<string>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/src/Attribute.cpp
+c000000004CE19DFB00000000000004A1
+t1289854459
+s1185
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/BaseInstance.cpp
+c000000004CE19DFB0000000000000FF4
+t1289854459
+s4084
+i<stdlib.h>
+i<stdio.h>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+i<malloc.h>
+
+N/Users/gnilk/src/yapt2/dev/src/ConfigObject.cpp
+c000000004CE19DFB0000000000000B4A
+t1289854459
+s2890
+i"yapt/ySystem.h"
+i"yapt/logger.h"
+i<malloc.h>
+
+N/Users/gnilk/src/yapt2/dev/src/Context.cpp
+c000000004CE19DFB0000000000000AB6
+t1289854459
+s2742
+i<assert.h>
+i<string>
+i<stack>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/DocNode.cpp
+c000000004CE19DFB0000000000000B63
+t1289854459
+s2915
+i<assert.h>
+i<string>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/src/Document.cpp
+c000000004CE19DFB0000000000002F99
+t1289854459
+s12185
+i<assert.h>
+i<string>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+i"noice/io/io.h"
+
+N/Users/gnilk/src/yapt2/dev/src/DocumentController.cpp
+c000000004CE19DFB000000000000132A
+t1289854459
+s4906
+i<assert.h>
+i<string>
+i<stack>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp
+c000000004CE19DFB00000000000033D8
+t1289854459
+s13272
+i<iostream>
+i<stdio.h>
+i<stack>
+i<string>
+i<map>
+i<malloc.h>
+i<windows.h>
+i"expat/lib/expat.h"
+i<expat.h>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+i"yapt/ExpatXMLImporter.h"
+i"noice/io/io.h"
+i"noice/io/ioclasses.h"
+i"noice/io/ioutils.h"
+
+N/Users/gnilk/src/yapt2/dev/src/ExportXML.cpp
+c000000004CE19DFB00000000000014E4
+t1289854459
+s5348
+i<iostream>
+i<stdio.h>
+i<stack>
+i<string>
+i<map>
+i<malloc.h>
+i<windows.h>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+i"yapt/ExportXML.h"
+i"noice/io/io.h"
+i"noice/io/ioutils.h"
+
+N/Users/gnilk/src/yapt2/dev/src/Lookup.cpp
+c000000004CE19DFB0000000000000C6F
+t1289854459
+s3183
+i<string>
+i<map>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/ObjectDefinition.cpp
+c000000004CE19DFB00000000000013D8
+t1289854459
+s5080
+i<list>
+i<string>
+i<assert.h>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/ObjectInstance.cpp
+c000000004CE19DFB000000000000320D
+t1289854459
+s12813
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/PluginContainer.cpp
+c000000004CE19DFB0000000000000433
+t1289854459
+s1075
+i<string>
+i<map>
+i<assert.h>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/PluginScanner_nix.cpp
+c000000004CE19DFB0000000000000E07
+t1289854459
+s3591
+i<string>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+i<windows.h>
+i<sys/types.h>
+i<sys/stat.h>
+i<dirent.h>
+i<dlfcn.h>
+
+N/Users/gnilk/src/yapt2/dev/src/Property.cpp
+c000000004CE19DFB000000000000302E
+t1289854459
+s12334
+i"yapt/logger.h"
+i<vector>
+i<string>
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/RenderVars.cpp
+c000000004CE19DFB0000000000000704
+t1289854459
+s1796
+i<assert.h>
+i<string>
+i<stack>
+i<map>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/ResourceContainer.cpp
+c000000004CE19DFB0000000000000780
+t1289854459
+s1920
+i<string>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/System.cpp
+c000000004CE19DFB00000000000029E5
+t1289854459
+s10725
+i<string>
+i<map>
+i<assert.h>
+i"yapt/ExpatXMLImporter.h"
+i"yapt/ExportXML.h"
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+i"noice/io/io.h"
+i"noice/io/ioclasses.h"
+i"noice/io/ioutils.h"
+i"noice/io/TextReader.h"
+
+N/Users/gnilk/src/yapt2/dev/src/SystemHookHandler.cpp
+c000000004CE19DFB0000000000001B03
+t1289854459
+s6915
+i<assert.h>
+i<string>
+i<stack>
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+N/Users/gnilk/src/yapt2/dev/src/TopLevel.cpp
+c000000004CE19DFB0000000000001851
+t1289854459
+s6225
+i"yapt/logger.h"
+i"yapt/ySystem.h"
+i"yapt/ySystem_internal.h"
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies311547781#311547781#0(0"0(0#1#0"31525614011351088#0"0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Attribute.o /Users/gnilk/src/yapt2/dev/src/Attribute.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547781.157810
+e311547781.759464
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Attribute.o
+x/Users/gnilk/src/yapt2/dev/src/Attribute.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@52"Compile /Users/gnilk/src/yapt2/dev/src/Attribute.cpp311547781#311547781#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547781#0#87#0(6@22"dev/inc/yapt/ySystem.h311547781#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547781#87#91#0(6@22"dev/inc/yapt/ySystem.h311547781#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547781#178#89#0(6@22"dev/inc/yapt/ySystem.h311547781#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547781#267#89#0(6@22"dev/inc/yapt/ySystem.h311547781#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547781#356#91#0(6@22"dev/inc/yapt/ySystem.h311547781#65#0#65#0#24"'*' defined but not used0(0#0#44"/Users/gnilk/src/yapt2/dev/src/Attribute.cpp8603768096#1202"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/Attribute.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Attribute.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/BaseInstance.o /Users/gnilk/src/yapt2/dev/src/BaseInstance.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547781.158999
+e311547781.847723
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/BaseInstance.o
+x/Users/gnilk/src/yapt2/dev/src/BaseInstance.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@55"Compile /Users/gnilk/src/yapt2/dev/src/BaseInstance.cpp311547781#311547781#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547781#0#87#0(6@22"dev/inc/yapt/ySystem.h311547781#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547781#87#91#0(6@22"dev/inc/yapt/ySystem.h311547781#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547781#178#89#0(6@22"dev/inc/yapt/ySystem.h311547781#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547781#267#89#0(6@22"dev/inc/yapt/ySystem.h311547781#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547781#356#91#0(6@22"dev/inc/yapt/ySystem.h311547781#65#0#65#0#24"'*' defined but not used0(0#0#47"/Users/gnilk/src/yapt2/dev/src/BaseInstance.cpp8596001792#1208"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/BaseInstance.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/BaseInstance.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ConfigObject.o /Users/gnilk/src/yapt2/dev/src/ConfigObject.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547781.759592
+e311547782.091648
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ConfigObject.o
+x/Users/gnilk/src/yapt2/dev/src/ConfigObject.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@55"Compile /Users/gnilk/src/yapt2/dev/src/ConfigObject.cpp311547781#311547782#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547782#0#87#0(6@22"dev/inc/yapt/ySystem.h311547782#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547782#87#91#0(6@22"dev/inc/yapt/ySystem.h311547782#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547782#178#89#0(6@22"dev/inc/yapt/ySystem.h311547782#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547782#267#89#0(6@22"dev/inc/yapt/ySystem.h311547782#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547782#356#91#0(6@22"dev/inc/yapt/ySystem.h311547782#65#0#65#0#24"'*' defined but not used0(0#0#47"/Users/gnilk/src/yapt2/dev/src/ConfigObject.cpp8607072640#1208"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/ConfigObject.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ConfigObject.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Context.o /Users/gnilk/src/yapt2/dev/src/Context.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547781.847851
+e311547782.646289
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Context.o
+x/Users/gnilk/src/yapt2/dev/src/Context.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@50"Compile /Users/gnilk/src/yapt2/dev/src/Context.cpp311547781#311547782#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547782#0#87#0(6@22"dev/inc/yapt/ySystem.h311547782#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547782#87#91#0(6@22"dev/inc/yapt/ySystem.h311547782#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547782#178#89#0(6@22"dev/inc/yapt/ySystem.h311547782#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547782#267#89#0(6@22"dev/inc/yapt/ySystem.h311547782#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547782#356#91#0(6@22"dev/inc/yapt/ySystem.h311547782#65#0#65#0#24"'*' defined but not used0(0#0#42"/Users/gnilk/src/yapt2/dev/src/Context.cpp8607232032#1198"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/Context.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Context.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocNode.o /Users/gnilk/src/yapt2/dev/src/DocNode.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547782.091879
+e311547782.725319
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocNode.o
+x/Users/gnilk/src/yapt2/dev/src/DocNode.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@50"Compile /Users/gnilk/src/yapt2/dev/src/DocNode.cpp311547782#311547782#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547782#0#87#0(6@22"dev/inc/yapt/ySystem.h311547782#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547782#87#91#0(6@22"dev/inc/yapt/ySystem.h311547782#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547782#178#89#0(6@22"dev/inc/yapt/ySystem.h311547782#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547782#267#89#0(6@22"dev/inc/yapt/ySystem.h311547782#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547782#356#91#0(6@22"dev/inc/yapt/ySystem.h311547782#65#0#65#0#24"'*' defined but not used0(0#0#42"/Users/gnilk/src/yapt2/dev/src/DocNode.cpp8598757632#1198"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/DocNode.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocNode.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Document.o /Users/gnilk/src/yapt2/dev/src/Document.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547782.646420
+e311547783.513431
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Document.o
+x/Users/gnilk/src/yapt2/dev/src/Document.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@51"Compile /Users/gnilk/src/yapt2/dev/src/Document.cpp311547782#311547783#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547783#0#87#0(6@22"dev/inc/yapt/ySystem.h311547783#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547783#87#91#0(6@22"dev/inc/yapt/ySystem.h311547783#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547783#178#89#0(6@22"dev/inc/yapt/ySystem.h311547783#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547783#267#89#0(6@22"dev/inc/yapt/ySystem.h311547783#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547783#356#91#0(6@22"dev/inc/yapt/ySystem.h311547783#65#0#65#0#24"'*' defined but not used0(0#0#43"/Users/gnilk/src/yapt2/dev/src/Document.cpp8597990112#1200"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/Document.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Document.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocumentController.o /Users/gnilk/src/yapt2/dev/src/DocumentController.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547782.725456
+e311547783.295145
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocumentController.o
+x/Users/gnilk/src/yapt2/dev/src/DocumentController.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@61"Compile /Users/gnilk/src/yapt2/dev/src/DocumentController.cpp311547782#311547783#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547783#0#87#0(6@22"dev/inc/yapt/ySystem.h311547783#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547783#87#91#0(6@22"dev/inc/yapt/ySystem.h311547783#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547783#178#89#0(6@22"dev/inc/yapt/ySystem.h311547783#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547783#267#89#0(6@22"dev/inc/yapt/ySystem.h311547783#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547783#356#91#0(6@22"dev/inc/yapt/ySystem.h311547783#65#0#65#0#24"'*' defined but not used0(0#0#53"/Users/gnilk/src/yapt2/dev/src/DocumentController.cpp8607074848#1220"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/DocumentController.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/DocumentController.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExpatXMLImporter.o /Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547783.295274
+e311547784.445365
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExpatXMLImporter.o
+x/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:66: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:68: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:68: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:68: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:70: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:72: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:74: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:74: warning: deprecated conversion from string constant to 'char*'
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp: In member function 'void yapt::ExpatXMLParser::ParseError(const char*)':
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:98: warning: unknown conversion type character 0xa in format
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp: In member function 'void yapt::ExpatXMLParser::doStartElement(const char*, const char**)':
+o/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:323: warning: unused variable 'pExtObject'
+odev/inc/yapt/ySystem.h: At global scope:
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@59"Compile /Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547783#311547784#0(1918"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:66: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:68: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:68: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:68: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:70: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:72: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:74: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:74: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp: In member function 'void yapt::ExpatXMLParser::ParseError(const char*)':/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:98: warning: unknown conversion type character 0xa in format/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp: In member function 'void yapt::ExpatXMLParser::doStartElement(const char*, const char**)':/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp:323: warning: unused variable 'pExtObject'dev/inc/yapt/ySystem.h: At global scope:dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used16(22@53"Deprecated conversion from string constant to 'char*'311547784#0#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#66#0#66#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547784#119#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#68#0#68#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547784#238#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#68#0#68#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547784#357#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#68#0#68#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547784#476#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#70#0#70#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547784#595#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#72#0#72#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547784#714#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#74#0#74#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547784#833#119#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#74#0#74#0#49"deprecated conversion from string constant to '*'0(22@47"Unknown conversion type character 0xa in format311547784#1078#113#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#98#0#98#0#0"0(22@28"Unused variable 'pExtObject'311547784#1335#95#0(6@51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp311547259#323#0#323#0#19"unused variable '*'0(23@16"At global scope:311547784#1430#41#0(6@22"dev/inc/yapt/ySystem.h311547784#0#0#0#0#0"0(22@50"'yapt::kDocument_RootTagName' defined but not used311547784#1471#87#0(6@22"dev/inc/yapt/ySystem.h311547784#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547784#1558#91#0(6@22"dev/inc/yapt/ySystem.h311547784#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547784#1649#89#0(6@22"dev/inc/yapt/ySystem.h311547784#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547784#1738#89#0(6@22"dev/inc/yapt/ySystem.h311547784#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547784#1827#91#0(6@22"dev/inc/yapt/ySystem.h311547784#65#0#65#0#24"'*' defined but not used0(0#0#51"/Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp8606024704#1216"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/ExpatXMLImporter.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExpatXMLImporter.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExportXML.o /Users/gnilk/src/yapt2/dev/src/ExportXML.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547783.513563
+e311547784.629473
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExportXML.o
+x/Users/gnilk/src/yapt2/dev/src/ExportXML.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@52"Compile /Users/gnilk/src/yapt2/dev/src/ExportXML.cpp311547783#311547784#0(0"0(0#0#44"/Users/gnilk/src/yapt2/dev/src/ExportXML.cpp8603717856#1202"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/ExportXML.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ExportXML.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Lookup.o /Users/gnilk/src/yapt2/dev/src/Lookup.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547784.445567
+e311547785.404947
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Lookup.o
+x/Users/gnilk/src/yapt2/dev/src/Lookup.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@49"Compile /Users/gnilk/src/yapt2/dev/src/Lookup.cpp311547784#311547785#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547785#0#87#0(6@22"dev/inc/yapt/ySystem.h311547785#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547785#87#91#0(6@22"dev/inc/yapt/ySystem.h311547785#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547785#178#89#0(6@22"dev/inc/yapt/ySystem.h311547785#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547785#267#89#0(6@22"dev/inc/yapt/ySystem.h311547785#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547785#356#91#0(6@22"dev/inc/yapt/ySystem.h311547785#65#0#65#0#24"'*' defined but not used0(0#0#41"/Users/gnilk/src/yapt2/dev/src/Lookup.cpp8595952672#1196"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/Lookup.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Lookup.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectDefinition.o /Users/gnilk/src/yapt2/dev/src/ObjectDefinition.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547784.629606
+e311547785.264896
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectDefinition.o
+x/Users/gnilk/src/yapt2/dev/src/ObjectDefinition.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@59"Compile /Users/gnilk/src/yapt2/dev/src/ObjectDefinition.cpp311547784#311547785#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547785#0#87#0(6@22"dev/inc/yapt/ySystem.h311547785#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547785#87#91#0(6@22"dev/inc/yapt/ySystem.h311547785#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547785#178#89#0(6@22"dev/inc/yapt/ySystem.h311547785#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547785#267#89#0(6@22"dev/inc/yapt/ySystem.h311547785#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547785#356#91#0(6@22"dev/inc/yapt/ySystem.h311547785#65#0#65#0#24"'*' defined but not used0(0#0#51"/Users/gnilk/src/yapt2/dev/src/ObjectDefinition.cpp8607205728#1216"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/ObjectDefinition.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectDefinition.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectInstance.o /Users/gnilk/src/yapt2/dev/src/ObjectInstance.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547785.265022
+e311547785.985476
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectInstance.o
+x/Users/gnilk/src/yapt2/dev/src/ObjectInstance.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@57"Compile /Users/gnilk/src/yapt2/dev/src/ObjectInstance.cpp311547785#311547785#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547785#0#87#0(6@22"dev/inc/yapt/ySystem.h311547785#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547785#87#91#0(6@22"dev/inc/yapt/ySystem.h311547785#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547785#178#89#0(6@22"dev/inc/yapt/ySystem.h311547785#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547785#267#89#0(6@22"dev/inc/yapt/ySystem.h311547785#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547785#356#91#0(6@22"dev/inc/yapt/ySystem.h311547785#65#0#65#0#24"'*' defined but not used0(0#0#49"/Users/gnilk/src/yapt2/dev/src/ObjectInstance.cpp8607119552#1212"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/ObjectInstance.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ObjectInstance.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginContainer.o /Users/gnilk/src/yapt2/dev/src/PluginContainer.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547785.405070
+e311547786.003058
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginContainer.o
+x/Users/gnilk/src/yapt2/dev/src/PluginContainer.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@58"Compile /Users/gnilk/src/yapt2/dev/src/PluginContainer.cpp311547785#311547786#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547785#0#87#0(6@22"dev/inc/yapt/ySystem.h311547785#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547785#87#91#0(6@22"dev/inc/yapt/ySystem.h311547785#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547785#178#89#0(6@22"dev/inc/yapt/ySystem.h311547785#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547785#267#89#0(6@22"dev/inc/yapt/ySystem.h311547785#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547785#356#91#0(6@22"dev/inc/yapt/ySystem.h311547785#65#0#65#0#24"'*' defined but not used0(0#0#50"/Users/gnilk/src/yapt2/dev/src/PluginContainer.cpp8606881920#1214"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/PluginContainer.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginContainer.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginScanner_nix.o /Users/gnilk/src/yapt2/dev/src/PluginScanner_nix.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547785.985679
+e311547786.576154
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginScanner_nix.o
+x/Users/gnilk/src/yapt2/dev/src/PluginScanner_nix.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@60"Compile /Users/gnilk/src/yapt2/dev/src/PluginScanner_nix.cpp311547785#311547786#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547786#0#87#0(6@22"dev/inc/yapt/ySystem.h311547786#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547786#87#91#0(6@22"dev/inc/yapt/ySystem.h311547786#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547786#178#89#0(6@22"dev/inc/yapt/ySystem.h311547786#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547786#267#89#0(6@22"dev/inc/yapt/ySystem.h311547786#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547786#356#91#0(6@22"dev/inc/yapt/ySystem.h311547786#65#0#65#0#24"'*' defined but not used0(0#0#52"/Users/gnilk/src/yapt2/dev/src/PluginScanner_nix.cpp8603935712#1218"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/PluginScanner_nix.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/PluginScanner_nix.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Property.o /Users/gnilk/src/yapt2/dev/src/Property.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547786.003190
+e311547786.700581
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Property.o
+x/Users/gnilk/src/yapt2/dev/src/Property.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+o/Users/gnilk/src/yapt2/dev/src/Property.cpp: In member function 'virtual void yapt::PropertyInstance::SetValue(const char*)':
+o/Users/gnilk/src/yapt2/dev/src/Property.cpp:232: warning: format '%d' expects type 'int*', but argument 3 has type 'float*'
+o/Users/gnilk/src/yapt2/dev/src/Property.cpp:232: warning: format '%d' expects type 'int*', but argument 4 has type 'float*'
+odev/inc/yapt/ySystem.h: At global scope:
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@51"Compile /Users/gnilk/src/yapt2/dev/src/Property.cpp311547786#311547786#0(862"/Users/gnilk/src/yapt2/dev/src/Property.cpp: In member function 'virtual void yapt::PropertyInstance::SetValue(const char*)':/Users/gnilk/src/yapt2/dev/src/Property.cpp:232: warning: format '%d' expects type 'int*', but argument 3 has type 'float*'/Users/gnilk/src/yapt2/dev/src/Property.cpp:232: warning: format '%d' expects type 'int*', but argument 4 has type 'float*'dev/inc/yapt/ySystem.h: At global scope:dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used8(22@65"Format '%d' expects type 'int*', but argument 3 has type 'float*'311547786#126#124#0(6@43"/Users/gnilk/src/yapt2/dev/src/Property.cpp311547259#232#0#232#0#56"format '*' expects type '*', but argument * has type '*'0(22@65"Format '%d' expects type 'int*', but argument 4 has type 'float*'311547786#250#124#0(6@43"/Users/gnilk/src/yapt2/dev/src/Property.cpp311547259#232#0#232#0#56"format '*' expects type '*', but argument * has type '*'0(23@16"At global scope:311547786#374#41#0(6@22"dev/inc/yapt/ySystem.h311547786#0#0#0#0#0"0(22@50"'yapt::kDocument_RootTagName' defined but not used311547786#415#87#0(6@22"dev/inc/yapt/ySystem.h311547786#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547786#502#91#0(6@22"dev/inc/yapt/ySystem.h311547786#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547786#593#89#0(6@22"dev/inc/yapt/ySystem.h311547786#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547786#682#89#0(6@22"dev/inc/yapt/ySystem.h311547786#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547786#771#91#0(6@22"dev/inc/yapt/ySystem.h311547786#65#0#65#0#24"'*' defined but not used0(0#0#43"/Users/gnilk/src/yapt2/dev/src/Property.cpp8596075360#1200"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/Property.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/Property.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/RenderVars.o /Users/gnilk/src/yapt2/dev/src/RenderVars.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547786.576287
+e311547787.353553
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/RenderVars.o
+x/Users/gnilk/src/yapt2/dev/src/RenderVars.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@53"Compile /Users/gnilk/src/yapt2/dev/src/RenderVars.cpp311547786#311547787#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547787#0#87#0(6@22"dev/inc/yapt/ySystem.h311547787#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547787#87#91#0(6@22"dev/inc/yapt/ySystem.h311547787#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547787#178#89#0(6@22"dev/inc/yapt/ySystem.h311547787#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547787#267#89#0(6@22"dev/inc/yapt/ySystem.h311547787#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547787#356#91#0(6@22"dev/inc/yapt/ySystem.h311547787#65#0#65#0#24"'*' defined but not used0(0#0#45"/Users/gnilk/src/yapt2/dev/src/RenderVars.cpp8596083680#1204"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/RenderVars.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/RenderVars.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ResourceContainer.o /Users/gnilk/src/yapt2/dev/src/ResourceContainer.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547786.700710
+e311547787.238255
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ResourceContainer.o
+x/Users/gnilk/src/yapt2/dev/src/ResourceContainer.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@60"Compile /Users/gnilk/src/yapt2/dev/src/ResourceContainer.cpp311547786#311547787#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547787#0#87#0(6@22"dev/inc/yapt/ySystem.h311547787#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547787#87#91#0(6@22"dev/inc/yapt/ySystem.h311547787#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547787#178#89#0(6@22"dev/inc/yapt/ySystem.h311547787#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547787#267#89#0(6@22"dev/inc/yapt/ySystem.h311547787#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547787#356#91#0(6@22"dev/inc/yapt/ySystem.h311547787#65#0#65#0#24"'*' defined but not used0(0#0#52"/Users/gnilk/src/yapt2/dev/src/ResourceContainer.cpp8604476736#1218"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/ResourceContainer.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/ResourceContainer.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/System.o /Users/gnilk/src/yapt2/dev/src/System.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547787.238383
+e311547788.299960
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/System.o
+x/Users/gnilk/src/yapt2/dev/src/System.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@49"Compile /Users/gnilk/src/yapt2/dev/src/System.cpp311547787#311547788#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547788#0#87#0(6@22"dev/inc/yapt/ySystem.h311547788#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547788#87#91#0(6@22"dev/inc/yapt/ySystem.h311547788#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547788#178#89#0(6@22"dev/inc/yapt/ySystem.h311547788#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547788#267#89#0(6@22"dev/inc/yapt/ySystem.h311547788#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547788#356#91#0(6@22"dev/inc/yapt/ySystem.h311547788#65#0#65#0#24"'*' defined but not used0(0#0#41"/Users/gnilk/src/yapt2/dev/src/System.cpp8607101600#1196"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/System.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/System.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/SystemHookHandler.o /Users/gnilk/src/yapt2/dev/src/SystemHookHandler.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547787.353685
+e311547788.100780
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/SystemHookHandler.o
+x/Users/gnilk/src/yapt2/dev/src/SystemHookHandler.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@60"Compile /Users/gnilk/src/yapt2/dev/src/SystemHookHandler.cpp311547787#311547788#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547788#0#87#0(6@22"dev/inc/yapt/ySystem.h311547788#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547788#87#91#0(6@22"dev/inc/yapt/ySystem.h311547788#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547788#178#89#0(6@22"dev/inc/yapt/ySystem.h311547788#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547788#267#89#0(6@22"dev/inc/yapt/ySystem.h311547788#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547788#356#91#0(6@22"dev/inc/yapt/ySystem.h311547788#65#0#65#0#24"'*' defined but not used0(0#0#52"/Users/gnilk/src/yapt2/dev/src/SystemHookHandler.cpp8607042560#1218"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/SystemHookHandler.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/SystemHookHandler.o0#
+
+CCompileC dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/TopLevel.o /Users/gnilk/src/yapt2/dev/src/TopLevel.cpp normal i386 c++ com.apple.compilers.gcc.4_2
+s311547788.101001
+e311547788.629480
+r1
+xCompileC
+xdev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/TopLevel.o
+x/Users/gnilk/src/yapt2/dev/src/TopLevel.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.gcc.4_2
+odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
+odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
+odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
+odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
+odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
+lSLF07#2@51"Compile /Users/gnilk/src/yapt2/dev/src/TopLevel.cpp311547788#311547788#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547788#0#87#0(6@22"dev/inc/yapt/ySystem.h311547788#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547788#87#91#0(6@22"dev/inc/yapt/ySystem.h311547788#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547788#178#89#0(6@22"dev/inc/yapt/ySystem.h311547788#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547788#267#89#0(6@22"dev/inc/yapt/ySystem.h311547788#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547788#356#91#0(6@22"dev/inc/yapt/ySystem.h311547788#65#0#65#0#24"'*' defined but not used0(0#0#43"/Users/gnilk/src/yapt2/dev/src/TopLevel.cpp8606557632#1200"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/yapt2-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug -I/Users/gnilk/src/yapt2/dev/bld/Debug/include -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -Idev/inc -Idev/inc/yapt -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/src/TopLevel.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/TopLevel.o0#
+
+CLibtool /Users/gnilk/src/yapt2/dev/bld/Debug/libyapt2.a normal i386
+s311547788.629607
+e311547788.701783
+r1
+xLibtool
+x/Users/gnilk/src/yapt2/dev/bld/Debug/libyapt2.a
+xnormal
+xi386
+o/Developer/usr/bin/libtool: file: /Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib is a dynamic library, not added to the static library
+lSLF07#2@44"Libtool dev/bld/Debug/libyapt2.a normal i386311547788#311547788#0(141"/Developer/usr/bin/libtool: file: /Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib is a dynamic library, not added to the static library0(0#0#0"8595827968#422"    cd /Users/gnilk/src/yapt2    setenv MACOSX_DEPLOYMENT_TARGET 10.5    /Developer/usr/bin/libtool -static -arch_only i386 -syslibroot /Developer/SDKs/MacOSX10.5.sdk -L/Users/gnilk/src/yapt2/dev/bld/Debug -filelist /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/yapt2.build/Objects-normal/i386/yapt2.LinkFileList /Users/gnilk/src/yapt2/dev/bld/Debug/libcommon.dylib -o /Users/gnilk/src/yapt2/dev/bld/Debug/libyapt2.a0#
+

@@ -1,0 +1,5 @@
+TODO: [- not done, + in progress, ! finished]
+---------------------------------------------
+! Moved to own library
+! Write test cases
+- Reintroduce error reporting (this was inside yapt before the move)

@@ -1,0 +1,47 @@
+<yapt2>
+	<resources base="dir:data">
+		<object class="Resources.Image" name="image1">
+			<property name="File">images/image1.png</property>
+		</object>
+	</resources>
+	<render>
+		<object class="Animation.HermiteSpline" name="TestSpline">
+			<object class="Animation.HermiateSpline.VectorKey">
+				<property name="Tension">0</property>
+				<property name="Control">0</property>
+				<property name="Bias">0</property>
+				<property name="T">0</property>
+				<property name="Value">4,6,5</property>
+			</object>
+			<object class="Animation.HermiateSpline.VectorKey">
+				<property name="T">1</property>			
+				<property name="Value">5,6,4</property>
+			</object>			
+			<object class="Animation.HermiateSpline.VectorKey">
+				<property name="T">2</property>
+				<property name="Value">5,6,4</property>
+			</object>			
+		</object>
+		<object class="Animation.Linear" name="TriRotation">
+			<property name="Start">0</property>
+			<property name="FrameIncrease">0.1</property>
+		</object>
+	
+		<object class="OpenGL.Context" name="Context1">
+			<object class="OpenGL.ViewPort">
+			</object>
+			<object class="Converters.ComponentsToVector" name="Rotation">
+				<property name="x">0</property>
+				<property name="y">0</property>
+				<property name="z" source="TriRotation" />
+			</object>
+			<object class="OpenGL.FullScreenQuad">
+				<property name="Texture" source="image1" />
+			</object>
+			<object class="OpenGL.Triangle">
+				<property name="radius">0.75</property>
+				<property name="rotation" source="Rotation" />
+			</object>	
+		</object>
+	</render>
+</yapt2>
