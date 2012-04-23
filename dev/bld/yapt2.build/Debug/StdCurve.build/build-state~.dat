@@ -1,175 +1,0 @@
-TStdCurve
-v7
-r0
-t311547790.648859
-cCheck dependencies
-cCompileC dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/Curve.o /Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp normal i386 c++ com.apple.compilers.gcc.4_2
-cCompileC dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/PluginMain.o /Users/gnilk/src/yapt2/dev/plugins/StdCurve/PluginMain.cpp normal i386 c++ com.apple.compilers.gcc.4_2
-cLd /Users/gnilk/src/yapt2/dev/bld/Debug/plugins/libStdCurve.dylib normal i386
-
-N/Developer/SDKs/MacOSX10.5.sdk
-c000000004C445C5F00000000000000EE
-t1279548511
-s238
-
-N/Developer/SDKs/MacOSX10.5.sdk/usr/include/assert.h
-c0000000047BA99300000000000000DCB
-t1203411248
-s3531
-
-N/Developer/SDKs/MacOSX10.5.sdk/usr/include/ctype.h
-c0000000047BA99310000000000002C3A
-t1203411249
-s11322
-
-N/Developer/SDKs/MacOSX10.5.sdk/usr/include/math.h
-c0000000047BA987000000000000004B7
-t1203411056
-s1207
-
-N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdio.h
-c0000000047BA99310000000000003D1D
-t1203411249
-s15645
-
-N/Developer/SDKs/MacOSX10.5.sdk/usr/include/stdlib.h
-c0000000047BA99310000000000002A79
-t1203411249
-s10873
-
-N/Users/gnilk/src/yapt2/dev/bld/Debug/plugins/libStdCurve.dylib
-t2
-s0
-
-N/Users/gnilk/src/yapt2/dev/bld/Debug/plugins/libcommon.dylib
-c00000000000000000000000000000000
-t2
-s0
-
-N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/Curve.o
-t1289854990
-s154216
-
-N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/PluginMain.o
-t1289854990
-s104736
-
-N/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/StdCurve.LinkFileList
-c000000004CE1A00E00000000000000BD
-t1289854990
-s189
-
-N/Users/gnilk/src/yapt2/dev/ext/noice.io/dev/inc/noice/io/io.h
-c000000004CE19E2A0000000000000818
-t1289854506
-s2072
-
-N/Users/gnilk/src/yapt2/dev/inc/yapt/logger.h
-c000000004CE19DFB00000000000012EA
-t1289854459
-s4842
-i<stdlib.h>
-i<stdio.h>
-i<list>
-
-N/Users/gnilk/src/yapt2/dev/inc/yapt/ySystem.h
-c000000004CE19DFB00000000000042B9
-t1289854459
-s17081
-i"yapt/logger.h"
-i<vector>
-i"noice/io/io.h"
-
-N/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp
-c000000004CE19DFB000000000000563A
-t1289854459
-s22074
-i<math.h>
-i<vector>
-i<assert.h>
-i<stdio.h>
-i<stdlib.h>
-i<ctype.h>
-i"yapt/ySystem.h"
-i"yapt/logger.h"
-i"Curve.h"
-
-N/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.h
-c000000004CE19DFB000000000000105C
-t1289854459
-s4188
-i"yapt/ySystem.h"
-i"yapt/logger.h"
-
-N/Users/gnilk/src/yapt2/dev/plugins/StdCurve/PluginMain.cpp
-c000000004CE19DFB000000000000296A
-t1289854459
-s10602
-i"yapt/ySystem.h"
-i"yapt/logger.h"
-i"Curve.h"
-i<malloc.h>
-
-CCheck dependencies
-r0
-lSLF07#2@18"Check dependencies311547790#311547790#0(0"0(0#1#0"8606834048#0"0#
-
-CCompileC dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/Curve.o /Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp normal i386 c++ com.apple.compilers.gcc.4_2
-s311547790.052031
-e311547790.630450
-r1
-xCompileC
-xdev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/Curve.o
-x/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp
-xnormal
-xi386
-xc++
-xcom.apple.compilers.gcc.4_2
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp: In member function 'void Goat::Curve::Save(const char*)':
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:254: warning: format '%d' expects type 'int', but argument 4 has type 'size_t'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp: At global scope:
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-o/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'
-odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
-odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
-odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
-odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
-odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
-lSLF07#2@61"Compile /Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547790#311547790#0(1741"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp: In member function 'void Goat::Curve::Save(const char*)':/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:254: warning: format '%d' expects type 'int', but argument 4 has type 'size_t'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp: At global scope:/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp:424: warning: deprecated conversion from string constant to 'char*'dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used15(22@64"Format '%d' expects type 'int', but argument 4 has type 'size_t'311547790#113#133#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#254#0#254#0#56"format '*' expects type '*', but argument * has type '*'0(23@16"At global scope:311547790#246#72#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#0#0#0#0#0"0(22@53"Deprecated conversion from string constant to 'char*'311547790#318#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547790#440#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547790#562#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547790#684#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547790#806#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547790#928#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547790#1050#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@53"Deprecated conversion from string constant to 'char*'311547790#1172#122#0(6@53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp311547259#424#0#424#0#49"deprecated conversion from string constant to '*'0(22@50"'yapt::kDocument_RootTagName' defined but not used311547790#1294#87#0(6@22"dev/inc/yapt/ySystem.h311547790#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547790#1381#91#0(6@22"dev/inc/yapt/ySystem.h311547790#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547790#1472#89#0(6@22"dev/inc/yapt/ySystem.h311547790#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547790#1561#89#0(6@22"dev/inc/yapt/ySystem.h311547790#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547790#1650#91#0(6@22"dev/inc/yapt/ySystem.h311547790#65#0#65#0#24"'*' defined but not used0(0#0#53"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp8606223680#1284"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug/plugins -I/Users/gnilk/src/yapt2/dev/bld/Debug/plugins/include -Idev/inc -Idev/inc/yapt -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/plugins/StdCurve/Curve.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/Curve.o0#
-
-CCompileC dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/PluginMain.o /Users/gnilk/src/yapt2/dev/plugins/StdCurve/PluginMain.cpp normal i386 c++ com.apple.compilers.gcc.4_2
-s311547790.053203
-e311547790.443937
-r1
-xCompileC
-xdev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/PluginMain.o
-x/Users/gnilk/src/yapt2/dev/plugins/StdCurve/PluginMain.cpp
-xnormal
-xi386
-xc++
-xcom.apple.compilers.gcc.4_2
-odev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not used
-odev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not used
-odev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not used
-odev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not used
-odev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used
-lSLF07#2@66"Compile /Users/gnilk/src/yapt2/dev/plugins/StdCurve/PluginMain.cpp311547790#311547790#0(447"dev/inc/yapt/ySystem.h:61: warning: 'yapt::kDocument_RootTagName' defined but not useddev/inc/yapt/ySystem.h:62: warning: 'yapt::kDocument_ResourceTagName' defined but not useddev/inc/yapt/ySystem.h:63: warning: 'yapt::kDocument_RenderTagName' defined but not useddev/inc/yapt/ySystem.h:64: warning: 'yapt::kDocument_ObjectTagName' defined but not useddev/inc/yapt/ySystem.h:65: warning: 'yapt::kDocument_PropertyTagName' defined but not used5(22@50"'yapt::kDocument_RootTagName' defined but not used311547790#0#87#0(6@22"dev/inc/yapt/ySystem.h311547790#61#0#61#0#24"'*' defined but not used0(22@54"'yapt::kDocument_ResourceTagName' defined but not used311547790#87#91#0(6@22"dev/inc/yapt/ySystem.h311547790#62#0#62#0#24"'*' defined but not used0(22@52"'yapt::kDocument_RenderTagName' defined but not used311547790#178#89#0(6@22"dev/inc/yapt/ySystem.h311547790#63#0#63#0#24"'*' defined but not used0(22@52"'yapt::kDocument_ObjectTagName' defined but not used311547790#267#89#0(6@22"dev/inc/yapt/ySystem.h311547790#64#0#64#0#24"'*' defined but not used0(22@54"'yapt::kDocument_PropertyTagName' defined but not used311547790#356#91#0(6@22"dev/inc/yapt/ySystem.h311547790#65#0#65#0#24"'*' defined but not used0(0#0#58"/Users/gnilk/src/yapt2/dev/plugins/StdCurve/PluginMain.cpp8605918432#1294"    cd /Users/gnilk/src/yapt2    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.5 -gdwarf-2 -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-generated-files.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-own-target-headers.hmap -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-all-target-headers.hmap -iquote /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/StdCurve-project-headers.hmap -F/Users/gnilk/src/yapt2/dev/bld/Debug/plugins -I/Users/gnilk/src/yapt2/dev/bld/Debug/plugins/include -Idev/inc -Idev/inc/yapt -Idev/ext/noice.io/dev/inc -Idev/ext/noice.io/dev/inc/noice -Idev/ext/noice.io/dev/inc/noice/io -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/DerivedSources/i386 -I/Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/DerivedSources -c /Users/gnilk/src/yapt2/dev/plugins/StdCurve/PluginMain.cpp -o /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/PluginMain.o0#
-
-CLd /Users/gnilk/src/yapt2/dev/bld/Debug/plugins/libStdCurve.dylib normal i386
-s311547790.630568
-e311547790.648804
-r0
-xLd
-x/Users/gnilk/src/yapt2/dev/bld/Debug/plugins/libStdCurve.dylib
-xnormal
-xi386
-old: library not found for -lcommon
-ocollect2: ld returned 1 exit status
-lSLF07#2@67"Link /Users/gnilk/src/yapt2/dev/bld/Debug/plugins/libStdCurve.dylib311547790#311547790#0(130"ld: library not found for -lcommoncollect2: ld returned 1 exit statusCommand /Developer/usr/bin/g++-4.2 failed with exit code 12(13@30"Library not found for -lcommon311547790#0#35#0(6@0"311547790#0#0#0#0#0"0(4@58"Command /Developer/usr/bin/g++-4.2 failed with exit code 1311547790#18446744073709551615#0#0(1@0"0(0#0#0"8606695424#583"    cd /Users/gnilk/src/yapt2    setenv MACOSX_DEPLOYMENT_TARGET 10.5    /Developer/usr/bin/g++-4.2 -arch i386 -dynamiclib -isysroot /Developer/SDKs/MacOSX10.5.sdk -L/Users/gnilk/src/yapt2/dev/bld/Debug/plugins -F/Users/gnilk/src/yapt2/dev/bld/Debug/plugins -filelist /Users/gnilk/src/yapt2/dev/bld/yapt2.build/Debug/StdCurve.build/Objects-normal/i386/StdCurve.LinkFileList -install_name /usr/local/lib/libStdCurve.dylib -mmacosx-version-min=10.5 -lcommon -single_module -compatibility_version 1 -current_version 1 -o /Users/gnilk/src/yapt2/dev/bld/Debug/plugins/libStdCurve.dylib1#
-

@@ -50,17 +50,11 @@ IStream *BasicFileStreamDevice::CreateStream(const char *path, unsigned int flag
 	std::string fullpath = relpath;
 
 	// Make sure the full ends with a proper path eliminator
-#ifdef WIN32
-	if(*fullpath.end()!='\\')
+	char last = fullpath.at(fullpath.length() -1);
+	if(!((last=='\\')  || (last=='/')))
 	{
-		fullpath += "\\";	
+		fullpath += last;	
 	}
-#else
-	if(*fullpath.end()!='//')
-	{
-		fullpath += "//";	
-	}
-#endif
 	fullpath += std::string(path);
 	pStream = dynamic_cast<IStream *>(new BasicFileStream(fullpath.c_str()));
 	return pStream;
