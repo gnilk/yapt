@@ -274,6 +274,13 @@ void Document::AddResourceObject(IBaseInstance *parent, IBaseInstance *object)
 	resources->AddResourceInstance(pInst);
 	pDocumentController->InitializeNode(pNode);
 }
+IDocNode *Document::AddMetaObject(IBaseInstance *parent) 
+{
+	IBaseInstance *pMeta = new BaseInstance(kInstanceType_MetaNode);
+	IDocNode *pNode = AddObjectToTree(parent, pMeta, kNodeType_Meta);
+	pDocumentController->InitializeNode(pNode);
+	return pNode;
+}
 
 //
 // Removes a node and tracks all objects

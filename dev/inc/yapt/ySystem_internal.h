@@ -329,6 +329,8 @@ namespace yapt
 			virtual IDocNode *AddObject(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType);
 			virtual IDocNode *AddRenderObject(IBaseInstance *parent, IBaseInstance *object);
 			virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object);
+			virtual IDocNode *AddMetaObject(IBaseInstance *parent);
+
 			virtual void DumpRenderTree();
 
 			virtual int GetNumChildren(IPluginObjectInstance *pObject);

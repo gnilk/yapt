@@ -169,17 +169,12 @@ void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInst
 	pLogger->Debug("PostInitialize");
 	if (pCurve != NULL)
 	{
-		// TODO: Dispose the curve
-		// pHermite->DisposeAllKeys();
 		pLogger->Debug("Dispose curve - not implemented, leaking memory");
 	}
 	pCurve = Curve::CreateCurve(kCurveClass(curveType->v->int_val), channels->v->int_val);
-	//pHermite = dynamic_cast<Curve *>(new Hermite(channels->v->int_val));
 
 	IDocNode *pNode = pInstance->GetDocumentNode();
 	int nChildren = pNode->GetNumChildren(kNodeType_ObjectInstance);
-//	IDocument *pDoc = ySys->GetActiveDocument();
-//	int nChildren = pDoc->GetNumChildren(pInstance, kNodeType_ObjectInstance);
 	pLogger->Debug("Assigning keys from children (num childs = '%d')",nChildren);
 	int i;
 	pLogger->Enter();
@@ -199,10 +194,6 @@ void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInst
 		}
 	}
 	pLogger->Leave();
-	//pCurve->DumpKeys();
-	//pCurve->Save("test.kf");
-	//Curve *pCurve2 = Curve::Load("test.kf");	
-	// Reinitialize key's here when "DisposeAllKeys" supported by Hermite
 }
 
 void YaptCurveFacade::Render(double t, IPluginObjectInstance *pInstance)
@@ -264,13 +255,6 @@ void GenericCurveKey::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	bias = pInstance->CreateProperty("bias", kPropertyType_Float, "0.0", "");
 	continity = pInstance->CreateProperty("continity", kPropertyType_Float, "0.0", "");
 	RegisterValueType(ySys, pInstance);
-/*
-	t =	ySys->CreateProperty(dynamic_cast<IPluginObject *>(this), "t", kPropertyType_Float, "0.0");
-	tension = ySys->CreateProperty(dynamic_cast<IPluginObject *>(this), "tension", kPropertyType_Float, "0.0");
-	bias = ySys->CreateProperty(dynamic_cast<IPluginObject *>(this), "bias", kPropertyType_Float, "0.0");
-	continity = ySys->CreateProperty(dynamic_cast<IPluginObject *>(this), "continity", kPropertyType_Float, "0.0");
-	RegisterValueType(ySys, pInstance);
-	*/
 }
 
 void GenericCurveKey::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance)
@@ -302,27 +286,11 @@ void GenericCurveKey::Render(double t, IPluginObjectInstance *pInstance)
 {
 }
 
-// This function must be exported from the lib/dll
 static void perror()
 {
-//	kErrorClass eClass;
-//	kError eCode;
-//	char estring[256];
-//
-//	GetYaptLastError(&eClass, &eCode);
-//	GetYaptErrorTranslation(estring,256);
-//	printf("ERROR (%d:%d); %s\n",eClass,eCode,estring);
-//	exit(1);
 }
 
-//static void yFxInitializePlugin(yapt::ISystem *ySys, IPluginObjectInstance *pInstance)
-//{
-//
-//	// name=Test.MyEffect;id={FC4F32E9-8164-4c32-BB6E-079DB8CFDFD8};description=this is just a test;
-//	//	if (!ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),NULL)) perror();
-//	//	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"@MyResource");
-//}
-
+// This function must be exported from the lib/dll
 int CALLCONV yaptInitializePlugin(ISystem *ySys)
 {
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.GenericCurve");

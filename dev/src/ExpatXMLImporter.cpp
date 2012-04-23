@@ -214,17 +214,14 @@ IPluginObjectInstance *ExpatXMLParser::CreateObjectInstance(const char *name, co
 		if (pDef != NULL)
 		{
 			pInst_if = pDef->CreateInstance();
-			// pInst_if = ySys->CreateObjectInstance(pDef);
 			if (pInst_if == NULL)
 			{
 				yapt::SetYaptLastError(kErrorClass_Import, kError_NoInstance);
 				pLogger->Error("Unable to create object instance for '%s' at line %d",atts[idx+1],XML_GetCurrentLineNumber(parser));
-//				ParseError("Unable to create instance of object");
 			}
 		} else
 		{
 			yapt::SetYaptLastError(kErrorClass_Import, kError_ObjectNotFound);
-			//ParseError("Unable to find object definition");
 			pLogger->Error("Unable to find object definition for '%s' at line %d",atts[idx+1],XML_GetCurrentLineNumber(parser));
 		}
 
@@ -286,7 +283,15 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 			int idx = GetAttributeIndex("url",atts);
 			if (idx != -1)
 			{
+				// Surround the include directive with a meta referer object
+				// will not flatten structure when saving!
+				IDocNode *pNode = pDocument->AddMetaObject(instanceStack.top());
+				pInstance = pNode->GetNodeObject();
+				const char *url = atts[idx+1];
+				pInstance->AddAttribute("url",url);
+				instanceStack.push(pInstance);
 				IncludeFromURL(atts[idx+1], atts);
+				instanceStack.pop();
 			}
 
 		}

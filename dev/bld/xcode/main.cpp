@@ -338,8 +338,7 @@ void MyResource::Render(double t, IPluginObjectInstance *pInstance)
 		memset(tmp,256,0);
 		res = pImageStream->Read(tmp,255);
 	} while(!(res<255));
-	pImageStream->Close();
-	
+	pImageStream->Close();	
 }
 
 
