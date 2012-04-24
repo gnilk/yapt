@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\Attribute.cpp" />
+    <ClCompile Include="..\..\..\src\BaseInstance.cpp" />
+    <ClCompile Include="..\..\..\src\ConfigObject.cpp" />
+    <ClCompile Include="..\..\..\src\Context.cpp" />
+    <ClCompile Include="..\..\..\src\DocNode.cpp" />
+    <ClCompile Include="..\..\..\src\Document.cpp" />
+    <ClCompile Include="..\..\..\src\DocumentController.cpp" />
+    <ClCompile Include="..\..\..\src\ExpatXMLImporter.cpp" />
+    <ClCompile Include="..\..\..\src\ExportXML.cpp" />
+    <ClCompile Include="..\..\..\src\Lookup.cpp" />
+    <ClCompile Include="..\..\..\src\ObjectDefinition.cpp" />
+    <ClCompile Include="..\..\..\src\ObjectInstance.cpp" />
+    <ClCompile Include="..\..\..\src\PluginContainer.cpp" />
+    <ClCompile Include="..\..\..\src\PluginScanner_Win32.cpp" />
+    <ClCompile Include="..\..\..\src\Property.cpp" />
+    <ClCompile Include="..\..\..\src\RenderVars.cpp" />
+    <ClCompile Include="..\..\..\src\ResourceContainer.cpp" />
+    <ClCompile Include="..\..\..\src\System.cpp" />
+    <ClCompile Include="..\..\..\src\SystemHookHandler.cpp" />
+    <ClCompile Include="..\..\..\src\TopLevel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\yapt.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\inc\yapt\Document.h" />
+    <ClInclude Include="..\..\..\inc\yapt\ExpatXMLImporter.h" />
+    <ClInclude Include="..\..\..\inc\yapt\ExportXML.h" />
+    <ClInclude Include="..\..\..\inc\yapt\Object.h" />
+    <ClInclude Include="..\..\..\inc\yapt\Property.h" />
+    <ClInclude Include="..\..\..\inc\yapt\ySystem.h" />
+    <ClInclude Include="..\..\..\inc\yapt\ySystem_internal.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1C07E4C9-7B53-4E85-B7AD-B72CE39A8AE6}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>yapt</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)../../../ext;$(ProjectDir)../../../ext/noice.io/dev/inc;$(ProjectDir)../../../inc;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)../../../ext;$(ProjectDir)../../../ext/noice.io/dev/inc;$(ProjectDir)../../../inc;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

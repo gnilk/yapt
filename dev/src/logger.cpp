@@ -222,7 +222,8 @@ char *Logger::TimeString(int maxchar, char *dst)
 			break;
 		case kTFLog4Net :
 			{
-				struct tm *gmt = gmtime(&tmv.tv_sec);
+        time_t tv_sec = (time_t)tmv.tv_sec;
+				struct tm *gmt = gmtime(&tv_sec);
 				snprintf(dst,maxchar,"%.2d.%.2d.%.4d %.2d:%.2d:%.2d.%.3d",
 						 gmt->tm_mday,gmt->tm_mon,gmt->tm_year+1900, 
 						 gmt->tm_hour,gmt->tm_min,gmt->tm_sec,tmv.tv_usec/1000);

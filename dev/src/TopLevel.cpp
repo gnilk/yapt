@@ -40,16 +40,16 @@ static kError glb_ErrCode = kError_NoError;
 // assigns logger and the logger does a push back on the Stl list
 static SystemHookHandler *hookHandler = NULL;	
 
-extern "C" 
-{
-	int CALLCONV InitializeConfigPlugin(ISystem *ySys);
-}
-
 // internal top level - not exposed through ySystem.h
 SystemHookHandler *yapt::GetHooks()
 {
 	return hookHandler;
 }
+
+extern "C" 
+{
+int CALLCONV InitializeConfigPlugin(ISystem *ySys);
+
 // top level function
 ISystem * CALLCONV yapt::GetYaptSystemInstance()
 {
@@ -197,4 +197,5 @@ char * CALLCONV yapt::GetYaptErrorTranslation(char *dst, int maxlen)
 
 	snprintf(dst, maxlen, "%s:%s",tmpclass,tmpcode);
 	return dst;
+}
 }

@@ -35,6 +35,8 @@ static const char *lExtensions[]=
 	NULL
 };
 
+#define kDLL_Export ("yaptInitializePlugin")
+
 // returns the extension of a file name
 std::string PluginScanner_Win32::GetExtension(std::string &pathName)
 {
@@ -43,7 +45,7 @@ std::string PluginScanner_Win32::GetExtension(std::string &pathName)
 	int l = (int)(pathName.length())-1;
 	while ((l>0) && (pathName[l]!='.'))
 	{
-		ext.insert(0,pathName[l]);
+    ext.insert(ext.begin(),pathName[l]);
 		l--;
 	}
 	if ((l > 0) && (pathName[l]=='.'))
@@ -78,7 +80,7 @@ void PluginScanner_Win32::TryLoadLibrary(std::string &pathName)
 		if (hLib != INVALID_HANDLE_VALUE)
 		{
 			PFNINITIALIZEPLUGIN pFunc;
-			pFunc = (PFNINITIALIZEPLUGIN)GetProcAddress(hLib,"yaptInitializePlugin");
+			pFunc = (PFNINITIALIZEPLUGIN)GetProcAddress(hLib,kDLL_Export);
 			if (pFunc != NULL)
 			{
 				IBaseInstance *pPlugin;
@@ -86,11 +88,9 @@ void PluginScanner_Win32::TryLoadLibrary(std::string &pathName)
 				pPlugin = ySys->RegisterAndInitializePlugin(pFunc,pathName.c_str());
 				pPlugin->AddAttribute("fullpath",pathName.c_str());
 				// TODO: Dig out some version stuff and author from DLL resource section
-			
-				
 			} else
 			{
-				pLogger->Warning("Library '%s' failed, skipping...",pathName.c_str());
+				pLogger->Warning("Library '%s' failed, unable to find exported function '%s'",pathName.c_str(),kDLL_Export);
 			}
 		} else
 		{
