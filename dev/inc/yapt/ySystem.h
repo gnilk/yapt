@@ -58,12 +58,12 @@ namespace yapt
 	// document tags
 //	#define kDocument_RootName ("yapt2")
 //#define kDocu
-	static const char *kDocument_RootTagName = "yapt2";
-	static const char *kDocument_ResourceTagName = "resources";
-	static const char *kDocument_RenderTagName = "render";
-	static const char *kDocument_ObjectTagName = "object";
-	static const char *kDocument_PropertyTagName = "property";
-	static const char *kDocument_IncludeTagName = "include";
+	#define kDocument_RootTagName ("yapt2")
+	#define kDocument_ResourceTagName ("resources")
+	#define kDocument_RenderTagName ("render")
+	#define kDocument_ObjectTagName ("object")
+	#define kDocument_PropertyTagName ("property")
+	#define kDocument_IncludeTagName ("include")
 
 
 	// defines the module/logical unit of where the error occured

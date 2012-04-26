@@ -234,7 +234,7 @@ void PropertyInstance::SetValue(const char *sValue)
 			property->v->float_val = (float)atof(sValue);
 			break;
 		case kPropertyType_FloatTuple :
-			sscanf(sValue, "%d,%d",
+			sscanf(sValue, "%f,%f",
 				&property->v->float_tuple[0],
 				&property->v->float_tuple[1]);
 			break;

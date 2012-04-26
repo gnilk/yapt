@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A27071041549EA6400A06F6A /* MetaInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A27071031549EA6400A06F6A /* MetaInstance.cpp */; };
 		A29AC7C311B3E1150012A062 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A711B3E1150012A062 /* Attribute.cpp */; };
 		A29AC7C411B3E1150012A062 /* BaseInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A811B3E1150012A062 /* BaseInstance.cpp */; };
 		A29AC7C511B3E1150012A062 /* ConfigObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A911B3E1150012A062 /* ConfigObject.cpp */; };
@@ -116,6 +117,7 @@
 /* Begin PBXFileReference section */
 		A267453B106947CD00D76D89 /* libFxPluginSample.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libFxPluginSample.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26745451069486A00D76D89 /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
+		A27071031549EA6400A06F6A /* MetaInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaInstance.cpp; path = dev/src/MetaInstance.cpp; sourceTree = "<group>"; };
 		A29AC7A411B3E0EA0012A062 /* libyapt2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libyapt2.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A29AC7A711B3E1150012A062 /* Attribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Attribute.cpp; path = dev/src/Attribute.cpp; sourceTree = "<group>"; };
 		A29AC7A811B3E1150012A062 /* BaseInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseInstance.cpp; path = dev/src/BaseInstance.cpp; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				A29AC7AF11B3E1150012A062 /* ExpatXMLImporter.cpp */,
 				A29AC7B011B3E1150012A062 /* ExportXML.cpp */,
 				A29AC7B211B3E1150012A062 /* Lookup.cpp */,
+				A27071031549EA6400A06F6A /* MetaInstance.cpp */,
 				A29AC7B611B3E1150012A062 /* ObjectDefinition.cpp */,
 				A29AC7B711B3E1150012A062 /* ObjectInstance.cpp */,
 				A29AC7B911B3E1150012A062 /* PluginContainer.cpp */,
@@ -596,6 +599,7 @@
 				A29AC7DB11B3E1150012A062 /* System.cpp in Sources */,
 				A29AC7DC11B3E1150012A062 /* SystemHookHandler.cpp in Sources */,
 				A29AC7DE11B3E1150012A062 /* TopLevel.cpp in Sources */,
+				A27071041549EA6400A06F6A /* MetaInstance.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -65,15 +65,15 @@ using namespace yapt;
 using namespace noice::io;
 
 
-static char *lRootTags[]={"yapt2",NULL};
+static const char *lRootTags[]={kDocument_RootTagName,NULL};
 static kParserState lRootChange[]={kParserState_Doc};
-static char *lDocTags[]={"resources","render","include",NULL};
+static const char *lDocTags[]={kDocument_ResourceTagName,kDocument_RenderTagName,kDocument_IncludeTagName,NULL};
 static kParserState lDocChange[]={kParserState_Resources, kParserState_Render, kParserState_Include};
-static char *lResourceTags[]={"object",NULL};
+static const char *lResourceTags[]={kDocument_ObjectTagName,NULL};
 static kParserState lResourceChange[]={kParserState_Object};
-static char *lRenderTags[]={"object",NULL};
+static const char *lRenderTags[]={kDocument_ObjectTagName,NULL};
 static kParserState lRenderChange[]={kParserState_Object};
-static char *lObjectTags[]={"object","property",NULL};
+static const char *lObjectTags[]={kDocument_ObjectTagName,kDocument_PropertyTagName,NULL};
 static kParserState lObjectChange[]={kParserState_Object, kParserState_Property};
 
 // TODO: REMOVE
@@ -95,10 +95,7 @@ ExpatXMLParser::~ExpatXMLParser()
 
 void ExpatXMLParser::ParseError(const char *errString)
 {
-	fprintf(stderr,
-		"%s at line %l\n",
-		XML_ErrorString(XML_GetErrorCode(parser)),
-		XML_GetCurrentLineNumber(parser));
+	fprintf(stderr,"%s at line %l\n",XML_ErrorString(XML_GetErrorCode(parser)),XML_GetCurrentLineNumber(parser));
 	pLogger->Error("%s  (%s at line %d)",
 		errString,
 		XML_ErrorString(XML_GetErrorCode(parser)),
@@ -106,7 +103,7 @@ void ExpatXMLParser::ParseError(const char *errString)
 }
 
 // helper
-static int IsInList(const char *name, char **list)
+static int IsInList(const char *name, const char **list)
 {
 	int i=0;
 	while(list[i]!=NULL)
@@ -290,14 +287,14 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		pInstance = dynamic_cast<IBaseInstance *>(pDocument);
 		break;
 	case kParserState_Doc :
-		if (!strcmp(name, "resources")) 
+		if (!strcmp(name, kDocument_ResourceTagName)) 
 		{
 			// we always have one.. replace when supporting multiple
 			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetResourceContainer());
-		} else if (!strcmp(name, "render"))
+		} else if (!strcmp(name, kDocument_RenderTagName))
 		{
       pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetRenderRoot());   
-		} else if (!strcmp(name,"include"))
+		} else if (!strcmp(name,kDocument_IncludeTagName))
 		{
 			int idx = GetAttributeIndex("url",atts);
 			if (idx != -1)
@@ -321,25 +318,25 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		// no action in this state - empty
 		break;
 	case kParserState_Resources :
-		if (!strcmp(name, "object"))
+		if (!strcmp(name, kDocument_ObjectTagName))
 		{
 			pInstance = dynamic_cast<IBaseInstance *>(CreateObjectInstance(name,atts));
 			action = kElementAction_AddAsResource;
 		}
 		break;
 	case kParserState_Render:
-		if (!strcmp(name, "object"))
+		if (!strcmp(name, kDocument_ObjectTagName))
 		{
 			pInstance = dynamic_cast<IBaseInstance *>(CreateObjectInstance(name,atts));
 			action = kElementAction_AddAsRender;
 		}
 		break;
 	case kParserState_Object:	// can be resource - must know
-		if (!strcmp(name, "object"))
+		if (!strcmp(name, kDocument_ObjectTagName))
 		{
 			pInstance = dynamic_cast<IBaseInstance *>(CreateObjectInstance(name,atts));
 			action = kElementAction_AddAsRender;
-		} else if (!strcmp(name, "property"))
+		} else if (!strcmp(name, kDocument_PropertyTagName))
 		{	
 			pInstance = instanceStack.top();
 			IPluginObjectInstance *pObjectInstance = dynamic_cast<IPluginObjectInstance *>(pInstance);
