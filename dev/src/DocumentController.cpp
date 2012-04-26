@@ -91,7 +91,6 @@ void DocumentController::InitializeNode(IDocNode *node)
 			{
 				// TODO: Reroute call through instance in order to track states
 				PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
-				//pInst->GetExtObject()->Initialize(ySys);
 				pInst->ExtInitialize();
 			}
 				break;
@@ -106,6 +105,9 @@ void DocumentController::InitializeNode(IDocNode *node)
 void DocumentController::PostInitializeNode(IDocNode *node)
 {
 	int i,nChildren;
+
+  InitializeNode(node);
+
 	nChildren = node->GetNumChildren();
 	for(i=0;i<nChildren;i++)
 	{

@@ -23,12 +23,14 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 <pre>
 - Solve dependency on BasicFileStream
 - Put in a DLL
-- Move Node initialization logic out of here
+! Move Node initialization logic out of here (node initialization is now a document post process step)
 </pre>
 
 
 \History
 - 17.10.09, FKling, Implementation
+- 26.04.12, FKling, Rewrote include handling, now uses lazy evaluation and ability to declare unbound properties on load
+                    Enables the document to keep track of include when saving!
 
 ---------------------------------------------------------------------------*/
 #include <iostream>
@@ -85,6 +87,7 @@ ExpatXMLParser::ExpatXMLParser(ISystem *pSys)
 	bCaptureCData = false;
 	pCdataProperty = NULL;
 	pDocument = NULL;
+  pRoot = NULL;
 }
 ExpatXMLParser::~ExpatXMLParser()
 {
@@ -174,9 +177,12 @@ void ExpatXMLParser::IncludeFromURL(const char *url, const char **atts)
 	noice::io::IStream *pStream = system->CreateStream(url, 0);
 	if (pStream != NULL)
 	{
+    pStream->Open(kStreamOp_ReadOnly);
 		ExpatXMLParser *xml = new ExpatXMLParser(system);
-		// Idea on how to support name prefixing during node creation
-
+    IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(instanceStack.top());
+    pMeta->GetDocument();
+    xml->SetRoot(pMeta);
+    // Idea on how to support name prefixing during node creation
 		char prefixCurrent[128];
 		int newPrefixIdx = GetAttributeIndex("prefix",atts);
 		if(newPrefixIdx > 0)
@@ -199,6 +205,20 @@ void ExpatXMLParser::IncludeFromURL(const char *url, const char **atts)
 			pContext->SetNamePrefix(prefixCurrent);
 		}
 		//pContext->SetNameCreationPrefix(tmp);
+
+    //TODO: Post process meta node here
+    // - resource container objects should be placed linked from the main resource container
+    // - render container objects should be linked from the main render container
+//    IDocument *pMetaDoc = pMeta->GetDocument();
+//    yapt::IBaseInstance *pInst = pMetaDoc->GetRenderRoot();
+//    yapt::IDocNode *pNode = pMetaDoc->GetRenderTree();
+////    pNode->GetParent()->AddChild(pNode);
+//    int nChild = pNode->GetNumChildren();
+//    for(int i=0;i<nChild;i++) {
+//      pDocument->GetRenderTree()->AddChild(pNode->GetChildAt(i));
+//    }
+
+    
 	
 		delete xml;	// ?
 	}	
@@ -274,10 +294,9 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		{
 			// we always have one.. replace when supporting multiple
 			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetResourceContainer());
-
 		} else if (!strcmp(name, "render"))
 		{
-			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetRenderRoot());
+      pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetRenderRoot());   
 		} else if (!strcmp(name,"include"))
 		{
 			int idx = GetAttributeIndex("url",atts);
@@ -285,8 +304,10 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 			{
 				// Surround the include directive with a meta referer object
 				// will not flatten structure when saving!
+
 				IDocNode *pNode = pDocument->AddMetaObject(instanceStack.top());
 				pInstance = pNode->GetNodeObject();
+
 				const char *url = atts[idx+1];
 				pInstance->AddAttribute("url",url);
 				instanceStack.push(pInstance);
@@ -330,10 +351,13 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 				Property *prop = pObjectInstance->GetProperty(atts[idx+1]);
 				if (prop == NULL)
 				{
-					// No such property found.. 
-					// Create one?
-					pLogger->Error("No such property '%s'",atts[idx+1]);
-					yapt::SetYaptLastError(kErrorClass_Import, kError_MissingIdentifier);
+          prop = pObjectInstance->CreateProperty(atts[idx+1],kPropertyType_Unbound,NULL,"");
+          if (prop == NULL) {
+					  // No such property found.. 
+					  // Create one?
+					  pLogger->Error("No such property '%s'",atts[idx+1]);
+					  yapt::SetYaptLastError(kErrorClass_Import, kError_MissingIdentifier);
+          }
 				}
 
 				pInstance = dynamic_cast<IBaseInstance *>(pObjectInstance->GetPropertyInstance(atts[idx+1]));
@@ -366,7 +390,10 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 			pInstance->AddAttribute(atts[i],atts[i+1]);
 			i+=2;
 		}
+
 	} 
+
+ 
 	//
 	// Add object at the end of element parsing, after all attributes has been asssigned
 	//
@@ -496,7 +523,11 @@ bool ExpatXMLParser::ImportFromStream(noice::io::IStream *pStream, bool bCreateN
 //	return false;	
 	if (!bCreateNewDocument)
 	{
-		pDocument = ySys->GetActiveDocument();
+    if (pRoot != NULL) {
+      pDocument = pRoot->GetDocument();
+    } else  {
+		  pDocument = ySys->GetActiveDocument();
+    }
 		if (pDocument == NULL) 
 		{
 			pLogger->Error("No active document, cant import to nothing!");

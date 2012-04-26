@@ -359,11 +359,21 @@ void PluginObjectInstance::OnAttributeChanged(Attribute *pAttribute)
 Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription, bool bOutput)
 {
 	Property *result = NULL;
+  PropertyInstance *prop = NULL;
+  result = GetProperty(sName);
+  if (bOutput == false) {
+    if ((result != NULL) && (result->type == kPropertyType_Unbound)) {
+      prop = dynamic_cast<PropertyInstance *>(GetPropertyInstance(sName));
+      result->type = type;
+      prop->SetDescription(sDescription);
+    }   
+  }
+  if (prop == NULL) {
+	  // Create the instance object
+	  prop = new PropertyInstance(sName, type, sDescription);
+  }
 
-	// Create the instance object
-	PropertyInstance *prop = new PropertyInstance(sName, type, sDescription);
 	prop->SetValue(sInitialValue);
-
 	AddPropertyInstance(prop, bOutput);
 
 	// Create and add node in document

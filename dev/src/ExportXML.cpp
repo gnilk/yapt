@@ -105,7 +105,7 @@ void ExportXML::WritePropertyData(IBaseInstance *pBase)
 	}
 }
 
-void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine)
+void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, bool bCloseTag)
 {
 	char tmp[256];
 	tagStack.push(std::string(tagName));
@@ -123,8 +123,13 @@ void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine)
 			pStream->Write(tmp,(int)strlen(tmp));
 		}
 	}
-	snprintf(tmp,256,">");
-	pStream->Write(tmp,(int)strlen(tmp));
+  if (!bCloseTag) {
+  	snprintf(tmp,256,">");
+	  pStream->Write(tmp,(int)strlen(tmp));
+  } else {
+  	snprintf(tmp,256,"/>");
+	  pStream->Write(tmp,(int)strlen(tmp));
+  }
 	if (bNewLine)
 	{
 		snprintf(tmp,256,"\n");
@@ -154,6 +159,16 @@ void ExportXML::End()
 	pStream->Write(tmp,(int)strlen(tmp));
 }
 
+void ExportXML::ExportMetaNode(IBaseInstance *pNode)
+{
+  IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(pNode);
+  const char *szUrl = pNode->GetAttributeValue("url");
+  if (szUrl != NULL) {
+    GetYaptSystemInstance()->SaveDocumentAs(szUrl,pMeta->GetDocument());
+  }
+}
+
+
 bool ExportXML::WriteNode(IDocNode *pNode)
 {
 	bool bSkipEndTag = false;
@@ -163,27 +178,32 @@ bool ExportXML::WriteNode(IDocNode *pNode)
 		switch(pBase->GetInstanceType())
 		{
 		case kInstanceType_Document :
-			Begin(kDocument_RootTagName, pBase,true);
+			Begin(kDocument_RootTagName, pBase,true,false);
 			break;
 		case kInstanceType_ResourceContainer:
 			if (pNode->GetNumChildren())
 			{
-				Begin(kDocument_ResourceTagName, pBase,true);
+				Begin(kDocument_ResourceTagName, pBase,true,false);
 			} else
 			{
 				bSkipEndTag = true;
 			}
 			break;
 		case kInstanceType_RenderNode:
-			Begin(kDocument_RenderTagName, pBase,true);
+			Begin(kDocument_RenderTagName, pBase,true,false);
 			break;
 		case kInstanceType_Object:
-			Begin(kDocument_ObjectTagName, pBase,true);
+			Begin(kDocument_ObjectTagName, pBase,true,false);
 			break;
 		case kInstanceType_Property:
-			Begin(kDocument_PropertyTagName,pBase,false);
+			Begin(kDocument_PropertyTagName,pBase,false,false);
 			WritePropertyData(pBase);
 			break;
+    case kInstanceType_MetaNode :
+      ExportMetaNode(pBase);
+      Begin(kDocument_IncludeTagName, pBase, true, true);
+      bSkipEndTag = true;
+      break;
 		default:
 			pLogger->Error("Unknown instance type: %d, can't export node");
 			bSkipEndTag = true;

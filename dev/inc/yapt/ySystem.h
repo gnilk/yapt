@@ -63,6 +63,7 @@ namespace yapt
 	static const char *kDocument_RenderTagName = "render";
 	static const char *kDocument_ObjectTagName = "object";
 	static const char *kDocument_PropertyTagName = "property";
+	static const char *kDocument_IncludeTagName = "include";
 
 
 	// defines the module/logical unit of where the error occured
@@ -122,6 +123,7 @@ namespace yapt
 		kPropertyType_UserPtr,
 	//	kPropertyType_Resource,
 		kPropertyType_Enum,
+    kPropertyType_Unbound,  // property created first through XML but not yet attached by plugin (after initialization all object properties which are unbound are declared wrong)
 	} kPropertyType;
 
 	typedef enum
@@ -315,9 +317,13 @@ namespace yapt
 		virtual IContext *GetContext() = 0;
 	};
 
-
-	struct IDocument;
-	struct IDocNode
+  struct IMetaInstance
+  {
+  public:
+    virtual IDocument *GetDocument() = 0;
+  };
+   
+  struct IDocNode
 	{
 	public:
 		virtual bool Dispose() = 0;	// deletes the node

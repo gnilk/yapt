@@ -146,6 +146,20 @@ namespace yapt
 		virtual void OnAttributeChanged(Attribute *pAttribute);
 	};
 
+  class MetaInstance : 
+    public IMetaInstance,
+    public BaseInstance
+    
+  {
+  protected:
+    IDocument *pDocument;
+  public:
+    MetaInstance(IDocument *pOwner);
+    virtual ~MetaInstance();
+
+    virtual IDocument *GetDocument();
+  };
+
 	typedef std::pair<IPluginObject *, IDocNode *> PluginNodePair;
 	typedef std::map<IPluginObject *, IDocNode *> PluginNodeMap;
 	//struct INodeMapper
@@ -293,13 +307,15 @@ namespace yapt
 			// void UpdateRenderVars(double sample_time);
 
 			virtual bool RemoveNodeTraceObjects(IDocNode *pNode, std::vector<IBaseInstance *> &nodeObjects);
-			
+
+      void Initialize();	
 		public:
+			Document();
 			Document(IContext *pContext);
 			virtual ~Document();
 			
 			void SetDocumentController(IDocumentController *pDocumentController);
-			
+			IDocumentController *GetDocumentController();
 
 		public:	// IDocument interface
 			virtual void Write(noice::io::IStream *stream);
@@ -426,10 +442,12 @@ namespace yapt
 		Property *GetProperty();
 		void SetProperty(Property *property);
 		
-		const char *GetName();
+    const char *GetName();
 		const char *GetDescription();
+    
+		void SetDescription(const char *strDesc);
 		
-		bool IsSourced();
+    bool IsSourced();
 		int IncSourceRef();
 		int DecSourceRef();
 		void SetSource(PropertyInstance *pSource);

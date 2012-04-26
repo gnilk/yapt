@@ -23,11 +23,12 @@ namespace yapt
 		void PopIndent();
 		void CreateIndentString();
 
-		void Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine);
+		void Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, bool bCloseTag);
 		void End();
 		void WritePropertyData(IBaseInstance *pBase);
 		bool ExportDocument();
 		bool WriteNode(IDocNode *pNode);
+    void ExportMetaNode(IBaseInstance *pNode);
 	public:
 		ExportXML(IDocument *pDocument);
 		virtual ~ExportXML();

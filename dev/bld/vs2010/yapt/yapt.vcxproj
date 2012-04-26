@@ -21,6 +21,7 @@
     <ClCompile Include="..\..\..\src\ExpatXMLImporter.cpp" />
     <ClCompile Include="..\..\..\src\ExportXML.cpp" />
     <ClCompile Include="..\..\..\src\Lookup.cpp" />
+    <ClCompile Include="..\..\..\src\MetaInstance.cpp" />
     <ClCompile Include="..\..\..\src\ObjectDefinition.cpp" />
     <ClCompile Include="..\..\..\src\ObjectInstance.cpp" />
     <ClCompile Include="..\..\..\src\PluginContainer.cpp" />

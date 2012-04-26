@@ -415,7 +415,7 @@ int main (int argc, char * const argv[])
 	//pLogger->Debug("Initializing IO Library");
 
 	pLogger->Debug("Testing Expat XML Parser");
-	TestExpat(system, "file://curve_test.xml");
+	TestExpat(system, "file://include_test.xml");
 
 	if (system->GetActiveDocument())
 	{

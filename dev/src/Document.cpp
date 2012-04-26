@@ -21,6 +21,7 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 - 25.09.09, FKling, Removed recursiveness during Initialize - PostInitialize is bottom-up
 - 08.10.09, FKling, Refactored all (almost) execution logic to "DocumentController" 
 - 08.10.09, FKling, Moved DocNode to own file.
+- 26.04.12, FKling, Rewrote include handling, now uses lazy evaluation and ability to declare unbound properties on load
 ---------------------------------------------------------------------------*/
 #include <assert.h>
 #include <string>
@@ -41,25 +42,19 @@ using namespace yapt;
 
 
 #define DOC_ROOT ("Document.DocumentRoot")
+Document::Document() :
+	BaseInstance(kInstanceType_Document)
+{
+  Initialize();
+}
+
 
 Document::Document(IContext *pContext) :
 	BaseInstance(kInstanceType_Document)
 {
-	pLogger = Logger::GetLogger("Document");
+  Initialize();
 
 	SetContext(pContext);	// set the context in the base class 
-
-	this->pDocumentController = NULL;
-	std::string fqName; 
-
-	// Set up root node, the document is always the root node of the tree
-	root = dynamic_cast<IDocNode *>(new DocNode(dynamic_cast<IDocument *>(this)));
-	root->SetNodeObject(dynamic_cast<IBaseInstance *>(this), kNodeType_Document);
-	AddAttribute("name","doc");
-	fqName = BuildQualifiedName(root);
-	SetFullyQualifiedName(fqName.c_str());
-	treemap.insert(BaseNodePair(dynamic_cast<IBaseInstance *>(this),root));
-
 	// setup default objects
 	// currently we setup a resource container and a render node
 	// TODO: Remove resource container when supported from the outside
@@ -72,19 +67,37 @@ Document::Document(IContext *pContext) :
 	pDummy->SetContext(pContext);
 	pDummy->AddAttribute("name","render");
 	renderRoot = AddObjectToTree(dynamic_cast<IBaseInstance *>(this), pDummy, kNodeType_RenderNode);
-
-
-//	renderVars = new RenderVars();
-
 }
 Document::~Document()
 {
 	
 }
+void Document::Initialize() 
+{
+  pLogger = Logger::GetLogger("Document");
+  pContext = NULL;
 
+	this->pDocumentController = NULL;
+	std::string fqName; 
+
+	// Set up root node, the document is always the root node of the tree
+	root = dynamic_cast<IDocNode *>(new DocNode(dynamic_cast<IDocument *>(this)));
+	root->SetNodeObject(dynamic_cast<IBaseInstance *>(this), kNodeType_Document);
+	AddAttribute("name","doc");
+	fqName = BuildQualifiedName(root);
+	SetFullyQualifiedName(fqName.c_str());
+	treemap.insert(BaseNodePair(dynamic_cast<IBaseInstance *>(this),root));
+
+  resources = NULL;
+  renderRoot = NULL;
+}
 void Document::SetDocumentController(IDocumentController *pDocumentController)
 {
 	this->pDocumentController = pDocumentController;
+}
+IDocumentController *Document::GetDocumentController()
+{
+  return pDocumentController;
 }
 
 void Document::Write(noice::io::IStream *stream)
@@ -220,29 +233,33 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 		BaseInstance *pBase = dynamic_cast<BaseInstance *>(object);
 		std::string qName = BuildQualifiedName(pNode);
 
-		// object with this name already registered?
-		// append a number to the name until it gets unique
-		if (Lookup::GetBaseFromString(qName) != NULL)
-		{
-			int extCount = 1;
-			// Can't reuse the const char * return value since if we update the
-			// attribute in the while loop it will be deallocated
-			std::string baseName(pBase->GetAttributeValue("name"));
+    // Don't assign funky names to implicit nodes (doc, resources and render)
+    if ((nodeType != kNodeType_Document) && (nodeType != kNodeType_ResourceContainer) && (nodeType != kNodeType_RenderNode)) {
 
-			// will update the name with a numbered version
-			while (Lookup::GetBaseFromString(qName) != NULL)
-			{				
-				char tmp[32];
+		  // object with this name already registered?
+		  // append a number to the name until it gets unique
+		  if (Lookup::GetBaseFromString(qName) != NULL)
+		  {
+			  int extCount = 1;
+			  // Can't reuse the const char * return value since if we update the
+			  // attribute in the while loop it will be deallocated
+			  std::string baseName(pBase->GetAttributeValue("name"));
 
-				std::string curName(baseName);
-				snprintf(tmp, 32, "%d", extCount);
-				curName.append(tmp);		// itoa not supported..
-				pBase->AddAttribute("name",curName.c_str());
-				qName = BuildQualifiedName(pNode);
+			  // will update the name with a numbered version
+			  while (Lookup::GetBaseFromString(qName) != NULL)
+			  {				
+				  char tmp[32];
 
-				extCount++;
-			}
-		}
+				  std::string curName(baseName);
+				  snprintf(tmp, 32, "%d", extCount);
+				  curName.append(tmp);		// itoa not supported..
+				  pBase->AddAttribute("name",curName.c_str());
+				  qName = BuildQualifiedName(pNode);
+
+				  extCount++;
+			  }
+		  }
+    }
 
 		pBase->SetFullyQualifiedName(qName.c_str());
 
@@ -256,14 +273,18 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 IDocNode *Document::AddObject(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType)
 {
 	IDocNode *pNode = AddObjectToTree(parent,object, nodeType);
-	pDocumentController->InitializeNode(pNode);
+  //if(pDocumentController) {
+	 // pDocumentController->InitializeNode(pNode);
+  //}
 	return pNode;
 }
 
 IDocNode *Document::AddRenderObject(IBaseInstance *parent, IBaseInstance *object)
 {
 	IDocNode *pNode = AddObjectToTree(parent,object,kNodeType_ObjectInstance);
-	pDocumentController->InitializeNode(pNode);
+  //if(pDocumentController) {
+	 // pDocumentController->InitializeNode(pNode);
+  //}
 	return pNode;
 }
 
@@ -272,13 +293,18 @@ void Document::AddResourceObject(IBaseInstance *parent, IBaseInstance *object)
 	IDocNode *pNode = AddObjectToTree(parent,object,kNodeType_ObjectInstance);
 	IPluginObjectInstance *pInst = dynamic_cast<IPluginObjectInstance *>(object);
 	resources->AddResourceInstance(pInst);
-	pDocumentController->InitializeNode(pNode);
+  //if(pDocumentController) {
+	 // pDocumentController->InitializeNode(pNode);
+  //}
 }
+
 IDocNode *Document::AddMetaObject(IBaseInstance *parent) 
 {
-	IBaseInstance *pMeta = new BaseInstance(kInstanceType_MetaNode);
+	IBaseInstance *pMeta = new MetaInstance(this);
 	IDocNode *pNode = AddObjectToTree(parent, pMeta, kNodeType_Meta);
-	pDocumentController->InitializeNode(pNode);
+  //if(pDocumentController) {
+	 // pDocumentController->InitializeNode(pNode);
+  //}
 	return pNode;
 }
 
@@ -360,6 +386,11 @@ void Document::DumpNode(IDocNode *pNode)
 		pLogger->Debug("Inst: %p,%d,%s",pInstance,pInstance->GetInstanceType(),pInstance->GetFullyQualifiedName());
 		pLogger->Enter();
 		//pInstance->Dump();
+    if (pInstance->GetInstanceType() == kInstanceType_MetaNode) {
+      pLogger->Debug("**: META :**");
+      IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(pInstance);
+      pMeta->GetDocument()->DumpRenderTree();
+    }
 		pLogger->Leave();
 	}
 	int n,i;

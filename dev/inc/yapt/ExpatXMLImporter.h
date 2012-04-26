@@ -37,6 +37,7 @@ namespace yapt
 		std::string cdata;
 		Property *pCdataProperty;
 		IDocument *pDocument;
+    IMetaInstance *pRoot;
 		ILogger *pLogger;
 		std::stack<kParserState> stateStack;
 		std::stack<IBaseInstance *> instanceStack;
@@ -55,6 +56,7 @@ namespace yapt
 		bool ImportFromStream(noice::io::IStream *pStream, bool bCreateNewDocument);
 		bool ImportFile(const char *filename, bool bCreateNewDocument);
 		IDocument *GetDocument();
+    void SetRoot(IMetaInstance *_pRoot) { this->pRoot = _pRoot; }
 
 		// - 
 		void doStartElement(const char *name, const char **atts);

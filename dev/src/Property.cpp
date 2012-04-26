@@ -210,6 +210,13 @@ const char *PropertyInstance::GetDescription()
 {
 	return sDescription;
 }
+void PropertyInstance::SetDescription(const char *strDesc)
+{
+  if (sDescription==NULL) free(sDescription);
+  this->sDescription = strdup(sDescription);
+}
+
+
 void PropertyInstance::SetObjectInstance(PluginObjectInstance *owner)
 {
 	this->objectInstance = owner;
