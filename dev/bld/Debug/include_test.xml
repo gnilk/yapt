@@ -1,0 +1,5 @@
+<yapt2>
+    <render>
+	</render>
+    <include url="file://file_to_inc.xml" />
+</yapt2>
