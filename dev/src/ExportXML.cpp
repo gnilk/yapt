@@ -84,6 +84,7 @@ void ExportXML::PopIndent()
 void ExportXML::CreateIndentString()
 {
 	char tmp[256];
+  tmp[0]='\0';
 	for(int i=0;i<iIndent;i++)
 	{
 		tmp[i]=' ';
@@ -108,8 +109,12 @@ void ExportXML::WritePropertyData(IBaseInstance *pBase)
 void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, bool bCloseTag)
 {
 	char tmp[256];
-	tagStack.push(std::string(tagName));
-	tagNewLineStack.push(bNewLine);
+  // If we should close the tag we don't need this
+  if (!bCloseTag) {
+	  tagStack.push(std::string(tagName));
+	  tagNewLineStack.push(bNewLine);
+  }
+
 	snprintf(tmp,256,"%s<%s",sIndent.c_str(), tagName);
 	pStream->Write(tmp,(int)strlen(tmp));
 	if (pBase->GetNumAttributes() > 0)
@@ -135,7 +140,9 @@ void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, 
 		snprintf(tmp,256,"\n");
 		pStream->Write(tmp,(int)strlen(tmp));
 	}
-	PushIndent();
+  if (!bCloseTag) {
+	  PushIndent();
+  }
 }
 
 void ExportXML::End()
