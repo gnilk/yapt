@@ -206,11 +206,11 @@ bool ExportXML::WriteNode(IDocNode *pNode)
 			Begin(kDocument_PropertyTagName,pBase,false,false);
 			WritePropertyData(pBase);
 			break;
-    case kInstanceType_MetaNode :
-      ExportMetaNode(pBase);
-      Begin(kDocument_IncludeTagName, pBase, true, true);
-      bSkipEndTag = true;
-      break;
+		case kInstanceType_MetaNode :
+			ExportMetaNode(pBase);
+			Begin(kDocument_IncludeTagName, pBase, true, true);
+			bSkipEndTag = true;
+			break;
 		default:
 			pLogger->Error("Unknown instance type: %d, can't export node");
 			bSkipEndTag = true;

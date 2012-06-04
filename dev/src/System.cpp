@@ -168,23 +168,26 @@ IDocument *System::LoadNewDocument(const char *url)
 	noice::io::IStream *pStream = CreateStream(url, 0);
 	if (pStream != NULL)
 	{
-		pStream->Open(kStreamOp_ReadOnly);
-		pDoc = CreateNewDocument(true);	// create a new document
-		pLogger->Debug("Loading XML from: %s",url);
-		ExpatXMLParser *xml = new ExpatXMLParser(dynamic_cast<ISystem *>(this));
-		if (xml->ImportFromStream(pStream, false))
-		{
-			pLogger->Debug("Document loaded ok");
-			GetActiveDocument()->DumpRenderTree();
-		} else
-		{
-			char eString[256];
-			yapt::GetYaptErrorTranslation(eString, 256);
-			pLogger->Error("%s",eString);
-			SetActiveDocument(NULL);
-			delete pDoc;
-			pDoc = NULL;
-
+		if (pStream->Open(kStreamOp_ReadOnly)) {
+			pDoc = CreateNewDocument(true);	// create a new document
+			pLogger->Debug("Loading XML from: %s",url);
+			ExpatXMLParser *xml = new ExpatXMLParser(dynamic_cast<ISystem *>(this));
+			if (xml->ImportFromStream(pStream, false))
+			{
+				pLogger->Debug("Document loaded ok");
+				GetActiveDocument()->DumpRenderTree();
+			} else
+			{
+				char eString[256];
+				yapt::GetYaptErrorTranslation(eString, 256);
+				pLogger->Error("%s",eString);
+				SetActiveDocument(NULL);
+				delete pDoc;
+				pDoc = NULL;
+				
+			}			
+		} else {
+			pLogger->Error("Unable to open stream");
 		}
 		pStream->Close();
 	}

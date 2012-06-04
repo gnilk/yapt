@@ -1,0 +1,12 @@
+<yapt2>
+<!--
+	<resources>
+		<object class="System.Config" name="Config">
+			<property name="Resolution.Width">640</property>
+		</object>
+	</resources>
+-->	
+	
+	<render>
+	</render>
+</yapt2>

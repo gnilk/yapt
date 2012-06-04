@@ -376,69 +376,73 @@ static int CALLCONV yFxInitializePlugin(yapt::ISystem *ySys)
 	return 0;
 }
 
-int main (int argc, char * const argv[]) 
-{
+static void runConsoleTestSuite() {
 	ILogger *pLogger = Logger::GetLogger("main");
 	pLogger->Debug("YAPT2 - running tests");
 	yapt::ISystem *system = GetYaptSystemInstance();
-
+	
 	//TestTextReader();
 	//exit(1);
 	system->SetConfigValue(kConfig_CaseSensitive,false);
 	// trigger all errors
-
-//	TestEnumParser("apa","enum={cpa,apa,bpa}");
-//	exit(1);
-
-//	TestPluginScanner();
+	
+	//	TestEnumParser("apa","enum={cpa,apa,bpa}");
+	//	exit(1);
+	
+	//	TestPluginScanner();
 	system->ScanForPlugins(".\\", true);
-
+	
 	pLogger->Debug("Initializing built in functionality");
 	IBaseInstance *pPlugin = system->RegisterAndInitializePlugin(yFxInitializePlugin, "built-in");
-
-
-//	system->SetConfigValue("key1","value1");
-//	system->SetConfigValue("key2","value2");
-//
-//	pLogger->Debug("key1=%s",system->GetConfigValue("key1"));
-//	pLogger->Debug("key2=%s",system->GetConfigValue("key2"));
-//
-//	system->SetConfigValue("key1","value1_2");
-//
-//	pLogger->Debug("key1=%s",system->GetConfigValue("key1"));
+	
+	
+	//	system->SetConfigValue("key1","value1");
+	//	system->SetConfigValue("key2","value2");
+	//
+	//	pLogger->Debug("key1=%s",system->GetConfigValue("key1"));
+	//	pLogger->Debug("key2=%s",system->GetConfigValue("key2"));
+	//
+	//	system->SetConfigValue("key1","value1_2");
+	//
+	//	pLogger->Debug("key1=%s",system->GetConfigValue("key1"));
 	//IStream *pStream = system->CreateStream("file://example1.xml");
 	//pStream->Open();
-
+	
 	// TODO: The system should load libraries and initialize them on load
 	//pLogger->Debug("Initializing Plugins");
 	//system->RegisterAndInitializePlugin(yFxInitializePlugin);
 	//pLogger->Debug("Initializing IO Library");
-
+	
 	pLogger->Debug("Testing Expat XML Parser");
-	TestExpat(system, "file://include_test.xml");
-
+	TestExpat(system, "file://curve_test.xml");
+	
 	if (system->GetActiveDocument())
 	{
 		pLogger->Debug("PostInitialize document --- FIX THIS");
 		IDocNode *pRoot = system->GetActiveDocument()->GetTree();
-
+		
 		system->GetActiveDocumentController()->PostInitializeNode(pRoot);
-//		system->GetActiveDocument()->PostInitializeNode(pRoot);
+		//		system->GetActiveDocument()->PostInitializeNode(pRoot);
 	}
-
-//	system->GetActiveDocument()->InitializeAllObjects(system);
+	
+	//	system->GetActiveDocument()->InitializeAllObjects(system);
 	pLogger->Debug("Rendering resources");
 	system->GetActiveDocumentController()->RenderResources();
 	pLogger->Debug("Rendering nodes");
 	system->GetActiveDocumentController()->Render(0.0);
-
-//	TestMoveNodes();
+	
+	//	TestMoveNodes();
 	pLogger->Debug("Dumping");
 	system->GetActiveDocument()->DumpRenderTree();
 	TestRemoveNodes();
 	TestEnumeration();
 	TestIODevice();
 	TestExport(system->GetActiveDocument());
+}
+
+int main (int argc, char * const argv[]) 
+{
+	runConsoleTestSuite();
 	return 0;
 }
 
@@ -636,7 +640,7 @@ static void TestIODevice()
 #ifdef WIN32
 		pSys->GetIODevice("file")->SetParam("relpath","c:\\temp\\");
 #else
-		pSys->GetIODevice("file")->SetParam("relpath","/temp/");
+		pSys->GetIODevice("file")->SetParam("relpath","/tmp/");
 #endif
 		pSys->GetIODevice("file")->Initialize();
 	} else

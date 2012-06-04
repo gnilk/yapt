@@ -213,7 +213,7 @@ const char *PropertyInstance::GetDescription()
 void PropertyInstance::SetDescription(const char *strDesc)
 {
   if (sDescription==NULL) free(sDescription);
-  this->sDescription = strdup(sDescription);
+  this->sDescription = strdup(strDesc);
 }
 
 

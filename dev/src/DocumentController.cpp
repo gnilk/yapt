@@ -93,7 +93,13 @@ void DocumentController::InitializeNode(IDocNode *node)
 				PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
 				pInst->ExtInitialize();
 			}
-				break;
+			break;
+			case kInstanceType_MetaNode :
+			{				
+				MetaInstance *pMeta = dynamic_cast<MetaInstance *> (pObject);
+				PostInitializeNode(pMeta->GetDocument()->GetTree());
+			}
+			break;
 		}
 	}
 }

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A266CE77157D358B00AB80AF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A266CE6A157D352A00AB80AF /* Cocoa.framework */; };
+		A266CE78157D359A00AB80AF /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A266CE60157D337B00AB80AF /* OpenGL.framework */; };
+		A266CEC7157D3A1700AB80AF /* glfwplayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CEC6157D3A1700AB80AF /* glfwplayer.cpp */; };
+		A266CEE2157D4DF700AB80AF /* libnoice.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC7FC11B3E7270012A062 /* libnoice.io.a */; };
+		A266CEE3157D4DFC00AB80AF /* libyapt2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC7A411B3E0EA0012A062 /* libyapt2.a */; };
+		A266CEE4157D4E2500AB80AF /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC86A11B409630012A062 /* libcommon.a */; };
+		A266CEE5157D4E7900AB80AF /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A26745451069486A00D76D89 /* libexpat.dylib */; };
+		A266CF25157D50A200AB80AF /* PluginMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CF24157D50A200AB80AF /* PluginMain.cpp */; };
 		A27071041549EA6400A06F6A /* MetaInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A27071031549EA6400A06F6A /* MetaInstance.cpp */; };
 		A29AC7C311B3E1150012A062 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A711B3E1150012A062 /* Attribute.cpp */; };
 		A29AC7C411B3E1150012A062 /* BaseInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A811B3E1150012A062 /* BaseInstance.cpp */; };
@@ -63,6 +71,55 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A266CEB1157D36DA00AB80AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A29AC86911B409630012A062 /* common */;
+			remoteInfo = common;
+		};
+		A266CEB3157D36DA00AB80AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A267453A106947CD00D76D89 /* FxPluginSample */;
+			remoteInfo = FxPluginSample;
+		};
+		A266CEB5157D36DA00AB80AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2C7553C107BCD240016640F /* StdCurve */;
+			remoteInfo = StdCurve;
+		};
+		A266CEB7157D36DA00AB80AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A29AC7A311B3E0EA0012A062 /* yapt2 */;
+			remoteInfo = yapt2;
+		};
+		A266CEB9157D36DA00AB80AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A29AC7FB11B3E7270012A062 /* noice.io */;
+			remoteInfo = noice.io;
+		};
+		A266CF19157D506800AB80AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A29AC86911B409630012A062;
+			remoteInfo = common;
+		};
+		A266CF26157D50E600AB80AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A266CF17157D506800AB80AF /* glFuncs */;
+			remoteInfo = glFuncs;
+		};
 		A29AC82F11B3EB570012A062 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
@@ -115,6 +172,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A266CE58157D334C00AB80AF /* glPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "glPlayer-Info.plist"; sourceTree = "<group>"; };
+		A266CE60157D337B00AB80AF /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		A266CE6A157D352A00AB80AF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		A266CE73157D356800AB80AF /* glPlayer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = glPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
+		A266CEC6157D3A1700AB80AF /* glfwplayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = glfwplayer.cpp; path = dev/bld/xcode/glfwplayer.cpp; sourceTree = "<group>"; };
+		A266CF23157D506800AB80AF /* libglFuncs.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libglFuncs.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		A266CF24157D50A200AB80AF /* PluginMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginMain.cpp; path = dev/plugins/glFuncs/PluginMain.cpp; sourceTree = "<group>"; };
 		A267453B106947CD00D76D89 /* libFxPluginSample.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libFxPluginSample.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26745451069486A00D76D89 /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		A27071031549EA6400A06F6A /* MetaInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaInstance.cpp; path = dev/src/MetaInstance.cpp; sourceTree = "<group>"; };
@@ -173,6 +237,26 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A266CE71157D356800AB80AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A266CE77157D358B00AB80AF /* Cocoa.framework in Frameworks */,
+				A266CE78157D359A00AB80AF /* OpenGL.framework in Frameworks */,
+				A266CEE2157D4DF700AB80AF /* libnoice.io.a in Frameworks */,
+				A266CEE3157D4DFC00AB80AF /* libyapt2.a in Frameworks */,
+				A266CEE4157D4E2500AB80AF /* libcommon.a in Frameworks */,
+				A266CEE5157D4E7900AB80AF /* libexpat.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A266CF1F157D506800AB80AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A2674539106947CD00D76D89 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,6 +314,9 @@
 				C6859E8C029090F304C91782 /* Documentation */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 				A26745451069486A00D76D89 /* libexpat.dylib */,
+				A266CE58157D334C00AB80AF /* glPlayer-Info.plist */,
+				A266CE60157D337B00AB80AF /* OpenGL.framework */,
+				A266CE6A157D352A00AB80AF /* Cocoa.framework */,
 			);
 			name = yapt2;
 			sourceTree = "<group>";
@@ -255,8 +342,18 @@
 				A29AC7FC11B3E7270012A062 /* libnoice.io.a */,
 				A29AC82A11B3EB1A0012A062 /* ytester */,
 				A29AC86A11B409630012A062 /* libcommon.a */,
+				A266CE73157D356800AB80AF /* glPlayer */,
+				A266CF23157D506800AB80AF /* libglFuncs.dylib */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A266CF14157D4FF200AB80AF /* glFuncs */ = {
+			isa = PBXGroup;
+			children = (
+				A266CF24157D50A200AB80AF /* PluginMain.cpp */,
+			);
+			name = glFuncs;
 			sourceTree = "<group>";
 		};
 		A29AC79E11B3E0780012A062 /* Common */ = {
@@ -342,6 +439,7 @@
 		A29AC82511B3EAD70012A062 /* OsXTest */ = {
 			isa = PBXGroup;
 			children = (
+				A266CEC6157D3A1700AB80AF /* glfwplayer.cpp */,
 				A29AC82611B3EAEA0012A062 /* main.cpp */,
 			);
 			name = OsXTest;
@@ -350,6 +448,7 @@
 		A29AC85B11B4086C0012A062 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				A266CF14157D4FF200AB80AF /* glFuncs */,
 				A29AC85C11B408730012A062 /* StdCurve */,
 			);
 			name = Plugins;
@@ -376,6 +475,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		A266CF1A157D506800AB80AF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A2674537106947CD00D76D89 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,6 +536,46 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		A266CE72157D356800AB80AF /* glPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A266CE82157D35D100AB80AF /* Build configuration list for PBXNativeTarget "glPlayer" */;
+			buildPhases = (
+				A266CE70157D356800AB80AF /* Sources */,
+				A266CE71157D356800AB80AF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A266CEB2157D36DA00AB80AF /* PBXTargetDependency */,
+				A266CEB4157D36DA00AB80AF /* PBXTargetDependency */,
+				A266CEB6157D36DA00AB80AF /* PBXTargetDependency */,
+				A266CEB8157D36DA00AB80AF /* PBXTargetDependency */,
+				A266CEBA157D36DA00AB80AF /* PBXTargetDependency */,
+				A266CF27157D50E600AB80AF /* PBXTargetDependency */,
+			);
+			name = glPlayer;
+			productName = glPlayer;
+			productReference = A266CE73157D356800AB80AF /* glPlayer */;
+			productType = "com.apple.product-type.tool";
+		};
+		A266CF17157D506800AB80AF /* glFuncs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A266CF20157D506800AB80AF /* Build configuration list for PBXNativeTarget "glFuncs" */;
+			buildPhases = (
+				A266CF1A157D506800AB80AF /* Headers */,
+				A266CF1C157D506800AB80AF /* Sources */,
+				A266CF1F157D506800AB80AF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A266CF18157D506800AB80AF /* PBXTargetDependency */,
+			);
+			name = glFuncs;
+			productName = StdCurve;
+			productReference = A266CF23157D506800AB80AF /* libglFuncs.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
 		A267453A106947CD00D76D89 /* FxPluginSample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A2674544106947EB00D76D89 /* Build configuration list for PBXNativeTarget "FxPluginSample" */;
@@ -563,11 +709,29 @@
 				A29AC7A311B3E0EA0012A062 /* yapt2 */,
 				A29AC7FB11B3E7270012A062 /* noice.io */,
 				A29AC82911B3EB1A0012A062 /* ytester */,
+				A266CE72157D356800AB80AF /* glPlayer */,
+				A266CF17157D506800AB80AF /* glFuncs */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A266CE70157D356800AB80AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A266CEC7157D3A1700AB80AF /* glfwplayer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A266CF1C157D506800AB80AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A266CF25157D50A200AB80AF /* PluginMain.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A2674538106947CD00D76D89 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -645,6 +809,41 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A266CEB2157D36DA00AB80AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A29AC86911B409630012A062 /* common */;
+			targetProxy = A266CEB1157D36DA00AB80AF /* PBXContainerItemProxy */;
+		};
+		A266CEB4157D36DA00AB80AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A267453A106947CD00D76D89 /* FxPluginSample */;
+			targetProxy = A266CEB3157D36DA00AB80AF /* PBXContainerItemProxy */;
+		};
+		A266CEB6157D36DA00AB80AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2C7553C107BCD240016640F /* StdCurve */;
+			targetProxy = A266CEB5157D36DA00AB80AF /* PBXContainerItemProxy */;
+		};
+		A266CEB8157D36DA00AB80AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A29AC7A311B3E0EA0012A062 /* yapt2 */;
+			targetProxy = A266CEB7157D36DA00AB80AF /* PBXContainerItemProxy */;
+		};
+		A266CEBA157D36DA00AB80AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A29AC7FB11B3E7270012A062 /* noice.io */;
+			targetProxy = A266CEB9157D36DA00AB80AF /* PBXContainerItemProxy */;
+		};
+		A266CF18157D506800AB80AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A29AC86911B409630012A062 /* common */;
+			targetProxy = A266CF19157D506800AB80AF /* PBXContainerItemProxy */;
+		};
+		A266CF27157D50E600AB80AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A266CF17157D506800AB80AF /* glFuncs */;
+			targetProxy = A266CF26157D50E600AB80AF /* PBXContainerItemProxy */;
+		};
 		A29AC83011B3EB570012A062 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A29AC7A311B3E0EA0012A062 /* yapt2 */;
@@ -704,6 +903,84 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+			};
+			name = Release;
+		};
+		A266CE75157D356800AB80AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"dev/ext/noice.io/dev/inc/**",
+					"dev/inc/**",
+				);
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = dev/bld/Debug;
+				OTHER_LDFLAGS = "-lglfw";
+				PREBINDING = NO;
+				PRODUCT_NAME = glPlayer;
+				SYMROOT = dev/bld;
+			};
+			name = Debug;
+		};
+		A266CE76157D356800AB80AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = glPlayer;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		A266CF21157D506800AB80AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/plugins";
+				COPY_PHASE_STRIP = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"dev/inc/**",
+					"dev/ext/noice.io/dev/inc/**",
+				);
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				OTHER_LDFLAGS = "-lcommon";
+				PREBINDING = NO;
+				PRODUCT_NAME = glFuncs;
+				SYMROOT = dev/bld;
+			};
+			name = Debug;
+		};
+		A266CF22157D506800AB80AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = StdCurve;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -930,6 +1207,24 @@
 			buildConfigurations = (
 				1DEB923608733DC60010E9CD /* Debug */,
 				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A266CE82157D35D100AB80AF /* Build configuration list for PBXNativeTarget "glPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A266CE75157D356800AB80AF /* Debug */,
+				A266CE76157D356800AB80AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A266CF20157D506800AB80AF /* Build configuration list for PBXNativeTarget "glFuncs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A266CF21157D506800AB80AF /* Debug */,
+				A266CF22157D506800AB80AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
