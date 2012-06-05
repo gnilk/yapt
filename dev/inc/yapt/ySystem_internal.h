@@ -427,6 +427,7 @@ namespace yapt
 		PropertyInstance *sourcedProperty;
 		PluginObjectInstance *objectInstance;
 		bool isSourced;
+		char *unboundRawValue;
 		char *sourceString;
 		char *sDescription;
 		int iSourceReferences;
@@ -447,6 +448,7 @@ namespace yapt
     
 		void SetDescription(const char *strDesc);
 		
+        const char *GetUnboundRawValue();
     bool IsSourced();
 		int IncSourceRef();
 		int DecSourceRef();

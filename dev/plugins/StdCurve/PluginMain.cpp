@@ -4,10 +4,14 @@
 #include "yapt/ySystem.h"
 #include "yapt/logger.h"
 #include "Curve.h"
+#include "expsolver.h"
 
 #ifdef WIN32
 #include <malloc.h>
 #endif
+
+#include <math.h>
+
 
 using namespace yapt;
 using namespace Goat;	// Curve is within the Goat namespace...
@@ -86,6 +90,26 @@ public:
 	
 };
 
+class YaptExpSolverFacade :
+    public BaseCurveFacade
+{
+protected:
+    Property *expression;
+    Property *result;   // output
+
+    double timeCurrent; // corrsponds to the 't' variable in the expression
+    ExpSolver *pExpSolver; 
+    // events
+public:
+    double OnConstantUserExpression(const char *data, int *bOk_out);
+    double OnFunctionExpression(const char *data, double arg, int *bOk_out);
+    // interface
+public:
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+};
+
 
 static CurveFactory factory;
 
@@ -105,6 +129,10 @@ IPluginObject *CurveFactory::CreateObject(const char *identifier)
 	if (!strcmp(identifier,"Animation.VectorKey"))
 	{
 		pObject = dynamic_cast<IPluginObject *> (new VectorCurveKey());
+	}
+	if (!strcmp(identifier,"Animation.ExpSolver"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new YaptExpSolverFacade());
 	}
 	if (pObject != NULL) 
 	{
@@ -286,6 +314,66 @@ void GenericCurveKey::Render(double t, IPluginObjectInstance *pInstance)
 {
 }
 
+extern "C" {
+    static  double cbExpVariable(void *pUser, const char *pData, int *bOk_out) {
+        YaptExpSolverFacade *pFacade = (YaptExpSolverFacade *)pUser;
+        return pFacade->OnConstantUserExpression(pData, bOk_out);
+    }    
+    static  double cbExpFunc(void *pUser, const char *pData, double arg, int *bOk_out) {
+        YaptExpSolverFacade *pFacade = (YaptExpSolverFacade *)pUser;
+        return pFacade->OnFunctionExpression(pData, arg, bOk_out);
+    }    
+}
+
+double YaptExpSolverFacade::OnConstantUserExpression(const char *data, int *bOk_out) {
+    double result = 0.0;
+    *bOk_out = 0;
+    if (!strcmp(data,"t")) {
+        *bOk_out = 1;
+        result = timeCurrent;
+    } else  if (!strcmp(data,"apa")) {
+        *bOk_out = 1;
+        result = sin(timeCurrent);
+    }
+    
+    return result;
+}
+double YaptExpSolverFacade::OnFunctionExpression(const char *data, double arg, int *bOk_out) {
+    double result = 0.0;
+    *bOk_out = 0;
+    if (!strcmp(data,"sin")) {
+        *bOk_out = 1;
+        result = sin(arg);
+    } else  if (!strcmp(data,"cos")) {
+        *bOk_out = 1;
+        result = cos(arg);
+    }
+    printf("%f\n",result);
+    
+    return result;
+}
+
+void YaptExpSolverFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+    expression = pInstance->CreateProperty("expression",kPropertyType_String,"0.0","");
+    result = pInstance->CreateOutputProperty("result",kPropertyType_Float, "", "");
+}
+
+void YaptExpSolverFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+    pExpSolver = new ExpSolver(expression->v->string);
+    pExpSolver->RegisterUserVariableCallback(cbExpVariable,this);
+    pExpSolver->RegisterUserFunctionCallback(cbExpFunc,this);
+    pExpSolver->Prepare();
+    // TODO: Support functions like 'sin','cos' and others through callback
+    
+}
+
+void YaptExpSolverFacade::Render(double t, IPluginObjectInstance *pInstance) {
+    timeCurrent = t;
+    result->v->float_val = pExpSolver->Evaluate();
+}
+
+
+
 static void perror()
 {
 }
@@ -296,5 +384,6 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys)
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.GenericCurve");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Key");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorKey");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.ExpSolver");
 	return 0;
 }

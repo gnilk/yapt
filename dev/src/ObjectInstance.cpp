@@ -1,23 +1,23 @@
 /*-------------------------------------------------------------------------
-File    : $Archive: yObjectDefinition.cpp $
-Author  : $Author: Fkling $
-Version : $Revision: 1 $
-Orginal : 2009-10-17, 15:50
-Descr   : The result of a plugin object instansation is wrapped in this object
-          by the system.
-
-Modified: $Date: $ by $Author: Fkling $
----------------------------------------------------------------------------
-TODO: [ -:Not done, +:In progress, !:Completed]
-<pre>
+ File    : $Archive: yObjectDefinition.cpp $
+ Author  : $Author: Fkling $
+ Version : $Revision: 1 $
+ Orginal : 2009-10-17, 15:50
+ Descr   : The result of a plugin object instansation is wrapped in this object
+ by the system.
+ 
+ Modified: $Date: $ by $Author: Fkling $
+ ---------------------------------------------------------------------------
+ TODO: [ -:Not done, +:In progress, !:Completed]
+ <pre>
  - Clean up constructor
-</pre>
-
-
-\History
-- 17.10.09, FKling, Implementation
-
----------------------------------------------------------------------------*/
+ </pre>
+ 
+ 
+ \History
+ - 17.10.09, FKling, Implementation
+ 
+ ---------------------------------------------------------------------------*/
 #include "yapt/logger.h"
 
 #include "yapt/ySystem.h"
@@ -34,18 +34,18 @@ using namespace yapt;
 
 // TODO: Refactor, parent not intresting at this level, definition more intresting instead!
 PluginObjectInstance::PluginObjectInstance(PluginObjectDefinition *definition) :
-	BaseInstance(kInstanceType_Object)
+BaseInstance(kInstanceType_Object)
 {
 	pDef = definition;
 	extObject = NULL;
-//	this->parent = NULL;
+    //	this->parent = NULL;
 	pDocument = NULL;
 	extState = kExtState_None;
 	CreateDefaultAttributes();
 }
 
 PluginObjectInstance::PluginObjectInstance(IPluginObjectDefinition *definition) :
-	BaseInstance(kInstanceType_Object)
+BaseInstance(kInstanceType_Object)
 {
 	pDef = (PluginObjectDefinition *)definition;
 	extObject = NULL;
@@ -152,7 +152,7 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
 		PluginObjectInstance *pObject = (PluginObjectInstance *)pChild->GetNodeObject();
 		// TODO: Verify binding
 		const char *sName = pObject->GetAttributeValue("name"); 
-
+        
 		if (!StrConfCaseCmp(sName,propertyReference))
 		{
 			pSource = pObject->GetPropertyInstance(0,true);
@@ -166,8 +166,8 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
 		{
 			IDocNode *pChild = pRootNode->GetChildAt(i);
 			if ((pChild->GetNodeType() == kNodeType_ObjectInstance) ||
-			(pChild->GetNodeType() == kNodeType_ResourceContainer) ||
-			(pChild->GetNodeType() == kNodeType_RenderNode))
+                (pChild->GetNodeType() == kNodeType_ResourceContainer) ||
+                (pChild->GetNodeType() == kNodeType_RenderNode))
 			{
 				pSource = FindPropertyInstance(propertyReference, pChild);
 				if (pSource != NULL) 
@@ -199,7 +199,7 @@ void PluginObjectInstance::BindProperties()
 			pSourceInst = FindPropertyInstance(propertyReference, GetDocumentNode()->GetParent());
 			// search render root & resources next
 			if (pSourceInst == NULL) pSourceInst = FindPropertyInstance(propertyReference, GetDocument()->GetTree());
-
+            
 			if (pSourceInst != NULL)
 			{
 				PropertyInstance *pSource = dynamic_cast<PropertyInstance *>(pSourceInst);
@@ -209,7 +209,7 @@ void PluginObjectInstance::BindProperties()
 			{			
 				Logger::GetLogger("PluginObjectInstance")->Warning("BindProperties, failed to bind property for %s.%s to %s.output[0]",GetDefinition()->GetDescription(), pInput->GetName(), propertyReference);
 			}
-
+            
 		}
 	}
 }
@@ -219,7 +219,7 @@ void PluginObjectInstance::BindProperties()
 PropertyInstance *PluginObjectInstance::GetPropertyInstance(std::vector<PropertyInstance *> *pList, const char *szName)
 {
 	std::vector<PropertyInstance *>::iterator it;
-
+    
 	// TODO: Translate incoming name!
 	
 	for (it=pList->begin(); it!=pList->end();it++)
@@ -291,7 +291,7 @@ bool PluginObjectInstance::ShouldRender(double glbTime)
 	bool bRes = false;
 	double start = atof(GetAttributeValue("start"));
 	double duration = atof(GetAttributeValue("duration"));
-
+    
 	if (duration < 0) duration = 1.0+glbTime;	// does not matter but makes the rest of logic pass
 	if ((glbTime >= start) && (glbTime < (start+duration))) 
 	{
@@ -340,18 +340,18 @@ void PluginObjectInstance::SetInstanceName(const char *sNewName)
 void PluginObjectInstance::OnAttributeChanged(Attribute *pAttribute)
 {
 	// support name-prefix here
-	 const char *name = pAttribute->GetName();
-	 if (!StrConfCaseCmp(name,"Name"))
-	 {
-		 char tmp[128];
-		 // have prefix? use it..
-		 if (strcmp(pContext->GetNamePrefix(tmp,128),""))
-		 {
-			 pContext->CreatePrefixName(pAttribute->GetValue(),tmp, 128);
-			 Logger::GetLogger("PluginObjectInstance")->Debug("Prefixing name: '%s' was '%s'",tmp, pAttribute->GetValue());
-			 pAttribute->SetValue(tmp);
-		 }
-	 }
+    const char *name = pAttribute->GetName();
+    if (!StrConfCaseCmp(name,"Name"))
+    {
+        char tmp[128];
+        // have prefix? use it..
+        if (strcmp(pContext->GetNamePrefix(tmp,128),""))
+        {
+            pContext->CreatePrefixName(pAttribute->GetValue(),tmp, 128);
+            Logger::GetLogger("PluginObjectInstance")->Debug("Prefixing name: '%s' was '%s'",tmp, pAttribute->GetValue());
+            pAttribute->SetValue(tmp);
+        }
+    }
 }
 
 
@@ -359,31 +359,41 @@ void PluginObjectInstance::OnAttributeChanged(Attribute *pAttribute)
 Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription, bool bOutput)
 {
 	Property *result = NULL;
-  PropertyInstance *prop = NULL;
-  result = GetProperty(sName);
-  if (bOutput == false) {
-    if ((result != NULL) && (result->type == kPropertyType_Unbound)) {
-      prop = dynamic_cast<PropertyInstance *>(GetPropertyInstance(sName));
-      result->type = type;
-      prop->SetDescription(sDescription);
-    }   
-  }
-  if (prop == NULL) {
-	  // Create the instance object
-	  prop = new PropertyInstance(sName, type, sDescription);
-  }
-
-	prop->SetValue(sInitialValue);
+    PropertyInstance *prop = NULL;
+    result = GetProperty(sName);
+	bool hasUnboundValue = false;
+    if (bOutput == false) {
+        if ((result != NULL) && (result->type == kPropertyType_Unbound)) {
+            prop = dynamic_cast<PropertyInstance *>(GetPropertyInstance(sName));
+            result->type = type;
+            prop->SetDescription(sDescription);
+            // we should have an unbound value
+            hasUnboundValue = prop->GetUnboundRawValue()?true:false;
+            
+        }   
+    }
+    if (prop == NULL) {
+        // Create the instance object
+        prop = new PropertyInstance(sName, type, sDescription);
+    }
+	// Initial value is NULL during early binding of variables - creating from XML stream reading
+	if (sInitialValue != NULL) {
+		if (!hasUnboundValue) {
+			prop->SetValue(sInitialValue);
+		} else {
+			prop->SetValue(prop->GetUnboundRawValue());
+		}
+	}
 	AddPropertyInstance(prop, bOutput);
-
+    
 	// Create and add node in document
 	//IDocument *pDocument = yapt::GetYaptSystemInstance()->GetActiveDocument();
 	pDocument->AddObject(dynamic_cast<IBaseInstance *>(this),dynamic_cast<IBaseInstance *>(prop),kNodeType_PropertyInstance);
-
+    
 	// Fetch the actual property and return it
 	result = prop->GetProperty();
 	return result;
-
+    
 }
 
 // -- interface
@@ -401,7 +411,7 @@ Property *PluginObjectInstance::GetProperty(const char *name)
 {
 	Property *prop = NULL;
 	PropertyInstance *pInst;
-
+    
 	pInst= GetPropertyInstance(&input_properties, name);
 	if (!pInst)
 	{
@@ -411,7 +421,7 @@ Property *PluginObjectInstance::GetProperty(const char *name)
 	{
 		prop = pInst->GetProperty();
 	}
-
+    
 	return prop;
 }
 
@@ -488,11 +498,11 @@ void PluginObjectInstance::ExtPostInitialize()
 void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
 {
 	// Figure out time through context object, context should be assign to each instance
-
+    
 	// Only do this when we have been initialized
 	if (extState == kExtState_Initialized)
 	{
-	
+        
 		extObject->Render(pRenderVars->GetTime(), dynamic_cast<IPluginObjectInstance *>(this));
 	}
 }

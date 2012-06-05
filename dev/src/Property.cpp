@@ -54,6 +54,7 @@ PropertyInstance::PropertyInstance(const char *szName, kPropertyType type, const
 
 	// Distinguish between them, in order to easily source/unsource the same property
 	v_unsourced = NULL;
+	unboundRawValue = NULL;
 	sourcedProperty = NULL;
 	sourceString = NULL;
 	isSourced = false;
@@ -282,10 +283,17 @@ void PropertyInstance::SetValue(const char *sValue)
 		case kPropertyType_UserPtr :
 			property->v->userdata = (void*)sValue;
 			break;
+		case kPropertyType_Unbound :
+			unboundRawValue = strdup(sValue);
+			break;
 		default:
 			Logger::GetLogger("PropertyInstance")->Warning("SetValue, Unsupported property type: %d",(int)GetPropertyType());
 			break;
 	}
+}
+
+const char *PropertyInstance::GetUnboundRawValue() {
+    return unboundRawValue;
 }
 
 //

@@ -8,5 +8,13 @@
 -->	
 	
 	<render>
+		<object class="gl.RenderContext" name="context">
+			<object class="Animation.ExpSolver" name="rotspeed">
+				<property name="expression">40 * sin(t)</property>
+			</object>
+			<object class="gl.DrawTriangle" name="triangle">
+				<property name="speed" source="rotspeed" />
+			</object>
+		</object>
 	</render>
 </yapt2>

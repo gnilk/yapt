@@ -15,6 +15,15 @@
 		A266CEE4157D4E2500AB80AF /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC86A11B409630012A062 /* libcommon.a */; };
 		A266CEE5157D4E7900AB80AF /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A26745451069486A00D76D89 /* libexpat.dylib */; };
 		A266CF25157D50A200AB80AF /* PluginMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CF24157D50A200AB80AF /* PluginMain.cpp */; };
+		A266CF3C157E84AA00AB80AF /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A266CE60157D337B00AB80AF /* OpenGL.framework */; };
+		A266CFD5157E912500AB80AF /* expsolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CFD1157E912500AB80AF /* expsolver.cpp */; };
+		A266CFD6157E912500AB80AF /* expsolver.h in Headers */ = {isa = PBXBuildFile; fileRef = A266CFD2157E912500AB80AF /* expsolver.h */; };
+		A266CFD7157E912500AB80AF /* tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CFD3157E912500AB80AF /* tokenizer.cpp */; };
+		A266CFD8157E912500AB80AF /* tokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = A266CFD4157E912500AB80AF /* tokenizer.h */; };
+		A266CFD9157E912500AB80AF /* expsolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CFD1157E912500AB80AF /* expsolver.cpp */; };
+		A266CFDA157E912500AB80AF /* expsolver.h in Headers */ = {isa = PBXBuildFile; fileRef = A266CFD2157E912500AB80AF /* expsolver.h */; };
+		A266CFDB157E912500AB80AF /* tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CFD3157E912500AB80AF /* tokenizer.cpp */; };
+		A266CFDC157E912500AB80AF /* tokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = A266CFD4157E912500AB80AF /* tokenizer.h */; };
 		A27071041549EA6400A06F6A /* MetaInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A27071031549EA6400A06F6A /* MetaInstance.cpp */; };
 		A29AC7C311B3E1150012A062 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A711B3E1150012A062 /* Attribute.cpp */; };
 		A29AC7C411B3E1150012A062 /* BaseInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A811B3E1150012A062 /* BaseInstance.cpp */; };
@@ -179,6 +188,10 @@
 		A266CEC6157D3A1700AB80AF /* glfwplayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = glfwplayer.cpp; path = dev/bld/xcode/glfwplayer.cpp; sourceTree = "<group>"; };
 		A266CF23157D506800AB80AF /* libglFuncs.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libglFuncs.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		A266CF24157D50A200AB80AF /* PluginMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginMain.cpp; path = dev/plugins/glFuncs/PluginMain.cpp; sourceTree = "<group>"; };
+		A266CFD1157E912500AB80AF /* expsolver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = expsolver.cpp; path = dev/plugins/StdCurve/expsolver.cpp; sourceTree = "<group>"; };
+		A266CFD2157E912500AB80AF /* expsolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expsolver.h; path = dev/plugins/StdCurve/expsolver.h; sourceTree = "<group>"; };
+		A266CFD3157E912500AB80AF /* tokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tokenizer.cpp; path = dev/plugins/StdCurve/tokenizer.cpp; sourceTree = "<group>"; };
+		A266CFD4157E912500AB80AF /* tokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tokenizer.h; path = dev/plugins/StdCurve/tokenizer.h; sourceTree = "<group>"; };
 		A267453B106947CD00D76D89 /* libFxPluginSample.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libFxPluginSample.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26745451069486A00D76D89 /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		A27071031549EA6400A06F6A /* MetaInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaInstance.cpp; path = dev/src/MetaInstance.cpp; sourceTree = "<group>"; };
@@ -254,6 +267,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A266CF3C157E84AA00AB80AF /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +471,10 @@
 		A29AC85C11B408730012A062 /* StdCurve */ = {
 			isa = PBXGroup;
 			children = (
+				A266CFD1157E912500AB80AF /* expsolver.cpp */,
+				A266CFD2157E912500AB80AF /* expsolver.h */,
+				A266CFD3157E912500AB80AF /* tokenizer.cpp */,
+				A266CFD4157E912500AB80AF /* tokenizer.h */,
 				A29AC85D11B4088A0012A062 /* Curve.cpp */,
 				A29AC85E11B4088A0012A062 /* Curve.h */,
 				A29AC85F11B4088A0012A062 /* PluginMain.cpp */,
@@ -479,6 +497,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A266CFD6157E912500AB80AF /* expsolver.h in Headers */,
+				A266CFD8157E912500AB80AF /* tokenizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +550,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A29AC86111B4088A0012A062 /* Curve.h in Headers */,
+				A266CFDA157E912500AB80AF /* expsolver.h in Headers */,
+				A266CFDC157E912500AB80AF /* tokenizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +751,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A266CF25157D50A200AB80AF /* PluginMain.cpp in Sources */,
+				A266CFD5157E912500AB80AF /* expsolver.cpp in Sources */,
+				A266CFD7157E912500AB80AF /* tokenizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +827,8 @@
 			files = (
 				A29AC86011B4088A0012A062 /* Curve.cpp in Sources */,
 				A29AC86211B4088A0012A062 /* PluginMain.cpp in Sources */,
+				A266CFD9157E912500AB80AF /* expsolver.cpp in Sources */,
+				A266CFDB157E912500AB80AF /* tokenizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
