@@ -108,17 +108,17 @@ void DocumentController::InitializeNode(IDocNode *node)
 // Calls postinitialize, first on all children and on the way back on the node itself
 // Called when all sub objects have been created or any property of the parent/children objects has changed
 //
-void DocumentController::PostInitializeNode(IDocNode *node)
+bool DocumentController::PostInitializeNode(IDocNode *node)
 {
 	int i,nChildren;
 
-  InitializeNode(node);
+    InitializeNode(node);
 
 	nChildren = node->GetNumChildren();
 	for(i=0;i<nChildren;i++)
 	{
 		IDocNode *child = node->GetChildAt(i);
-		PostInitializeNode(child);
+		if (!PostInitializeNode(child)) return false;
 	}
 	
 	//	ISystem *ySys = yapt::GetYaptSystemInstance();
@@ -132,12 +132,16 @@ void DocumentController::PostInitializeNode(IDocNode *node)
 			{
 				// TODO: Reroute call through instance in order to track states
 				PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
-				pInst->BindProperties();
+				if (!pInst->BindProperties()) {
+                    // Binding failed => loading failed
+                    return false;
+                }
 				pInst->ExtPostInitialize();
 			}
-				break;
+            break;
 		}
-	}	
+	}
+    return true;
 }
 
 void DocumentController::Render(double sample_time)

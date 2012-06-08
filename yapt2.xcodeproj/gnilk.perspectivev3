@@ -309,8 +309,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
-									<integer>2</integer>
+									<integer>19</integer>
+									<integer>17</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -333,7 +333,7 @@
 							<real>281</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>81 55 1362 691 0 0 1366 746 </string>
+						<string>-15 55 1362 691 0 0 1366 746 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -351,7 +351,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>A21B3CDB1041491600A24D60</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>PluginMain.cpp</string>
+								<string>glfwplayer.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -359,41 +359,34 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>A21B3CDC1041491600A24D60</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>PluginMain.cpp</string>
+										<string>glfwplayer.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>A266D056157E9CB100AB80AF</string>
+										<string>A266D2541582482400AB80AF</string>
 										<key>history</key>
 										<array>
-											<string>A2BFD0EA129A4A6300A9B829</string>
-											<string>A2BFD0EC129A4A6300A9B829</string>
 											<string>A27070F015474AF300A06F6A</string>
 											<string>A27070F115474AF300A06F6A</string>
-											<string>A27070F215474AF300A06F6A</string>
-											<string>A27070F315474AF300A06F6A</string>
-											<string>A27070FB15474AF300A06F6A</string>
-											<string>A270710E1549EBAE00A06F6A</string>
 											<string>A27071331549EDDF00A06F6A</string>
 											<string>A2C7B02D154C4C5700D8235F</string>
 											<string>A2C7B030154C4C5700D8235F</string>
-											<string>A2C7B040154C4DE800D8235F</string>
-											<string>A2C7B059154C512F00D8235F</string>
-											<string>A266CF01157D4EF300AB80AF</string>
-											<string>A266CF43157E84B800AB80AF</string>
-											<string>A266CF44157E84B800AB80AF</string>
-											<string>A266CF68157E869C00AB80AF</string>
-											<string>A266CF69157E869C00AB80AF</string>
-											<string>A266CFC3157E8ED400AB80AF</string>
-											<string>A266CFC4157E8ED400AB80AF</string>
-											<string>A266CFC5157E8ED400AB80AF</string>
-											<string>A266CFE0157E92E200AB80AF</string>
-											<string>A266CFE1157E92E200AB80AF</string>
 											<string>A266CFE2157E92E200AB80AF</string>
 											<string>A266D016157E98A400AB80AF</string>
 											<string>A266D01D157E999400AB80AF</string>
-											<string>A266D04D157E9BA500AB80AF</string>
-											<string>A266D04E157E9BA500AB80AF</string>
+											<string>A266D0D5157FE29B00AB80AF</string>
+											<string>A266D0D6157FE29B00AB80AF</string>
+											<string>A266D141157FF28600AB80AF</string>
+											<string>A266D16B1582233F00AB80AF</string>
+											<string>A266D1CB15822AED00AB80AF</string>
+											<string>A266D1DB1582421B00AB80AF</string>
+											<string>A266D1E71582435700AB80AF</string>
+											<string>A266D1F11582441400AB80AF</string>
+											<string>A266D220158246EF00AB80AF</string>
+											<string>A266D22B1582471A00AB80AF</string>
+											<string>A266D246158247D800AB80AF</string>
+											<string>A266D24C158247ED00AB80AF</string>
+											<string>A266D24D158247ED00AB80AF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -409,7 +402,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1059, 646}}</string>
 								<key>RubberWindowFrame</key>
-								<string>81 55 1362 691 0 0 1366 746 </string>
+								<string>-15 55 1362 691 0 0 1366 746 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -432,7 +425,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1059, -27}}</string>
+										<string>{{10, 27}, {1059, 167}}</string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -448,7 +441,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1332, 61}}</string>
+										<string>{{10, 27}, {1059, -27}}</string>
+										<key>RubberWindowFrame</key>
+										<string>-15 55 1362 691 0 0 1366 746 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXProjectFindModule</string>
@@ -487,8 +482,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1059, -27}}</string>
-										<key>RubberWindowFrame</key>
-										<string>81 55 1362 691 0 0 1366 746 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -693,7 +686,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>360619185.55482203</real>
+	<real>360859684.969006</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -708,13 +701,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>A266D057157E9CB100AB80AF</string>
 		<string>A266CE97157D36A400AB80AF</string>
 		<string>A266CE99157D36A400AB80AF</string>
 		<string>/Users/gnilk/src/github/yapt/yapt2.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>81 55 1362 691 0 0 1366 746 </string>
+	<string>-15 55 1362 691 0 0 1366 746 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

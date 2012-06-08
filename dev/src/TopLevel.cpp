@@ -166,7 +166,9 @@ static char *GetErrCodeTranslation(char *dst, int maxlen)
 	case kError_FactoryFailed :
 		snprintf(dst, maxlen, "Factory failed to create object");
 		break;
-
+    case kError_PropertyBindFailed :
+        snprintf(dst, maxlen, "Could not bind property");
+        break;
 		//
 	case kError_ObjectNotFound :
 		snprintf(dst, maxlen, "Object not found");

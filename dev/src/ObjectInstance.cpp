@@ -139,51 +139,112 @@ void PluginObjectInstance::SetDocument(IDocument *pDoc)
 	pDocument = pDoc;
 }
 
+
+static std::string GetEquallyDottedString(std::string propRef, std::string fqName) {
+    int nDots = 0;
+    size_t pos = 0;
+    // Counter number '.' in ref
+    while(pos != std::string::npos) {
+        pos = propRef.find('.',pos);
+        nDots++;   
+        if (pos == std::string::npos) break;
+        pos++;
+    }
+    pos = std::string::npos;
+    while(nDots > 0) {
+        pos = fqName.find_last_of('.',pos);   
+        nDots--;
+        if (nDots > 0) {
+            pos--;
+        }
+    }
+    // Skip '.' - we don't want it, want everything to the right side..
+    pos++;
+    std::string fqLast = fqName.substr(pos);
+    return fqLast;
+    
+}
 //
 // must fix this, only search in the direct render tree
 //
 IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *propertyReference, IDocNode *pRootNode)
 {
 	IPropertyInstance *pSource = NULL;
+    std::string propRef(propertyReference);
+    bool simpleRef = false;
+    if (propRef.find('.') == std::string::npos) {
+        simpleRef = true;
+    }
+    
 	int i;
 	for (i=0;i<pRootNode->GetNumChildren();i++)
 	{
 		IDocNode *pChild = pRootNode->GetChildAt(i);
-		PluginObjectInstance *pObject = (PluginObjectInstance *)pChild->GetNodeObject();
-		// TODO: Verify binding
-		const char *sName = pObject->GetAttributeValue("name"); 
+		PluginObjectInstance *pObject = dynamic_cast<PluginObjectInstance *>(pChild->GetNodeObject());
+        if (pObject == NULL) continue;
         
-		if (!StrConfCaseCmp(sName,propertyReference))
-		{
-			pSource = pObject->GetPropertyInstance(0,true);
-			break;
-		}
+        const char *sName = pObject->GetInstanceName();
+        if (simpleRef && !StrConfCaseCmp(sName, pObject->GetInstanceName())) {            
+			return pObject->GetPropertyInstance(0,true);
+        } else {
+            // 'Advanced' reference model..            
+            // 1) Look for absolute name targetting variables directly
+
+            int nProp = pObject->GetNumOutputProperties();
+            for(int j=0;j<nProp;j++) {
+                
+                PropertyInstance *pInst = dynamic_cast<PropertyInstance *>(pObject->GetPropertyInstance(j, true));
+                
+                std::string qName = GetEquallyDottedString(propRef, pInst->GetFullyQualifiedName());
+                if (!qName.compare(propRef)) {
+                    // found!
+                    return pObject->GetPropertyInstance(j, true);
+                }                
+            }
+            // 2) Look for object name - targetting first output implicityly
+            if (pSource == NULL) {
+                std::string qName = GetEquallyDottedString(propRef, std::string(pObject->GetFullyQualifiedName()));
+                if (!qName.compare(propRef)) {                
+                    return pObject->GetPropertyInstance(0,true); 
+                }                
+            }
+            
+        }
+//		if (!StrConfCaseCmp(sName,propertyReference))
+//		{
+//			pSource = pObject->GetPropertyInstance(0,true);
+//			break;
+//		}
 	}
 	// did not find node, search children!
 	if (pSource == NULL)
 	{
-		for (i=0;i<pRootNode->GetNumChildren();i++)
-		{
-			IDocNode *pChild = pRootNode->GetChildAt(i);
-			if ((pChild->GetNodeType() == kNodeType_ObjectInstance) ||
-                (pChild->GetNodeType() == kNodeType_ResourceContainer) ||
-                (pChild->GetNodeType() == kNodeType_RenderNode))
-			{
-				pSource = FindPropertyInstance(propertyReference, pChild);
-				if (pSource != NULL) 
-				{
-					break;
-				}
-			}
-			
-		}
+        if (pRootNode->GetParent() != NULL) {
+            
+            return FindPropertyInstance(propertyReference, pRootNode->GetParent());
+        }
+//		for (i=0;i<pRootNode->GetNumChildren();i++)
+//		{
+//			IDocNode *pChild = pRootNode->GetChildAt(i);
+//			if ((pChild->GetNodeType() == kNodeType_ObjectInstance) ||
+//                (pChild->GetNodeType() == kNodeType_ResourceContainer) ||
+//                (pChild->GetNodeType() == kNodeType_RenderNode))
+//			{
+//				pSource = FindPropertyInstance(propertyReference, pChild);
+//				if (pSource != NULL) 
+//				{
+//					break;
+//				}
+//			}
+//			
+//		}
 	}
-	return pSource;
+	return NULL;
 	
 }
 
 // Todo: this requires a more advanced lookup parser
-void PluginObjectInstance::BindProperties()
+bool PluginObjectInstance::BindProperties()
 {
 	size_t i;
 	for (i=0;i<input_properties.size();i++)
@@ -203,15 +264,17 @@ void PluginObjectInstance::BindProperties()
 			if (pSourceInst != NULL)
 			{
 				PropertyInstance *pSource = dynamic_cast<PropertyInstance *>(pSourceInst);
-				Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Succesfully bound property for %s.%s to %s.output[0]",GetInstanceName(), pInput->GetName(), propertyReference);
+				Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Succesfully bound property for %s.%s to %s",GetInstanceName(), pInput->GetName(), pSource->GetFullyQualifiedName());
 				pInput->SetSource(pSource);
 			} else
 			{			
-				Logger::GetLogger("PluginObjectInstance")->Warning("BindProperties, failed to bind property for %s.%s to %s.output[0]",GetDefinition()->GetDescription(), pInput->GetName(), propertyReference);
-			}
-            
+				Logger::GetLogger("PluginObjectInstance")->Warning("BindProperties, failed to bind property for %s.%s to %s",GetDefinition()->GetDescription(), pInput->GetName(), propertyReference);
+                SetYaptLastError(kErrorClass_ObjectDefinition, kError_PropertyBindFailed);
+                return false;
+			}            
 		}
 	}
+    return true;
 }
 
 
@@ -373,8 +436,10 @@ Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType 
         }   
     }
     if (prop == NULL) {
-        // Create the instance object
+        // Create instance object and add node in document
         prop = new PropertyInstance(sName, type, sDescription);
+        pDocument->AddObject(dynamic_cast<IBaseInstance *>(this),dynamic_cast<IBaseInstance *>(prop),kNodeType_PropertyInstance);
+        AddPropertyInstance(prop, bOutput);        
     }
 	// Initial value is NULL during early binding of variables - creating from XML stream reading
 	if (sInitialValue != NULL) {
@@ -384,12 +449,6 @@ Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType 
 			prop->SetValue(prop->GetUnboundRawValue());
 		}
 	}
-	AddPropertyInstance(prop, bOutput);
-    
-	// Create and add node in document
-	//IDocument *pDocument = yapt::GetYaptSystemInstance()->GetActiveDocument();
-	pDocument->AddObject(dynamic_cast<IBaseInstance *>(this),dynamic_cast<IBaseInstance *>(prop),kNodeType_PropertyInstance);
-    
 	// Fetch the actual property and return it
 	result = prop->GetProperty();
 	return result;

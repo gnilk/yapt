@@ -10,11 +10,16 @@
 	<render>
 		<object class="gl.RenderContext" name="context">
 			<object class="Animation.ExpSolver" name="rotspeed">
-				<property name="expression">40 * sin(t)</property>
+				<property name="expression">40 * abs(sin(t))</property>
+			</object>
+			<object class="geom.Triangle" name="tri">
 			</object>
 			<object class="gl.DrawTriangle" name="triangle">
-				<property name="speed" source="rotspeed" />
+				<property name="numIndex" source="tri.numIndex"/>
+				<property name="indexData" source="tri.indexData"/>
+				<property name="vertexData" source="tri.vertexData"/>
+				<property name="speed" source="rotspeed.bla" />
 			</object>
 		</object>
 	</render>
-</yapt2>
+</yapt2>				

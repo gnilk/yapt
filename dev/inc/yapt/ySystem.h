@@ -95,7 +95,8 @@ namespace yapt
 		kError_MissingIdentifier,	// the "identifier" token was not found in the descriptor string
 		kError_NoFactory,	// Factory was NULL when trying to create descriptor
 		kError_NoDescriptor,	// Descriptor was NULL
-		kError_FactoryFailed,	// failed in factory when creatingi nstance
+		kError_FactoryFailed,	// failed in factory when creating instance
+        kError_PropertyBindFailed,  // Failed to bind a property
 		
 		// no object matching the given class was found during XML import
 		// a node look up failed for the object
@@ -346,7 +347,7 @@ namespace yapt
 		virtual IRenderVars *GetRenderVars() = 0;
 		
 		virtual void InitializeNode(IDocNode *node) = 0;
-		virtual void PostInitializeNode(IDocNode *node) = 0;
+		virtual bool PostInitializeNode(IDocNode *node) = 0;
 		
 		virtual void Render(double sample_time) = 0;
 		virtual void RenderResources() = 0;

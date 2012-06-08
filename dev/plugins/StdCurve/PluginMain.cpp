@@ -347,8 +347,10 @@ double YaptExpSolverFacade::OnFunctionExpression(const char *data, double arg, i
     } else  if (!strcmp(data,"cos")) {
         *bOk_out = 1;
         result = cos(arg);
-    }
-    printf("%f\n",result);
+    } else  if (!strcmp(data,"abs")) {
+        *bOk_out = 1;
+        result = fabs(arg);
+    }    
     
     return result;
 }
@@ -362,9 +364,7 @@ void YaptExpSolverFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *p
     pExpSolver = new ExpSolver(expression->v->string);
     pExpSolver->RegisterUserVariableCallback(cbExpVariable,this);
     pExpSolver->RegisterUserFunctionCallback(cbExpFunc,this);
-    pExpSolver->Prepare();
-    // TODO: Support functions like 'sin','cos' and others through callback
-    
+    pExpSolver->Prepare();    
 }
 
 void YaptExpSolverFacade::Render(double t, IPluginObjectInstance *pInstance) {

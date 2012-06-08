@@ -24,6 +24,10 @@
 		A266CFDA157E912500AB80AF /* expsolver.h in Headers */ = {isa = PBXBuildFile; fileRef = A266CFD2157E912500AB80AF /* expsolver.h */; };
 		A266CFDB157E912500AB80AF /* tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A266CFD3157E912500AB80AF /* tokenizer.cpp */; };
 		A266CFDC157E912500AB80AF /* tokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = A266CFD4157E912500AB80AF /* tokenizer.h */; };
+		A266D0D1157FE0D500AB80AF /* vec.c in Sources */ = {isa = PBXBuildFile; fileRef = A266D0CD157FE0D500AB80AF /* vec.c */; };
+		A266D0D2157FE0D500AB80AF /* vec.h in Headers */ = {isa = PBXBuildFile; fileRef = A266D0CE157FE0D500AB80AF /* vec.h */; };
+		A266D0D3157FE0D500AB80AF /* vecutil.c in Sources */ = {isa = PBXBuildFile; fileRef = A266D0CF157FE0D500AB80AF /* vecutil.c */; };
+		A266D0D4157FE0D500AB80AF /* vecutil.h in Headers */ = {isa = PBXBuildFile; fileRef = A266D0D0157FE0D500AB80AF /* vecutil.h */; };
 		A27071041549EA6400A06F6A /* MetaInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A27071031549EA6400A06F6A /* MetaInstance.cpp */; };
 		A29AC7C311B3E1150012A062 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A711B3E1150012A062 /* Attribute.cpp */; };
 		A29AC7C411B3E1150012A062 /* BaseInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A29AC7A811B3E1150012A062 /* BaseInstance.cpp */; };
@@ -192,6 +196,10 @@
 		A266CFD2157E912500AB80AF /* expsolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expsolver.h; path = dev/plugins/StdCurve/expsolver.h; sourceTree = "<group>"; };
 		A266CFD3157E912500AB80AF /* tokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tokenizer.cpp; path = dev/plugins/StdCurve/tokenizer.cpp; sourceTree = "<group>"; };
 		A266CFD4157E912500AB80AF /* tokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tokenizer.h; path = dev/plugins/StdCurve/tokenizer.h; sourceTree = "<group>"; };
+		A266D0CD157FE0D500AB80AF /* vec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vec.c; path = dev/plugins/glFuncs/vec.c; sourceTree = "<group>"; };
+		A266D0CE157FE0D500AB80AF /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vec.h; path = dev/plugins/glFuncs/vec.h; sourceTree = "<group>"; };
+		A266D0CF157FE0D500AB80AF /* vecutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vecutil.c; path = dev/plugins/glFuncs/vecutil.c; sourceTree = "<group>"; };
+		A266D0D0157FE0D500AB80AF /* vecutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vecutil.h; path = dev/plugins/glFuncs/vecutil.h; sourceTree = "<group>"; };
 		A267453B106947CD00D76D89 /* libFxPluginSample.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libFxPluginSample.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26745451069486A00D76D89 /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		A27071031549EA6400A06F6A /* MetaInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaInstance.cpp; path = dev/src/MetaInstance.cpp; sourceTree = "<group>"; };
@@ -365,6 +373,10 @@
 		A266CF14157D4FF200AB80AF /* glFuncs */ = {
 			isa = PBXGroup;
 			children = (
+				A266D0CD157FE0D500AB80AF /* vec.c */,
+				A266D0CE157FE0D500AB80AF /* vec.h */,
+				A266D0CF157FE0D500AB80AF /* vecutil.c */,
+				A266D0D0157FE0D500AB80AF /* vecutil.h */,
 				A266CF24157D50A200AB80AF /* PluginMain.cpp */,
 			);
 			name = glFuncs;
@@ -499,6 +511,8 @@
 			files = (
 				A266CFD6157E912500AB80AF /* expsolver.h in Headers */,
 				A266CFD8157E912500AB80AF /* tokenizer.h in Headers */,
+				A266D0D2157FE0D500AB80AF /* vec.h in Headers */,
+				A266D0D4157FE0D500AB80AF /* vecutil.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +767,8 @@
 				A266CF25157D50A200AB80AF /* PluginMain.cpp in Sources */,
 				A266CFD5157E912500AB80AF /* expsolver.cpp in Sources */,
 				A266CFD7157E912500AB80AF /* tokenizer.cpp in Sources */,
+				A266D0D1157FE0D500AB80AF /* vec.c in Sources */,
+				A266D0D3157FE0D500AB80AF /* vecutil.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

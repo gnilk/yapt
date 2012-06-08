@@ -373,7 +373,7 @@ namespace yapt
 		virtual IRenderVars *GetRenderVars();
 	
 		virtual void InitializeNode(IDocNode *node); 
-		virtual void PostInitializeNode(IDocNode *node);
+		virtual bool PostInitializeNode(IDocNode *node);
 
 		
 		virtual void Render(double sample_time);
@@ -554,7 +554,7 @@ namespace yapt
 		IPropertyInstance *GetPropertyInstance(int index, bool bOutput);
 		void AddPropertyInstance(PropertyInstance *property, bool bOutput);
 	
-		void BindProperties();
+		bool BindProperties();
 		bool ShouldRender(double glbTime);
 
 		// Functions to access most common attributes

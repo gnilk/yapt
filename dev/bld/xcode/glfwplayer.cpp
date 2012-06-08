@@ -10,6 +10,18 @@
 
 using namespace yapt;
 
+static void perror()
+{
+	kErrorClass eClass;
+	kError eCode;
+	char estring[256];
+    
+	GetYaptLastError(&eClass, &eCode);
+	GetYaptErrorTranslation(estring,256);
+	Logger::GetLogger("main")->Error("(%d:%d); %s\n",eClass,eCode,estring);
+	exit(1);
+}
+
 
 static void loadDocument(char *filename) {
 	ILogger *pLogger = Logger::GetLogger("main");
@@ -26,15 +38,48 @@ static void loadDocument(char *filename) {
 	{
 		pLogger->Debug("PostInitialize");
 		IDocNode *pRoot = system->GetActiveDocument()->GetTree();		
-		system->GetActiveDocumentController()->PostInitializeNode(pRoot);
+		if (!system->GetActiveDocumentController()->PostInitializeNode(pRoot)) {
+            perror();
+        }
 		pLogger->Debug("Initialize/Render Resources");
 		system->GetActiveDocumentController()->RenderResources();
 
-	}
-	
+	}	
+}
+static void testBindParser() {
+    
+    // 1) Build a FQ cache when post-initializing the document
+    // 2) Classify source
+    //      a) Contain no '.' - single name, with first output, like today
+    //      b) Contain one or more '.' -> find best match according to
+    //         1) Last item is output-variable-name, if found make sure right hand side matches
+    //         2) Last item is effect-name and we want only first output, find object with matching effect name
+    
+    char *sFQObjectName = "doc.render.context.rotspeed.expression";
+    char *sSourceName = "rotspeed";
+    
+    std::string source(sSourceName);
+    std::string fqPropName(sFQObjectName);
+    
+    size_t pos = fqPropName.find_last_of('.');
+    std::string fqObjectName = fqPropName.substr(0, pos);
+    std::string propName = fqPropName.substr(pos+1);
+    // primitive sourceing - just fetch first
+    if (source.find('.') == std::string::npos) {
+        // not found, source is object name only..
+        size_t pos = fqObjectName.find_last_of('.');
+        std::string objectName = fqObjectName.substr(pos+1);
+        if (!objectName.compare(source)) {
+            // found
+            printf("found\n");
+        }
+    }
+    
+    
+    
 }
 static void initializeYapt() {
-	
+    
 	ILogger *pLogger = Logger::GetLogger("main");
 	pLogger->Debug("YAPT2 - running tests");
 	yapt::ISystem *system = GetYaptSystemInstance();
@@ -42,15 +87,14 @@ static void initializeYapt() {
 	system->SetConfigValue(kConfig_CaseSensitive,false);
 	system->ScanForPlugins(".\\", true);
 	
-//	pLogger->Debug("Initializing built in functionality");
-//	IBaseInstance *pPlugin = system->RegisterAndInitializePlugin(yFxInitializePlugin, "built-in");
 }
+
+
 
 int main(int argc, char **argv) {
 
 	initializeYapt();
 	loadDocument("file://gl_test.xml");
-	
 	
 	if( !glfwInit() )
     {
