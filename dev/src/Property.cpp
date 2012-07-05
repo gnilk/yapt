@@ -227,6 +227,49 @@ PluginObjectInstance *PropertyInstance::GetObjectInstance()
 	return this->objectInstance;
 }
 
+char *PropertyInstance::GetPropertyTypeName(char *sDest, int maxLen) {
+    switch(GetPropertyType()) {
+		case kPropertyType_Float:
+            snprintf(sDest, maxLen, "float");
+			break;
+		case kPropertyType_FloatTuple :
+            snprintf(sDest, maxLen, "vec2");
+			break;
+		case kPropertyType_Integer :
+            snprintf(sDest, maxLen, "int");
+			break;
+		case kPropertyType_IntegerTuple :
+            snprintf(sDest, maxLen, "int2");
+			break;
+		case kPropertyType_Color :
+            snprintf(sDest, maxLen, "rgba");
+			break;            
+		case kPropertyType_Quaternion:
+            snprintf(sDest, maxLen, "quat");
+			break;
+		case kPropertyType_Vector :
+            snprintf(sDest, maxLen, "vec3");
+			break;
+		case kPropertyType_String :
+            snprintf(sDest, maxLen, "str");
+			break;
+		case kPropertyType_Enum :
+            snprintf(sDest, maxLen, "enum");
+			break;
+		case kPropertyType_UserPtr :
+            snprintf(sDest, maxLen, "ptr");
+			break;
+		case kPropertyType_Unbound :
+            snprintf(sDest, maxLen, "-int-");
+            break;
+        default :
+            snprintf(sDest, maxLen, "unk");
+            break;
+            
+    }
+    return sDest;
+}
+
 void PropertyInstance::SetValue(const char *sValue)
 {
 	switch (GetPropertyType())

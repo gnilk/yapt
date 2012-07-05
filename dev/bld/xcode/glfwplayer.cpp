@@ -89,12 +89,98 @@ static void initializeYapt() {
 	
 }
 
-
+static void printHelp(char *execname) {
+    
+    printf("Usage: %s [options] <filename>\n",execname);
+    printf("Options\n");
+    printf(" l <num>    Set log level (higher means less, default is 0)\n");
+    printf(" o <class>  Dump info for object of type 'class'\n");
+    printf("Filename is default 'file://gl_text.xml' (don't forget the URI specifier)\n");
+}
+static void dumpProperties(IPluginObjectInstance *pInst, bool bOutput) {
+    int nProp;
+    if (!bOutput) {
+        nProp = pInst->GetNumInputProperties();
+        if (nProp == 0) return;
+        printf("Input properties\n");
+    } else {
+        nProp = pInst->GetNumOutputProperties();
+        if (nProp == 0) return;
+        printf("Output properties\n");
+    }
+    for(int i=0;i<nProp;i++) {    
+        IPropertyInstance *iPropInst = pInst->GetPropertyInstance(i, bOutput);
+        IBaseInstance *pBase = dynamic_cast<IBaseInstance *> (iPropInst);
+        if (pBase != NULL) {
+            char tmp[256];
+            char tmp2[256];
+            printf("  %i: [%s] %s (default: %s)\n",i,iPropInst->GetPropertyTypeName(tmp2,256),pBase->GetAttribute("name")->GetValue(), iPropInst->GetValue(tmp,256));            
+        }    
+    }
+}
+static void printObjectProperties(char *className) {
+	yapt::ISystem *ySys = GetYaptSystemInstance();
+    IPluginObjectDefinition *pDef = ySys->GetObjectDefinition(className);
+    if (pDef == NULL) {
+        
+        printf("[!] Error: Object not found '%s'\n",className);
+        return;
+    }
+    IPluginObjectInstance *pInst = pDef->CreateInstance();
+    if (pInst == NULL) {
+        
+        printf("[!] Error: Unable to create instance of object\n");
+        return;
+    }
+    pInst->GetExtObject()->Initialize(ySys, pInst);
+    
+    printf("Object '%s', created ok\n",className);
+        
+    dumpProperties(pInst, false);
+    dumpProperties(pInst, true);
+}
 
 int main(int argc, char **argv) {
 
+    int logLevel = Logger::kMCDebug;
+    char *docFileName = "file://gl_test.xml";
+    char *objName = NULL;
+    if (argc > 1) {
+        for(int i=1;i<argc;i++) {
+            if ((argv[i][0] == '-') || (argv[i][0] == '/')) {
+                switch(argv[i][1]) {
+                    case 'l' :
+                        logLevel = atoi(argv[++i]);
+                        break;
+                    case 'o' :
+                        objName = argv[++i];
+                        break;
+                    case 'h' :
+                    case 'H' :
+                        printHelp(argv[0]);
+                        exit(1);
+                        break;
+                    default :
+                        printf("Unknown option: %s\n",argv[i]);
+                        printHelp(argv[0]);
+                        exit(1);
+                        break;
+                }                
+            } else {
+                docFileName = argv[i];
+            }
+            
+        }
+    } 
+
+    Logger::SetAllSinkDebugLevel(logLevel);
 	initializeYapt();
-	loadDocument("file://gl_test.xml");
+    if (objName!=NULL) {
+        printObjectProperties(objName);
+        exit(1);
+    }
+    loadDocument(docFileName);
+
 	
 	if( !glfwInit() )
     {
@@ -119,7 +205,7 @@ int main(int argc, char **argv) {
     // Enable vertical sync (on cards that support it)
     glfwSwapInterval( 1 );
 	yapt::ISystem *ySys = GetYaptSystemInstance();
-	
+    	
     do
     {
 		ySys->GetActiveDocumentController()->Render(glfwGetTime());

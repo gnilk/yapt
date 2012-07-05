@@ -467,6 +467,7 @@ namespace yapt
 
 	public:	// interface
 		virtual kPropertyType GetPropertyType();
+        virtual char *GetPropertyTypeName(char *sDest, int maxLen);
 		virtual void SetValue(const char *sValue);
 		virtual char *GetValue(char *sValueDest, int maxlen);
 	};
@@ -551,7 +552,6 @@ namespace yapt
 		void Dump();
 		// Property Instance functions
 		IPropertyInstance *GetPropertyInstance(const char *szName, bool bOutput);
-		IPropertyInstance *GetPropertyInstance(int index, bool bOutput);
 		void AddPropertyInstance(PropertyInstance *property, bool bOutput);
 	
 		bool BindProperties();
@@ -578,6 +578,7 @@ namespace yapt
 		virtual Property *GetProperty(const char *name);
 		virtual void SetPropertyValue(Property *prop, const char *value);
 		virtual IPropertyInstance *GetPropertyInstance(const char *name);
+		virtual IPropertyInstance *GetPropertyInstance(int index, bool bOutput);
 		virtual int GetNumInputProperties();
 		virtual int GetNumOutputProperties();
 		virtual Property *GetInputPropertyAt(int index);

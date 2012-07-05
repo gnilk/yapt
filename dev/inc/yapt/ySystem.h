@@ -220,6 +220,7 @@ namespace yapt
 	{
 	public:
 		virtual kPropertyType GetPropertyType() = 0;
+        virtual char *GetPropertyTypeName(char *sDest, int maxLen) = 0;
 		virtual void SetValue(const char *sValue) = 0;
 		virtual char *GetValue(char *sValueDest, int maxlen) = 0;
 	};
@@ -239,6 +240,7 @@ namespace yapt
 		virtual Property *CreateOutputProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription) = 0;
 		virtual Property *GetProperty(const char *name) = 0;
 		virtual IPropertyInstance *GetPropertyInstance(const char *name) = 0;
+		virtual IPropertyInstance *GetPropertyInstance(int index, bool bOutput) = 0;
 		virtual void SetPropertyValue(Property *prop, const char *value) = 0;
 		virtual int GetNumInputProperties() = 0;
 		virtual int GetNumOutputProperties() = 0;

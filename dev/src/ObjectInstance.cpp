@@ -438,7 +438,9 @@ Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType 
     if (prop == NULL) {
         // Create instance object and add node in document
         prop = new PropertyInstance(sName, type, sDescription);
-        pDocument->AddObject(dynamic_cast<IBaseInstance *>(this),dynamic_cast<IBaseInstance *>(prop),kNodeType_PropertyInstance);
+        if (pDocument) {
+            pDocument->AddObject(dynamic_cast<IBaseInstance *>(this),dynamic_cast<IBaseInstance *>(prop),kNodeType_PropertyInstance);            
+        }
         AddPropertyInstance(prop, bOutput);        
     }
 	// Initial value is NULL during early binding of variables - creating from XML stream reading
