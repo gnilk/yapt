@@ -721,6 +721,7 @@ namespace yapt
 		virtual noice::io::IStreamDevice *CreateIODevice(const char *url_identifier);
 		virtual bool RegisterIODevice(noice::io::IStreamDeviceFactory *pDeviceFactory, const char *url_identifier, const char *initparam, bool bCreate);
 
+
 		// Configuration
 		virtual const char *GetConfigValue(const char *key);
 		virtual const bool GetConfigBool(const char *key);
@@ -748,6 +749,7 @@ namespace yapt
 		virtual void UnregisterDocumentHook(ISystemDocumentHooks *pHook);
 
 
+		virtual yapt::ILogger *GetLogger(const char *loggerName);
 	};
 
 	// This class holds mappings available for everybody, everywhere... 

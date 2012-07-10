@@ -438,4 +438,7 @@ void System::UnregisterDocumentHook(ISystemDocumentHooks *pHook)
 	GetHooks()->RemoveHooks(pHook);
 }
 
+yapt::ILogger *System::GetLogger(const char *loggerName) {
+	return Logger::GetLogger(loggerName);
+}
 

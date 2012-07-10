@@ -71,7 +71,7 @@ namespace Goat
 	class Curve
 	{
 	protected:
-		ILogger *pLogger;
+		yapt::ILogger *pLogger;
 		int nChannels;
 		kCurveType curveType;
 		kCurveClass curveClass;

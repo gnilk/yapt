@@ -492,6 +492,8 @@ namespace yapt
 		// hooking functions - ok, global stuff
 		virtual void RegisterDocumentHook(ISystemDocumentHooks *pHook) = 0;
 		virtual void UnregisterDocumentHook(ISystemDocumentHooks *pHook) = 0;
+
+		virtual yapt::ILogger *GetLogger(const char *loggerName) = 0;
 	};
 
 	// TODO: Also provide a class wrapper for this

@@ -69,6 +69,7 @@ static double* qAdd(double *q, double *q1, double *q2);
 static double* qSlerp(double *q, double *q1, double *q2, double t);
 static double *qDup(double *dst, double *src);
 
+extern ISystem *pSysPtr;
 
 Key::Key()
 {
@@ -90,7 +91,7 @@ Curve::Curve(int nChannels, kCurveClass cClass)
 	this->nChannels = nChannels;
 	curveType = kCurveType_Regular;	// change in order to hint
 	curveClass = cClass;
-	pLogger = Logger::GetLogger("Curve");
+	pLogger = pSysPtr->GetLogger("Curve");//Logger::GetLogger("Curve");
 }
 
 kCurveType Curve::ChangeType(kCurveType newType)
@@ -303,7 +304,7 @@ static int StrToken(const char *sInput, int iOffset, char *dest, int nMax)
 //
 Curve *Curve::Load(const char *filename)
 {
-	ILogger *pLogger = Logger::GetLogger("Curve");
+	ILogger *pLogger = pSysPtr->GetLogger("Curve");//Logger::GetLogger("Curve");
 
 	Curve *pCurve = NULL;
 	FILE *f = fopen(filename,"r");

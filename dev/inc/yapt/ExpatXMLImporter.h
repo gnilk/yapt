@@ -11,6 +11,7 @@
 
 #include "yapt/logger.h"
 #include "yapt/ySystem.h"
+#include "noice/io/io.h"
 
 namespace yapt
 {
