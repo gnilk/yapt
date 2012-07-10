@@ -256,6 +256,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -297,10 +299,12 @@
 								<string>A266CF14157D4FF200AB80AF</string>
 								<string>A29AC85C11B408730012A062</string>
 								<string>A29AC82511B3EAD70012A062</string>
-								<string>A29AC79F11B3E0810012A062</string>
-								<string>A29AC7E011B3E2C00012A062</string>
-								<string>A29AC79E11B3E0780012A062</string>
+								<string>A29AC7F711B3E7040012A062</string>
 								<string>1C37FBAC04509CD000000102</string>
+								<string>A266D2DA15AB5EF400AB80AF</string>
+								<string>A266D2DB15AB5EF400AB80AF</string>
+								<string>A266D2DC15AB5EF400AB80AF</string>
+								<string>A266D2DD15AB5EF400AB80AF</string>
 								<string>A266CF3F157E84B800AB80AF</string>
 								<string>A266CF40157E84B800AB80AF</string>
 								<string>A266CF41157E84B800AB80AF</string>
@@ -310,15 +314,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>30</integer>
-									<integer>22</integer>
-									<integer>21</integer>
-									<integer>1</integer>
-									<integer>0</integer>
+									<integer>39</integer>
+									<integer>37</integer>
+									<integer>36</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 168}, {281, 632}}</string>
+							<string>{{0, 561}, {281, 632}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -346,14 +348,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>A21B3CDB1041491600A24D60</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>glfwplayer.cpp</string>
+								<string>glPlayer-Info.plist</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -361,17 +361,14 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>A21B3CDC1041491600A24D60</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>glfwplayer.cpp</string>
+										<string>glPlayer-Info.plist</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>A266D2D915A633CC00AB80AF</string>
+										<string>A266D2ED15AB5EF400AB80AF</string>
 										<key>history</key>
 										<array>
-											<string>A27070F015474AF300A06F6A</string>
-											<string>A27070F115474AF300A06F6A</string>
 											<string>A2C7B02D154C4C5700D8235F</string>
-											<string>A2C7B030154C4C5700D8235F</string>
 											<string>A266CFE2157E92E200AB80AF</string>
 											<string>A266D01D157E999400AB80AF</string>
 											<string>A266D0D5157FE29B00AB80AF</string>
@@ -379,16 +376,28 @@
 											<string>A266D16B1582233F00AB80AF</string>
 											<string>A266D1DB1582421B00AB80AF</string>
 											<string>A266D1F11582441400AB80AF</string>
-											<string>A266D220158246EF00AB80AF</string>
 											<string>A266D246158247D800AB80AF</string>
 											<string>A266D24C158247ED00AB80AF</string>
 											<string>A266D25A15A6255300AB80AF</string>
 											<string>A266D27715A6274F00AB80AF</string>
-											<string>A266D2A615A62ECA00AB80AF</string>
 											<string>A266D2A915A62ECA00AB80AF</string>
 											<string>A266D2CD15A632EF00AB80AF</string>
 											<string>A266D2CE15A632EF00AB80AF</string>
-											<string>A266D2CF15A632EF00AB80AF</string>
+											<string>A266D2DE15AB5EF400AB80AF</string>
+											<string>A266D2DF15AB5EF400AB80AF</string>
+											<string>A266D2E015AB5EF400AB80AF</string>
+											<string>A266D2E115AB5EF400AB80AF</string>
+											<string>A266D2E215AB5EF400AB80AF</string>
+											<string>A266D2E315AB5EF400AB80AF</string>
+											<string>A266D2E415AB5EF400AB80AF</string>
+											<string>A266D2E515AB5EF400AB80AF</string>
+											<string>A266D2E615AB5EF400AB80AF</string>
+											<string>A266D2E715AB5EF400AB80AF</string>
+											<string>A266D2E815AB5EF400AB80AF</string>
+											<string>A266D2E915AB5EF400AB80AF</string>
+											<string>A266D2EA15AB5EF400AB80AF</string>
+											<string>A266D2EB15AB5EF400AB80AF</string>
+											<string>A266D2EC15AB5EF400AB80AF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -427,7 +436,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1059, 10}}</string>
+										<string>{{10, 27}, {1059, -3}}</string>
+										<key>RubberWindowFrame</key>
+										<string>-15 55 1362 691 0 0 1366 746 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -482,8 +493,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1059, -3}}</string>
-										<key>RubberWindowFrame</key>
-										<string>-15 55 1362 691 0 0 1366 746 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -688,7 +697,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>363213772.81618398</real>
+	<real>363552500.90376502</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
