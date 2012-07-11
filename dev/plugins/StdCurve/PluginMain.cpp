@@ -16,7 +16,6 @@
 using namespace yapt;
 using namespace Goat;	// Curve is within the Goat namespace...
 
-ISystem *pSysPtr = NULL;	// Global for lib - holds the system pointer, setup on loading
 
 extern "C"
 {
@@ -27,7 +26,7 @@ class CurveFactory :
 	public IPluginObjectFactory
 {
 public:	
-	virtual IPluginObject *CreateObject(const char *guid_identifier);
+	virtual IPluginObject *CreateObject(ISystem *pSys, const char *guid_identifier);
 };
 
 class BaseCurveFacade :
@@ -115,9 +114,9 @@ public:
 
 static CurveFactory factory;
 
-IPluginObject *CurveFactory::CreateObject(const char *identifier)
+IPluginObject *CurveFactory::CreateObject(ISystem *pSys, const char *identifier)
 {
-	ILogger *pLogger = pSysPtr->GetLogger("StdCurve.Factory");//Logger::GetLogger("StdCurve.Factory");
+	ILogger *pLogger = pSys->GetLogger("StdCurve.Factory");//Logger::GetLogger("StdCurve.Factory");
 	IPluginObject *pObject = NULL;
 	pLogger->Debug("Trying '%s'", identifier);
 	if (!strcmp(identifier,"Animation.GenericCurve"))
@@ -195,7 +194,7 @@ void YaptCurveFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 
 void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance)
 {
-	ILogger *pLogger = pSysPtr->GetLogger("YaptCurveFacade");//Logger::GetLogger("YaptCurveFacade");
+	ILogger *pLogger = ySys->GetLogger("YaptCurveFacade");//Logger::GetLogger("YaptCurveFacade");
 	pLogger->Debug("PostInitialize");
 	if (pCurve != NULL)
 	{
@@ -383,7 +382,6 @@ static void perror()
 // This function must be exported from the lib/dll
 int CALLCONV yaptInitializePlugin(ISystem *ySys)
 {
-	pSysPtr = ySys;
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.GenericCurve");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Key");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorKey");

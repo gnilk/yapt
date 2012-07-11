@@ -213,7 +213,7 @@ namespace yapt
 	struct IPluginObjectFactory
 	{
 	public:
-		virtual IPluginObject *CreateObject(const char *guid_identifier) = 0;
+		virtual IPluginObject *CreateObject(ISystem *pSys, const char *guid_identifier) = 0;
 	};
 	
 	struct IPropertyInstance

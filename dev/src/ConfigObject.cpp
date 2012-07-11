@@ -31,12 +31,13 @@ extern "C"
 	int CALLCONV InitializeConfigPlugin(ISystem *ySys);
 }
 
+ISystem *pSysPtr;
 
 class InternalPluginFactory :
 	public IPluginObjectFactory
 {
 public:	
-	virtual IPluginObject *CreateObject(const char *guid_identifier);
+	virtual IPluginObject *CreateObject(ISystem *pSys, const char *guid_identifier);
 };
 
 class ConfigObject :
@@ -83,9 +84,10 @@ void ConfigObject::PostRender(double t, IPluginObjectInstance *pInstance)
 {
 }
 
-IPluginObject *InternalPluginFactory::CreateObject(const char *identifier)
+IPluginObject *InternalPluginFactory::CreateObject(ISystem *pSys, const char *identifier)
 {
-	ILogger *pLogger = Logger::GetLogger("InternalPluginFactory");
+	pSysPtr = pSys;
+	ILogger *pLogger = pSys->GetLogger("InternalPluginFactory");
 	IPluginObject *pObject = NULL;
 	pLogger->Debug("Trying '%s'", identifier);
 	if (!strcmp(identifier,"System.Config"))

@@ -191,7 +191,8 @@ IPluginObject *PluginObjectDefinition::CreateExternalInstance()
 	if(factory != NULL)
 	{
 		const char *extid  = GetAttributeValue(kDefintion_Name);
-		result = factory->CreateObject(extid);
+		ISystem *pSys = GetYaptSystemInstance();
+		result = factory->CreateObject(pSys, extid);
 		if (!result)
 		{
 			yapt::SetYaptLastError(kErrorClass_ObjectDefinition, kError_FactoryFailed);
