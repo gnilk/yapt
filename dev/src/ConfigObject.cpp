@@ -86,7 +86,8 @@ void ConfigObject::PostRender(double t, IPluginObjectInstance *pInstance)
 
 IPluginObject *InternalPluginFactory::CreateObject(ISystem *pSys, const char *identifier)
 {
-	pSysPtr = pSys;
+	pSysPtr = pSys; // Curve does not have an ISystem ptr  - use a globally shared variable instead
+
 	ILogger *pLogger = pSys->GetLogger("InternalPluginFactory");
 	IPluginObject *pObject = NULL;
 	pLogger->Debug("Trying '%s'", identifier);

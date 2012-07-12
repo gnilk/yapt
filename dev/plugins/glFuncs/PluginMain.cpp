@@ -20,7 +20,7 @@ extern "C" {
 
 class Factory: public IPluginObjectFactory {
 public:
-	virtual IPluginObject *CreateObject(ISystem *pSys, const char *guid_identifier);
+	virtual IPluginObject *CreateObject(ISystem *pSys, const char *identifier);
 };
 
 class PluginObjectImpl: public IPluginObject {
@@ -169,6 +169,8 @@ void OpenGLRenderContext::PostInitialize(ISystem *ySys,
 
 void OpenGLRenderContext::PostRender(double t,
 		IPluginObjectInstance *pInstance) {
+
+	// TODO: Copy to texture here!
 
 }
 //

@@ -26,7 +26,7 @@ class CurveFactory :
 	public IPluginObjectFactory
 {
 public:	
-	virtual IPluginObject *CreateObject(ISystem *pSys, const char *guid_identifier);
+	virtual IPluginObject *CreateObject(ISystem *pSys, const char *identifier);
 };
 
 class BaseCurveFacade :
