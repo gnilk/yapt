@@ -25,6 +25,9 @@ namespace yapt
 		kParserState_Object,
 		kParserState_Property,
 		kParserState_Include,
+		kParserState_Timeline,
+		kParserState_Timeline_Execute,
+
 	} kParserState;
 
 	class ExpatXMLParser :
@@ -47,6 +50,7 @@ namespace yapt
 		bool IsElementAllowed(const char *name);
 		void ParseError(const char *errString);
 		IPluginObjectInstance *CreateObjectInstance(const char *name, const char **atts);
+		IBaseInstance *CreateExecuteInstance(const char *name, const char **atts);
 		void IncludeFromURL(const char *url, const char **atts);
 
 		bool ReadStream(noice::io::IStream *pStream);

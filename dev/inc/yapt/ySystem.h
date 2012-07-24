@@ -64,6 +64,8 @@ namespace yapt
 	#define kDocument_ObjectTagName ("object")
 	#define kDocument_PropertyTagName ("property")
 	#define kDocument_IncludeTagName ("include")
+	#define kDocument_TimelineTagName ("timeline")
+	#define kDocument_ExecuteTagName ("execute")
 
 
 	// defines the module/logical unit of where the error occured
@@ -154,6 +156,7 @@ namespace yapt
 		kNodeType_XMLRAW = 7,	// RAW XML, should dump RAW during serialization (comments and unknown tokens etc)
 		kNodeType_Meta = 8,	// This is a meta node
 		kNodeType_Include = 9,
+		kNodeType_Timeline = 10,
 	} kNodeType;
 
 	union PropertyValue
@@ -320,6 +323,11 @@ namespace yapt
 		virtual IContext *GetContext() = 0;
 	};
 
+	struct ITimeline {
+		virtual int GetNumExecutors() = 0;
+		virtual IBaseInstance *GetExecutorAtIndex(int idx) = 0;
+	};
+
   struct IMetaInstance
   {
   public:
@@ -366,6 +374,7 @@ namespace yapt
 		virtual IDocNode *GetRenderTree() = 0;
 		virtual IBaseInstance *GetRenderRoot() = 0;
 		virtual IResourceContainer *GetResourceContainer() = 0;	// returns root of resource tree
+		virtual ITimeline *GetTimeline() = 0;
 
 		virtual void MoveNode (IDocNode *pNewParent, IDocNode *pNode) = 0;
 		virtual void SwapNodes (IDocNode *pNodeA, IDocNode *pNodeB) = 0;
@@ -374,6 +383,7 @@ namespace yapt
 		virtual bool RemoveObject(IBaseInstance *pObject) = 0;
 		virtual IDocNode *AddObject(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType) = 0;
 		virtual IDocNode *AddRenderObject(IBaseInstance *parent, IBaseInstance *object) = 0;
+		virtual IDocNode *AddToTimeline(IBaseInstance *object) = 0;
 		virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object) = 0;
 		virtual IDocNode *AddMetaObject(IBaseInstance *parent) = 0;
 

@@ -182,6 +182,16 @@ namespace yapt
 
 	class PluginObjectInstance;
 	
+	class Timeline :
+		public ITimeline,
+		public BaseInstance
+	{
+	public:
+		Timeline();
+		virtual ~Timeline();
+		virtual int GetNumExecutors();
+		virtual IBaseInstance *GetExecutorAtIndex(int idx);
+	};
 	class ResourceContainer :
 		public IResourceContainer, 
 		public BaseInstance
@@ -288,7 +298,8 @@ namespace yapt
 			ILogger *pLogger;
 
 			IDocumentController *pDocumentController;		// Current assigned engine
-			
+
+			Timeline *timeline;	// timeline object
 			ResourceContainer *resources;	// default resource container (TODO: Replace)
 			BaseNodeMap treemap;	// lookup baseinstance/inode
 		protected:
@@ -328,6 +339,7 @@ namespace yapt
 			
 			virtual IBaseInstance *GetRenderRoot();
 			virtual IResourceContainer *GetResourceContainer();	// returns resource container
+			virtual ITimeline *GetTimeline();
 		/*	
 			virtual void InitializeNode(IDocNode *node); 
 			virtual void PostInitializeNode(IDocNode *node);
@@ -344,6 +356,7 @@ namespace yapt
 			
 			virtual IDocNode *AddObject(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType);
 			virtual IDocNode *AddRenderObject(IBaseInstance *parent, IBaseInstance *object);
+			virtual IDocNode *AddToTimeline(IBaseInstance *object);
 			virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object);
 			virtual IDocNode *AddMetaObject(IBaseInstance *parent);
 

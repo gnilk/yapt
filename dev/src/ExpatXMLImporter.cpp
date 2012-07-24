@@ -67,12 +67,14 @@ using namespace noice::io;
 
 static const char *lRootTags[]={kDocument_RootTagName,NULL};
 static kParserState lRootChange[]={kParserState_Doc};
-static const char *lDocTags[]={kDocument_ResourceTagName,kDocument_RenderTagName,kDocument_IncludeTagName,NULL};
-static kParserState lDocChange[]={kParserState_Resources, kParserState_Render, kParserState_Include};
+static const char *lDocTags[]={kDocument_ResourceTagName,kDocument_RenderTagName,kDocument_IncludeTagName,kDocument_TimelineTagName, NULL};
+static kParserState lDocChange[]={kParserState_Resources, kParserState_Render, kParserState_Include, kParserState_Timeline};
 static const char *lResourceTags[]={kDocument_ObjectTagName,NULL};
 static kParserState lResourceChange[]={kParserState_Object};
 static const char *lRenderTags[]={kDocument_ObjectTagName,NULL};
 static kParserState lRenderChange[]={kParserState_Object};
+static const char *lTimelineTags[]={kDocument_ExecuteTagName,NULL};
+static kParserState lTimelineChange[]={kParserState_Timeline_Execute};
 static const char *lObjectTags[]={kDocument_ObjectTagName,kDocument_PropertyTagName,NULL};
 static kParserState lObjectChange[]={kParserState_Object, kParserState_Property};
 
@@ -154,14 +156,18 @@ bool ExpatXMLParser::IsElementAllowed(const char *name)
 	case kParserState_Resources :
 		CHECK_STATE_CHANGE(name,lResourceTags, lResourceChange);
 		break;
+	case kParserState_Timeline:
+		CHECK_STATE_CHANGE(name, lTimelineTags, lTimelineChange);
+		break;
 	case kParserState_Render :
 		CHECK_STATE_CHANGE(name,lRenderTags, lRenderChange);
 		break;
 	case kParserState_Object :
 		CHECK_STATE_CHANGE(name,lObjectTags, lObjectChange);
 		break;
+	case kParserState_Timeline_Execute :
 	case kParserState_Property :
-		// nothing allowed as sub to property
+		// nothing allowed as sub
 		break;
 	default:
 		pLogger->Error("Unknown parser state: %d",(int)stateStack.top());
@@ -250,6 +256,11 @@ IPluginObjectInstance *ExpatXMLParser::CreateObjectInstance(const char *name, co
 	}
 	return pInst_if;
 }
+
+IBaseInstance *ExpatXMLParser::CreateExecuteInstance(const char *name, const char **atts) {
+	return NULL;
+}
+
 // callback when expat find the start of an element
 typedef enum 
 {
@@ -258,6 +269,7 @@ typedef enum
 	kElementAction_AddAsRender,
 	kElementAction_AddAsResourceContainer,
 	kElementAction_AddAsRenderContainer,
+	kElementAction_AddToTimeline,
 } kElementAction;
 void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 {
@@ -293,8 +305,12 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetResourceContainer());
 		} else if (!strcmp(name, kDocument_RenderTagName))
 		{
-      pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetRenderRoot());   
-		} else if (!strcmp(name,kDocument_IncludeTagName))
+			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetRenderRoot());
+		} else if (!strcmp(name, kDocument_RenderTagName))
+		{
+			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetTimeline());
+		}
+		else if (!strcmp(name,kDocument_IncludeTagName))
 		{
 			int idx = GetAttributeIndex("url",atts);
 			if (idx != -1)
@@ -322,6 +338,12 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		{
 			pInstance = dynamic_cast<IBaseInstance *>(CreateObjectInstance(name,atts));
 			action = kElementAction_AddAsResource;
+		}
+		break;
+	case kParserState_Timeline :
+		if (!strcmp(name, kDocument_ExecuteTagName)) {
+			pInstance = NULL; // dynamic_cast<IBaseInstance>(CreateExecuteInstance(name, atts));
+			action = kElementAction_AddToTimeline;
 		}
 		break;
 	case kParserState_Render:
@@ -401,6 +423,9 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		break;
 	case kElementAction_AddAsRender :
 		pDocument->AddRenderObject(instanceStack.top(),pInstance);
+		break;
+	case kElementAction_AddToTimeline :
+		pDocument->AddToTimeline(pInstance);
 		break;
 	case kElementAction_None :
 		break;

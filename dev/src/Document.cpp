@@ -63,6 +63,12 @@ Document::Document(IContext *pContext) :
 	resources->AddAttribute("name","resources");
 	AddObjectToTree(dynamic_cast<IBaseInstance *>(this), resources, kNodeType_ResourceContainer);
 
+	timeline = new Timeline();
+	timeline->SetContext(pContext);
+	resources->AddAttribute("name","timeline");
+	AddObjectToTree(dynamic_cast<IBaseInstance *>(this), timeline, kNodeType_Timeline);
+
+
 	BaseInstance *pDummy = new BaseInstance(kInstanceType_RenderNode);
 	pDummy->SetContext(pContext);
 	pDummy->AddAttribute("name","render");
@@ -123,10 +129,15 @@ IBaseInstance *Document::GetRenderRoot()
 	return (IBaseInstance *)(renderRoot->GetNodeObject());
 }
 
+ITimeline *Document::GetTimeline() {
+	return NULL;
+}
+
 IResourceContainer *Document::GetResourceContainer()
 {
 	return dynamic_cast<IResourceContainer *>(resources);
 }
+
 IBaseInstance *Document::GetObject(const char *fullQualifiedName)
 {
 	// TODO: Need lookup str::BasInstance	
@@ -234,7 +245,10 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 		std::string qName = BuildQualifiedName(pNode);
 
     // Don't assign funky names to implicit nodes (doc, resources and render)
-    if ((nodeType != kNodeType_Document) && (nodeType != kNodeType_ResourceContainer) && (nodeType != kNodeType_RenderNode)) {
+    if ((nodeType != kNodeType_Document) &&
+        (nodeType != kNodeType_ResourceContainer) &&
+        (nodeType != kNodeType_Timeline) &&
+    	(nodeType != kNodeType_RenderNode)) {
 
 		  // object with this name already registered?
 		  // append a number to the name until it gets unique
@@ -287,6 +301,10 @@ IDocNode *Document::AddRenderObject(IBaseInstance *parent, IBaseInstance *object
   //}
 	return pNode;
 }
+IDocNode *Document::AddToTimeline(IBaseInstance *object) {
+	return NULL;
+}
+
 
 void Document::AddResourceObject(IBaseInstance *parent, IBaseInstance *object)
 {
