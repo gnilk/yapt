@@ -141,6 +141,7 @@ namespace yapt
 		kInstanceType_PluginContainer = 7,
 		kInstanceType_URLFactory = 8,
 		kInstanceType_MetaNode = 9,
+		kInstanceType_Timeline = 10,
 	} kInstanceType;
 
 	typedef enum
@@ -386,6 +387,9 @@ namespace yapt
 		virtual IDocNode *AddToTimeline(IBaseInstance *object) = 0;
 		virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object) = 0;
 		virtual IDocNode *AddMetaObject(IBaseInstance *parent) = 0;
+
+		virtual IBaseInstance *SearchFromNode(IDocNode *pRootNode, const char *name) = 0;
+		virtual IBaseInstance *GetObjectFromSimpleName(const char *name) = 0;
 
 		virtual IBaseInstance *GetObject(const char *fullQualifiedName) = 0;
 		virtual IDocNode *FindNode(IBaseInstance *pObject) = 0;

@@ -257,8 +257,24 @@ IPluginObjectInstance *ExpatXMLParser::CreateObjectInstance(const char *name, co
 	return pInst_if;
 }
 
-IBaseInstance *ExpatXMLParser::CreateExecuteInstance(const char *name, const char **atts) {
-	return NULL;
+IPluginObjectInstance *ExpatXMLParser::CreateExecuteInstance(const char *name, const char **atts) {
+	const char *timelineObjectName = "Timeline.Execute";
+	IPluginObjectInstance *pInst_if = NULL;
+	IPluginObjectDefinition *pDef = ySys->GetObjectDefinition(timelineObjectName);
+	if (pDef != NULL)
+	{
+		pInst_if = pDef->CreateInstance();
+		if (pInst_if == NULL)
+		{
+			yapt::SetYaptLastError(kErrorClass_Import, kError_NoInstance);
+			pLogger->Error("Unable to create object instance for '%s' at line %d",timelineObjectName,XML_GetCurrentLineNumber(parser));
+		}
+	} else
+	{
+		yapt::SetYaptLastError(kErrorClass_Import, kError_ObjectNotFound);
+		pLogger->Error("Unable to find object definition for '%s' at line %d",timelineObjectName,XML_GetCurrentLineNumber(parser));
+	}
+	return pInst_if;
 }
 
 // callback when expat find the start of an element
@@ -306,7 +322,7 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		} else if (!strcmp(name, kDocument_RenderTagName))
 		{
 			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetRenderRoot());
-		} else if (!strcmp(name, kDocument_RenderTagName))
+		} else if (!strcmp(name, kDocument_TimelineTagName))
 		{
 			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetTimeline());
 		}
@@ -342,7 +358,7 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		break;
 	case kParserState_Timeline :
 		if (!strcmp(name, kDocument_ExecuteTagName)) {
-			pInstance = NULL; // dynamic_cast<IBaseInstance>(CreateExecuteInstance(name, atts));
+			pInstance = dynamic_cast<IBaseInstance *>(CreateExecuteInstance(name, atts));
 			action = kElementAction_AddToTimeline;
 		}
 		break;

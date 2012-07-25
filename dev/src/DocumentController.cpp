@@ -161,6 +161,12 @@ void DocumentController::RenderResources()
 }
 
 //
+// TODO: Render according to timeline instead
+//       - Introduce different document renderes that contain
+//         rendering logic, we want to keep this logic!
+//         That way 'force' can be removed, and instead it is
+//         just another render-logic handler..
+//
 // Renders a single node and recursivley all children
 // Force is used to override timing information
 //

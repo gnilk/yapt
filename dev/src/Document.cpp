@@ -130,7 +130,7 @@ IBaseInstance *Document::GetRenderRoot()
 }
 
 ITimeline *Document::GetTimeline() {
-	return NULL;
+	return timeline;
 }
 
 IResourceContainer *Document::GetResourceContainer()
@@ -138,6 +138,27 @@ IResourceContainer *Document::GetResourceContainer()
 	return dynamic_cast<IResourceContainer *>(resources);
 }
 
+IBaseInstance *Document::SearchFromNode(IDocNode *pRootNode, const char *name) {
+	int i;
+	for (i=0;i<pRootNode->GetNumChildren();i++)
+	{
+		IDocNode *pChild = pRootNode->GetChildAt(i);
+		PluginObjectInstance *pObject = dynamic_cast<PluginObjectInstance *>(pChild->GetNodeObject());
+        if (pObject == NULL) continue;
+        // Do depth first search -
+        IBaseInstance *pRet = SearchFromNode(pChild, name);
+        if (pRet != NULL) return pRet;
+
+        const char *sName = pObject->GetInstanceName();
+        if (!StrConfCaseCmp(sName, pObject->GetInstanceName())) {
+			return pChild->GetNodeObject();
+        }
+	}
+	return NULL;
+}
+IBaseInstance *Document::GetObjectFromSimpleName(const char *name) {
+	return SearchFromNode(GetTree(),name);
+}
 IBaseInstance *Document::GetObject(const char *fullQualifiedName)
 {
 	// TODO: Need lookup str::BasInstance	
@@ -302,7 +323,7 @@ IDocNode *Document::AddRenderObject(IBaseInstance *parent, IBaseInstance *object
 	return pNode;
 }
 IDocNode *Document::AddToTimeline(IBaseInstance *object) {
-	return NULL;
+	return AddObjectToTree(timeline, object, kNodeType_ObjectInstance);
 }
 
 

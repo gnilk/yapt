@@ -191,7 +191,10 @@ namespace yapt
 		virtual ~Timeline();
 		virtual int GetNumExecutors();
 		virtual IBaseInstance *GetExecutorAtIndex(int idx);
+	public:
+		static void RegisterTimelineObjectFactory(ISystem *pSys);
 	};
+
 	class ResourceContainer :
 		public IResourceContainer, 
 		public BaseInstance
@@ -346,6 +349,9 @@ namespace yapt
 			virtual IRenderVars *GetRenderVars();
 		 */
 
+
+			virtual IBaseInstance *SearchFromNode(IDocNode *pRootNode, const char *name);
+			virtual IBaseInstance *GetObjectFromSimpleName(const char *name);
 			virtual IBaseInstance *GetObject(const char *fullQualifiedName);
 			virtual IDocNode *FindNode(IBaseInstance *pObject);
 			

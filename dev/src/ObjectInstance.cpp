@@ -210,11 +210,6 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
             }
             
         }
-//		if (!StrConfCaseCmp(sName,propertyReference))
-//		{
-//			pSource = pObject->GetPropertyInstance(0,true);
-//			break;
-//		}
 	}
 	// did not find node, search children!
 	if (pSource == NULL)
@@ -223,21 +218,6 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
             
             return FindPropertyInstance(propertyReference, pRootNode->GetParent());
         }
-//		for (i=0;i<pRootNode->GetNumChildren();i++)
-//		{
-//			IDocNode *pChild = pRootNode->GetChildAt(i);
-//			if ((pChild->GetNodeType() == kNodeType_ObjectInstance) ||
-//                (pChild->GetNodeType() == kNodeType_ResourceContainer) ||
-//                (pChild->GetNodeType() == kNodeType_RenderNode))
-//			{
-//				pSource = FindPropertyInstance(propertyReference, pChild);
-//				if (pSource != NULL) 
-//				{
-//					break;
-//				}
-//			}
-//			
-//		}
 	}
 	return NULL;
 	

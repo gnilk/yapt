@@ -49,6 +49,7 @@ SystemHookHandler *yapt::GetHooks()
 extern "C" 
 {
 int CALLCONV InitializeConfigPlugin(ISystem *ySys);
+int CALLCONV InitializeTimelinePlugin(ISystem *ySys);
 
 // top level function
 ISystem * CALLCONV yapt::GetYaptSystemInstance()
@@ -65,6 +66,7 @@ ISystem * CALLCONV yapt::GetYaptSystemInstance()
 		pSystemInstance->ReadAndStoreDefaultSettings();
 		Logger::GetLogger("TopLevel")->Debug("Registering built in plugin types");
 		pSystemInstance->RegisterAndInitializePlugin(InitializeConfigPlugin, "System");
+		pSystemInstance->RegisterAndInitializePlugin(InitializeTimelinePlugin, "System");
 		Logger::GetLogger("TopLevel")->Debug("Ok, everything initialized..");
 
 	}
