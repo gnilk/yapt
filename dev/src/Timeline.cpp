@@ -44,6 +44,12 @@ Timeline::Timeline() : BaseInstance(kInstanceType_Timeline){
 Timeline::~Timeline() {
 
 }
+ITimelineExecute *Timeline::AddExecuteObject(float start, float duration, char *objectName) {
+	TimelineExecute *pExec= new TimelineExecute();
+	pExec->SetParam(start, duration, objectName);
+	return dynamic_cast<ITimelineExecute *>(pExec);
+
+}
 
 int Timeline::GetNumExecutors() {
 	return 0;

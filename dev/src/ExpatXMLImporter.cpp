@@ -257,6 +257,14 @@ IPluginObjectInstance *ExpatXMLParser::CreateObjectInstance(const char *name, co
 	return pInst_if;
 }
 
+//
+// An execute instance is an object living under the timeline. It controls when, for how long a specific node should
+// be rendered (all children are rendered as well).
+//
+// TODO: Make the timeline execution object a native citizen - currently we wrap this functionality through the common plugin interface
+//       even if very cool and dynamic it is not very nice since plugin objects has a fixed predefined set of attribute thus the attributes
+//       of the executor is mapped to properties...
+//
 IPluginObjectInstance *ExpatXMLParser::CreateExecuteInstance(const char *name, const char **atts) {
 	const char *timelineObjectName = "Timeline.Execute";
 	IPluginObjectInstance *pInst_if = NULL;
@@ -268,6 +276,20 @@ IPluginObjectInstance *ExpatXMLParser::CreateExecuteInstance(const char *name, c
 		{
 			yapt::SetYaptLastError(kErrorClass_Import, kError_NoInstance);
 			pLogger->Error("Unable to create object instance for '%s' at line %d",timelineObjectName,XML_GetCurrentLineNumber(parser));
+		} else {
+			// Map these attributes to properties...
+			// NOTE: The timeline executor should be a native object!
+			int idxObject = GetAttributeIndex("object",atts);
+			int idxStart = GetAttributeIndex("start",atts);
+			int idxDuration = GetAttributeIndex("duration",atts);
+			if ((idxObject!=-1)&&(idxStart!=-1)&&(idxDuration!=-1)) {
+				pInst_if->CreateProperty("object",kPropertyType_String, atts[idxObject+1],"Object to render");
+				pInst_if->CreateProperty("start",kPropertyType_Float, atts[idxStart+1], "Start in seconds");
+				pInst_if->CreateProperty("duration",kPropertyType_Float, atts[idxDuration+1],"Duration in seconds");
+			} else {
+				yapt::SetYaptLastError(kErrorClass_Import, kError_MissingIdentifier);
+				pLogger->Error("Unable to create object instance for '%s' at line %d - one or more attribute(s) failed!",timelineObjectName,XML_GetCurrentLineNumber(parser));
+			}
 		}
 	} else
 	{

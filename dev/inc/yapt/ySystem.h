@@ -142,6 +142,7 @@ namespace yapt
 		kInstanceType_URLFactory = 8,
 		kInstanceType_MetaNode = 9,
 		kInstanceType_Timeline = 10,
+		kInstanceType_TimelineExecute = 11,
 	} kInstanceType;
 
 	typedef enum
@@ -324,7 +325,14 @@ namespace yapt
 		virtual IContext *GetContext() = 0;
 	};
 
+	struct ITimelineExecute {
+		virtual float GetStart() = 0;
+		virtual float GetDuration() = 0;
+		virtual char *GetObjectName() = 0;
+		virtual bool ShouldRender(float t) = 0;
+	};
 	struct ITimeline {
+		virtual ITimelineExecute *AddExecuteObject(float start, float duration, char *objectName);
 		virtual int GetNumExecutors() = 0;
 		virtual IBaseInstance *GetExecutorAtIndex(int idx) = 0;
 	};

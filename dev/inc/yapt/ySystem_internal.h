@@ -182,6 +182,24 @@ namespace yapt
 
 	class PluginObjectInstance;
 	
+	class TimelineExecute :
+		public ITimelineExecute,
+		public BaseInstance
+	{
+	public:
+			TimelineExecute();
+			virtual ~TimelineExecute();
+			virtual float GetStart();
+			virtual float GetDuration();
+			virtual char *GetObjectName();
+			virtual bool ShouldRender(float t);
+			void SetParam(float _start, float _duration, char *_objectName);
+	private:
+			float start;
+			float duration;
+			char *objectName;
+	};
+
 	class Timeline :
 		public ITimeline,
 		public BaseInstance
@@ -189,6 +207,7 @@ namespace yapt
 	public:
 		Timeline();
 		virtual ~Timeline();
+		virtual ITimelineExecute *AddExecuteObject(float start, float duration, char *objectName);
 		virtual int GetNumExecutors();
 		virtual IBaseInstance *GetExecutorAtIndex(int idx);
 	public:
