@@ -153,7 +153,7 @@ void DocumentController::Render(double sample_time)
 void DocumentController::RenderResources()
 {
 	// TODO: Solve this with function in Document
-	IDocNode *pNodeResourceContainer = pDocument->FindNode(dynamic_cast<IBaseInstance *>(pDocument->GetResourceContainer()));
+	IDocNode *pNodeResourceContainer = pDocument->FindNode(dynamic_cast<IBaseInstance *>(pDocument->GetResources()));
 	if(pNodeResourceContainer != NULL)
 	{
 		RenderNode(pNodeResourceContainer,true);

@@ -95,10 +95,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\plugins\StdCurve\Curve.cpp" />
+    <ClCompile Include="..\..\..\plugins\StdCurve\expsolver.cpp" />
     <ClCompile Include="..\..\..\plugins\StdCurve\PluginMain.cpp" />
+    <ClCompile Include="..\..\..\plugins\StdCurve\tokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\plugins\StdCurve\Curve.h" />
+    <ClInclude Include="..\..\..\plugins\StdCurve\expsolver.h" />
+    <ClInclude Include="..\..\..\plugins\StdCurve\tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\plugins\StdCurve\StdCurve.def" />

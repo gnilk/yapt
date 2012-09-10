@@ -22,7 +22,9 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef WIN32
 #include <alloc.h>
+#endif
 #include <math.h>
 #include "tokenizer.h"
 #include "expsolver.h"

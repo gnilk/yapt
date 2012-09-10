@@ -91,6 +91,7 @@ Curve::Curve(int nChannels, kCurveClass cClass)
 	this->nChannels = nChannels;
 	curveType = kCurveType_Regular;	// change in order to hint
 	curveClass = cClass;
+
 	pLogger = pSysPtr->GetLogger("Curve");//Logger::GetLogger("Curve");
 }
 

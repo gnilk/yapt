@@ -265,38 +265,19 @@ IPluginObjectInstance *ExpatXMLParser::CreateObjectInstance(const char *name, co
 //       even if very cool and dynamic it is not very nice since plugin objects has a fixed predefined set of attribute thus the attributes
 //       of the executor is mapped to properties...
 //
-IPluginObjectInstance *ExpatXMLParser::CreateExecuteInstance(const char *name, const char **atts) {
-	const char *timelineObjectName = "Timeline.Execute";
-	IPluginObjectInstance *pInst_if = NULL;
-	IPluginObjectDefinition *pDef = ySys->GetObjectDefinition(timelineObjectName);
-	if (pDef != NULL)
-	{
-		pInst_if = pDef->CreateInstance();
-		if (pInst_if == NULL)
-		{
-			yapt::SetYaptLastError(kErrorClass_Import, kError_NoInstance);
-			pLogger->Error("Unable to create object instance for '%s' at line %d",timelineObjectName,XML_GetCurrentLineNumber(parser));
-		} else {
-			// Map these attributes to properties...
-			// NOTE: The timeline executor should be a native object!
-			int idxObject = GetAttributeIndex("object",atts);
-			int idxStart = GetAttributeIndex("start",atts);
-			int idxDuration = GetAttributeIndex("duration",atts);
-			if ((idxObject!=-1)&&(idxStart!=-1)&&(idxDuration!=-1)) {
-				pInst_if->CreateProperty("object",kPropertyType_String, atts[idxObject+1],"Object to render");
-				pInst_if->CreateProperty("start",kPropertyType_Float, atts[idxStart+1], "Start in seconds");
-				pInst_if->CreateProperty("duration",kPropertyType_Float, atts[idxDuration+1],"Duration in seconds");
-			} else {
-				yapt::SetYaptLastError(kErrorClass_Import, kError_MissingIdentifier);
-				pLogger->Error("Unable to create object instance for '%s' at line %d - one or more attribute(s) failed!",timelineObjectName,XML_GetCurrentLineNumber(parser));
-			}
-		}
-	} else
-	{
-		yapt::SetYaptLastError(kErrorClass_Import, kError_ObjectNotFound);
-		pLogger->Error("Unable to find object definition for '%s' at line %d",timelineObjectName,XML_GetCurrentLineNumber(parser));
+ITimelineExecute *ExpatXMLParser::CreateExecuteInstance(const char *name, const char **atts) {
+  ITimeline *pTimeline = ySys->GetActiveDocument()->GetTimeline();
+  ITimelineExecute *pInst = NULL;
+	int idxObject = GetAttributeIndex("object",atts);
+	int idxStart = GetAttributeIndex("start",atts);
+	int idxDuration = GetAttributeIndex("duration",atts);
+	if ((idxObject!=-1)&&(idxStart!=-1)&&(idxDuration!=-1)) {
+    pInst = pTimeline->AddExecuteObject(atof(atts[idxStart+1]),atof(atts[idxDuration+1]),(char *)atts[idxObject+1]);
+	} else {
+		yapt::SetYaptLastError(kErrorClass_Import, kError_MissingIdentifier);
+		pLogger->Error("Unable to create object instance for '%s' at line %d - one or more attribute(s) failed!",name,XML_GetCurrentLineNumber(parser));
 	}
-	return pInst_if;
+	return pInst;
 }
 
 // callback when expat find the start of an element
@@ -340,7 +321,7 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 		if (!strcmp(name, kDocument_ResourceTagName)) 
 		{
 			// we always have one.. replace when supporting multiple
-			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetResourceContainer());
+			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetResources());
 		} else if (!strcmp(name, kDocument_RenderTagName))
 		{
 			pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetRenderRoot());

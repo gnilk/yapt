@@ -1,0 +1,30 @@
+<yapt2>
+<!--
+	<resources>
+		<object class="System.Config" name="Config">
+			<property name="Resolution.Width">640</property>
+		</object>
+	</resources>
+-->	
+	
+	<render>
+	<!--
+		<object class="gl.RenderContext" name="context">
+			<object class="Animation.ExpSolver" name="rotspeed">
+				<property name="expression">40 * abs(sin(t))</property>
+			</object>
+			<object class="geom.Triangle" name="tri">
+			</object>
+			<object class="gl.DrawTriangle" name="triangle">
+				<property name="numIndex" source="tri.numIndex"/>
+				<property name="indexData" source="tri.indexData"/>
+				<property name="vertexData" source="tri.vertexData"/>
+				<property name="speed" source="rotspeed.bla" />
+			</object>
+		</object>
+		-->
+	</render>
+	<timeline>
+	   <execute start="0" duration="0" object="context" />
+	</timeline>
+</yapt2>				

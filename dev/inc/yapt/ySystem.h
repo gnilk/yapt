@@ -332,7 +332,7 @@ namespace yapt
 		virtual bool ShouldRender(float t) = 0;
 	};
 	struct ITimeline {
-		virtual ITimelineExecute *AddExecuteObject(float start, float duration, char *objectName);
+		virtual ITimelineExecute *AddExecuteObject(float start, float duration, char *objectName) = 0;
 		virtual int GetNumExecutors() = 0;
 		virtual IBaseInstance *GetExecutorAtIndex(int idx) = 0;
 	};
@@ -382,7 +382,7 @@ namespace yapt
 		virtual IDocNode *GetTree() = 0;
 		virtual IDocNode *GetRenderTree() = 0;
 		virtual IBaseInstance *GetRenderRoot() = 0;
-		virtual IResourceContainer *GetResourceContainer() = 0;	// returns root of resource tree
+		virtual IResourceContainer *GetResources() = 0;	// returns root of resource tree
 		virtual ITimeline *GetTimeline() = 0;
 
 		virtual void MoveNode (IDocNode *pNewParent, IDocNode *pNode) = 0;

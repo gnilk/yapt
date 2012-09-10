@@ -360,7 +360,7 @@ namespace yapt
 			// TODO: Add "GetResourceTree"
 			
 			virtual IBaseInstance *GetRenderRoot();
-			virtual IResourceContainer *GetResourceContainer();	// returns resource container
+			virtual IResourceContainer *GetResources();	// returns resource container
 			virtual ITimeline *GetTimeline();
 		/*	
 			virtual void InitializeNode(IDocNode *node); 

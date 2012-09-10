@@ -58,15 +58,10 @@ Document::Document(IContext *pContext) :
 	// setup default objects
 	// currently we setup a resource container and a render node
 	// TODO: Remove resource container when supported from the outside
-	resources = new ResourceContainer();//new DocNode(dynamic_cast<IDocument *> (this));
-	resources->SetContext(pContext);
-	resources->AddAttribute("name","resources");
-	AddObjectToTree(dynamic_cast<IBaseInstance *>(this), resources, kNodeType_ResourceContainer);
 
-	timeline = new Timeline();
-	timeline->SetContext(pContext);
-	resources->AddAttribute("name","timeline");
-	AddObjectToTree(dynamic_cast<IBaseInstance *>(this), timeline, kNodeType_Timeline);
+  resources = NULL;
+  timeline = NULL;
+
 
 
 	BaseInstance *pDummy = new BaseInstance(kInstanceType_RenderNode);
@@ -93,14 +88,13 @@ void Document::Initialize()
 	fqName = BuildQualifiedName(root);
 	SetFullyQualifiedName(fqName.c_str());
 	treemap.insert(BaseNodePair(dynamic_cast<IBaseInstance *>(this),root));
-
-  resources = NULL;
-  renderRoot = NULL;
 }
+
 void Document::SetDocumentController(IDocumentController *pDocumentController)
 {
 	this->pDocumentController = pDocumentController;
 }
+
 IDocumentController *Document::GetDocumentController()
 {
   return pDocumentController;
@@ -130,11 +124,24 @@ IBaseInstance *Document::GetRenderRoot()
 }
 
 ITimeline *Document::GetTimeline() {
+  if (timeline == NULL) {
+    // Lazy create the time line object
+	  timeline = new Timeline();
+	  timeline->SetContext(pContext);
+	  resources->AddAttribute("name","timeline");
+	  AddObjectToTree(dynamic_cast<IBaseInstance *>(this), timeline, kNodeType_Timeline);
+  }
 	return timeline;
 }
 
-IResourceContainer *Document::GetResourceContainer()
+IResourceContainer *Document::GetResources()
 {
+  if (resources == NULL) {
+	  resources = new ResourceContainer();//new DocNode(dynamic_cast<IDocument *> (this));
+	  resources->SetContext(pContext);
+	  resources->AddAttribute("name","resources");
+	  AddObjectToTree(dynamic_cast<IBaseInstance *>(this), resources, kNodeType_ResourceContainer);
+  }
 	return dynamic_cast<IResourceContainer *>(resources);
 }
 

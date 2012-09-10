@@ -196,6 +196,14 @@ bool ExportXML::WriteNode(IDocNode *pNode)
 				bSkipEndTag = true;
 			}
 			break;
+    case kInstanceType_Timeline :
+      Begin(kDocument_TimelineTagName, pBase, true, false);
+      break;
+    case kInstanceType_TimelineExecute :
+      Begin(kDocument_ExecuteTagName, pBase, true, true);
+    			bSkipEndTag = true;
+
+      break;
 		case kInstanceType_RenderNode:
 			Begin(kDocument_RenderTagName, pBase,true,false);
 			break;

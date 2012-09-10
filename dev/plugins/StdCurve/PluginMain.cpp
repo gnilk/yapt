@@ -16,6 +16,7 @@
 using namespace yapt;
 using namespace Goat;	// Curve is within the Goat namespace...
 
+ISystem *pSysPtr; // Used by curve to query the logger..
 
 extern "C"
 {
@@ -316,11 +317,11 @@ void GenericCurveKey::Render(double t, IPluginObjectInstance *pInstance)
 }
 
 extern "C" {
-    static  double cbExpVariable(void *pUser, const char *pData, int *bOk_out) {
+    static  double CALLCONV cbExpVariable(void *pUser, const char *pData, int *bOk_out) {
         YaptExpSolverFacade *pFacade = (YaptExpSolverFacade *)pUser;
         return pFacade->OnConstantUserExpression(pData, bOk_out);
     }    
-    static  double cbExpFunc(void *pUser, const char *pData, double arg, int *bOk_out) {
+    static  double CALLCONV cbExpFunc(void *pUser, const char *pData, double arg, int *bOk_out) {
         YaptExpSolverFacade *pFacade = (YaptExpSolverFacade *)pUser;
         return pFacade->OnFunctionExpression(pData, arg, bOk_out);
     }    
@@ -382,6 +383,7 @@ static void perror()
 // This function must be exported from the lib/dll
 int CALLCONV yaptInitializePlugin(ISystem *ySys)
 {
+  pSysPtr = ySys;
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.GenericCurve");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Key");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorKey");
