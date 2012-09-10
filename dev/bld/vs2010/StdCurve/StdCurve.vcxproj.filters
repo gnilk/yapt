@@ -21,6 +21,12 @@
     <ClCompile Include="..\..\..\plugins\StdCurve\PluginMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\plugins\StdCurve\expsolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\plugins\StdCurve\tokenizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\plugins\StdCurve\StdCurve.def">
@@ -29,6 +35,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\plugins\StdCurve\Curve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\plugins\StdCurve\expsolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\plugins\StdCurve\tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

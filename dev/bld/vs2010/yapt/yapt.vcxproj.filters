@@ -78,6 +78,9 @@
     <ClCompile Include="..\..\..\src\MetaInstance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Timeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\src\yapt.def">
