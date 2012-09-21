@@ -128,10 +128,14 @@ ITimeline *Document::GetTimeline() {
     // Lazy create the time line object
 	  timeline = new Timeline();
 	  timeline->SetContext(pContext);
-	  resources->AddAttribute("name","timeline");
+	  timeline->AddAttribute("name","timeline");
 	  AddObjectToTree(dynamic_cast<IBaseInstance *>(this), timeline, kNodeType_Timeline);
   }
 	return timeline;
+}
+
+bool Document::HasTimeline() {
+  return ((timeline==NULL)?false:true);
 }
 
 IResourceContainer *Document::GetResources()
@@ -150,16 +154,20 @@ IBaseInstance *Document::SearchFromNode(IDocNode *pRootNode, const char *name) {
 	for (i=0;i<pRootNode->GetNumChildren();i++)
 	{
 		IDocNode *pChild = pRootNode->GetChildAt(i);
-		PluginObjectInstance *pObject = dynamic_cast<PluginObjectInstance *>(pChild->GetNodeObject());
-        if (pObject == NULL) continue;
-        // Do depth first search -
-        IBaseInstance *pRet = SearchFromNode(pChild, name);
-        if (pRet != NULL) return pRet;
+		IBaseInstance *pObject = pChild->GetNodeObject();
+    if (pObject == NULL) continue;
+    // Do depth first search -
+    IBaseInstance *pRet = SearchFromNode(pChild, name);
+    if (pRet != NULL) return pRet;
 
-        const char *sName = pObject->GetInstanceName();
-        if (!StrConfCaseCmp(sName, pObject->GetInstanceName())) {
-			return pChild->GetNodeObject();
-        }
+    // Only pluggable objects may be referenced
+    PluginObjectInstance *pNamedInstance = dynamic_cast<PluginObjectInstance *>(pObject);
+    if(pNamedInstance == NULL) continue;
+
+    const char *sName = pNamedInstance->GetInstanceName();
+    if (!StrConfCaseCmp(name,sName)) {
+    	return pChild->GetNodeObject();
+    }
 	}
 	return NULL;
 }

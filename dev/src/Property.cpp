@@ -199,6 +199,10 @@ PropertyInstance *PropertyInstance::GetSource()
 
 kPropertyType PropertyInstance::GetPropertyType()
 {
+  // No need to check source type (if sourced) can bind to different type than self..
+  if (GetSource() != NULL) {
+    return GetSource()->GetPropertyType();
+  }
 	return property->type;
 }
 

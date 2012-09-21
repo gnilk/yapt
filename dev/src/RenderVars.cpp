@@ -35,6 +35,7 @@ using namespace yapt;
 RenderVars::RenderVars()
 {
 	tGlobal = 0.0;
+  renderReference=0;
 }
 
 RenderVars::~RenderVars()
@@ -54,6 +55,12 @@ void RenderVars::PushLocal(double tStart)
 void RenderVars::PopLocal()
 {
 	localtime.pop();
+}
+void RenderVars::IncRenderRef() {
+  renderReference++;
+}
+unsigned int RenderVars::GetRenderRef() {
+  return renderReference;
 }
 
 double RenderVars::GetLocalTime()

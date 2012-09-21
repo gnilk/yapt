@@ -29,6 +29,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdCurve", "StdCurve\StdCur
 		{D82D609D-BFEF-46BB-B543-0C7C3193EC17} = {D82D609D-BFEF-46BB-B543-0C7C3193EC17}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SysUtils", "SysUtils\SysUtils.vcxproj", "{8EFA2691-ADF0-45AA-A292-BCC66C3071A8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AEADF802-5AB3-4ED7-8E2B-C797DF451294} = {AEADF802-5AB3-4ED7-8E2B-C797DF451294}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -59,11 +64,16 @@ Global
 		{01421CD8-8A7E-4054-8690-93B7D6242FBA}.Debug|Win32.Build.0 = Debug|Win32
 		{01421CD8-8A7E-4054-8690-93B7D6242FBA}.Release|Win32.ActiveCfg = Release|Win32
 		{01421CD8-8A7E-4054-8690-93B7D6242FBA}.Release|Win32.Build.0 = Release|Win32
+		{8EFA2691-ADF0-45AA-A292-BCC66C3071A8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8EFA2691-ADF0-45AA-A292-BCC66C3071A8}.Debug|Win32.Build.0 = Debug|Win32
+		{8EFA2691-ADF0-45AA-A292-BCC66C3071A8}.Release|Win32.ActiveCfg = Release|Win32
+		{8EFA2691-ADF0-45AA-A292-BCC66C3071A8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{01421CD8-8A7E-4054-8690-93B7D6242FBA} = {DD8869A5-BC2F-444A-BF01-A91172570CBF}
+		{8EFA2691-ADF0-45AA-A292-BCC66C3071A8} = {DD8869A5-BC2F-444A-BF01-A91172570CBF}
 	EndGlobalSection
 EndGlobal

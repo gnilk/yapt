@@ -44,7 +44,7 @@ static void loadDocument(char *filename) {
 }
 static void testBindParser() {
 
-	// 1) Build a FQ cache when post-initializing the document
+	// 1) Build a FQ (FQ - fully qualified) cache when post-initializing the document
 	// 2) Classify source
 	//      a) Contain no '.' - single name, with first output, like today
 	//      b) Contain one or more '.' -> find best match according to

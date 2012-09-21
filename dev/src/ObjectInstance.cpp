@@ -41,6 +41,7 @@ BaseInstance(kInstanceType_Object)
     //	this->parent = NULL;
 	pDocument = NULL;
 	extState = kExtState_None;
+  lastRenderRef = 0;
 	CreateDefaultAttributes();
 }
 
@@ -52,6 +53,7 @@ BaseInstance(kInstanceType_Object)
 	//this->parent = NULL;
 	pDocument = NULL;
 	extState = kExtState_None;
+  lastRenderRef = 0;
 	CreateDefaultAttributes();
 }
 
@@ -329,9 +331,10 @@ void PluginObjectInstance::AddPropertyInstance(PropertyInstance *property, bool 
 	}
 }
 // -- determines if this object should render or not..
-bool PluginObjectInstance::ShouldRender(double glbTime)
+bool PluginObjectInstance::ShouldRender(RenderVars *pRenderVars)
 {
 	bool bRes = false;
+  double glbTime = pRenderVars->GetTime();
 	double start = atof(GetAttributeValue("start"));
 	double duration = atof(GetAttributeValue("duration"));
     
@@ -340,6 +343,7 @@ bool PluginObjectInstance::ShouldRender(double glbTime)
 	{
 		bRes = true;
 	}
+  
 	return bRes;
 }
 //
@@ -542,8 +546,7 @@ void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
     
 	// Only do this when we have been initialized
 	if (extState == kExtState_Initialized)
-	{
-        
+	{        
 		extObject->Render(pRenderVars->GetTime(), dynamic_cast<IPluginObjectInstance *>(this));
 	}
 }

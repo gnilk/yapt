@@ -48,15 +48,16 @@ Timeline::~Timeline() {
 ITimelineExecute *Timeline::AddExecuteObject(float start, float duration, char *objectName) {
   TimelineExecute *pExec= new TimelineExecute();
   pExec->SetParam(start, duration, objectName);
+  executeObjects.push_back(pExec);
   return dynamic_cast<ITimelineExecute *>(pExec);
 }
 
 int Timeline::GetNumExecutors() {
-  return 0;
+  return executeObjects.size();
 
 }
 IBaseInstance *Timeline::GetExecutorAtIndex(int idx) {
-  return NULL;
+  return dynamic_cast<IBaseInstance*>(executeObjects.at(idx));
 }
 
 TimelineExecute::TimelineExecute() : BaseInstance(kInstanceType_TimelineExecute) {
@@ -78,7 +79,7 @@ char *TimelineExecute::GetObjectName() {
   return objectName;
 }
 
-bool TimelineExecute::ShouldRender(float t) {
+bool TimelineExecute::ShouldRender(double t) {
   return true;
 }
 

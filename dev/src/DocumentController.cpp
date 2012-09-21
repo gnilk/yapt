@@ -63,6 +63,7 @@ void DocumentController::SetDocument(IDocument *pDocument)
 //
 void DocumentController::UpdateRenderVars(double sample_time)
 {
+  renderVars->IncRenderRef();
 	renderVars->SetTime(sample_time);
 }
 
@@ -147,7 +148,26 @@ bool DocumentController::PostInitializeNode(IDocNode *node)
 void DocumentController::Render(double sample_time)
 {
 	UpdateRenderVars(sample_time);
-	RenderNode(pDocument->GetRenderTree(), false);
+  if (!pDocument->HasTimeline()) {
+	  RenderNode(pDocument->GetRenderTree(), false);
+  } else {
+    RenderTimeline();
+  }
+}
+
+void DocumentController::RenderTimeline() {
+  if (!pDocument->HasTimeline()) return;
+  ITimeline *pTimeline = pDocument->GetTimeline();
+  int n = pTimeline->GetNumExecutors();
+  for(int i=0;i<n;i++) {
+    ITimelineExecute *pExec = dynamic_cast<ITimelineExecute *>(pTimeline->GetExecutorAtIndex(i));
+    if ((pExec != NULL) && (pExec->ShouldRender(renderVars->GetTime()))) {
+      char *simpleName =pExec->GetObjectName();
+      IBaseInstance *pObject=pDocument->GetObjectFromSimpleName(simpleName);
+      IDocNode *pNode=pDocument->FindNode(pObject);
+      RenderNode(pNode, true);  // Override timings of object (if any) since controlled by the timeline
+    }
+  }
 }
 
 void DocumentController::RenderResources()
@@ -182,10 +202,13 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
 			case kInstanceType_Object :
 			{
 				PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
-				if ((pInst->ShouldRender(renderVars->GetTime())) || (bForce))
+				if ((pInst->ShouldRender(renderVars)) || (bForce))
 				{
 					double tStart = atof(pInst->GetAttributeValue("start"));
 					renderVars->PushLocal(tStart);
+
+          // TODO: Need to update bound properties if not rendered
+
 					// TODO: add check for debugging and so forth
 					// pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
 					// TODO: call system hook handler

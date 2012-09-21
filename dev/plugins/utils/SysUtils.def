@@ -1,0 +1,5 @@
+LIBRARY	SysUtils
+VERSION 2.0.0
+EXPORTS
+    yaptInitializePlugin       @1
+

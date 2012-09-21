@@ -192,7 +192,7 @@ namespace yapt
 			virtual float GetStart();
 			virtual float GetDuration();
 			virtual char *GetObjectName();
-			virtual bool ShouldRender(float t);
+			virtual bool ShouldRender(double t);
 			void SetParam(float _start, float _duration, char *_objectName);
 	private:
 			float start;
@@ -204,6 +204,8 @@ namespace yapt
 		public ITimeline,
 		public BaseInstance
 	{
+    protected:
+    std::vector<ITimelineExecute *> executeObjects;
 	public:
 		Timeline();
 		virtual ~Timeline();
@@ -288,6 +290,7 @@ namespace yapt
 		TimerIDMap timers;
 		std::stack<double> localtime;
 		double tGlobal;
+    unsigned int renderReference;
 	public:
 		RenderVars();
 		virtual ~RenderVars();
@@ -295,6 +298,8 @@ namespace yapt
 		void SetTime(double tGlobal);
 		void PushLocal(double tStart);
 		void PopLocal();
+    void IncRenderRef();
+    unsigned int GetRenderRef();
 		// IRenderVars - interface
 	public:
 		virtual double GetLocalTime();
@@ -362,6 +367,7 @@ namespace yapt
 			virtual IBaseInstance *GetRenderRoot();
 			virtual IResourceContainer *GetResources();	// returns resource container
 			virtual ITimeline *GetTimeline();
+      virtual bool HasTimeline();
 		/*	
 			virtual void InitializeNode(IDocNode *node); 
 			virtual void PostInitializeNode(IDocNode *node);
@@ -417,7 +423,8 @@ namespace yapt
 		virtual void Render(double sample_time);
 		virtual void RenderResources();
 		virtual void RenderNode(IDocNode *pNode, bool bForce);
-		// internal
+    virtual void RenderTimeline();    
+     // internal
 	public:
 		void SetDocument(IDocument *pDocument);
 	};
@@ -487,7 +494,6 @@ namespace yapt
 		void SetDescription(const char *strDesc);
 		
         const char *GetUnboundRawValue();
-    bool IsSourced();
 		int IncSourceRef();
 		int DecSourceRef();
 		void SetSource(PropertyInstance *pSource);
@@ -505,10 +511,11 @@ namespace yapt
 
 	public:	// interface
 		virtual kPropertyType GetPropertyType();
-        virtual char *GetPropertyTypeName(char *sDest, int maxLen);
+    virtual char *GetPropertyTypeName(char *sDest, int maxLen);
 		virtual void SetValue(const char *sValue);
 		virtual char *GetValue(char *sValueDest, int maxlen);
-	};
+    virtual bool IsSourced();
+  };
 
 	typedef std::pair<std::string, void *> CtxNameObjectPair;
 	typedef std::map<std::string, void *> CtxNameObjectMap;
@@ -570,7 +577,8 @@ namespace yapt
 
 		void CreateDefaultAttributes();
 
-		kExtState extState;
+    kExtState extState;
+    unsigned int lastRenderRef;
 	public:
 		PluginObjectInstance(PluginObjectDefinition *definition);
 		PluginObjectInstance(IPluginObjectDefinition *definition);
@@ -593,7 +601,8 @@ namespace yapt
 		void AddPropertyInstance(PropertyInstance *property, bool bOutput);
 	
 		bool BindProperties();
-		bool ShouldRender(double glbTime);
+		//bool ShouldRender(double glbTime);
+		bool ShouldRender(RenderVars *pRenderVars);
 
 		// Functions to access most common attributes
 		double GetStartTime();

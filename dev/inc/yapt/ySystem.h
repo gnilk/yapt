@@ -225,9 +225,10 @@ namespace yapt
 	{
 	public:
 		virtual kPropertyType GetPropertyType() = 0;
-        virtual char *GetPropertyTypeName(char *sDest, int maxLen) = 0;
+    virtual char *GetPropertyTypeName(char *sDest, int maxLen) = 0;
 		virtual void SetValue(const char *sValue) = 0;
 		virtual char *GetValue(char *sValueDest, int maxlen) = 0;
+    virtual bool IsSourced() = 0;
 	};
 	
 	struct IPluginObjectDefinition
@@ -329,7 +330,7 @@ namespace yapt
 		virtual float GetStart() = 0;
 		virtual float GetDuration() = 0;
 		virtual char *GetObjectName() = 0;
-		virtual bool ShouldRender(float t) = 0;
+		virtual bool ShouldRender(double t) = 0;
 	};
 	struct ITimeline {
 		virtual ITimelineExecute *AddExecuteObject(float start, float duration, char *objectName) = 0;
@@ -384,6 +385,7 @@ namespace yapt
 		virtual IBaseInstance *GetRenderRoot() = 0;
 		virtual IResourceContainer *GetResources() = 0;	// returns root of resource tree
 		virtual ITimeline *GetTimeline() = 0;
+    virtual bool HasTimeline() = 0;
 
 		virtual void MoveNode (IDocNode *pNewParent, IDocNode *pNode) = 0;
 		virtual void SwapNodes (IDocNode *pNodeA, IDocNode *pNodeB) = 0;

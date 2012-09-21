@@ -23,8 +23,19 @@
 			</object>
 		</object>
 		-->
+		<object class="Animation.ExpSolver" name="expsolver">
+		  <property name="expression">2.0</property>
+		</object>
+		<object class="utils.WriteLine" name="write">
+		  <property name="string" source="expsolver" />
+		</object>
 	</render>
+	  <!--
+    A timeline is used to separate rendering control from object instances
+    allows for objects beeing rendered multiple times separated from each other
+      -->
+
 	<timeline>
-	   <execute start="0" duration="0" object="context" />
+	   <execute start="0" duration="0" object="write" />
 	</timeline>
 </yapt2>				

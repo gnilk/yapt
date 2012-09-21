@@ -430,7 +430,9 @@ int main (int argc, char * const argv[])
 	pLogger->Debug("Rendering resources");
 	system->GetActiveDocumentController()->RenderResources();
 	pLogger->Debug("Rendering nodes");
+	pLogger->Debug("-------------------------------------------------------------------");
 	system->GetActiveDocumentController()->Render(0.0);
+	pLogger->Debug("-------------------------------------------------------------------");
 
 //	TestMoveNodes();
 	pLogger->Debug("Dumping");
