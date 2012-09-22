@@ -539,22 +539,44 @@ void PluginObjectInstance::ExtPostInitialize()
 	}
 }
 
+bool PluginObjectInstance::IsDirty() {
+  return dirtyFlag;
+}
+void PluginObjectInstance::SetDirty(bool dirty) {
+  dirtyFlag = dirty;
+}
+
+void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
+  // Update dependencies
+  for(int i=0;i<input_properties.size();i++) {
+    PropertyInstance *pInst = input_properties[i];
+    if (pInst->IsSourced()) {
+      pInst->GetSource()->GetObjectInstance()->ExtRender(pRenderVars);
+    }
+  }
+}
+
 // TODO: Move to controller [external]
 void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
-{
-	// Figure out time through context object, context should be assign to each instance
-    
-	// Only do this when we have been initialized
-	if (extState == kExtState_Initialized)
+{    
+	// Only do this when we have been initialized and if not already rendered
+  // Multiple calls can be done when several other objects refer to the properties of this one
+  if ((extState == kExtState_Initialized) && (lastRenderRef != pRenderVars->GetRenderRef()))
 	{        
-		extObject->Render(pRenderVars->GetTime(), dynamic_cast<IPluginObjectInstance *>(this));
+    RenderPropertyDependencies(pRenderVars);
+    extObject->Render(pRenderVars->GetTime(), dynamic_cast<IPluginObjectInstance *>(this));
+    lastRenderRef = pRenderVars->GetRenderRef();
+    // Set this to dirty in order to pass call's through the post-renderer
+    SetDirty(true);
+
 	}
 }
 void PluginObjectInstance::ExtPostRender()
 {
-	if (extState == kExtState_Initialized)
+	if ((extState == kExtState_Initialized) && (IsDirty()))
 	{
 		extObject->PostRender(0.0, dynamic_cast<IPluginObjectInstance *>(this));
+    SetDirty(false);
 	}
 }
 

@@ -24,7 +24,7 @@
 		</object>
 		-->
 		<object class="Animation.ExpSolver" name="expsolver">
-		  <property name="expression">2.0</property>
+		  <property name="expression">2.0 * t</property>
 		</object>
 		<object class="utils.WriteLine" name="write">
 		  <property name="string" source="expsolver" />

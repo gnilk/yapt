@@ -432,6 +432,8 @@ int main (int argc, char * const argv[])
 	pLogger->Debug("Rendering nodes");
 	pLogger->Debug("-------------------------------------------------------------------");
 	system->GetActiveDocumentController()->Render(0.0);
+	system->GetActiveDocumentController()->Render(1.0);
+	system->GetActiveDocumentController()->Render(2.0);
 	pLogger->Debug("-------------------------------------------------------------------");
 
 //	TestMoveNodes();
