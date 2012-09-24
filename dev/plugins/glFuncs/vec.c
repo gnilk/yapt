@@ -1,6 +1,6 @@
 /**
-	2002-11-29
-		fixed a bug	in qSlerp
+  2002-11-29
+    fixed a bug	in qSlerp
 **/
 #include "vec.h"
 #include <math.h>
@@ -26,8 +26,8 @@ float *vNeg(float *dest, float *v)
 }
 float *matDup(float *dst, float *src)
 {
-	memcpy (dst,src,sizeof (float) * 16);
-	return dst;
+  memcpy (dst,src,sizeof (float) * 16);
+  return dst;
 }
 
 float *matMul(float *dest, float *a, float *b)
@@ -92,7 +92,7 @@ max:=abs(inMatrix.Mat[k,i]);
 j:=k;
   end;
   
-		if (max<=0) then
+    if (max<=0) then
             exit;
         
         if j<>i then
@@ -115,7 +115,7 @@ det:=det*pivot;
     begin
 t:=inMatrix.Mat[j,i];
     for k:=i+1 to 3 do
-				inMatrix.Mat[j,k]:=inMatrix.Mat[j,k]-(inMatrix.Mat[i,k]*t);
+        inMatrix.Mat[j,k]:=inMatrix.Mat[j,k]-(inMatrix.Mat[i,k]*t);
                 for k:=0 to 3 do
                 utMatrix.Mat[j,k]:=utMatrix.Mat[j,k]-(utMatrix.Mat[i,k]*t);
                 end;
@@ -212,26 +212,26 @@ float *matInv2(float *dest, float *A)
   // checke ob diagonalkomponenten alle besetzt
   for (j=0;j<4;j++)
   {
-	if (MAT(A,j,j)==0.0) 
-	{
-	  for (k=j+1;k<4;k++) 
-	  {
-	    if (MAT(A,k,j)!=0.0)
-		{
-		  // swap row k/j in Matrix A and B !!!
-		  for (i=0;i<4;i++)
-		  {
-			t = MAT(A,j,i); 
-			MAT(A,j,i) = MAT(A,k,i);
-			MAT(A,k,i) = (float)t;
-			t = MAT(B,j,i); 
-			MAT(B,j,i) = MAT(B,k,i);
-			MAT(B,k,i) = (float)t;
-		  }
-		}
-		break;
+  if (MAT(A,j,j)==0.0) 
+  {
+    for (k=j+1;k<4;k++) 
+    {
+      if (MAT(A,k,j)!=0.0)
+    {
+      // swap row k/j in Matrix A and B !!!
+      for (i=0;i<4;i++)
+      {
+      t = MAT(A,j,i); 
+      MAT(A,j,i) = MAT(A,k,i);
+      MAT(A,k,i) = (float)t;
+      t = MAT(B,j,i); 
+      MAT(B,j,i) = MAT(B,k,i);
+      MAT(B,k,i) = (float)t;
       }
-	}
+    }
+    break;
+      }
+  }
   }
   
   // für jede der 4 spalten auf der linken Seite
@@ -239,20 +239,20 @@ float *matInv2(float *dest, float *A)
   {
     // normiere pivot-element j,j
     t=MAT(A,j,j);
-	for (k=0;k<4;k++) 
-	{  
-	  MAT(A,j,k)=MAT(A,j,k)/t;MAT(B,j,k)=MAT(B,j,k)/t;
-	}
-  	// eliminiere alle elemente der spalte j, ausser in zeile j
-	for (i=0;i<4;i++) if ((i!=j) && MAT(A,i,j) != 0)
-	{
-	  t = MAT(A,i,j);
-	  for (k=0;k<4;k++)
-	  {
-	    MAT(A,i,k) = MAT(A,i,k) - t*MAT(A,j,k);
-	    MAT(B,i,k) = MAT(B,i,k) - t*MAT(B,j,k);
-	  }
-	}
+  for (k=0;k<4;k++) 
+  {  
+    MAT(A,j,k)=MAT(A,j,k)/t;MAT(B,j,k)=MAT(B,j,k)/t;
+  }
+    // eliminiere alle elemente der spalte j, ausser in zeile j
+  for (i=0;i<4;i++) if ((i!=j) && MAT(A,i,j) != 0)
+  {
+    t = MAT(A,i,j);
+    for (k=0;k<4;k++)
+    {
+      MAT(A,i,k) = MAT(A,i,k) - t*MAT(A,j,k);
+      MAT(B,i,k) = MAT(B,i,k) - t*MAT(B,j,k);
+    }
+  }
   }
   memcpy(dest,B,sizeof(float)*16);
 
@@ -291,23 +291,23 @@ float *matFromAngleAxis(float *m, float angle, float *axis)
 
 float *vMatIdentity (float *mat)
 {
-	int i;
-	for (i=0;i<4*4;i++) mat[i]=0;
+  int i;
+  for (i=0;i<4*4;i++) mat[i]=0;
 
-	MAT(mat,0,0)=1;
-	MAT(mat,1,1)=1;
-	MAT(mat,2,2)=1;
-	MAT(mat,3,3)=1;
+  MAT(mat,0,0)=1;
+  MAT(mat,1,1)=1;
+  MAT(mat,2,2)=1;
+  MAT(mat,3,3)=1;
 
-	return mat;
+  return mat;
 }
 float *vMatGetTrans (float *dst, float *mat)
 {
-	dst[0] = MAT(mat,0,3);
-	dst[1] = MAT(mat,1,3);
-	dst[2] = MAT(mat,2,3);
-	
-	return dst;
+  dst[0] = MAT(mat,0,3);
+  dst[1] = MAT(mat,1,3);
+  dst[2] = MAT(mat,2,3);
+  
+  return dst;
 }
 
 float *matRotateAngles (float *mat, float x, float y, float z)
@@ -325,83 +325,83 @@ float *matRotateAngles (float *mat, float x, float y, float z)
 
 float *vMatFromFixedAngles (float *mat, float x, float y, float z)
 {
-	float a,b;
+  float a,b;
 
-	a = sin(x)*sin(y);
-	b = cos(x)*sin(y);
+  a = sin(x)*sin(y);
+  b = cos(x)*sin(y);
 
-	
-	MAT(mat,0,0) = cos(y)*cos(z);
-	MAT(mat,0,1) = cos(y)*sin(z);
-	MAT(mat,0,2) =-sin(y);
+  
+  MAT(mat,0,0) = cos(y)*cos(z);
+  MAT(mat,0,1) = cos(y)*sin(z);
+  MAT(mat,0,2) =-sin(y);
 
-	MAT(mat,1,0) = a*cos(z) - cos(x)*sin(z);
-	MAT(mat,1,1) = a*sin(z) + cos(x)*cos(z);
-	MAT(mat,1,2) =   sin(x)*cos(y);
+  MAT(mat,1,0) = a*cos(z) - cos(x)*sin(z);
+  MAT(mat,1,1) = a*sin(z) + cos(x)*cos(z);
+  MAT(mat,1,2) =   sin(x)*cos(y);
 
-	MAT(mat,2,0) = b*cos(z) + sin(x)*sin(z);
-	MAT(mat,2,1) = b*sin(z) - sin(x)*cos(z);
-	MAT(mat,2,2) = cos(x)*cos(y);
+  MAT(mat,2,0) = b*cos(z) + sin(x)*sin(z);
+  MAT(mat,2,1) = b*sin(z) - sin(x)*cos(z);
+  MAT(mat,2,2) = cos(x)*cos(y);
 
-	return mat;
+  return mat;
 }
 
 
 float *vMatFromAngles (float *mat, float x, float y,float z)
 {
   float a,b;
-	
+  
   a = sin(y)*sin(x);
   b = sin(y)*cos(x);
-	
+  
   MAT(mat,0,0) = cos(z)*cos(y);
   MAT(mat,0,1) = sin(z)*cos(x) + a*cos(z);
   MAT(mat,0,2) = sin(z)*sin(x) - b*cos(z);
-	
+  
   MAT(mat,1,0) =-sin(z)*cos(y);
   MAT(mat,1,1) = cos(z)*cos(x) - a*sin(z);
   MAT(mat,1,2) = cos(z)*sin(x) + b*sin(z);
-	
+  
   MAT(mat,2,0) = sin(y);
   MAT(mat,2,1) =-cos(y)*sin(x);
   MAT(mat,2,2) = cos(y)*cos(x);
 
-	return mat;
-	
+  return mat;
+  
 }
 float *vMatTranslate (float *mat, float *v)
 {
-	MAT(mat,0,3) += v[0];
-	MAT(mat,1,3) += v[1];
-	MAT(mat,2,3) += v[2];
-	
-	return mat;
+  MAT(mat,0,3) += v[0];
+  MAT(mat,1,3) += v[1];
+  MAT(mat,2,3) += v[2];
+  
+  return mat;
 }
 
 float *matTranspose(float *dest, float *mat)
 {
-	float tmp;
-	matIdentity(dest);
-	MAT(dest,0,3) -= MAT(mat,0,3);
-	MAT(dest,1,3) -= MAT(mat,1,3);
-	MAT(dest,2,3) -= MAT(mat,2,3);
+  float tmp;
+  matIdentity(dest);
+  MAT(dest,0,3) -= MAT(mat,0,3);
+  MAT(dest,1,3) -= MAT(mat,1,3);
+  MAT(dest,2,3) -= MAT(mat,2,3);
 /*
-	m11 = 1.0f;	m12 = 0.0f;	m13 = 0.0f	;
-	m21 = 0.0f;	m22 = 1.0f;	m23 = 0.0f	;
-	m31 = 0.0f;	m32 = 0.0f;	m33 = 1.0f	;
+  m11 = 1.0f;	m12 = 0.0f;	m13 = 0.0f	;
+  m21 = 0.0f;	m22 = 1.0f;	m23 = 0.0f	;
+  m31 = 0.0f;	m32 = 0.0f;	m33 = 1.0f	;
 */
-	tmp = MAT(mat,0,1); MAT(dest,0,1) = MAT(mat,1,0); MAT(dest,0,1) = tmp;
-	tmp = MAT(mat,0,2); MAT(dest,0,2) = MAT(mat,2,0); MAT(dest,0,2) = tmp;
-	tmp = MAT(mat,1,2); MAT(dest,1,2) = MAT(mat,2,1); MAT(dest,2,1) = tmp;
-	
+  tmp = MAT(mat,0,1); MAT(dest,0,1) = MAT(mat,1,0); MAT(dest,0,1) = tmp;
+  tmp = MAT(mat,0,2); MAT(dest,0,2) = MAT(mat,2,0); MAT(dest,0,2) = tmp;
+  tmp = MAT(mat,1,2); MAT(dest,1,2) = MAT(mat,2,1); MAT(dest,2,1) = tmp;
+  
 /*
-	transp = m12; m12 = m21; m21 = transp	;
-	transp = m13; m13 = m31; m31 = transp	;
-	transp = m23; m23 = m32; m32 = transp	;
+  transp = m12; m12 = m21; m21 = transp	;
+  transp = m13; m13 = m31; m31 = transp	;
+  transp = m23; m23 = m32; m32 = transp	;
 */	
-	return dest;
+  return dest;
 
-	
+  
 }
 
 float *vApplyMat(float *dest, float *v, float *mat)
@@ -459,14 +459,15 @@ float *vScale (float *dest, float *src, float x, float y, float z)
 }
 #define EQ_EPS 0.0001f
 int vEquals(float *a, float *b) {
-	
-	if (fabs(a[0]-b[0]) > EQ_EPS) return 0;
-	if (fabs(a[1]-b[1]) > EQ_EPS) return 0;
-	if (fabs(a[2]-b[2]) > EQ_EPS) return 0;
-	return 1;
+  
+  if (fabs(a[0]-b[0]) > EQ_EPS) return 0;
+  if (fabs(a[1]-b[1]) > EQ_EPS) return 0;
+  if (fabs(a[2]-b[2]) > EQ_EPS) return 0;
+  return 1;
 }
 
-inline unsigned long vHash(float *v) {
+
+unsigned long vHash(float *v) {
     unsigned long xi = (unsigned long)(v[0] * 73856093);
     unsigned long yi = (unsigned long)(v[1] * 19349663);
     unsigned long zi = (unsigned long)(v[2] * 83492791);
@@ -530,89 +531,89 @@ int vCmp(float *a, float *b)
 }
 float *qIdentity (float *q)
 {
-	vIni (q,0,0,0);
-	q[3] = 1.0f;
-	return q;
+  vIni (q,0,0,0);
+  q[3] = 1.0f;
+  return q;
 }
 float *qIni (float *q, float x, float y, float z, float w)
 {
-	q[0] = x;
-	q[1] = y;
-	q[2] = z;
-	q[3] = w;
-	return q;
+  q[0] = x;
+  q[1] = y;
+  q[2] = z;
+  q[3] = w;
+  return q;
 }
 
 
 float *qDup(float *dst, float *src)
 {
-	memcpy (dst,src,sizeof (float) * 4);
-	return dst;
+  memcpy (dst,src,sizeof (float) * 4);
+  return dst;
 }
 
 float *qScale (float *qr, float *qa, float scale)
 {
-	int i;
-	for (i=0;i<4;i++)
-		qr[i]=qa[i] * scale;
+  int i;
+  for (i=0;i<4;i++)
+    qr[i]=qa[i] * scale;
 
-	return qr;
+  return qr;
 }
 
 float *qInv (float *qr, float *qa )
 {
-	int i;
-	for (i=0;i<3;i++)
-		qr[i] = -qa[i];
+  int i;
+  for (i=0;i<3;i++)
+    qr[i] = -qa[i];
 
-	qr[3] = qa[3];
+  qr[3] = qa[3];
 
-	return qr;
+  return qr;
 }
 
 float qAbs (float *q)
 {
-	return sqrt(q[0]*q[0]+q[1]*q[1]+q[2]*q[2]+q[3]*q[3]);
+  return sqrt(q[0]*q[0]+q[1]*q[1]+q[2]*q[2]+q[3]*q[3]);
 }
 
 float qDot (float *q1, float *q2)
 {
-	return q1[0]*q2[0] + q1[1]*q2[1] + q1[2]*q2[2] + q1[3]*q2[3];
+  return q1[0]*q2[0] + q1[1]*q2[1] + q1[2]*q2[2] + q1[3]*q2[3];
 
 }
 float *qNorm(float *dest, float *v)
 {
   float oneoverl=(float)1.0/qAbs(v);
-	
+  
   dest[0]=oneoverl*v[0];
   dest[1]=oneoverl*v[1];
   dest[2]=oneoverl*v[2];
   dest[3]=oneoverl*v[3];
-	
+  
   return dest;
 }
 float* qAdd(float *q, float *q1, float *q2)
 {
-	int i;
-	for (i=0;i<4;i++)
-		q[i] = q1[i]+q2[i];
-	
-	return q;
+  int i;
+  for (i=0;i<4;i++)
+    q[i] = q1[i]+q2[i];
+  
+  return q;
 }
 
 float *qMul(float *qr, float *qa, float *qb )
 {
-	float va[3],vb[3],vc[3];
-	qr[3] = vDot (qa, qb);
-	
-	vCross (va, qa, qb);
-	vMul (vb, qa, qb[3]);
-	vMul (vc, qb, qa[3]);
-	vAdd(va,va,vb);
-	vAdd(qr, va, vc);
-	
-	qNorm(qr, qr);
-	return qr;
+  float va[3],vb[3],vc[3];
+  qr[3] = vDot (qa, qb);
+  
+  vCross (va, qa, qb);
+  vMul (vb, qa, qb[3]);
+  vMul (vc, qb, qa[3]);
+  vAdd(va,va,vb);
+  vAdd(qr, va, vc);
+  
+  qNorm(qr, qr);
+  return qr;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -626,47 +627,47 @@ I don't normalize quat before proceding for speed reasons.
 /*
 float *qToMat4x4 (float *mat, float *q)
 {
-	float w,px,py,pz;
-	float xs,ys,zs,wx,wy,wz,xx,xy,xz,yy,yz,zz;
+  float w,px,py,pz;
+  float xs,ys,zs,wx,wy,wz,xx,xy,xz,yy,yz,zz;
 
-	qNorm(q,q);
-	
-	px = q[0];
-	py = q[1];
-	pz = q[2];
-	w  = q[3];
-	
-	 xs = px + px; 
-	 ys = py + py; 
-	 zs = pz + pz;
-	 wx = w * xs; 
-	 wy = w * ys; 
-	 wz = w * zs;
-	 xx = px * xs; 
-	 xy = px * ys; 
-	 xz = px * zs;
-	 yy = py * ys; 
-	 yz = py * zs; 
-	 zz = pz * zs;
+  qNorm(q,q);
+  
+  px = q[0];
+  py = q[1];
+  pz = q[2];
+  w  = q[3];
+  
+   xs = px + px; 
+   ys = py + py; 
+   zs = pz + pz;
+   wx = w * xs; 
+   wy = w * ys; 
+   wz = w * zs;
+   xx = px * xs; 
+   xy = px * ys; 
+   xz = px * zs;
+   yy = py * ys; 
+   yz = py * zs; 
+   zz = pz * zs;
 
-	 
-	 MAT(mat,0,0) = 1.0f - yy - zz;
-	 MAT(mat,1,0) = xy - wz;
-	 MAT(mat,2,0) = xz + wy;
-	 
-	 MAT(mat,0,1) = xy + wz;
-	 MAT(mat,1,1) = 1.0f - xx - zz;
-	 MAT(mat,2,1) = yz - wx;
-	 
-	 MAT(mat,0,2) = xz - wy;
-	 MAT(mat,1,2) = yz + wx;
-	 MAT(mat,2,2) = 1.0f - xx - yy;
+   
+   MAT(mat,0,0) = 1.0f - yy - zz;
+   MAT(mat,1,0) = xy - wz;
+   MAT(mat,2,0) = xz + wy;
+   
+   MAT(mat,0,1) = xy + wz;
+   MAT(mat,1,1) = 1.0f - xx - zz;
+   MAT(mat,2,1) = yz - wx;
+   
+   MAT(mat,0,2) = xz - wy;
+   MAT(mat,1,2) = yz + wx;
+   MAT(mat,2,2) = 1.0f - xx - yy;
 
-	 mat[3] = mat[7] = 0;
-	mat[11] = mat[12] = mat[13] = mat[14] = 0;
-	mat[15] = 1;
-	
-	return mat;
+   mat[3] = mat[7] = 0;
+  mat[11] = mat[12] = mat[13] = mat[14] = 0;
+  mat[15] = 1;
+  
+  return mat;
 }
 
 */
@@ -727,121 +728,121 @@ float *qToMat4x4 (float *mat, float *qr)
 }
 float *qToMat3x3 (float *mat, float *qr)
 {
-	float X,Y,Z,W,xx,xy,xz,xw,yy,yz,yw,zz,zw;
-	
-	X = qr[0];
-	Y = qr[1];
-	Z = qr[2];
-	W = qr[3];
-	
-	xx = X * X;
-	xy = X * Y;
-	xz = X * Z;
-	xw = X * W;
-	
-	yy = Y * Y;
-	yz = Y * Z;
-	yw = Y * W;
-	
-	zz = Z * Z;
-	zw = Z * W;
-	
-	MAT(mat,0,0) = 1 - 2 * ( yy + zz );
-	MAT(mat,0,1) =     2 * ( xy - zw );
-	MAT(mat,0,2) =     2 * ( xz + yw );
-	
-	MAT(mat,1,0)  =     2 * ( xy + zw );
-	MAT(mat,1,1)  = 1 - 2 * ( xx + zz );
-	MAT(mat,1,2) =     2 * ( yz - xw );
-	
-	MAT(mat,2,0)  =     2 * ( xz - yw );
-	MAT(mat,2,1)  =     2 * ( yz + xw );
-	MAT(mat,2,2) = 1 - 2 * ( xx + yy );
-	
-	
-	return mat;
+  float X,Y,Z,W,xx,xy,xz,xw,yy,yz,yw,zz,zw;
+  
+  X = qr[0];
+  Y = qr[1];
+  Z = qr[2];
+  W = qr[3];
+  
+  xx = X * X;
+  xy = X * Y;
+  xz = X * Z;
+  xw = X * W;
+  
+  yy = Y * Y;
+  yz = Y * Z;
+  yw = Y * W;
+  
+  zz = Z * Z;
+  zw = Z * W;
+  
+  MAT(mat,0,0) = 1 - 2 * ( yy + zz );
+  MAT(mat,0,1) =     2 * ( xy - zw );
+  MAT(mat,0,2) =     2 * ( xz + yw );
+  
+  MAT(mat,1,0)  =     2 * ( xy + zw );
+  MAT(mat,1,1)  = 1 - 2 * ( xx + zz );
+  MAT(mat,1,2) =     2 * ( yz - xw );
+  
+  MAT(mat,2,0)  =     2 * ( xz - yw );
+  MAT(mat,2,1)  =     2 * ( yz + xw );
+  MAT(mat,2,2) = 1 - 2 * ( xx + yy );
+  
+  
+  return mat;
 }
 
 
 
 float* qSlerp(float *q, float *q1, float *q2, float t)
 {
-	float q3[4],q4[4];
-	float s1,s2,sa,a,d;
+  float q3[4],q4[4];
+  float s1,s2,sa,a,d;
 
-	d = qDot(q1,q2);
-	if(d < -1.0f)
-		d = -1.0f;
-	else
-		if(d > 1.0f) d = 1.0f;
-		
-	a = acos(d);
-	sa = sin(a);
-	if(sa < 0.0001f)
-	{
-		int i;
-		for (i=0;i<4;i++) q[i] = q1[i];
-	}	
-	else
-	{
-		s1 = sin((1.0f-t)*a)/sa;
-		s2 = sin(t*a)/sa;
-		qScale(q3,q1,s1);
-		qScale(q4,q2,s2);	// bug here, fixed by Gnilk 021129
-		qAdd(q,q3,q4);
-	}
-	
-	return q;
+  d = qDot(q1,q2);
+  if(d < -1.0f)
+    d = -1.0f;
+  else
+    if(d > 1.0f) d = 1.0f;
+    
+  a = acos(d);
+  sa = sin(a);
+  if(sa < 0.0001f)
+  {
+    int i;
+    for (i=0;i<4;i++) q[i] = q1[i];
+  }	
+  else
+  {
+    s1 = sin((1.0f-t)*a)/sa;
+    s2 = sin(t*a)/sa;
+    qScale(q3,q1,s1);
+    qScale(q4,q2,s2);	// bug here, fixed by Gnilk 021129
+    qAdd(q,q3,q4);
+  }
+  
+  return q;
 }
 
 void qToAngleAxis (float *v,float *axis,float *qr)
 {
-	float ca,sa;
+  float ca,sa;
 
-	qNorm(qr,qr);
+  qNorm(qr,qr);
 
   ca = acos (qr[3]);
   sa = sin  (ca);
-	
-	*v = ca * 2;
-	
-	if ( fabs( sa ) < 0.0005 )
-	{
-		vIni(axis,0,0,1);
-	} else
-		{
-			vIni(axis,qr[0],qr[1],qr[2]);
-			vMul(axis,axis,1.0/sa);
-		}
+  
+  *v = ca * 2;
+  
+  if ( fabs( sa ) < 0.0005 )
+  {
+    vIni(axis,0,0,1);
+  } else
+    {
+      vIni(axis,qr[0],qr[1],qr[2]);
+      vMul(axis,axis,1.0/sa);
+    }
 
 }
 float* qFromAngleAxis(float *q, float a, float *v)
 {
-	float u[3];
-	float s;
-	
-	if(v[0]==0.0f && v[1]==0.0f && v[2]==0.0f)
-	{
-		q[0] = 1.0f;
-		q[1] = 0.0f;
-		q[2] = 0.0f;
-		q[3] = 0.0f;
-		return q;
-	}
-	
-	a *= 0.5f;
-	s = (float)sin(a);
-	vNorm(u,v);
-	
-	vMul(q,u,s);
+  float u[3];
+  float s;
+  
+  if(v[0]==0.0f && v[1]==0.0f && v[2]==0.0f)
+  {
+    q[0] = 1.0f;
+    q[1] = 0.0f;
+    q[2] = 0.0f;
+    q[3] = 0.0f;
+    return q;
+  }
+  
+  a *= 0.5f;
+  s = (float)sin(a);
+  vNorm(u,v);
+  
+  vMul(q,u,s);
 /*
-	q[0] = u.x*s;
-	q[1] = u.y*s;
-	q[2] = u.z*s;
+  q[0] = u.x*s;
+  q[1] = u.y*s;
+  q[2] = u.z*s;
 */
-	q[3] = (float)cos(a);
-	
-	return q;
+  q[3] = (float)cos(a);
+  
+  return q;
 }
 /*
 // taken from gamedev.net quat faq...
@@ -863,19 +864,19 @@ quaternion_from_euler( QUATERNION *q, VFLOAT ax, VFLOAT ay, VFLOAT az )
 */
 float *qFromEuler(float *q, float *v)
 {
-	float vx[]={1,0,0};
-	float vy[]={0,1,0};
-	float vz[]={0,0,1};
-	float qx[4],qy[4],qz[4],qt[4];
+  float vx[]={1,0,0};
+  float vy[]={0,1,0};
+  float vz[]={0,0,1};
+  float qx[4],qy[4],qz[4],qt[4];
 
-	qFromAngleAxis(qx,v[0],vx);
-	qFromAngleAxis(qy,v[1],vy);
-	qFromAngleAxis(qz,v[2],vz);
+  qFromAngleAxis(qx,v[0],vx);
+  qFromAngleAxis(qy,v[1],vy);
+  qFromAngleAxis(qz,v[2],vz);
 
-	qMul (qt,qx,qy);
-	qMul (q,qt,qz);
+  qMul (qt,qx,qy);
+  qMul (q,qt,qz);
 
-	return q;
+  return q;
 }
 float *matGetTranslation(float *mat, float *dest)
 {
@@ -915,16 +916,16 @@ float *matGetZVec(float *mat, float *dest)
 
 float *matScale(float *mat, float *scale)
 {
-	float tmp[16],tmp2[16];
+  float tmp[16],tmp2[16];
 
-	matIdentity(tmp);
-	tmp[0] = scale[0];
-	tmp[5] = scale[1];
-	tmp[10] = scale[2];
+  matIdentity(tmp);
+  tmp[0] = scale[0];
+  tmp[5] = scale[1];
+  tmp[10] = scale[2];
 
-	matMul (tmp2,tmp,mat);
-	matDup (mat,tmp2);
-	return mat;
+  matMul (tmp2,tmp,mat);
+  matDup (mat,tmp2);
+  return mat;
 }
 
 float *matSetTranslation(float *mat, float *dest)
@@ -1025,8 +1026,8 @@ float* matFromVectors(float *m, float *z, float *y)
 /*
 void GLAPI
 gluLookAt(GLdouble eyex, GLdouble eyey, GLdouble eyez, GLdouble centerx,
-	  GLdouble centery, GLdouble centerz, GLdouble upx, GLdouble upy,
-	  GLdouble upz)
+    GLdouble centery, GLdouble centerz, GLdouble upx, GLdouble upy,
+    GLdouble upz)
 {
     int i;
     float forward[3], side[3], up[3];
@@ -1071,31 +1072,31 @@ gluLookAt(GLdouble eyex, GLdouble eyey, GLdouble eyez, GLdouble centerx,
 float *matLookAt (float *m, float *s, float *t, float *up_in)
 {
     float forward[3], side[3], up[3];
-	float tmp[16];
+  float tmp[16];
 
-	vSub (forward,t,s);
-	vDup (up,up_in);
+  vSub (forward,t,s);
+  vDup (up,up_in);
     vNorm(forward,forward);
 
     // Side = forward x up 
-	vCross (side,forward,up);
-	vNorm (side,side);
+  vCross (side,forward,up);
+  vNorm (side,side);
 
     // Recompute up as: up = side x forward 
-	vCross (up,side,forward);
+  vCross (up,side,forward);
 
     matIdentity(tmp);
-	matSetXVec(tmp,side);
-	matSetYVec(tmp,up);
-	vMul (forward,forward,-1);
-	matSetZVec(tmp,forward);
+  matSetXVec(tmp,side);
+  matSetYVec(tmp,up);
+  vMul (forward,forward,-1);
+  matSetZVec(tmp,forward);
 
     matSetTranslation(tmp,s);
 
-	matIdentity(m);
-	matInv (m,tmp);
+  matIdentity(m);
+  matInv (m,tmp);
 
-	return m;
+  return m;
 }
 
 /*
@@ -1119,7 +1120,7 @@ float* matLookAt(float *m, float *s, float *t, float *up)
     vCross(right,up,inn);
     vCross(up_new,inn,right);
 
-	vNorm (right,right);
+  vNorm (right,right);
     vNorm (up_new,up_new);
     
 
@@ -1138,11 +1139,11 @@ float* matLookAt(float *m, float *s, float *t, float *up)
 */
 float* matLookAtV(float *m, float sx, float sy, float sz, float tx, float ty, float tz, float ux, float uy, float uz)
 {
-	float sv[3],tv[3],uv[3];
-	vIni (sv,sx,sy,sz);
-	vIni (tv,tx,ty,tz);
-	vIni (uv,ux,uy,uz);
-	return matLookAt (m,sv,tv,uv);
+  float sv[3],tv[3],uv[3];
+  vIni (sv,sx,sy,sz);
+  vIni (tv,tx,ty,tz);
+  vIni (uv,ux,uy,uz);
+  return matLookAt (m,sv,tv,uv);
 }
 
 /*

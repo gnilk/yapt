@@ -1,3 +1,20 @@
+/*-------------------------------------------------------------------------
+File    : $Archive: Timeline.cpp $
+Author  : $Author: Fkling $
+Version : $Revision: 1 $
+Orginal : 2012-09-20, 15:50
+Descr   : Implementation of the Timeline container and the execute object
+
+Modified: $Date: $ by $Author: Fkling $
+---------------------------------------------------------------------------
+TODO: [ -:Not done, +:In progress, !:Completed]
+<pre>
+</pre>
+
+
+\History
+- 20.09.12, FKling, Implementation
+---------------------------------------------------------------------------*/
 #include "yapt/logger.h"
 #include "yapt/ySystem.h"
 #include "yapt/ySystem_internal.h"
@@ -7,36 +24,6 @@
 #endif
 
 using namespace yapt;
-
-//extern "C"
-//{
-//	int CALLCONV InitializeTimelinePlugin(ISystem *ySys);
-//}
-//
-//class TimelineExecuteFactory :
-//	public IPluginObjectFactory
-//{
-//public:
-//	virtual IPluginObject *CreateObject(ISystem *pSys, const char *guid_identifier);
-//};
-
-//class TimelineExecuteObject :
-//	public IPluginObject
-//{
-//protected:
-//	//
-//	Property *start;
-//	Property *duration;
-//	Property *object;
-//	IBaseInstance *pRenderInstanceObject;
-//public:
-//	TimelineExecuteObject();
-//	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
-//	virtual void Render(double t, IPluginObjectInstance *pInstance);
-//	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
-//	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
-//};
-
 
 Timeline::Timeline() : BaseInstance(kInstanceType_Timeline){
   AddAttribute("name","timeline");
@@ -80,7 +67,10 @@ char *TimelineExecute::GetObjectName() {
 }
 
 bool TimelineExecute::ShouldRender(double t) {
-  return true;
+  if ((t>=start) && (t<(start+duration))) {
+    return true;
+  } 
+  return false;
 }
 
 void TimelineExecute::SetParam(float _start, float _duration, char *_objectName) {
