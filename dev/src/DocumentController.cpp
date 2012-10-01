@@ -12,6 +12,10 @@
  TODO: [ -:Not done, +:In progress, !:Completed]
  <pre>
  - Replace bUpdate with a proper state
+ - Idea: Introduce different document renderes that contain
+   rendering logic, we want to keep this logic!
+   That way 'force' can be removed, and instead it is
+   just another render-logic handler..
  </pre>
  
  
@@ -19,6 +23,7 @@
  - 08.10.09, FKling, Implementation
  - 09.10.09, FKling, Renamed to DocumentController
  - 04.11.09, FKling, Fixed property binding, was broken due to refactoring
+ - 01.10.12, FKling, Rewrote initialization, had the logic all mixed up
  
  ---------------------------------------------------------------------------*/
 #include <assert.h>
@@ -83,6 +88,7 @@ void DocumentController::InitializeNode(IDocNode *node)
 {
   //	ISystem *ySys = yapt::GetYaptSystemInstance();
   IBaseInstance *pObject = node->GetNodeObject();
+  pLogger->Debug("Initialize: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
   if (pObject != NULL)
   {
     pLogger->Debug("Initialize: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
@@ -98,10 +104,15 @@ void DocumentController::InitializeNode(IDocNode *node)
       case kInstanceType_MetaNode :
       {				
         MetaInstance *pMeta = dynamic_cast<MetaInstance *> (pObject);
-        PostInitializeNode(pMeta->GetDocument()->GetTree());
+        InitializeNode(pMeta->GetDocument()->GetTree());
       }
       break;
     }
+  }
+  for(int i=0;i<node->GetNumChildren();i++)
+  {
+    IDocNode *child = node->GetChildAt(i);
+    InitializeNode(child);
   }
 }
 
@@ -109,11 +120,27 @@ void DocumentController::InitializeNode(IDocNode *node)
 // Calls postinitialize, first on all children and on the way back on the node itself
 // Called when all sub objects have been created or any property of the parent/children objects has changed
 //
-bool DocumentController::PostInitializeNode(IDocNode *node)
-{
+bool DocumentController::PostInitializeNode(IDocNode *node) {
   int i,nChildren;
 
-    InitializeNode(node);
+  IBaseInstance *pObject = node->GetNodeObject();
+  if (pObject != NULL) {
+    switch(pObject->GetInstanceType()) {
+      case kInstanceType_Object : 
+      {
+        PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
+        pInst->ExtPostInitialize();
+      }
+      break;  
+      case kInstanceType_MetaNode :
+      {				
+        MetaInstance *pMeta = dynamic_cast<MetaInstance *> (pObject);
+        PostInitializeNode(pMeta->GetDocument()->GetTree());
+      }
+      break;
+    }
+  }
+
 
   nChildren = node->GetNumChildren();
   for(i=0;i<nChildren;i++)
@@ -122,27 +149,50 @@ bool DocumentController::PostInitializeNode(IDocNode *node)
     if (!PostInitializeNode(child)) return false;
   }
   
+  return true;
+}
+bool DocumentController::BindAllProperties(IDocNode *node) {
   //	ISystem *ySys = yapt::GetYaptSystemInstance();
   IBaseInstance *pObject = node->GetNodeObject();
   if (pObject != NULL)
   {
-    pLogger->Debug("PostInitialize: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
     switch(pObject->GetInstanceType())
     {
       case kInstanceType_Object :
       {
-        // TODO: Reroute call through instance in order to track states
         PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
         if (!pInst->BindProperties()) {
-                    // Binding failed => loading failed
-                    return false;
-                }
-        pInst->ExtPostInitialize();
+          return false;
+        }
       }
-            break;
+      break;
+      case kInstanceType_MetaNode :
+      {
+        MetaInstance *pMeta = dynamic_cast<MetaInstance *> (pObject);
+        BindAllProperties(pMeta->GetDocument()->GetTree());
+      }
+      break;
     }
   }
-    return true;
+
+  for(int i=0;i<node->GetNumChildren();i++)
+  {
+    IDocNode *child = node->GetChildAt(i);
+    if (!BindAllProperties(child)) return false;
+  }
+  return true;
+}
+
+bool DocumentController::Initialize() {
+
+  InitializeNode(pDocument->GetTree());
+  if(BindAllProperties(pDocument->GetTree())) {
+    if (PostInitializeNode(pDocument->GetTree())) {
+      return true;
+    }
+  }
+  return false;
+
 }
 
 void DocumentController::Render(double sample_time)
@@ -181,11 +231,6 @@ void DocumentController::RenderResources()
 }
 
 //
-// TODO: Render according to timeline instead
-//       - Introduce different document renderes that contain
-//         rendering logic, we want to keep this logic!
-//         That way 'force' can be removed, and instead it is
-//         just another render-logic handler..
 //
 // Renders a single node and recursivley all children
 // Force is used to override timing information

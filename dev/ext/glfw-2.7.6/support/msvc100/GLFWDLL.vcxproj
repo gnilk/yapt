@@ -70,6 +70,7 @@
     <LinkIncremental>true</LinkIncremental>
     <TargetName>GLFW</TargetName>
     <IntDir>$(Configuration)DLL\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -83,17 +84,18 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_GLFW_NO_DLOAD_WINMM;_GLFW_NO_DLOAD_GDI32;GLFW_BUILD_DLL;WIN32;_DEBUG;_WINDOWS;_USRDLL;GLFWDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>false</CompileAsManaged>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\lib;$(SolutionDir)\..\..\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\lib;$(ProjectDir)\..\..\lib\win32;%(AdditionalIncludeDirectories)$(ProjectDir)\..\..\lib</AdditionalIncludeDirectories>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(TargetName)DLL.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)$(Configuration)/$(TargetName)DLL.lib</ImportLibrary>
       <AdditionalDependencies>winmm.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>$(SolutionDir)\..\..\lib\win32\glfwdll.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>$(ProjectDir)\..\..\lib\win32\glfwdll.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(SolutionDir)../$(Configuration)/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,7 +107,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_GLFW_NO_DLOAD_WINMM;_GLFW_NO_DLOAD_GDI32;GLFW_BUILD_DLL;WIN32;NDEBUG;_WINDOWS;_USRDLL;GLFWDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>false</CompileAsManaged>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\lib;$(SolutionDir)\..\..\lib\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\lib;$(ProjectDir)\..\..\lib\win32;%(AdditionalIncludeDirectories)$(ProjectDir)\..\..\lib</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <DebugInformationFormat>

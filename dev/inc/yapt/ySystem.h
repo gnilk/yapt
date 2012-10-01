@@ -55,6 +55,9 @@ namespace yapt
 
   #define kConfig_CaseSensitive ("yapt.casesensitive")
 
+  #define kConfig_ResolutionWidth ("screen.resolution.width")
+  #define kConfig_ResolutionHeight ("screen.resolution.height")
+
   // document tags
 //	#define kDocument_RootName ("yapt2")
 //#define kDocu
@@ -366,6 +369,7 @@ namespace yapt
   public:
     virtual IRenderVars *GetRenderVars() = 0;
     
+    virtual bool Initialize() = 0;
     virtual void InitializeNode(IDocNode *node) = 0;
     virtual bool PostInitializeNode(IDocNode *node) = 0;
     

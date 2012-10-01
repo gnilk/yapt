@@ -1,0 +1,44 @@
+gl.DrawImage
+    Inputs
+        Texture
+        Position
+        Size
+
+gl.FullScreenImage
+    Inputs
+        Texture
+
+gl.Clear
+    Inputs
+        targets={none,color,depth,both}
+        color=0,0,0,0
+                
+gl.RenderTarget
+    Inputs
+        width=512
+        height=288
+        colorMode=32,8,alpha,etc..
+        depthBits=32,24,16,8
+        haveColor=true
+        haveDepth=true
+        haveStencil=false
+        forceMipMaps=false
+    Outputs
+        texture
+        fbo
+        rbo
+    Init:
+        Create FBO objects (see: C:\Users\chfrkl\Downloads\fbo\fbo\src\main.cpp)
+    Rendering:
+        Setup FBO objects for rendering purposes by children
+        Basically: glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+
+    PostInitialize:
+        Release bindings
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        if (forceMipMaps) {
+            glBindTexture(GL_TEXTURE_2D, textureId);
+            glGenerateMipmap(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, 0);        
+        }        
+                        

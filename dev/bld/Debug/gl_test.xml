@@ -1,14 +1,18 @@
 <yapt2>
-<!--
 	<resources>
+	<!--
 		<object class="System.Config" name="Config">
 			<property name="Resolution.Width">640</property>
 		</object>
+	-->
+	   <object class="gl.LoadTexture2D" name="texture1">
+	       <property name="fileName">texture.tga</property>
+	   </object>
 	</resources>
--->	
 	
 	<render>
 		<object class="gl.RenderContext" name="context">
+			<!--
 			<object class="Animation.ExpSolver" name="rotspeed">
 				<property name="expression">40 * abs(sin(t))</property>
 			</object>
@@ -20,25 +24,14 @@
 				<property name="vertexData" source="tri.vertexData"/>
 				<property name="speed" source="rotspeed" />
 			</object>
-		</object>
-		
-		<object class="gl.RenderContext" name="context2">
-			<object class="Animation.ExpSolver" name="rotspeed">
-				<property name="expression">t*40</property>
-			</object>
-			<object class="geom.Triangle" name="tri">
-			</object>
-			<object class="gl.DrawTriangle" name="triangle">
-				<property name="numIndex" source="tri.numIndex"/>
-				<property name="indexData" source="tri.indexData"/>
-				<property name="vertexData" source="tri.vertexData"/>
-				<property name="speed" source="rotspeed" />
-			</object>
+			-->
+			<object class="gl.FullScreenImage" name="fscreen">
+			 <property name="texture" source="texture1.texture"/> 
+			</object>		
 		</object>
 	</render>
 	
 	<timeline>
-	   <execute start="0" duration="5" object="context" />
-	   <execute start="5" duration="5" object="context2" />
+	   <execute start="0" duration="1000" object="fscreen" />
 	</timeline>
 </yapt2>				

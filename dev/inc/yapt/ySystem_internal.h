@@ -410,12 +410,14 @@ namespace yapt
     IDocument *pDocument;
   private:
     void UpdateRenderVars(double sample_time);
+    bool BindAllProperties(IDocNode *node);
   public:
     DocumentController(IDocument *pDocument);
     virtual ~DocumentController();
 
     virtual IRenderVars *GetRenderVars();
   
+    virtual bool Initialize();
     virtual void InitializeNode(IDocNode *node); 
     virtual bool PostInitializeNode(IDocNode *node);
 
