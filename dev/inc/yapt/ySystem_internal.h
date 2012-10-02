@@ -583,7 +583,11 @@ namespace yapt
     unsigned int lastRenderRef;
     // 'dirtyFlag' controls synchronization between Render/PostRender (render set's to true, post set's to false) 
     // Done to avoid multiple calls to postRender for the same render counter  
-    bool dirtyFlag; 
+    bool dirtyFlag;
+    bool enablePropertyRefRendering;
+
+    bool IsPropertyRefRendering();
+    void SetPropertyRefRendering(bool _enablePropertyRefRendering);
     bool IsDirty();
     void SetDirty(bool dirty);
     void RenderPropertyDependencies(RenderVars *pRenderVars);

@@ -42,6 +42,7 @@ BaseInstance(kInstanceType_Object)
   pDocument = NULL;
   extState = kExtState_None;
   lastRenderRef = 0xffffffff;
+  enablePropertyRefRendering = true;  // Default is to render when sourced
   CreateDefaultAttributes();
 }
 
@@ -54,6 +55,7 @@ BaseInstance(kInstanceType_Object)
   pDocument = NULL;
   extState = kExtState_None;
   lastRenderRef = 0xffffffff;
+  enablePropertyRefRendering= true;
   CreateDefaultAttributes();
 }
 
@@ -408,6 +410,15 @@ void PluginObjectInstance::OnAttributeChanged(Attribute *pAttribute)
       pAttribute->SetValue(tmp);
     }
   }
+  // This attribute disables/enables rendering of property dependencies
+  // good for feedback scenarios..
+  if (!StrConfCaseCmp(name,"allowRefUpdate")) {
+    if (!StrConfCaseCmp(name,"true")){
+      enablePropertyRefRendering = true;
+    } else {
+      enablePropertyRefRendering = false;
+    }
+  }
 }
 
 
@@ -548,6 +559,13 @@ void PluginObjectInstance::ExtPostInitialize()
   }
 }
 
+bool PluginObjectInstance::IsPropertyRefRendering(){
+  return enablePropertyRefRendering;
+}
+void PluginObjectInstance::SetPropertyRefRendering(bool _enablePropertyRefRendering) {
+  enablePropertyRefRendering = _enablePropertyRefRendering;
+}
+
 bool PluginObjectInstance::IsDirty() {
   return dirtyFlag;
 }
@@ -559,7 +577,7 @@ void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
   // Update dependencies
   for(int i=0;i<input_properties.size();i++) {
     PropertyInstance *pInst = input_properties[i];
-    if (pInst->IsSourced()) {
+    if ((pInst->IsSourced()) && (pInst->GetSource()->GetObjectInstance()->IsPropertyRefRendering())) {
       pInst->GetSource()->GetObjectInstance()->ExtRender(pRenderVars);
     }
   }
