@@ -1,39 +1,18 @@
-﻿Build started 09.09.2012 20:39:15.
-     1>Project "C:\Users\chfrkl\Documents\GitHub\yapt\dev\ext\noice.io\dev\bld\vs2010\noice.io\noice.io.vcxproj" on node 4 (build target(s)).
-     1>InitializeBuildStatus:
-         Creating "Debug\noice.io.unsuccessfulbuild" because "AlwaysCreate" was specified.
-       ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Users\chfrkl\Documents\GitHub\yapt\dev\ext\noice.io\dev\bld\vs2010\noice.io\../../../inc /ZI /nologo /W3 /WX- /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D WIN32 /D _DEBUG /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\src\BasicFileDevice.cpp ..\..\..\src\BasicFileStream.cpp ..\..\..\src\DeviceFactoryHolder.cpp ..\..\..\src\DeviceManager.cpp ..\..\..\src\TextReader.cpp ..\..\..\src\URLParser.cpp
-         URLParser.cpp
-     1>c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\urlparser.cpp(64): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-     1>c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\urlparser.cpp(76): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-         TextReader.cpp
-         DeviceManager.cpp
-         DeviceFactoryHolder.cpp
-     1>c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\devicefactoryholder.cpp(42): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-     1>c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\devicefactoryholder.cpp(43): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-         BasicFileStream.cpp
-     1>c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\basicfilestream.cpp(44): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-         BasicFileDevice.cpp
-         Generating Code...
-       Lib:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\chfrkl\Documents\GitHub\yapt\dev\bld\vs2010\Debug\noice.io.lib" /NOLOGO Debug\BasicFileDevice.obj
-         Debug\BasicFileStream.obj
-         Debug\DeviceFactoryHolder.obj
-         Debug\DeviceManager.obj
-         Debug\TextReader.obj
-         Debug\URLParser.obj
-         noice.io.vcxproj -> C:\Users\chfrkl\Documents\GitHub\yapt\dev\bld\vs2010\Debug\noice.io.lib
-       FinalizeBuildStatus:
-         Deleting file "Debug\noice.io.unsuccessfulbuild".
-         Touching "Debug\noice.io.lastbuildstate".
-     1>Done Building Project "C:\Users\chfrkl\Documents\GitHub\yapt\dev\ext\noice.io\dev\bld\vs2010\noice.io\noice.io.vcxproj" (build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:05.27
+﻿  URLParser.cpp
+c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\urlparser.cpp(64): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
+c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\urlparser.cpp(76): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
+  TextReader.cpp
+  DeviceManager.cpp
+  DeviceFactoryHolder.cpp
+c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\devicefactoryholder.cpp(42): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
+c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\devicefactoryholder.cpp(43): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
+  BasicFileStream.cpp
+c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\basicfilestream.cpp(44): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
+  BasicFileDevice.cpp
+  Generating Code...
+  noice.io.vcxproj -> C:\Users\chfrkl\Documents\GitHub\yapt\dev\bld\vs2010\Debug\noice.io.lib
