@@ -1,0 +1,12 @@
+<yapt2>
+	<render>
+		<object class="Animation.GenericCurve" name="TestSpline">
+			<property name="channels">3</property>
+			<property name="type">hold</property>
+			<property name="vector">1.000,3.00,6.000</property>
+		</object>
+		<object class="Animation.VectorKey" name="mytestkey">
+			<property name="Values" source="TestSpline" />
+		</object>
+	</render>
+</yapt2>

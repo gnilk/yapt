@@ -1,0 +1,41 @@
+<yapt2>
+<!--
+	<resources>
+		<object class="System.Config" name="Config">
+			<property name="Resolution.Width">640</property>
+		</object>
+	</resources>
+-->	
+	
+	<render>
+	<!--
+		<object class="gl.RenderContext" name="context">
+			<object class="Animation.ExpSolver" name="rotspeed">
+				<property name="expression">40 * abs(sin(t))</property>
+			</object>
+			<object class="geom.Triangle" name="tri">
+			</object>
+			<object class="gl.DrawTriangle" name="triangle">
+				<property name="numIndex" source="tri.numIndex"/>
+				<property name="indexData" source="tri.indexData"/>
+				<property name="vertexData" source="tri.vertexData"/>
+				<property name="speed" source="rotspeed.bla" />
+			</object>
+		</object>
+		-->
+		<object class="Animation.ExpSolver" name="expsolver">
+		  <property name="expression">2.0 * t</property>
+		</object>
+		<object class="utils.WriteLine" name="write">
+		  <property name="string" source="expsolver" />
+		</object>
+	</render>
+	  <!--
+    A timeline is used to separate rendering control from object instances
+    allows for objects beeing rendered multiple times separated from each other
+      -->
+
+	<timeline>
+	   <execute start="0" duration="0" object="write" />
+	</timeline>
+</yapt2>				
