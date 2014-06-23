@@ -24,7 +24,8 @@ CFLAGS += -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NO
 # Linker settings
 LD = clang++
 LDFLAGS =  -dynamiclib -arch x86_64 -stdlib=libc++
-LDFLAGS += -framework Cocoa -framework OpenGL -L/usr/local/lib -lglfw -lexpat
+#LDFLAGS += -framework Cocoa -framework OpenGL -L/usr/local/lib -lglfw -lexpat
+LDFLAGS += -framework Cocoa -framework OpenGL -L/usr/local/lib -lglfw
 
 LINK_LIBS += -framework Cocoa -framework OpenGL -L/usr/local/lib -lglfw -lexpat
 PLAYER_LINK_LIBS += -framework Cocoa -framework OpenGL -L/usr/local/lib -lglfw -lexpat -L. -lyapt

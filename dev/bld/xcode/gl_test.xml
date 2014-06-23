@@ -12,9 +12,8 @@
 	
 	<render>
 		<object class="gl.RenderContext" name="context">
-			<!--
 			<object class="Animation.ExpSolver" name="rotspeed">
-				<property name="expression">40 * abs(sin(t))</property>
+				<property name="expression">40 * t + (sin(t))</property>
 			</object>
 			<object class="geom.Triangle" name="tri">
 			</object>
@@ -24,7 +23,7 @@
 				<property name="vertexData" source="tri.vertexData"/>
 				<property name="speed" source="rotspeed" />
 			</object>
-			-->
+<!--			
 			<object class="gl.FullScreenImage" name="feedback">
 			 <property name="texture" source="previous"/> 
 			</object>		
@@ -32,6 +31,7 @@
 			 <property name="blendOp"></property>
 			 <property name="texture" source="texture1"/> 
 			</object>		
+		-->
 		</object>
 		<!-- Take a copy of the context and store for next frame 
 		    'allowRefUpdates' disables circular dependency updates
@@ -40,13 +40,13 @@
         <object class="gl.RenderContext" name="previous" allowRefUpdate="false">
 			<object class="gl.FullScreenImage" name="fscreen">
 			 <property name="color">0.25,0.25,0.25,0.25</property>
-			 <property name="texture" source="context"/> 
+			 <property name="texture" source="texture1"/> 
 			</object>		
         </object>
 	</render>
 	
 	<timeline>
-	   <execute start="0" duration="1000" object="fscreen" />
-	   <execute start="0" duration="1000" object="previous" />
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="context" />
 	</timeline>
 </yapt2>				

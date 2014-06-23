@@ -255,7 +255,8 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
           // TODO: Need to update bound properties if not rendered
 
           // TODO: add check for debugging and so forth
-          // pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
+          //pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
+          
           // TODO: call system hook handler
           pInst->ExtRender(renderVars);
           renderVars->PopLocal();

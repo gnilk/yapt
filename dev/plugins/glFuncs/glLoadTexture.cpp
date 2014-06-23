@@ -24,7 +24,6 @@ void OpenGLLoadTexture::Render(double t, IPluginObjectInstance *pInstance) {
   glGenTextures(1, &textureID);
   glBindTexture(GL_TEXTURE_2D, textureID);
 
-
   // Load texture from file into video memory, including mipmap levels
   if(!glfwLoadTexture2D(filename->v->string, GLFW_BUILD_MIPMAPS_BIT))
   {

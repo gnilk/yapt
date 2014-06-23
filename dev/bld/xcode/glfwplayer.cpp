@@ -30,17 +30,6 @@ static void loadDocument(char *filename) {
 		fprintf(stderr, "Unable to load: %s\n", filename);
 		exit(1);
 	}
-
-	if (system->GetActiveDocument()) {
-		pLogger->Debug("PostInitialize");
-		IDocNode *pRoot = system->GetActiveDocument()->GetTree();
-		if (!system->GetActiveDocumentController()->PostInitializeNode(pRoot)) {
-			perror();
-		}
-		pLogger->Debug("Initialize/Render Resources");
-		system->GetActiveDocumentController()->RenderResources();
-
-	}
 }
 static void testBindParser() {
 
@@ -201,8 +190,25 @@ int main(int argc, char **argv) {
 
 	// Enable vertical sync (on cards that support it)
 	glfwSwapInterval(1);
+
+	ILogger *pLogger = Logger::GetLogger("main");
 	yapt::ISystem *ySys = GetYaptSystemInstance();
 
+	// Need to have GL initalized before we can initalize the document
+	if (ySys->GetActiveDocument()) {
+		pLogger->Debug("Initialize");
+		ySys->GetActiveDocumentController()->Initialize();
+
+		// pLogger->Debug("PostInitialize");
+		// IDocNode *pRoot = system->GetActiveDocument()->GetTree();
+		// if (!system->GetActiveDocumentController()->PostInitializeNode(pRoot)) {
+		// 	perror();
+		// }
+		// pLogger->Debug("Initialize/Render Resources");
+		ySys->GetActiveDocumentController()->RenderResources();
+	}
+
+	pLogger->Debug("Running render loop");
 	do {
 		ySys->GetActiveDocumentController()->Render(glfwGetTime());
 		glfwSwapBuffers();

@@ -544,6 +544,7 @@ IDocNode *PluginObjectInstance::GetDocumentNode()
 
 void PluginObjectInstance::ExtInitialize()
 {
+  Logger::GetLogger("PluginObjectInstance")->Debug("ExtInitialize, state=%d",extState);
   if (extState == kExtState_Created)
   {
     extObject->Initialize(yapt::GetYaptSystemInstance(), dynamic_cast<IPluginObjectInstance *>(this));
@@ -553,9 +554,12 @@ void PluginObjectInstance::ExtInitialize()
 
 void PluginObjectInstance::ExtPostInitialize()
 {
+  Logger::GetLogger("PluginObjectInstance")->Debug("ExtPostInitialize, state=%d",extState);
   if (extState == kExtState_Initialized)
   {
     extObject->PostInitialize(yapt::GetYaptSystemInstance(), dynamic_cast<IPluginObjectInstance *>(this));
+  } else {
+    Logger::GetLogger("PluginObjectInstance")->Error("ExtPostInitialize, not Initialized!! (state=%d)",extState);    
   }
 }
 
@@ -588,14 +592,18 @@ void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
 {    
   // Only do this when we have been initialized and if not already rendered
   // Multiple calls can be done when several other objects refer to the properties of this one
+//  Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, state=%d, lastRenderRef=%d (%d)\n",extState, lastRenderRef, pRenderVars->GetRenderRef());
+
   if ((extState == kExtState_Initialized) && (lastRenderRef != pRenderVars->GetRenderRef()))
   {        
+
+//    Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, render property dependencies");
     RenderPropertyDependencies(pRenderVars);
+    //Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, calling ext object render: %p",extObject);
     extObject->Render(pRenderVars->GetTime(), dynamic_cast<IPluginObjectInstance *>(this));
     lastRenderRef = pRenderVars->GetRenderRef();
     // Set this to dirty in order to pass call's through the post-renderer
     SetDirty(true);
-
   }
 }
 void PluginObjectInstance::ExtPostRender()
