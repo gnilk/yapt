@@ -26,6 +26,8 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 - 11.11.09, FKling, Moved to own library
 
 ---------------------------------------------------------------------------*/
+#include <stdlib.h>
+#include <string.h>
 #include <string>
 
 #include "noice/io/io.h"

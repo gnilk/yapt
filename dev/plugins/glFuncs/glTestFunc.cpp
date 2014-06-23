@@ -18,9 +18,10 @@ void OpenGLRenderContext::Initialize(ISystem *ySys, IPluginObjectInstance *pInst
 void OpenGLRenderContext::Render(double t, IPluginObjectInstance *pInstance) {
 
 	glViewport(0, 0, width, height);
+    printf("HELLO WORLD\n");
 
 	// Clear color buffer to black
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Select and setup the projection matrix

@@ -619,8 +619,8 @@ fi
 # Last chance to change the flags before file generation
 ##########################################################################
 
-GLFW_LIB_CFLAGS="-c -I. -I.. $GLFW_LIB_CFLAGS"
-GLFW_BIN_CFLAGS="-I../include $GLFW_BIN_CFLAGS"
+GLFW_LIB_CFLAGS="-arch i386 -c -I. -I.. $GLFW_LIB_CFLAGS"
+GLFW_BIN_CFLAGS="-arch i386 -I../include $GLFW_BIN_CFLAGS"
 
 if [ "x$CFLAGS" = x ]; then
   if [ "x$use_gcc" = xyes ]; then

@@ -31,12 +31,14 @@ LoadFile::~LoadFile() {
 void LoadFile::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 	fileName = pInstance->CreateProperty("fileName", kPropertyType_String, "file.txt", "");
 	fileData = pInstance->CreateOutputProperty("fileData", kPropertyType_UserPtr, NULL, "");
+    pSys = ySys;
 }
 
 void LoadFile::Render(double t, IPluginObjectInstance *pInstance) {
 	// TODO: Load file from fileName into fileData
 	std::string name = std::string("file://")+fileName->v->string;
-	noice::io::IStream *pStream = DeviceManager::GetInstance()->CreateStream(name.c_str(), 0);
+    noice::io::IStream *pStream = pSys->CreateStream(name.c_str(),0);
+//	noice::io::IStream *pStream = DeviceManager::GetInstance()->CreateStream(name.c_str(), 0);
 	if (pStream != NULL)
 	{
 		if (pStream->Open(kStreamOp_ReadOnly)) {

@@ -4,7 +4,7 @@
 #include "yapt/logger.h"
 
 
-#include <gl/glew.h>
+//#include <gl/glew.h>
 #include <GL/glfw.h>
 
 using namespace yapt;

@@ -23,6 +23,9 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 //#include "noice/io/ySystem.h"
 //#include "noice/io/ySystem_internal.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "noice/io/io.h"
 #include "noice/io/ioclasses.h"
 #include "noice/io/ioutils.h"

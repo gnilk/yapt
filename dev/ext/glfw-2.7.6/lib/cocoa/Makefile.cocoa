@@ -21,7 +21,7 @@ all: libglfw.a libglfw.dylib
 # Compiler settings
 ##########################################################################
 CC     ?= cc
-CFLAGS ?= -O2 -g
+CFLAGS ?= -O2 -g 
 CFLAGS += -c -I. -I.. -Wall -fno-common
 
 

@@ -24,6 +24,7 @@ public:
 private:
 	Property *fileName;
 	Property *fileData;
+    ISystem *pSys;
 };
 
 #endif /* LOADFILE_H_ */

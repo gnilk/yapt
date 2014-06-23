@@ -1,24 +1,24 @@
 /*-------------------------------------------------------------------------
-File    : $Archive: ExportXML.cpp $
-Author  : $Author: Fkling $
-Version : $Revision: 1 $
-Orginal : 2009-10-13, 15:50
-Descr   : Simple and very small XML Exporter
-
-Will change input structure and flatten the document (if using includes)
-This is because we can't track includes
-
-Modified: $Date: $ by $Author: Fkling $
----------------------------------------------------------------------------
-TODO: [ -:Not done, +:In progress, !:Completed]
-<pre>
-</pre>
-
-
-\History
-- 13.10.09, FKling, Implementation
-
----------------------------------------------------------------------------*/
+ File    : $Archive: ExportXML.cpp $
+ Author  : $Author: Fkling $
+ Version : $Revision: 1 $
+ Orginal : 2009-10-13, 15:50
+ Descr   : Simple and very small XML Exporter
+ 
+ Will change input structure and flatten the document (if using includes)
+ This is because we can't track includes
+ 
+ Modified: $Date: $ by $Author: Fkling $
+ ---------------------------------------------------------------------------
+ TODO: [ -:Not done, +:In progress, !:Completed]
+ <pre>
+ </pre>
+ 
+ 
+ \History
+ - 13.10.09, FKling, Implementation
+ 
+ ---------------------------------------------------------------------------*/
 #include <iostream>
 #include <stdio.h>
 #include <stack>
@@ -35,7 +35,7 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 
 
 #include "yapt/logger.h"
-#include "yapt/ySystem.h"	
+#include "yapt/ySystem.h"
 #include "yapt/ySystem_internal.h"
 #include "yapt/ExportXML.h"
 using namespace yapt;
@@ -67,7 +67,7 @@ ExportXML::ExportXML(IDocument *pDocument)
 	pLogger = Logger::GetLogger("ExportXML");
 	iIndent = 0;
 	sIndent = std::string("");
-}	
+}
 ExportXML::~ExportXML()
 {
 }
@@ -84,7 +84,7 @@ void ExportXML::PopIndent()
 void ExportXML::CreateIndentString()
 {
 	char tmp[256];
-  tmp[0]='\0';
+    tmp[0]='\0';
 	for(int i=0;i<iIndent;i++)
 	{
 		tmp[i]=' ';
@@ -109,12 +109,12 @@ void ExportXML::WritePropertyData(IBaseInstance *pBase)
 void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, bool bCloseTag)
 {
 	char tmp[256];
-  // If we should close the tag we don't need this
-  if (!bCloseTag) {
-	  tagStack.push(std::string(tagName));
-	  tagNewLineStack.push(bNewLine);
-  }
-
+    // If we should close the tag we don't need this
+    if (!bCloseTag) {
+        tagStack.push(std::string(tagName));
+        tagNewLineStack.push(bNewLine);
+    }
+    
 	snprintf(tmp,256,"%s<%s",sIndent.c_str(), tagName);
 	pStream->Write(tmp,(int)strlen(tmp));
 	if (pBase->GetNumAttributes() > 0)
@@ -128,21 +128,21 @@ void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, 
 			pStream->Write(tmp,(int)strlen(tmp));
 		}
 	}
-  if (!bCloseTag) {
-  	snprintf(tmp,256,">");
-	  pStream->Write(tmp,(int)strlen(tmp));
-  } else {
-  	snprintf(tmp,256,"/>");
-	  pStream->Write(tmp,(int)strlen(tmp));
-  }
+    if (!bCloseTag) {
+        snprintf(tmp,256,">");
+        pStream->Write(tmp,(int)strlen(tmp));
+    } else {
+        snprintf(tmp,256,"/>");
+        pStream->Write(tmp,(int)strlen(tmp));
+    }
 	if (bNewLine)
 	{
 		snprintf(tmp,256,"\n");
 		pStream->Write(tmp,(int)strlen(tmp));
 	}
-  if (!bCloseTag) {
-	  PushIndent();
-  }
+    if (!bCloseTag) {
+        PushIndent();
+    }
 }
 
 void ExportXML::End()
@@ -154,7 +154,7 @@ void ExportXML::End()
 	PopIndent();
 	tagNewLineStack.pop();
 	tagStack.pop();
-
+    
 	// only write indent if start tag ended with a new line
 	if (bNewLine)
 	{
@@ -168,11 +168,11 @@ void ExportXML::End()
 
 void ExportXML::ExportMetaNode(IBaseInstance *pNode)
 {
-  IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(pNode);
-  const char *szUrl = pNode->GetAttributeValue("url");
-  if (szUrl != NULL) {
-    GetYaptSystemInstance()->SaveDocumentAs(szUrl,pMeta->GetDocument());
-  }
+    IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(pNode);
+    const char *szUrl = pNode->GetAttributeValue("url");
+    if (szUrl != NULL) {
+        GetYaptSystemInstance()->SaveDocumentAs(szUrl,pMeta->GetDocument());
+    }
 }
 
 
@@ -184,47 +184,47 @@ bool ExportXML::WriteNode(IDocNode *pNode)
 	{
 		switch(pBase->GetInstanceType())
 		{
-		case kInstanceType_Document :
-			Begin(kDocument_RootTagName, pBase,true,false);
-			break;
-		case kInstanceType_ResourceContainer:
-			if (pNode->GetNumChildren())
-			{
-				Begin(kDocument_ResourceTagName, pBase,true,false);
-			} else
-			{
-				bSkipEndTag = true;
-			}
-			break;
-    case kInstanceType_Timeline :
-      Begin(kDocument_TimelineTagName, pBase, true, false);
-      break;
-    case kInstanceType_TimelineExecute :
-      Begin(kDocument_ExecuteTagName, pBase, true, true);
-    			bSkipEndTag = true;
-
-      break;
-		case kInstanceType_RenderNode:
-			Begin(kDocument_RenderTagName, pBase,true,false);
-			break;
-		case kInstanceType_Object:
-			Begin(kDocument_ObjectTagName, pBase,true,false);
-			break;
-		case kInstanceType_Property:
-			Begin(kDocument_PropertyTagName,pBase,false,false);
-			WritePropertyData(pBase);
-			break;
-		case kInstanceType_MetaNode :
-			ExportMetaNode(pBase);
-			Begin(kDocument_IncludeTagName, pBase, true, true);
-			bSkipEndTag = true;
-			break;
-		default:
-			pLogger->Error("Unknown instance type: %d, can't export node");
-			bSkipEndTag = true;
-			break;
+            case kInstanceType_Document :
+                Begin(kDocument_RootTagName, pBase,true,false);
+                break;
+            case kInstanceType_ResourceContainer:
+                if (pNode->GetNumChildren())
+                {
+                    Begin(kDocument_ResourceTagName, pBase,true,false);
+                } else
+                {
+                    bSkipEndTag = true;
+                }
+                break;
+            case kInstanceType_Timeline :
+                Begin(kDocument_TimelineTagName, pBase, true, false);
+                break;
+            case kInstanceType_TimelineExecute :
+                Begin(kDocument_ExecuteTagName, pBase, true, true);
+                bSkipEndTag = true;
+                
+                break;
+            case kInstanceType_RenderNode:
+                Begin(kDocument_RenderTagName, pBase,true,false);
+                break;
+            case kInstanceType_Object:
+                Begin(kDocument_ObjectTagName, pBase,true,false);
+                break;
+            case kInstanceType_Property:
+                Begin(kDocument_PropertyTagName,pBase,false,false);
+                WritePropertyData(pBase);
+                break;
+            case kInstanceType_MetaNode :
+                ExportMetaNode(pBase);
+                Begin(kDocument_IncludeTagName, pBase, true, true);
+                bSkipEndTag = true;
+                break;
+            default:
+                pLogger->Error("Unknown instance type: %d, can't export node");
+                bSkipEndTag = true;
+                break;
 		}
-
+        
 		int i,n;
 		n=pNode->GetNumChildren();
 		for(i=0;i<n;i++)
@@ -252,10 +252,10 @@ bool ExportXML::ExportToStream(noice::io::IStream *pStream)
 	bRes = ExportDocument();
 	pStream->Close();
 	return bRes;
-}	
+}
 bool ExportXML::ExportToFile(const char *sFilename)
 {
-//	BasicFileStream *stream = new BasicFileStream(sFilename);
+    //	BasicFileStream *stream = new BasicFileStream(sFilename);
 	noice::io::IStreamDevice *pDevice = yapt::GetYaptSystemInstance()->GetIODevice("file");
 	noice::io::IStream *pStream = pDevice->CreateStream(sFilename,0);
 	return ExportToStream(pStream);
