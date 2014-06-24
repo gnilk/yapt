@@ -161,6 +161,7 @@ bool DocumentController::BindAllProperties(IDocNode *node) {
       case kInstanceType_Object :
       {
         PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
+        pLogger->Debug("BindAll for %p\n",pInst);
         if (!pInst->BindProperties()) {
           return false;
         }

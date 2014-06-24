@@ -228,6 +228,16 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
 
 }
 
+IPropertyInstance *PluginObjectInstance::FindPropertyInstanceFromRoot(const char *propertyReference) {
+  // Search from root - must be done outside
+  for (size_t i=0;i<GetDocument()->GetTree()->GetNumChildren();i++)
+  {
+    IDocNode *pChild = GetDocument()->GetTree()->GetChildAt(i);
+    IPropertyInstance *pSourceInst = FindPropertyInstance(propertyReference, pChild);
+    if (pSourceInst != NULL) return pSourceInst;
+  }
+  return NULL;
+}
 // Todo: this requires a more advanced lookup parser
 bool PluginObjectInstance::BindProperties()
 {
@@ -235,7 +245,6 @@ bool PluginObjectInstance::BindProperties()
   for (i=0;i<input_properties.size();i++)
   {
     PropertyInstance *pInput = input_properties[i];
-
     if (pInput->IsSourced())
     {
       // bind to sibling...
@@ -245,13 +254,7 @@ bool PluginObjectInstance::BindProperties()
       pSourceInst = FindPropertyInstance(propertyReference, GetDocumentNode()->GetParent());
       // search render root & resources next
       if (pSourceInst == NULL) {       
-        // Search from root - must be done outside
-        for (i=0;i<GetDocument()->GetTree()->GetNumChildren();i++)
-        {
-          IDocNode *pChild = GetDocument()->GetTree()->GetChildAt(i);
-          pSourceInst = FindPropertyInstance(propertyReference, pChild);
-          if (pSourceInst != NULL) break;
-        }
+        pSourceInst = FindPropertyInstanceFromRoot(propertyReference);
       }
 
       if (pSourceInst != NULL)
@@ -266,7 +269,7 @@ bool PluginObjectInstance::BindProperties()
         return false;
       }            
     }
-  }
+  } // for
   return true;
 }
 

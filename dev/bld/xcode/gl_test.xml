@@ -8,14 +8,14 @@
 	   <object class="gl.LoadTexture2D" name="texture1">
 	       <property name="fileName">texture.tga</property>
 	   </object>
+	  <object class="geom.Triangle" name="tri">
+	</object>
 	</resources>
 	
 	<render>
 		<object class="gl.RenderContext" name="context">
 			<object class="Animation.ExpSolver" name="rotspeed">
 				<property name="expression">40 * t + (sin(t))</property>
-			</object>
-			<object class="geom.Triangle" name="tri">
 			</object>
 			<object class="gl.DrawTriangle" name="triangle">
 				<property name="numIndex" source="tri.numIndex"/>
