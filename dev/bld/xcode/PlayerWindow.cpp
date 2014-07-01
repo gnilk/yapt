@@ -37,13 +37,10 @@ void PlayerWindow::Prepare()
 }
 void PlayerWindow::Render()
 {
-	printf("Player Window: %d,%d\n",width,height);
 	contextParams.width = width;
 	contextParams.height = height;
 	IBaseInstance *pBase = dynamic_cast<IBaseInstance *>(system->GetActiveDocument());
 	IContext *pContext = pBase->GetContext();
-	printf("PlayerWindowContext: %p\n", this);
-	printf("DocContextInstance: %p\n", pContext);
 	pContext->SetContextParamObject(&contextParams);
 	system->GetActiveDocumentController()->Render(glfwGetTime());
 	// Swap buffers done by base window
