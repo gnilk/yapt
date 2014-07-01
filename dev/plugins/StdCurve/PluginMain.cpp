@@ -41,6 +41,20 @@ public:
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
 };
 
+class VectorMux :
+	public IPluginObject
+{
+protected:
+	Property *xv, *yv, *zv;
+	Property *vectorResult;
+public:
+	VectorMux();
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+};
+
 
 class GenericCurveKey :
 	public BaseCurveFacade
@@ -135,6 +149,10 @@ IPluginObject *CurveFactory::CreateObject(ISystem *pSys, const char *identifier)
 	if (!strcmp(identifier,"Animation.ExpSolver"))
 	{
 		pObject = dynamic_cast<IPluginObject *> (new YaptExpSolverFacade());
+	}
+	if (!strcmp(identifier,"Numeric.VectorMux"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new VectorMux());
 	}
 	if (pObject != NULL) 
 	{
@@ -375,6 +393,29 @@ void YaptExpSolverFacade::Render(double t, IPluginObjectInstance *pInstance) {
 }
 
 
+VectorMux::VectorMux() {
+
+}
+
+void VectorMux::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	xv = pInstance->CreateProperty("x", kPropertyType_Float, "0.0", "");
+	yv = pInstance->CreateProperty("y", kPropertyType_Float, "0.0", "");
+	zv = pInstance->CreateProperty("z", kPropertyType_Float, "0.0", "");
+	vectorResult = pInstance->CreateOutputProperty("vector", kPropertyType_Vector, "0.0,0.0,0.0", "");
+}
+void VectorMux::Render(double t, IPluginObjectInstance *pInstance) {
+	vectorResult->v->vector[0] = xv->v->float_val;
+	vectorResult->v->vector[1] = yv->v->float_val;
+	vectorResult->v->vector[2] = zv->v->float_val;
+}
+void VectorMux::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
+}
+void VectorMux::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+}
+
+
 
 static void perror()
 {
@@ -383,10 +424,11 @@ static void perror()
 // This function must be exported from the lib/dll
 int CALLCONV yaptInitializePlugin(ISystem *ySys)
 {
-  pSysPtr = ySys;
+  	pSysPtr = ySys;
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.GenericCurve");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Key");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorKey");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.ExpSolver");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Numeric.VectorMux");
 	return 0;
 }

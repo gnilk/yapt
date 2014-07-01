@@ -4,8 +4,8 @@
 #include "yapt/logger.h"
 
 
-//#include <gl/glew.h>
-#include <GL/glfw.h>
+#include <OpenGl/glu.h>
+
 
 using namespace yapt;
 /////////////////////

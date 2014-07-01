@@ -70,6 +70,10 @@ void DocumentController::UpdateRenderVars(double sample_time)
 {
   renderVars->IncRenderRef();
   renderVars->SetTime(sample_time);
+
+  // Calculate FPS here
+
+
 }
 
 //
@@ -88,10 +92,9 @@ void DocumentController::InitializeNode(IDocNode *node)
 {
   //	ISystem *ySys = yapt::GetYaptSystemInstance();
   IBaseInstance *pObject = node->GetNodeObject();
-  pLogger->Debug("Initialize: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
   if (pObject != NULL)
   {
-    pLogger->Debug("Initialize: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
+    // pLogger->Debug("Initialize: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
     switch(pObject->GetInstanceType())
     {
       case kInstanceType_Object :
@@ -115,6 +118,22 @@ void DocumentController::InitializeNode(IDocNode *node)
     InitializeNode(child);
   }
 }
+
+void DocumentController::TraverseNode(IDocumentTraversalSink *sink, IDocNode *node, int depth)
+{
+  sink->OnNode(node, depth);
+  for(int i=0;i<node->GetNumChildren();i++)
+  {
+    IDocNode *child = node->GetChildAt(i);
+    TraverseNode(sink, child, depth+1);
+  }
+}
+
+void DocumentController::TraverseDocument(IDocumentTraversalSink *sink)
+{
+  TraverseNode(sink, pDocument->GetTree(), 0);
+}
+
 
 //
 // Calls postinitialize, first on all children and on the way back on the node itself
@@ -161,7 +180,6 @@ bool DocumentController::BindAllProperties(IDocNode *node) {
       case kInstanceType_Object :
       {
         PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
-        pLogger->Debug("BindAll for %p\n",pInst);
         if (!pInst->BindProperties()) {
           return false;
         }
@@ -185,7 +203,6 @@ bool DocumentController::BindAllProperties(IDocNode *node) {
 }
 
 bool DocumentController::Initialize() {
-
   InitializeNode(pDocument->GetTree());
   if(BindAllProperties(pDocument->GetTree())) {
     if (PostInitializeNode(pDocument->GetTree())) {
@@ -199,6 +216,8 @@ bool DocumentController::Initialize() {
 void DocumentController::Render(double sample_time)
 {
   UpdateRenderVars(sample_time);
+  fpsController.Update(sample_time);
+
   if (!pDocument->HasTimeline()) {
     RenderNode(pDocument->GetRenderTree(), false);
   } else {

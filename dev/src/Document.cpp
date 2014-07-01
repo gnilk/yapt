@@ -52,31 +52,39 @@ Document::Document() :
 Document::Document(IContext *pContext) :
 	BaseInstance(kInstanceType_Document)
 {
-  Initialize();
-
+	Initialize();
 	SetContext(pContext);	// set the context in the base class 
 	// setup default objects
 	// currently we setup a resource container and a render node
-	// TODO: Remove resource container when supported from the outside
 
-  resources = NULL;
-  timeline = NULL;
+	timeline = NULL;	// time line is optional
 
+	// Since we "inject" predefined stuff in the object tree it is important that we force
+	// resources first. During initalization the tree is simply traversed - resource should be initialized
+	// first.
 
+	// Force creation of resource container
+	resources = new ResourceContainer();//new DocNode(dynamic_cast<IDocument *> (this));
+	resources->SetContext(pContext);
+	resources->AddAttribute("name","resources");
+	AddObjectToTree(dynamic_cast<IBaseInstance *>(this), resources, kNodeType_ResourceContainer);
 
 	BaseInstance *pDummy = new BaseInstance(kInstanceType_RenderNode);
 	pDummy->SetContext(pContext);
 	pDummy->AddAttribute("name","render");
 	renderRoot = AddObjectToTree(dynamic_cast<IBaseInstance *>(this), pDummy, kNodeType_RenderNode);
+
 }
+
 Document::~Document()
 {
 	
 }
+
 void Document::Initialize() 
 {
-  pLogger = Logger::GetLogger("Document");
-  pContext = NULL;
+	pLogger = Logger::GetLogger("Document");
+	pContext = NULL;
 
 	this->pDocumentController = NULL;
 	std::string fqName; 
@@ -235,7 +243,7 @@ IDocNode *Document::AddNode(IDocNode *parent, IBaseInstance *pObject, kNodeType 
 	treemap.insert(BaseNodePair(pObject,pNode));
 	RegisterNode(pNode, pObject);
 	
-	pLogger->Debug("AddNode, node=%p for object=%p",pNode,pObject);
+	//pLogger->Debug("AddNode, node=(%p) for object=%p",pNode, pObject);
 
 	return pNode;
 }
@@ -280,38 +288,40 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 		BaseInstance *pBase = dynamic_cast<BaseInstance *>(object);
 		std::string qName = BuildQualifiedName(pNode);
 
-    // Don't assign funky names to implicit nodes (doc, resources and render)
-    if ((nodeType != kNodeType_Document) &&
-        (nodeType != kNodeType_ResourceContainer) &&
-        (nodeType != kNodeType_Timeline) &&
-    	(nodeType != kNodeType_RenderNode)) {
+	    // Don't assign funky names to implicit nodes (doc, resources and render)
+	    if ((nodeType != kNodeType_Document) &&
+	        (nodeType != kNodeType_ResourceContainer) &&
+	        (nodeType != kNodeType_Timeline) &&
+	    	(nodeType != kNodeType_RenderNode)) {
 
-		  // object with this name already registered?
-		  // append a number to the name until it gets unique
-		  if (Lookup::GetBaseFromString(qName) != NULL)
-		  {
-			  int extCount = 1;
-			  // Can't reuse the const char * return value since if we update the
-			  // attribute in the while loop it will be deallocated
-			  std::string baseName(pBase->GetAttributeValue("name"));
+			  // object with this name already registered?
+			  // append a number to the name until it gets unique
+			  if (Lookup::GetBaseFromString(qName) != NULL)
+			  {
+				  int extCount = 1;
+				  // Can't reuse the const char * return value since if we update the
+				  // attribute in the while loop it will be deallocated
+				  std::string baseName(pBase->GetAttributeValue("name"));
 
-			  // will update the name with a numbered version
-			  while (Lookup::GetBaseFromString(qName) != NULL)
-			  {				
-				  char tmp[32];
+				  // will update the name with a numbered version
+				  while (Lookup::GetBaseFromString(qName) != NULL)
+				  {				
+					  char tmp[32];
 
-				  std::string curName(baseName);
-				  snprintf(tmp, 32, "%d", extCount);
-				  curName.append(tmp);		// itoa not supported..
-				  pBase->AddAttribute("name",curName.c_str());
-				  qName = BuildQualifiedName(pNode);
+					  std::string curName(baseName);
+					  snprintf(tmp, 32, "%d", extCount);
+					  curName.append(tmp);		// itoa not supported..
+					  pBase->AddAttribute("name",curName.c_str());
+					  qName = BuildQualifiedName(pNode);
 
-				  extCount++;
+					  extCount++;
+				  }
 			  }
-		  }
-    }
+	    } // node type
 
 		pBase->SetFullyQualifiedName(qName.c_str());
+
+		pLogger->Debug("AddObjectToTree, %s",qName.c_str());
 
 		// add a lookup for this one..
 		Lookup::RegisterStrBase(qName, object);
@@ -440,11 +450,11 @@ void Document::DumpNode(IDocNode *pNode)
 		pLogger->Debug("Inst: %p,%d,%s",pInstance,pInstance->GetInstanceType(),pInstance->GetFullyQualifiedName());
 		pLogger->Enter();
 		//pInstance->Dump();
-    if (pInstance->GetInstanceType() == kInstanceType_MetaNode) {
-      pLogger->Debug("**: META :**");
-      IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(pInstance);
-      pMeta->GetDocument()->DumpRenderTree();
-    }
+	    if (pInstance->GetInstanceType() == kInstanceType_MetaNode) {
+	      pLogger->Debug("**: META :**");
+	      IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(pInstance);
+	      pMeta->GetDocument()->DumpRenderTree();
+	    }
 		pLogger->Leave();
 	}
 	int n,i;

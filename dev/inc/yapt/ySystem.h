@@ -48,7 +48,7 @@ namespace yapt
   extern "C"
   {
     typedef int (CALLCONV *PFNINITIALIZEPLUGIN)(ISystem *pSys);
-    typedef int (CALLCONV *PFNENUMBASEFUNC)(IBaseInstance *pInst);
+    typedef int (CALLCONV *PFNENUMBASEFUNC)(void *, IBaseInstance *pInst);
   }
 
   #define kDefintion_Name ("name")
@@ -232,6 +232,9 @@ namespace yapt
     virtual void SetValue(const char *sValue) = 0;
     virtual char *GetValue(char *sValueDest, int maxlen) = 0;
     virtual bool IsSourced() = 0;
+    virtual char *GetSourceString() = 0;  
+    virtual IPropertyInstance *GetSource() = 0;
+
   };
   
   struct IPluginObjectDefinition
@@ -261,6 +264,13 @@ namespace yapt
     //virtual IPluginObjectInstance *GetChildAt(int index, kNodeType ofType) = 0;
   };
 
+  struct IOpenGLContextParams
+  {
+  public:
+    virtual int GetFrameBufferWidth() = 0;
+    virtual int GetFrameBufferHeight() = 0;
+  };
+
   struct IContext
   {
   public:
@@ -269,6 +279,8 @@ namespace yapt
     virtual void SetObject(const char *name, void *pObject) = 0;
     virtual void *GetObject(const char *name) = 0;
 
+    virtual void SetContextParamObject(void *pObject) = 0;
+    virtual void *GetContextParamObject() = 0;
 
     virtual void SetNamePrefix(const char *prefix) = 0;
     virtual char *GetNamePrefix(char *pdest, int nmaxlen) = 0;
@@ -364,6 +376,12 @@ namespace yapt
     virtual void SetNodeObject(IBaseInstance *pObject, kNodeType type) = 0;
   };
 
+  struct IDocumentTraversalSink
+  {
+  public:
+    virtual void OnNode(IDocNode *node, int depth) = 0;
+  };
+
   struct IDocumentController
   {
   public:
@@ -373,6 +391,8 @@ namespace yapt
     virtual void InitializeNode(IDocNode *node) = 0;
     virtual bool PostInitializeNode(IDocNode *node) = 0;
     
+    virtual void TraverseDocument(IDocumentTraversalSink *sink) = 0;
+
     virtual void Render(double sample_time) = 0;
     virtual void RenderResources() = 0;
     virtual void RenderNode(IDocNode *node, bool bForce) = 0;
@@ -513,8 +533,8 @@ namespace yapt
     virtual IBaseInstance *RegisterAndInitializePlugin(PFNINITIALIZEPLUGIN pInitializeFunc, const char *name) = 0;
 
     // enumerators - ok, global stuff
-    virtual void EnumeratePlugins(PFNENUMBASEFUNC pEnumFunc) = 0;
-    virtual void EnumeratePluginObjects(PFNENUMBASEFUNC pEnumFunc) = 0;
+    virtual void EnumeratePlugins(void *pUser, PFNENUMBASEFUNC pEnumFunc) = 0;
+    virtual void EnumeratePluginObjects(void *pUser, PFNENUMBASEFUNC pEnumFunc) = 0;
     virtual void EnumerateURIHandlers(noice::io::PFNENUMIODEVICE pEnumFunc) = 0;
 
     // hooking functions - ok, global stuff

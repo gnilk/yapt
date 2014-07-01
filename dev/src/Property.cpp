@@ -191,7 +191,7 @@ void PropertyInstance::SetSource(PropertyInstance *pSource)
 	sourcedProperty = pSource;
 }
 
-PropertyInstance *PropertyInstance::GetSource()
+IPropertyInstance *PropertyInstance::GetSource()
 {
 	return sourcedProperty;
 }

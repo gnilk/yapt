@@ -390,14 +390,14 @@ IBaseInstance *System::RegisterAndInitializePlugin(PFNINITIALIZEPLUGIN pInitiali
 	return dynamic_cast<IBaseInstance *>(pContainer);
 }
 // -- enumeration functions
-void System::EnumeratePlugins(PFNENUMBASEFUNC pEnumFunc)
+void System::EnumeratePlugins(void *pUser, PFNENUMBASEFUNC pEnumFunc)
 {
 	size_t i;
 	for(i=0;i<plugins.size();i++)
 	{
 		try
 		{
-			pEnumFunc(dynamic_cast<IBaseInstance *>(plugins[i]));
+			pEnumFunc(pUser, dynamic_cast<IBaseInstance *>(plugins[i]));
 		} catch(...)
 		{
 			// callback exception
@@ -405,7 +405,7 @@ void System::EnumeratePlugins(PFNENUMBASEFUNC pEnumFunc)
 		}
 	}
 }
-void System::EnumeratePluginObjects(PFNENUMBASEFUNC pEnumFunc)
+void System::EnumeratePluginObjects(void *pUser, PFNENUMBASEFUNC pEnumFunc)
 {
 	PluginNameDefMap::iterator keys;
 	for(keys=definitions.begin(); keys != definitions.end(); keys++)
@@ -413,7 +413,7 @@ void System::EnumeratePluginObjects(PFNENUMBASEFUNC pEnumFunc)
 		PluginNameDefPair pair = *(keys);
 		try
 		{
-			pEnumFunc(dynamic_cast<IBaseInstance *>(pair.second));
+			pEnumFunc(pUser, dynamic_cast<IBaseInstance *>(pair.second));
 		} catch(...)
 		{
 			// callback exception

@@ -173,13 +173,13 @@ static std::string GetEquallyDottedString(std::string propRef, std::string fqNam
 //
 IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *propertyReference, IDocNode *pRootNode)
 {
+  ILogger *pLogger = Logger::GetLogger("FindPropertyInstance");
   IPropertyInstance *pSource = NULL;
   std::string propRef(propertyReference);
   bool simpleRef = false;
   if (propRef.find('.') == std::string::npos) {
     simpleRef = true;
   }
-
   int i;
   for (i=0;i<pRootNode->GetNumChildren();i++)
   {
@@ -188,9 +188,8 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
     if (pObject == NULL) {
       continue;
     }
-
     const char *sName = pObject->GetInstanceName();
-    if (simpleRef && !StrConfCaseCmp(sName, pObject->GetInstanceName())) {            
+    if (simpleRef && !StrConfCaseCmp(propertyReference, pObject->GetInstanceName())) {
       return pObject->GetPropertyInstance(0,true);
     } else {
       // 'Advanced' reference model..            
@@ -217,7 +216,7 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
 
     }
   }
-  // did not find node, search children!
+  // did not find node, search parent
   if (pSource == NULL)
   {
     if (pRootNode->GetParent() != NULL) {            
@@ -238,7 +237,13 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstanceFromRoot(const char
   }
   return NULL;
 }
-// Todo: this requires a more advanced lookup parser
+//
+// Property binding is based on the following rule
+// 1) Search from parent first, see if there is an object matching the source string
+// 2) Search recurisvely from the document root - this will take the resource section first
+//
+// the matching is done on string basis. The source string is matched against the name of the object.
+//
 bool PluginObjectInstance::BindProperties()
 {
   size_t i;
@@ -254,6 +259,7 @@ bool PluginObjectInstance::BindProperties()
       pSourceInst = FindPropertyInstance(propertyReference, GetDocumentNode()->GetParent());
       // search render root & resources next
       if (pSourceInst == NULL) {       
+        Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Looking from root for %s",propertyReference);
         pSourceInst = FindPropertyInstanceFromRoot(propertyReference);
       }
 
@@ -299,6 +305,8 @@ PropertyInstance *PluginObjectInstance::GetPropertyInstance(std::vector<Property
   if (index < (int)pList->size())
   {
     return pList->at(index);
+  } else {
+    Logger::GetLogger("PluginObjectInstance")->Debug("GetPropertyInstance, index '%d' out of bounds (%d)",index, pList->size());
   }
   return NULL;
 }
@@ -547,17 +555,18 @@ IDocNode *PluginObjectInstance::GetDocumentNode()
 
 void PluginObjectInstance::ExtInitialize()
 {
-  Logger::GetLogger("PluginObjectInstance")->Debug("ExtInitialize, state=%d",extState);
   if (extState == kExtState_Created)
   {
     extObject->Initialize(yapt::GetYaptSystemInstance(), dynamic_cast<IPluginObjectInstance *>(this));
     extState = kExtState_Initialized;
+  } else {
+    Logger::GetLogger("PluginObjectInstance")->Error("ExtInitialize, wrong state (%d) expected=%d",extState, kExtState_Created);    
   }
 }
 
 void PluginObjectInstance::ExtPostInitialize()
 {
-  Logger::GetLogger("PluginObjectInstance")->Debug("ExtPostInitialize, state=%d",extState);
+//  Logger::GetLogger("PluginObjectInstance")->Debug("ExtPostInitialize, state=%d",extState);
   if (extState == kExtState_Initialized)
   {
     extObject->PostInitialize(yapt::GetYaptSystemInstance(), dynamic_cast<IPluginObjectInstance *>(this));
@@ -584,8 +593,12 @@ void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
   // Update dependencies
   for(int i=0;i<input_properties.size();i++) {
     PropertyInstance *pInst = input_properties[i];
-    if ((pInst->IsSourced()) && (pInst->GetSource()->GetObjectInstance()->IsPropertyRefRendering())) {
-      pInst->GetSource()->GetObjectInstance()->ExtRender(pRenderVars);
+
+    if (pInst->IsSourced()) {
+      PropertyInstance *pSourceInst = dynamic_cast<PropertyInstance *>(pInst->GetSource());
+      if (pSourceInst->GetObjectInstance()->IsPropertyRefRendering()) {
+        pSourceInst->GetObjectInstance()->ExtRender(pRenderVars); 
+      }
     }
   }
 }

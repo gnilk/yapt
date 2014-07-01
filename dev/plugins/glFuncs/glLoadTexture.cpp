@@ -5,9 +5,10 @@
 
 
 //#include <gl/glew.h>
-#include <GL/glfw.h>
 
 using namespace yapt;
+
+#include <OpenGl/glu.h>
 
 /////////////////////
 //
@@ -25,12 +26,12 @@ void OpenGLLoadTexture::Render(double t, IPluginObjectInstance *pInstance) {
   glBindTexture(GL_TEXTURE_2D, textureID);
 
   // Load texture from file into video memory, including mipmap levels
-  if(!glfwLoadTexture2D(filename->v->string, GLFW_BUILD_MIPMAPS_BIT))
-  {
-    fprintf(stderr, "Failed to load texture %s\n", filename->v->string);
-    glfwTerminate();
-    exit(EXIT_FAILURE);
-  }
+  // if(!glfwLoadTexture2D(filename->v->string, GLFW_BUILD_MIPMAPS_BIT))
+  // {
+  //   fprintf(stderr, "Failed to load texture %s\n", filename->v->string);
+  //   glfwTerminate();
+  //   exit(EXIT_FAILURE);
+  // }
 
   // Use trilinear interpolation (GL_LINEAR_MIPMAP_LINEAR)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);

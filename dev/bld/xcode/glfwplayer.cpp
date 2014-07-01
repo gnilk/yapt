@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <GL/glfw.h>
+#include <GL/GLEW.h>
+#include <GLFW/glfw3.h>
+
 
 #include "yapt/logger.h"
 #include "yapt/ySystem.h"
@@ -8,7 +10,15 @@
 #include "yapt/ExpatXMLImporter.h"
 #include "yapt/ExportXML.h"
 
+#include "ConsoleWindow.h"
+#include "PlayerWindow.h"
+#include "WebService.h"
+
 using namespace yapt;
+
+
+static int window_width = 1280;
+static int window_height = 720;
 
 static void perror() {
 	kErrorClass eClass;
@@ -21,14 +31,20 @@ static void perror() {
 	exit(1);
 }
 
-static void loadDocument(char *filename) {
+static void LoadDocument(char *filename) {
 	ILogger *pLogger = Logger::GetLogger("main");
 	pLogger->Debug("Loading: %s", filename);
 	yapt::ISystem *system = GetYaptSystemInstance();
 	if (!system->LoadNewDocument(filename)) {
-
-		fprintf(stderr, "Unable to load: %s\n", filename);
-		exit(1);
+		perror();
+		//fprintf(stderr, "Unable to load: %s\n", filename);
+		//exit(1);
+	}
+	if (system->GetActiveDocument()) {
+		pLogger->Debug("Initialize");
+		if (!system->GetActiveDocumentController()->Initialize()) {
+			perror();
+		}
 	}
 }
 static void testBindParser() {
@@ -61,7 +77,12 @@ static void testBindParser() {
 	}
 
 }
-static void initializeYapt() {
+static void Initialize(int logLevel) {
+
+	// Initialize the logger - set up console
+	Logger::Initialize();
+	Logger::AddSink(Logger::CreateSink("LogConsoleSink"), "console", 0, NULL);
+	Logger::SetAllSinkDebugLevel(logLevel);
 
 	ILogger *pLogger = Logger::GetLogger("main");
 	pLogger->Debug("YAPT2 - running tests");
@@ -69,7 +90,6 @@ static void initializeYapt() {
 
 	system->SetConfigValue(kConfig_CaseSensitive, false);
 	system->ScanForPlugins(".\\", true);
-
 }
 
 static void printHelp(char *execname) {
@@ -78,8 +98,7 @@ static void printHelp(char *execname) {
 	printf("Options\n");
 	printf(" l <num>    Set log level (higher means less, default is 0)\n");
 	printf(" o <class>  Dump info for object of type 'class'\n");
-	printf(
-			"Filename is default 'file://gl_text.xml' (don't forget the URI specifier)\n");
+	printf("Filename is default 'file://gl_test.xml' (don't forget the URI specifier)\n");
 }
 static void dumpProperties(IPluginObjectInstance *pInst, bool bOutput) {
 	int nProp;
@@ -128,6 +147,15 @@ static void printObjectProperties(char *className) {
 	dumpProperties(pInst, false);
 	dumpProperties(pInst, true);
 }
+void OnGlfwFramebufferSizeChanged(GLFWwindow* window, int width, int height)
+{
+	//Logger::GetLogger("main")->Debug("Window Size Change: %d,%d", width, height);	
+
+}
+void OnGlfwShouldClose(GLFWwindow* window)
+{
+	//glfwSetWindowShouldClose(window, GL_TRUE);
+}
 
 int main(int argc, char **argv) {
 
@@ -162,63 +190,66 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	Logger::SetAllSinkDebugLevel(logLevel);
-	initializeYapt();
+	Initialize(logLevel);
+	ILogger *pLogger = Logger::GetLogger("main");
 	if (objName != NULL) {
 		printObjectProperties(objName);
 		exit(1);
 	}
-	loadDocument(docFileName);
+
+	LoadDocument(docFileName);
+	StartWebService();
 
 	if (!glfwInit()) {
 		fprintf(stderr, "Failed to initialize GLFW\n");
 		exit(EXIT_FAILURE);
 	}
 
-	// Open a window and create its OpenGL context
-	if (!glfwOpenWindow(640, 480, 0, 0, 0, 0, 0, 0, GLFW_WINDOW)) {
-		fprintf(stderr, "Failed to open GLFW window\n");
 
-		glfwTerminate();
-		exit(EXIT_FAILURE);
+
+	// Get window height, can be overridden by the system
+	yapt::ISystem *system = GetYaptSystemInstance();
+	window_width = system->GetConfigInt(kConfig_ResolutionWidth,1280);  
+  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,720);  
+
+
+	pLogger->Debug("Opening Console Window");
+	ConsoleWindow console;
+	console.Open(640, 500, "console");
+	console.SetPos(640,0);
+	if (!console.InitializeFreeType()) {
+		pLogger->Error("Failed to initalize text rendering");
+		exit(1);
 	}
 
-	glfwSetWindowTitle("YAPT2 - glfw player");
+	pLogger->Debug("Opening Rendering Window");
+	pLogger->Debug("  Width: %d", window_width);
+	pLogger->Debug("  Height: %d", window_height);  	
 
-	// Ensure we can capture the escape key being pressed below
-	glfwEnable(GLFW_STICKY_KEYS);
-
-	// Enable vertical sync (on cards that support it)
-	glfwSwapInterval(1);
-
-	ILogger *pLogger = Logger::GetLogger("main");
-	yapt::ISystem *ySys = GetYaptSystemInstance();
-
-	// Need to have GL initalized before we can initalize the document
-	if (ySys->GetActiveDocument()) {
-		pLogger->Debug("Initialize");
-		ySys->GetActiveDocumentController()->Initialize();
-
-		// pLogger->Debug("PostInitialize");
-		// IDocNode *pRoot = system->GetActiveDocument()->GetTree();
-		// if (!system->GetActiveDocumentController()->PostInitializeNode(pRoot)) {
-		// 	perror();
-		// }
-		// pLogger->Debug("Initialize/Render Resources");
-		ySys->GetActiveDocumentController()->RenderResources();
-	}
-
+	PlayerWindow player;
+	player.Open(window_width, window_height, "player");
+	player.InitalizeYapt();
+	player.SetPos(0,0);
 	pLogger->Debug("Running render loop");
-	do {
-		ySys->GetActiveDocumentController()->Render(glfwGetTime());
-		glfwSwapBuffers();
 
-	} // Check if the ESC key was pressed or the window was closed
-	while (glfwGetKey(GLFW_KEY_ESC) != GLFW_PRESS
-			&& glfwGetWindowParam(GLFW_OPENED));
+	console.WriteLine("YAPT2 v0.1 - (c) Fredrik Kling 2009");
+	console.WriteLine("Document: "+ std::string(docFileName));
+	console.WriteLine("Running render loop");
+
+	while (!player.ShouldClose())
+	{
+		player.Update();
+		console.Update();
+		glfwPollEvents();
+	}
 
 	// Close OpenGL window and terminate GLFW
+	console.Close();
+	player.Close();
 	glfwTerminate();
+	StopWebService();
 
 	exit(EXIT_SUCCESS);
 }
+
+

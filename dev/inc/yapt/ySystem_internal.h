@@ -308,8 +308,29 @@ namespace yapt
     virtual void CreateTimer(unsigned int idTimer, unsigned int flags);
     virtual void UpdateTimer(unsigned int idTimer, double newTime);
   };
-  
-  
+
+  #define FPS_CONTROLLER_TIME_WINDOW_SIZE 16  
+  class FPSController
+  {
+  public:
+    FPSController();
+    virtual ~FPSController();
+
+    void Update(double time);
+    void Reset();
+    double GetFPS();
+    double GetAverageFPS();
+
+  private:
+    double lastUpdate;
+    double fpsWindow[FPS_CONTROLLER_TIME_WINDOW_SIZE]; // 32 samples in window
+    int deltaIndex;
+    int deltaCount;
+    double fpsCurrent;
+    double fpsAverage;
+  };
+
+
   typedef std::pair<IBaseInstance *, IDocNode *> BaseNodePair;
   typedef std::map<IBaseInstance *, IDocNode *> BaseNodeMap;
 
@@ -406,11 +427,13 @@ namespace yapt
   private:
     ILogger *pLogger;
     RenderVars *renderVars;	// holds the rendering variables
+    FPSController fpsController;
     ISystem *pSys;
     IDocument *pDocument;
   private:
     void UpdateRenderVars(double sample_time);
     bool BindAllProperties(IDocNode *node);
+    void TraverseNode(IDocumentTraversalSink *sink, IDocNode *node, int depth);
   public:
     DocumentController(IDocument *pDocument);
     virtual ~DocumentController();
@@ -420,7 +443,7 @@ namespace yapt
     virtual bool Initialize();
     virtual void InitializeNode(IDocNode *node); 
     virtual bool PostInitializeNode(IDocNode *node);
-
+    virtual void TraverseDocument(IDocumentTraversalSink *sink);
     
     virtual void Render(double sample_time);
     virtual void RenderResources();
@@ -499,8 +522,6 @@ namespace yapt
     int IncSourceRef();
     int DecSourceRef();
     void SetSource(PropertyInstance *pSource);
-    PropertyInstance *GetSource();
-    char *GetSourceString();
     void BindProperty(char *propertyReference);
     
     
@@ -517,6 +538,9 @@ namespace yapt
     virtual void SetValue(const char *sValue);
     virtual char *GetValue(char *sValueDest, int maxlen);
     virtual bool IsSourced();
+    virtual char *GetSourceString();
+    virtual IPropertyInstance *GetSource();
+
   };
 
   typedef std::pair<std::string, void *> CtxNameObjectPair;
@@ -530,6 +554,7 @@ namespace yapt
     DocumentController *pDocumentController;
     CtxNameObjectMap objects;
     std::string namePrefix;
+    void *contextParamObject;
   public:
     Context();
     virtual ~Context();
@@ -542,6 +567,9 @@ namespace yapt
     virtual IDocumentController *GetDocumentController();
     virtual void SetObject(const char *name, void *pObject);
     virtual void *GetObject(const char *name);
+    virtual void SetContextParamObject(void *pObject);
+    virtual void *GetContextParamObject();
+
     virtual void SetNamePrefix(const char *prefix);
     virtual char *GetNamePrefix(char *pdest, int nmaxlen);
     virtual char *CreatePrefixName(const char *name, char *prefixedname, int nmaxlen);
@@ -798,8 +826,8 @@ namespace yapt
     virtual void ScanForPlugins(const char *absPath, bool bRecursive);
     virtual IBaseInstance *RegisterAndInitializePlugin(PFNINITIALIZEPLUGIN pInitializeFunc, const char *name);
     // enumeration function
-    virtual void EnumeratePlugins(PFNENUMBASEFUNC pEnumFunc);
-    virtual void EnumeratePluginObjects(PFNENUMBASEFUNC pEnumFunc);
+    virtual void EnumeratePlugins(void *pUser, PFNENUMBASEFUNC pEnumFunc);
+    virtual void EnumeratePluginObjects(void *pUser, PFNENUMBASEFUNC pEnumFunc);
     virtual void EnumerateURIHandlers(noice::io::PFNENUMIODEVICE pEnumFunc);
 
     // hooking

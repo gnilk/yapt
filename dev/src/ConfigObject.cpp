@@ -45,8 +45,9 @@ class ConfigObject :
 {
 protected:
 	// Video properties
-	Property *width, *height, *bpp;
+	Property *width, *height;
 	// System properties
+//	Property *fps;
 public:
 	ConfigObject();
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
@@ -64,17 +65,15 @@ ConfigObject::ConfigObject()
 void ConfigObject::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance)
 {
 	// video
-	width = pInstance->CreateProperty("Resolution.Width", kPropertyType_Integer, "640", "Default screen resolution width in pixels");
-	height = pInstance->CreateProperty("Resolution.Height", kPropertyType_Integer, "480", "Default screen resolution height in pixels");
-	bpp = pInstance->CreateProperty("Resolution.BPP", kPropertyType_Integer, "32", "Default screen pixel resolution in bits");
-
+	width = pInstance->CreateProperty(kConfig_ResolutionWidth, kPropertyType_Integer, "1280", "Default screen resolution width in pixels");
+	height = pInstance->CreateProperty(kConfig_ResolutionHeight, kPropertyType_Integer, "720", "Default screen resolution height in pixels");
 }
 void ConfigObject::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance)
 {
 	// translate
-	ySys->SetConfigValue("Resolution.Width", width->v->int_val);
-	ySys->SetConfigValue("Resolution.Height", height->v->int_val);
-	ySys->SetConfigValue("Resolution.BPP", bpp->v->int_val);
+	ySys->SetConfigValue(kConfig_ResolutionWidth, width->v->int_val);
+	ySys->SetConfigValue(kConfig_ResolutionHeight, height->v->int_val);
+//	ySys->SetConfigValue("Resolution.BPP", bpp->v->int_val);
 }
 
 void ConfigObject::Render(double t, IPluginObjectInstance *pInstance)

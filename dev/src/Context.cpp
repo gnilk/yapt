@@ -49,6 +49,7 @@ Context::Context()
 	pDocument->SetDocumentController(pDocumentController);
 	pDocument->SetContext(dynamic_cast<IContext *>(this));
 	namePrefix = "";
+	contextParamObject = NULL;
 }
 Context::~Context()
 {
@@ -91,6 +92,16 @@ void *Context::GetObject(const char *name)
 	}
 	return pObject;
 }
+
+void Context::SetContextParamObject(void *pObject)
+{
+	this->contextParamObject = pObject;
+}
+
+void *Context::GetContextParamObject() {
+	return this->contextParamObject;
+}
+
 
 void Context::SetNamePrefix(const char *prefix)
 {

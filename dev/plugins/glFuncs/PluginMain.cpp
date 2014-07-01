@@ -10,7 +10,6 @@
 #include <malloc.h>
 #endif
 
-#include <GL/glfw.h>
   
 // Plugin objects
 #include "PluginObjectImpl.h"
@@ -58,6 +57,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.RenderContext")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLRenderContext());
   }
+  if (!strcmp(identifier, "gl.Camera")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLCamera());
+  }
   if (!strcmp(identifier, "gl.FullScreenImage")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLFullScreenImage());
   }
@@ -92,6 +94,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.RenderContext");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Plot");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Rotate3f");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Camera");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawTriangle");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.Triangle");
   // Real stuff
@@ -119,9 +122,10 @@ void TestTriangleGenerator::PostInitialize(ISystem *ySys, IPluginObjectInstance 
   int *pIndex = (int *) malloc(sizeof(int) * numIdx);
   float *pVertex = (float *) malloc(sizeof(float) * 3 * 3);
 
-  vIni(&pVertex[0 * 3], -5.0f, 0.0f, -4.0f);
-  vIni(&pVertex[1 * 3], 5.0f, 0.0f, -4.0f);
-  vIni(&pVertex[2 * 3], 0.0f, 0.0f, 6.0f);
+
+  vIni(&pVertex[0 * 3], 1.0f, 1.0f, 0.0f);
+  vIni(&pVertex[1 * 3], -1.0f, -1.0f, 0.0f);
+  vIni(&pVertex[2 * 3], 1.0f, -1.0f, 0.0f);
 
   pIndex[0] = 0;
   pIndex[1] = 1;

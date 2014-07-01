@@ -181,7 +181,12 @@ IPluginObjectInstance *PluginObjectDefinition::CreateInstance()
 	PluginObjectInstance *pInst = new PluginObjectInstance(dynamic_cast<IPluginObjectDefinition  *>(this));
 	// TODO: Remove, the object can assign this
 	pInst->SetDocument(yapt::GetYaptSystemInstance()->GetActiveDocument());
-	pInst->CreateInstance();
+	if (pInst->CreateInstance() == false) {
+		// failed to create the instance.
+		Logger::GetLogger("PluginObjectDefinition")->Error("Failed to create external object for %s", description);
+		delete pInst;
+		return NULL;
+	}
 	return dynamic_cast<IPluginObjectInstance *>(pInst);
 }
 
