@@ -279,6 +279,15 @@ bool PluginObjectInstance::BindProperties()
   return true;
 }
 
+// - protected
+bool PluginObjectInstance::IsPropertyInstanceOutput(PropertyInstance *pInst) 
+{
+  // check if the instance pointer is part of the output list
+  for(int i=0;i<output_properties.size();i++) {
+    if (output_properties[i] == pInst) return true;
+  }
+  return false;
+}
 
 // - protected
 PropertyInstance *PluginObjectInstance::GetPropertyInstance(std::vector<PropertyInstance *> *pList, const char *szName)

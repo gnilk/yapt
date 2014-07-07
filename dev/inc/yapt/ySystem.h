@@ -232,6 +232,7 @@ namespace yapt
     virtual void SetValue(const char *sValue) = 0;
     virtual char *GetValue(char *sValueDest, int maxlen) = 0;
     virtual bool IsSourced() = 0;
+    virtual bool IsOutputProperty() = 0;
     virtual char *GetSourceString() = 0;  
     virtual IPropertyInstance *GetSource() = 0;
 

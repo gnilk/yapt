@@ -538,6 +538,7 @@ namespace yapt
     virtual void SetValue(const char *sValue);
     virtual char *GetValue(char *sValueDest, int maxlen);
     virtual bool IsSourced();
+    virtual bool IsOutputProperty();
     virtual char *GetSourceString();
     virtual IPropertyInstance *GetSource();
 
@@ -638,6 +639,7 @@ namespace yapt
     // Property Instance functions
     IPropertyInstance *GetPropertyInstance(const char *szName, bool bOutput);
     void AddPropertyInstance(PropertyInstance *property, bool bOutput);
+    bool IsPropertyInstanceOutput(PropertyInstance *pInst);
   
     bool BindProperties();
     //bool ShouldRender(double glbTime);

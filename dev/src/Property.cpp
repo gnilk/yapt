@@ -105,6 +105,12 @@ void PropertyInstance::SetProperty(Property *property)
 {
 	this->property = property;
 }
+
+bool PropertyInstance::IsOutputProperty() 
+{
+	return this->objectInstance->IsPropertyInstanceOutput(this);
+}
+
 bool PropertyInstance::IsSourced()
 {
 	bool bRes = false;
