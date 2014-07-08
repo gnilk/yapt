@@ -235,6 +235,7 @@ namespace yapt
     virtual bool IsOutputProperty() = 0;
     virtual char *GetSourceString() = 0;  
     virtual IPropertyInstance *GetSource() = 0;
+    virtual IBaseInstance *GetObjectInstance() = 0;
 
   };
   

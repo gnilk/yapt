@@ -605,8 +605,8 @@ void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
 
     if (pInst->IsSourced()) {
       PropertyInstance *pSourceInst = dynamic_cast<PropertyInstance *>(pInst->GetSource());
-      if (pSourceInst->GetObjectInstance()->IsPropertyRefRendering()) {
-        pSourceInst->GetObjectInstance()->ExtRender(pRenderVars); 
+      if (pSourceInst->GetPluginObjectInstance()->IsPropertyRefRendering()) {
+        pSourceInst->GetPluginObjectInstance()->ExtRender(pRenderVars); 
       }
     }
   }

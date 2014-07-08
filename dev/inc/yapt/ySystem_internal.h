@@ -526,7 +526,7 @@ namespace yapt
     
     
     void SetObjectInstance(PluginObjectInstance *owner);
-    PluginObjectInstance *GetObjectInstance();
+    PluginObjectInstance *GetPluginObjectInstance();
 
     virtual void Dump();
   public: // BaseInstance overrides
@@ -541,6 +541,8 @@ namespace yapt
     virtual bool IsOutputProperty();
     virtual char *GetSourceString();
     virtual IPropertyInstance *GetSource();
+    virtual IBaseInstance *GetObjectInstance();
+
 
   };
 

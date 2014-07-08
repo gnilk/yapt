@@ -232,9 +232,13 @@ void PropertyInstance::SetObjectInstance(PluginObjectInstance *owner)
 {
 	this->objectInstance = owner;
 }
-PluginObjectInstance *PropertyInstance::GetObjectInstance()
+PluginObjectInstance *PropertyInstance::GetPluginObjectInstance()
 {
-	return this->objectInstance;
+	return this->objectInstance;	
+}
+IBaseInstance *PropertyInstance::GetObjectInstance()
+{
+	return dynamic_cast<IBaseInstance *>(this->objectInstance);
 }
 
 char *PropertyInstance::GetPropertyTypeName(char *sDest, int maxLen) {
