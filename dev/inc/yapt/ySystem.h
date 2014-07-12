@@ -164,6 +164,12 @@ namespace yapt
     kNodeType_Timeline = 10,
   } kNodeType;
 
+  typedef enum  
+  {  
+    kPropertyHint_None = 0,
+    kPropertyHint_File,
+  } kPropertyHint;
+
   union PropertyValue
   {
     float matrix[16];
@@ -252,6 +258,8 @@ namespace yapt
     virtual IPluginObject *GetExtObject() = 0;
     virtual Property *CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription) = 0;
     virtual Property *CreateOutputProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription) = 0;
+    virtual void SetPropertyHint(const char *sName, kPropertyHint hint) = 0;
+    virtual kPropertyHint GetPropertyHint(const char *sName) = 0;
     virtual Property *GetProperty(const char *name) = 0;
     virtual IPropertyInstance *GetPropertyInstance(const char *name) = 0;
     virtual IPropertyInstance *GetPropertyInstance(int index, bool bOutput) = 0;

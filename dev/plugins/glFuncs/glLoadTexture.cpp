@@ -16,6 +16,7 @@ using namespace yapt;
 //
 void OpenGLLoadTexture::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   filename = pInstance->CreateProperty("filename",kPropertyType_String,"texture.jpg","");
+  pInstance->SetPropertyHint("filename",kPropertyHint_File);
   outputTexture = pInstance->CreateOutputProperty("texture",kPropertyType_Integer,"0","");
 }
 void OpenGLLoadTexture::Render(double t, IPluginObjectInstance *pInstance) {

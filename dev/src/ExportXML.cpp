@@ -5,8 +5,8 @@
  Orginal : 2009-10-13, 15:50
  Descr   : Simple and very small XML Exporter
  
- Will change input structure and flatten the document (if using includes)
- This is because we can't track includes
+ Does not preserve comments.
+ Should handle includes.. 
  
  Modified: $Date: $ by $Author: Fkling $
  ---------------------------------------------------------------------------
@@ -16,6 +16,7 @@
  
  
  \History
+ - 12.07.14, FKling, Fixed property export
  - 13.10.09, FKling, Implementation
  
  ---------------------------------------------------------------------------*/
@@ -92,18 +93,29 @@ void ExportXML::CreateIndentString()
 	}
 	sIndent = std::string(tmp);
 }
-void ExportXML::WritePropertyData(IBaseInstance *pBase)
+bool ExportXML::WritePropertyData(IBaseInstance *pBase)
 {
 	IPropertyInstance *pInst = dynamic_cast<IPropertyInstance *>(pBase);
-	if (pInst != NULL)
-	{
+
+	if (pInst == NULL) {
+		pLogger->Error("Not a property, identification object type mismatch");
+		return false;
+	}
+	// Don't save output properties
+	if (pInst->IsOutputProperty()) return false;
+
+	// Ok, validation fine - let's write property data
+
+	if (!pInst->IsSourced()) {
+		Begin(kDocument_PropertyTagName,pBase,false,false);
 		char tmp[256];
 		pInst->GetValue(tmp, 256);
-		pStream->Write(tmp,(int)strlen(tmp));
-	} else
-	{
-		pLogger->Error("Not a property, identification object type mismatch");
+		pStream->Write(tmp,(int)strlen(tmp));		
+	} else {
+		Begin(kDocument_PropertyTagName,pBase,true,true);
+		return false;	// don't need to close this tag - already done.
 	}
+	return true;
 }
 
 void ExportXML::Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, bool bCloseTag)
@@ -211,8 +223,9 @@ bool ExportXML::WriteNode(IDocNode *pNode)
                 Begin(kDocument_ObjectTagName, pBase,true,false);
                 break;
             case kInstanceType_Property:
-                Begin(kDocument_PropertyTagName,pBase,false,false);
-                WritePropertyData(pBase);
+            	if (!WritePropertyData(pBase)) {
+            		bSkipEndTag = true;
+            	}
                 break;
             case kInstanceType_MetaNode :
                 ExportMetaNode(pBase);

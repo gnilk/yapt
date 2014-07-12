@@ -26,7 +26,7 @@ namespace yapt
 
 		void Begin(const char *tagName, IBaseInstance *pBase, bool bNewLine, bool bCloseTag);
 		void End();
-		void WritePropertyData(IBaseInstance *pBase);
+		bool WritePropertyData(IBaseInstance *pBase);
 		bool ExportDocument();
 		bool WriteNode(IDocNode *pNode);
     void ExportMetaNode(IBaseInstance *pNode);

@@ -492,6 +492,27 @@ Property *PluginObjectInstance::CreateOutputProperty(const char *sName, kPropert
   return CreateProperty(sName, type, sInitialValue, sDescription, true);
 }
 
+void PluginObjectInstance::SetPropertyHint(const char *sName, kPropertyHint hint) 
+{
+  PropertyInstance *prop = dynamic_cast<PropertyInstance *>(GetPropertyInstance(sName));
+  if (prop == NULL) {
+      Logger::GetLogger("PluginObjectInstance")->Debug("SetPropertyHint, no property named '%s' was found",sName);
+      return;
+  }
+  prop->SetPropertyHint(hint);
+}
+
+kPropertyHint PluginObjectInstance::GetPropertyHint(const char *sName)
+{
+  PropertyInstance *prop = dynamic_cast<PropertyInstance *>(GetPropertyInstance(sName));
+  if (prop == NULL) {
+      Logger::GetLogger("PluginObjectInstance")->Debug("GetPropertyHint, no property named '%s' was found",sName);
+      return kPropertyHint_None;
+  }
+  return prop->GetPropertyHint();
+
+}
+
 Property *PluginObjectInstance::GetProperty(const char *name)
 {
   Property *prop = NULL;

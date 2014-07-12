@@ -496,6 +496,7 @@ namespace yapt
     ILogger *pLogger;
     PropertyInstance *sourcedProperty;
     PluginObjectInstance *objectInstance;
+    kPropertyHint propertyHint; 
     bool isSourced;
     char *unboundRawValue;
     char *sourceString;
@@ -512,13 +513,15 @@ namespace yapt
     
     Property *GetProperty();
     void SetProperty(Property *property);
+    void SetPropertyHint(kPropertyHint hint);
+    kPropertyHint GetPropertyHint();
     
     const char *GetName();
     const char *GetDescription();
     
     void SetDescription(const char *strDesc);
     
-        const char *GetUnboundRawValue();
+    const char *GetUnboundRawValue();
     int IncSourceRef();
     int DecSourceRef();
     void SetSource(PropertyInstance *pSource);
@@ -665,6 +668,8 @@ namespace yapt
     // external interface
     virtual Property *CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription);
     virtual Property *CreateOutputProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription);
+    virtual void SetPropertyHint(const char *sName, kPropertyHint hint);
+    virtual kPropertyHint GetPropertyHint(const char *sName);
     virtual Property *GetProperty(const char *name);
     virtual void SetPropertyValue(Property *prop, const char *value);
     virtual IPropertyInstance *GetPropertyInstance(const char *name);

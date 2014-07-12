@@ -106,6 +106,17 @@ void PropertyInstance::SetProperty(Property *property)
 	this->property = property;
 }
 
+void PropertyInstance::SetPropertyHint(kPropertyHint hint)
+{
+	this->propertyHint = hint;
+}
+
+kPropertyHint PropertyInstance::GetPropertyHint()
+{
+	return this->propertyHint;
+}
+
+
 bool PropertyInstance::IsOutputProperty() 
 {
 	return this->objectInstance->IsPropertyInstanceOutput(this);
@@ -170,15 +181,16 @@ int PropertyInstance::DecSourceRef()
 // Set the property sourcing, supply NULL to break an already sourced property
 void PropertyInstance::SetSource(PropertyInstance *pSource)
 {
+	// Already sourced? Decrease previous target reference, don't backup the value
+	if (isSourced && sourcedProperty!=NULL)
+	{
+		sourcedProperty->DecSourceRef();
+	}
+
 	// if NULL then we should break sourceing and go back to old value
 	if(pSource != NULL)
 	{
-		// Already sourced? Decrease previous target reference, don't backup the value
-		if (isSourced && sourcedProperty!=NULL)
-		{
-			sourcedProperty->DecSourceRef();
-		}
-		else
+		if (!isSourced)
 		{
 			// first time we are sourced, save the orginal value
 			v_unsourced = property->v;
@@ -188,10 +200,14 @@ void PropertyInstance::SetSource(PropertyInstance *pSource)
 		property->v = pSource->GetProperty()->v;		
 		pSource->IncSourceRef();
 	}
-	else if (pSource == NULL)
+	else // pSouce == NULL
 	{
+		// Restore previous value - if we were sourced
+		if (isSourced) {
+			property->v = v_unsourced;			
+		}
+		// reset
 		isSourced = false;
-		property->v = v_unsourced;
 		v_unsourced = NULL;
 	}
 	sourcedProperty = pSource;
