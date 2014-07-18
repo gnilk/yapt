@@ -554,8 +554,11 @@ void Logger::RebuildSinksFromConfiguration()
 
 	std::vector<std::string> arAppenders;
 
-	// TODO: need to call destructors here I guess
-	sinks.clear();
+	// clear and delete all sinks
+	while(!sinks.empty()) {
+		delete sinks.back();
+		sinks.pop_back();
+	}
 
 	int nAppenders = StrExplode(&arAppenders, appenders, ',');
 	for (int i=0;i<nAppenders;i++)

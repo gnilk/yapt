@@ -78,9 +78,16 @@ Document::Document(IContext *pContext) :
 
 Document::~Document()
 {
-	
+	DisposeTree(root);
 }
-
+void Document::DisposeTree(IDocNode *root)
+{
+	int n = root->GetNumChildren();
+	for(int i=0;i<n;i++) {
+		DisposeTree(root->GetChildAt(i));
+	}
+	delete root;
+}
 void Document::Initialize() 
 {
 	pLogger = Logger::GetLogger("Document");

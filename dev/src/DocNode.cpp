@@ -48,7 +48,10 @@ DocNode::DocNode(IDocument *doc)
 
 DocNode::~DocNode()
 {
-	
+	if (userObject != NULL)
+	{
+		delete userObject;
+	}	
 }
 
 bool DocNode::Dispose()

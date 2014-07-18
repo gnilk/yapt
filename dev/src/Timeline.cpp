@@ -29,6 +29,9 @@ Timeline::Timeline() : BaseInstance(kInstanceType_Timeline){
   AddAttribute("name","timeline");
 }
 Timeline::~Timeline() {
+    for(int i=0;i<executeObjects.size();i++) {
+      delete executeObjects[i];
+    }
 
 }
 

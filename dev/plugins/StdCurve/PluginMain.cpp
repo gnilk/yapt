@@ -193,8 +193,8 @@ void YaptCurveFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	pCurve = NULL;
 	this->channels = pInstance->CreateProperty("channels", kPropertyType_Integer, "1", "");
 	// make sure the curvetype matches the kCurveClass_ in Curve.h
-	this->curveType = pInstance->CreateProperty("type",kPropertyType_Enum, "kbspline", "enum={unknown,hold,linear,linearsmooth,cubic,hermite,kbspline,kbquatspline}");
-	this->curveType->v->int_val = (int)kCurveClass_Hermite; // this is the default
+	this->curveType = pInstance->CreateProperty("type",kPropertyType_Enum, "kbspline", "enum={hold,linear,linearsmooth,cubic,hermite,kbspline,kbquatspline}");
+	//this->curveType->v->int_val = (int)kCurveClass_Hermite; // this is the default
 	this->testVector = pInstance->CreateProperty("vector",kPropertyType_Vector, "1", "");
 	// TODO: Fix this, need to create this one during post-initialize since it depends on the number of channels.. 
 	this->result = pInstance->CreateOutputProperty("result",kPropertyType_Vector, "", "");
@@ -219,7 +219,8 @@ void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInst
 	{
 		pLogger->Debug("Dispose curve - not implemented, leaking memory");
 	}
-	pCurve = Curve::CreateCurve(kCurveClass(curveType->v->int_val), channels->v->int_val);
+	// 'unknown' not supported (it's pointless) so just add '1' to the incoming type
+	pCurve = Curve::CreateCurve(kCurveClass(curveType->v->int_val+1), channels->v->int_val);
 
 	IDocNode *pNode = pInstance->GetDocumentNode();
 	int nChildren = pNode->GetNumChildren(kNodeType_ObjectInstance);

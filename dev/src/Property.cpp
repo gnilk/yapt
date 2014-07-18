@@ -451,6 +451,20 @@ void PropertyInstance::StrSplit(std::vector<std::string> &strings, const char *s
 		}
 	}
 }
+
+//
+// returns the possible enumeration values
+//
+std::vector<std::string> PropertyInstance::GetValidEnumValues()
+{
+	std::vector<std::string> values;
+	if (GetPropertyType() != kPropertyType_Enum) return values;
+	if (!PrepareEnumString(values, this->sDescription)) {
+		values.clear();
+	}
+	return values;
+}
+
 //
 // Verifies the syntax and returns an array with the various sub strings of the enum
 // declartion
@@ -534,6 +548,7 @@ int PropertyInstance::ParseEnumString(const char *val, const char *def)
 			if (!StrConfCaseCmp(val, enumvalues[i].c_str()))
 			{
 				iRes = (int)i;
+				break;
 			}
 		}
 	}

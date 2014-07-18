@@ -61,6 +61,17 @@ BaseInstance(kInstanceType_Object)
 
 PluginObjectInstance::~PluginObjectInstance()
 {
+  if (this->extObject != NULL)  {
+    delete this->extObject;
+  }
+  while(!input_properties.empty()) {
+    delete input_properties.back();
+    input_properties.pop_back();
+  }
+  while(!output_properties.empty()) {
+    delete output_properties.back();
+    output_properties.pop_back();
+  }
 }
 
 void PluginObjectInstance::CreateDefaultAttributes()

@@ -137,9 +137,14 @@ IDocument *System::CreateNewDocument(bool bSetActive)
 	Context *pContext = new Context();	// Create context for document
 	IDocument *pDoc = pContext->GetDocument();
 
-	//pContext->SetNamePrefix("weffo");
+	
 	this->pContext = dynamic_cast<IContext *>(pContext);
 	return dynamic_cast<IDocument *> (pDoc);
+}
+
+void System::DisposeActiveDocument() {
+	delete this->pContext;
+	this->pContext = NULL;
 }
 
 IDocument *System::GetActiveDocument()

@@ -53,6 +53,9 @@ Context::Context()
 }
 Context::~Context()
 {
+	delete pDocument;
+	delete pDocumentController;
+	// param object is not allocated by us..
 }
 
 void Context::SetDocument(Document *pDocument)

@@ -361,6 +361,7 @@ namespace yapt
       void DumpNode(IDocNode *pNode);
 
       IDocNode *AddObjectToTree(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType);
+      void DisposeTree(IDocNode *root);
 
       std::string BuildQualifiedName(IDocNode *pNode);
       // void UpdateRenderVars(double sample_time);
@@ -540,6 +541,7 @@ namespace yapt
     virtual char *GetPropertyTypeName(char *sDest, int maxLen);
     virtual void SetValue(const char *sValue);
     virtual char *GetValue(char *sValueDest, int maxlen);
+    virtual std::vector<std::string> GetValidEnumValues();
     virtual bool IsSourced();
     virtual bool IsOutputProperty();
     virtual char *GetSourceString();
@@ -794,6 +796,7 @@ namespace yapt
     int ReadAndStoreDefaultSettings();
     
     virtual IDocument *CreateNewDocument(bool bSetActive);
+    virtual void DisposeActiveDocument();
     virtual IDocument *GetActiveDocument();
     virtual IDocumentController *GetActiveDocumentController();
     virtual void SetActiveDocument(IDocument *pDocument);

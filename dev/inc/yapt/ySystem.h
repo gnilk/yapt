@@ -237,6 +237,8 @@ namespace yapt
     virtual char *GetPropertyTypeName(char *sDest, int maxLen) = 0;
     virtual void SetValue(const char *sValue) = 0;
     virtual char *GetValue(char *sValueDest, int maxlen) = 0;
+    virtual std::vector<std::string> GetValidEnumValues() = 0;
+//        virtual char **GetValidEnumValues(int *outNumValues) = 0;
     virtual bool IsSourced() = 0;
     virtual bool IsOutputProperty() = 0;
     virtual char *GetSourceString() = 0;  
@@ -503,6 +505,7 @@ namespace yapt
   public:
     // Global data routines
     virtual IDocument *CreateNewDocument(bool bSetActive) = 0;
+    virtual void DisposeActiveDocument() = 0;
     virtual IDocument *GetActiveDocument() = 0;
     virtual IDocument *LoadNewDocument(const char *url) = 0;
     virtual void SaveDocumentAs(const char *url, IDocument *pDoc) = 0;

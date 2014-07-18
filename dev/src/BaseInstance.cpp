@@ -44,8 +44,11 @@ BaseInstance::BaseInstance(kInstanceType mType)
 }
 BaseInstance::~BaseInstance()
 {
-	// TODO: Release all attributes
 	free (qualifiedName);
+	for(int i=0;i<attributes.size();i++) {
+		delete attributes[i];		
+	}
+
 }
 
 kInstanceType BaseInstance::GetInstanceType()
