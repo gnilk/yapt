@@ -14,12 +14,6 @@
 	
 	<render>
 		<object class="gl.RenderContext" name="mycontext">
-			<object class="Animation.ExpSolver" name="campos_x">
-				<property name="expression">3*sin(t)</property>
-			</object>
-			<object class="Animation.ExpSolver" name="campos_z">
-				<property name="expression">3*cos(t*0.5)</property>
-			</object>
 
 			<object class="Numeric.VectorMux" name="campos">
 				<property name="x" source="campos_x"/>
@@ -40,15 +34,28 @@
 				<property name="vertexData" source="tri.vertexData"/>
 				<property name="speed" source="rotspeed" />
 			</object>
-<!--			
+
+			<object class="Animation.ExpSolver" name="campos_x">
+				<property name="expression">3*sin(t)</property>
+			</object>
+			<object class="Animation.ExpSolver" name="campos_z">
+				<property name="expression">3*cos(t*0.5)</property>
+			</object>
+			<object class="Animation.GenericCurve" name="TestSpline">
+				<property name="channels">3</property>
+				<property name="type">hold</property>
+				<property name="vector">1.000,3.00,6.000</property>
+			</object>
+
+<!--
 			<object class="gl.FullScreenImage" name="feedback">
 			 <property name="texture" source="previous"/> 
 			</object>		
+-->
 			<object class="gl.FullScreenImage" name="fscreen">
-			 <property name="blendOp"></property>
 			 <property name="texture" source="texture1"/> 
 			</object>		
-		-->
+		
 		</object>
 		<!-- Take a copy of the context and store for next frame 
 		    'allowRefUpdates' disables circular dependency updates
