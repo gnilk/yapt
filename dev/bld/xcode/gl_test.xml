@@ -14,7 +14,9 @@
 	
 	<render>
 		<object class="gl.RenderContext" name="mycontext">
-
+			<object class="utils.TestProperties" name="test">
+				<property name="color_rgba">#102030</property>
+			</object>
 			<object class="Numeric.VectorMux" name="campos">
 				<property name="x" source="campos_x"/>
 				<property name="y">0</property>

@@ -28,6 +28,7 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 
 #include <vector>
 #include <string>
+#include <cstdlib>
 
 #include "yapt/ySystem.h"
 #include "yapt/ySystem_internal.h"
@@ -299,7 +300,12 @@ char *PropertyInstance::GetPropertyTypeName(char *sDest, int maxLen) {
     }
     return sDest;
 }
-
+static int hexStrToValue(const char *s, int len) {
+	char tmp[256];
+	if (len > 255) return 0;
+	strncpy(tmp, s, len);
+	return std::strtoul(tmp, NULL, 16);
+}
 void PropertyInstance::SetValue(const char *sValue)
 {
 	switch (GetPropertyType())
@@ -321,11 +327,23 @@ void PropertyInstance::SetValue(const char *sValue)
 				&property->v->int_tuple[1]);
 			break;
 		case kPropertyType_Color :
-			sscanf(sValue, "%f,%f,%f,%f",
-				&property->v->rgba[0],
-				&property->v->rgba[1],
-				&property->v->rgba[2],
-				&property->v->rgba[3]);
+			if (sValue[0]=='#') {
+				property->v->rgba[0] = hexStrToValue(&sValue[1],2);
+				property->v->rgba[1] = hexStrToValue(&sValue[3],2);
+				property->v->rgba[2] = hexStrToValue(&sValue[5],2);
+				if (strlen(sValue) > 7) {
+					property->v->rgba[3] = hexStrToValue(&sValue[7],2);
+				} else
+				{
+					property->v->rgba[3] = 0;
+				}
+			} else {
+				sscanf(sValue, "%f,%f,%f,%f",
+					&property->v->rgba[0],
+					&property->v->rgba[1],
+					&property->v->rgba[2],
+					&property->v->rgba[3]);
+			}
 			break;
 
 		case kPropertyType_Quaternion:
