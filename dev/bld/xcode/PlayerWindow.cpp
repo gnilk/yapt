@@ -41,16 +41,17 @@ void PlayerWindow::Render()
 	contextParams.height = height;
 	IBaseInstance *pBase = dynamic_cast<IBaseInstance *>(system->GetActiveDocument());
 	IContext *pContext = pBase->GetContext();
-	pContext->SetContextParamObject(&contextParams);
+	pContext->PushContextParamObject(&contextParams,"RenderContext");
 	system->GetActiveDocumentController()->Render(glfwGetTime());
+	pContext->PopContextParamObject();	// Need to pop
 	// Swap buffers done by base window
 }
 
 // implementation of IOpenGLContextParams
-int OpenGLContextParams::GetFrameBufferWidth() {
+int OpenGLRenderContextParams::GetFrameBufferWidth() {
 	return width;
 }
-int OpenGLContextParams::GetFrameBufferHeight() {
+int OpenGLRenderContextParams::GetFrameBufferHeight() {
 	return height;
 }
 

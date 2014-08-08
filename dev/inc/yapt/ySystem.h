@@ -276,7 +276,7 @@ namespace yapt
     //virtual IPluginObjectInstance *GetChildAt(int index, kNodeType ofType) = 0;
   };
 
-  struct IOpenGLContextParams
+  struct IRenderContextParams
   {
   public:
     virtual int GetFrameBufferWidth() = 0;
@@ -291,8 +291,9 @@ namespace yapt
     virtual void SetObject(const char *name, void *pObject) = 0;
     virtual void *GetObject(const char *name) = 0;
 
-    virtual void SetContextParamObject(void *pObject) = 0;
-    virtual void *GetContextParamObject() = 0;
+    virtual void PushContextParamObject(void *pObject, const char *name) = 0;
+    virtual void PopContextParamObject() = 0;
+    virtual void *TopContextParamObject() = 0;
 
     virtual void SetNamePrefix(const char *prefix) = 0;
     virtual char *GetNamePrefix(char *pdest, int nmaxlen) = 0;

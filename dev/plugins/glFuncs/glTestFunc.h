@@ -17,6 +17,7 @@ protected:
 	int width;
 	int height;
 	ISystem *ySys;
+	Property *fov;
 };
 
 class OpenGLTriangle: public PluginObjectImpl {
@@ -32,15 +33,15 @@ public:
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
 };
 
-class OpenGLCamera: public PluginObjectImpl {
+class OpenGLDrawPoints: public PluginObjectImpl {
 private:
-	Property *position;
-	Property *target;
-	Property *upvector;
-	ISystem *pSys;
+	Property *numVertex;
+	Property *vertexData;
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
 };
+
+

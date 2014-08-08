@@ -49,13 +49,14 @@ Context::Context()
 	pDocument->SetDocumentController(pDocumentController);
 	pDocument->SetContext(dynamic_cast<IContext *>(this));
 	namePrefix = "";
-	contextParamObject = NULL;
+	//contextParamObject = NULL;
 }
 Context::~Context()
 {
 	delete pDocument;
 	delete pDocumentController;
-	// param object is not allocated by us..
+	// TODO: clean up context param stack
+
 }
 
 void Context::SetDocument(Document *pDocument)
@@ -96,13 +97,20 @@ void *Context::GetObject(const char *name)
 	return pObject;
 }
 
-void Context::SetContextParamObject(void *pObject)
+void Context::PushContextParamObject(void *pObject, const char *name)
 {
-	this->contextParamObject = pObject;
+	CtxNameObjectPair ctxObject(std::string(name), pObject);
+	this->contexParamObjectStack.push(ctxObject);
+//	this->contextParamObject = pObject;
 }
 
-void *Context::GetContextParamObject() {
-	return this->contextParamObject;
+void Context::PopContextParamObject() {
+	this->contexParamObjectStack.pop();
+}
+
+void *Context::TopContextParamObject() {
+	//return this->contextParamObject;
+	return (void *)this->contexParamObjectStack.top().second;	
 }
 
 

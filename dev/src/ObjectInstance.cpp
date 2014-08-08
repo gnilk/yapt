@@ -467,9 +467,17 @@ Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType 
       prop->SetDescription(sDescription);
       // we should have an unbound value
       hasUnboundValue = prop->GetUnboundRawValue()?true:false;
-
-    }   
+    }  else if (result != NULL) {
+      // recreating input property
+      return result;
+    }
   }
+
+  // recreate output??
+  if ((result != NULL) && (bOutput == true)) {
+    return result;
+  }
+
   if (prop == NULL) {
     // Create instance object and add node in document
     prop = new PropertyInstance(sName, type, sDescription);

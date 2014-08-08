@@ -6,7 +6,7 @@
 
 using namespace yapt;
 
-class OpenGLContextParams : public IOpenGLContextParams
+class OpenGLRenderContextParams : public IRenderContextParams
 {
 public:	// interface
 	virtual int GetFrameBufferWidth();
@@ -29,7 +29,7 @@ protected:
 private:
 	void Prepare();
 	yapt::ISystem *system;
-	OpenGLContextParams contextParams;
+	OpenGLRenderContextParams contextParams;
 
 
 };

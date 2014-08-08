@@ -562,7 +562,8 @@ namespace yapt
     DocumentController *pDocumentController;
     CtxNameObjectMap objects;
     std::string namePrefix;
-    void *contextParamObject;
+    //void *contextParamObject;
+    std::stack<CtxNameObjectPair> contexParamObjectStack;
   public:
     Context();
     virtual ~Context();
@@ -575,8 +576,9 @@ namespace yapt
     virtual IDocumentController *GetDocumentController();
     virtual void SetObject(const char *name, void *pObject);
     virtual void *GetObject(const char *name);
-    virtual void SetContextParamObject(void *pObject);
-    virtual void *GetContextParamObject();
+    virtual void PushContextParamObject(void *pObject, const char *name);
+    virtual void PopContextParamObject();
+    virtual void *TopContextParamObject();
 
     virtual void SetNamePrefix(const char *prefix);
     virtual char *GetNamePrefix(char *pdest, int nmaxlen);

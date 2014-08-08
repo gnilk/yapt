@@ -27,11 +27,13 @@ PLUGIN_SRC_DIR = $(ROOT)/plugins
 STDCURVE_PLUGIN = $(PLUGIN_SRC_DIR)/StdCurve
 
 PLUGIN_DEST_DIR = plugins
-PLUGINS = StdCurve utils glFuncs
+PLUGINS = StdCurve utils glFuncs Geometry Enigma
 PLUGINS_DIRS = \
 	$(PLUGIN_SRC_DIR)/StdCurve  \
 	$(PLUGIN_SRC_DIR)/utils 	\
 	$(PLUGIN_SRC_DIR)/glFuncs	\
+	$(PLUGIN_SRC_DIR)/Geometry	\
+	$(PLUGIN_SRC_DIR)/Enigma	\
 
 INCLUDE_FILES = -I/opt/local/include/freetype2 -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NOICE_IO_INC) -I$(EXPAT_ROOT) -I$(MONGOOSE_ROOT)
 LIB_FILES = -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo -L/opt/local/lib -lGLEW -lglfw -lexpat -lfreetype
