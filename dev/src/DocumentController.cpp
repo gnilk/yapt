@@ -202,19 +202,32 @@ bool DocumentController::BindAllProperties(IDocNode *node) {
   return true;
 }
 
+void DocumentController::SetDirty(IDocNode *pNode)
+{
+  dirtyNodes.push_back(pNode);
+}
+
 bool DocumentController::Initialize() {
+  bool result = false;
   InitializeNode(pDocument->GetTree());
   if(BindAllProperties(pDocument->GetTree())) {
     if (PostInitializeNode(pDocument->GetTree())) {
-      return true;
+      result = true;
     }
   }
-  return false;
-
+  dirtyNodes.clear();
+  return result;
 }
 
 void DocumentController::Render(double sample_time)
 {
+  if (dirtyNodes.size() > 0) {
+    // we have dirty nodes - poort mans solution - reinitialize the whole tree!
+    // This will be costly if the document grows..
+    PostInitializeNode(pDocument->GetTree());
+    dirtyNodes.clear();
+  }
+
   UpdateRenderVars(sample_time);
   fpsController.Update(sample_time);
 

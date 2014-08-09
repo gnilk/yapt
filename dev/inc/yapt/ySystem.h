@@ -399,6 +399,8 @@ namespace yapt
   {
   public:
     virtual IRenderVars *GetRenderVars() = 0;
+
+    virtual void SetDirty(IDocNode *pNode) = 0;
     
     virtual bool Initialize() = 0;
     virtual void InitializeNode(IDocNode *node) = 0;

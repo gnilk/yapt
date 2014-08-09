@@ -35,7 +35,7 @@ class Starfield : public PluginObjectImpl {
 private:
   Property *numSrcVertex;
   Property *srcVertexData;
-  Property *vertexDataLength;
+  Property *vertexCount;
   Property *vertexData;
   // could be vector, but most likely you want just to control one component
   Property *x_movement;
@@ -91,7 +91,7 @@ void Starfield::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   y_movement = pInstance->CreateProperty("y_movement", kPropertyType_Float, "0", "");
   z_movement = pInstance->CreateProperty("z_movement", kPropertyType_Float, "0", "");
 
-  vertexDataLength = pInstance->CreateOutputProperty("vertexDataLength", kPropertyType_Integer, "1024", "");
+  vertexCount = pInstance->CreateOutputProperty("vertexCount", kPropertyType_Integer, "1024", "");
   vertexData = pInstance->CreateOutputProperty("vertexData", kPropertyType_UserPtr, NULL, "");
 }
 
@@ -109,14 +109,23 @@ void Starfield::Render(double t, IPluginObjectInstance *pInstance) {
     pVertex[i*3+2] = fmod(pSrcVertex[i*3+2]+z_movement->v->float_val+1,2.0) - 1.0f;
   }
 
-  vertexDataLength->v->int_val = nVertex;
+  vertexCount->v->int_val = nVertex;
 }
 
 void Starfield::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
   int nVertex = numSrcVertex->v->int_val;
 
-  float *pVertex = (float *)malloc(sizeof(float) * nVertex * 3);
+  float *pVertex = (float *)vertexData->v->userdata;
+  // Reinitialized??
+  if ((pVertex != NULL) && (nVertex != vertexCount->v->int_val)) {
+    free(pVertex);
+    pVertex = NULL;
+  }
+  if (pVertex == NULL) {
+    pVertex = (float *)malloc(sizeof(float) * nVertex * 3);
+  }
+
   float *pSrcVertex = (float *)srcVertexData->v->userdata;
 
 
@@ -124,7 +133,7 @@ void Starfield::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) 
     vDup(&pVertex[i*3], &pSrcVertex[i*3]);
   }
 
-  vertexDataLength->v->int_val = nVertex;
+  vertexCount->v->int_val = nVertex;
   vertexData->v->userdata = pVertex;
 
 }

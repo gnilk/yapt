@@ -133,7 +133,7 @@ void OpenGLTriangle::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 /// Draw points
 void OpenGLDrawPoints::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
-	numVertex = pInstance->CreateProperty("vertexDataLength", kPropertyType_Integer, "0","");
+	numVertex = pInstance->CreateProperty("vertexCount", kPropertyType_Integer, "0","");
 	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
 }
 
@@ -148,24 +148,6 @@ void OpenGLDrawPoints::Render(double t, IPluginObjectInstance *pInstance) {
 		glVertex3fv(&pVertex[i*3]);
 	}
 	glEnd();
-	// float m_speed = speed->v->float_val;
-	// glBegin(GL_TRIANGLES);
-	// int idx = 0;
-	// float *pVtx = (float *) vertexData->v->userdata;
-	// int *pIdx = (int *) indexData->v->userdata;
-
-	// glColor3f(1.0f, 0.0f, 0.0f);
-	// glVertex3fv(&pVtx[pIdx[0] * 3]);
-	// glColor3f(0.0f, 1.0f, 0.0f);
-	// glVertex3fv(&pVtx[pIdx[1] * 3]);
-	// glColor3f(0.0f, 0.0f, 1.0f);
-	// glVertex3fv(&pVtx[pIdx[2] * 3]);
-
-	// glEnd();
-
-	//float mid[3] = {0,0,0};
-	//renderBoundingSphere(mid, 1.0f);
-
 
 }
 

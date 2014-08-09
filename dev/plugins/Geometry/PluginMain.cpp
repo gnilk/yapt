@@ -45,16 +45,33 @@ public:
 
 class PointCloudGenerator : public PluginObjectImpl {
 private:
-  Property *numVertex;
-  Property *vertexDataLength;
+  Property *numVertex;  // Num to be generated
+  Property *vertexCount;  // Number actually generated (output)
   Property *vertexData;
   Property *range;
-
+public:
   virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
   virtual void Render(double t, IPluginObjectInstance *pInstance);
   virtual void PostInitialize(ISystem *ySys,
       IPluginObjectInstance *pInstance);
   virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+};
+
+class CubeGenerator : public PluginObjectImpl {
+private:
+  Property *scale;
+  Property *vertexCount;
+  Property *vertexData;
+  Property *triangleCount;
+  Property *triangleData;
+
+public:
+  virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+  virtual void Render(double t, IPluginObjectInstance *pInstance);
+  virtual void PostInitialize(ISystem *ySys,
+      IPluginObjectInstance *pInstance);
+  virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+
 };
 
 static Factory factory;
@@ -125,13 +142,13 @@ void TestTriangleGenerator::PostRender(double t, IPluginObjectInstance *pInstanc
 }
 
 //
-// -- Triangle
+// -- Point Cloud
 //
 void PointCloudGenerator::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   numVertex = pInstance->CreateProperty("numVertex", kPropertyType_Integer, "1024", "");
   range = pInstance->CreateProperty("range", kPropertyType_Vector, "1.0, 1.0, 1.0", "");
 
-  vertexDataLength = pInstance->CreateOutputProperty("vertexDataLength", kPropertyType_Integer, "1024", "");
+  vertexCount = pInstance->CreateOutputProperty("vertexCount", kPropertyType_Integer, "1024", "");
   vertexData = pInstance->CreateOutputProperty("vertexData", kPropertyType_UserPtr, NULL, "");
 }
 
@@ -143,7 +160,17 @@ void PointCloudGenerator::PostInitialize(ISystem *ySys, IPluginObjectInstance *p
 
   int nVertex = numVertex->v->int_val;
 
-  float *pVertex = (float *)malloc(sizeof(float) * nVertex * 3);
+  float *pVertex = (float *)vertexData->v->userdata;
+
+  // Being re-initialized?
+  if ((pVertex != NULL) && (nVertex != vertexCount->v->int_val)) {
+    free (pVertex);
+    pVertex = NULL;
+  }
+
+  if (pVertex == NULL) {
+    pVertex = (float *)malloc(sizeof(float) * nVertex * 3);
+  }
 
 
   std::default_random_engine generator;
@@ -155,7 +182,7 @@ void PointCloudGenerator::PostInitialize(ISystem *ySys, IPluginObjectInstance *p
     vIni(&pVertex[i*3], x_distribution(generator), y_distribution(generator), z_distribution(generator));
   }
 
-  vertexDataLength->v->int_val = nVertex;
+  vertexCount->v->int_val = nVertex;
   vertexData->v->userdata = pVertex;
 
 }
@@ -163,4 +190,99 @@ void PointCloudGenerator::PostInitialize(ISystem *ySys, IPluginObjectInstance *p
 void PointCloudGenerator::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
+
+void CubeGenerator::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+  scale = pInstance->CreateProperty("range", kPropertyType_Vector, "1.0, 1.0, 1.0", "");
+
+  vertexCount = pInstance->CreateOutputProperty("vertexCount", kPropertyType_Integer, "0", "");
+  vertexData = pInstance->CreateOutputProperty("vertexData", kPropertyType_UserPtr, NULL, "");
+
+  triangleCount = pInstance->CreateOutputProperty("triangleCount", kPropertyType_Integer, "0", "");
+  triangleData = pInstance->CreateOutputProperty("triangleData", kPropertyType_UserPtr, NULL, "");
+
+}
+
+void CubeGenerator::Render(double t, IPluginObjectInstance *pInstance) {
+
+}
+
+void CubeGenerator::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
+  static float cubeVertex[] = {
+     1,  1, -1 , 
+     1, -1, -1,
+    -1, -1, -1,
+    -1,  1, -1,
+     1,  1,  1,
+     1, -1,  1,
+    -1, -1,  1,
+    -1,  1,  1,
+  };
+
+  static int cubeIndex[] = 
+  { 0,1,2, 2,3,0, 
+  7,6,5, 5,4,7, 
+  0,4,5, 5,1,0, 
+  3,2,6, 6,7,3, 
+  7,4,0, 0,3,7, 
+  1,5,6, 6,2,1
+  };
+
+  float *pVertex  = (float *)vertexData->v->userdata;
+  int *pIndex = (int *)triangleData->v->userdata;
+
+  // first time?
+  if (pVertex == NULL) {
+    pVertex = (float *)malloc(sizeof(float) * 3 * 8);
+    pIndex = (int *)malloc(sizeof(int)*6*2*3);    
+  }
+
+  for(int i=0;i<8;i++) {
+    vScale(&pVertex[i*3], &cubeVertex[i*3], scale->v->vector[0], scale->v->vector[1], scale->v->vector[2]);
+  }
+  memcpy(pIndex, cubeIndex, sizeof(int)*6*2*3);
+
+  vertexCount->v->int_val = 8;
+  triangleCount->v->int_val = 6*2;
+  vertexData->v->userdata = pVertex;
+  triangleData->v->userdata = pIndex;
+}
+
+void CubeGenerator::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+}
+
+
+/*
+Mesh *Mesh::CreateCube()
+{
+  static Goat::Vector<FTYPE> cubeVertex[] = {
+    Goat::Vector<FTYPE>(  1,  1, -1 ), 
+    Goat::Vector<FTYPE>(  1, -1, -1 ),
+    Goat::Vector<FTYPE>( -1, -1, -1 ),
+    Goat::Vector<FTYPE>( -1,  1, -1 ),
+    Goat::Vector<FTYPE>(  1,  1,  1 ),
+    Goat::Vector<FTYPE>(  1, -1,  1 ),
+    Goat::Vector<FTYPE>( -1, -1,  1 ),
+    Goat::Vector<FTYPE>( -1,  1,  1 ),
+  };
+
+  static int cubeIndex[] = 
+  { 0,1,2, 2,3,0, 
+  7,6,5, 5,4,7, 
+  0,4,5, 5,1,0, 
+  3,2,6, 6,7,3, 
+  7,4,0, 0,3,7, 
+  1,5,6, 6,2,1
+  };
+
+
+  Mesh *pMesh = new Mesh();
+
+  pMesh->SetVertexArray(cubeVertex, 8);
+  pMesh->SetIndexArray(cubeIndex, 6*2*3);
+
+  return pMesh;
+}
+  */
 

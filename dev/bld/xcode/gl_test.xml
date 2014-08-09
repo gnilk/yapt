@@ -62,13 +62,13 @@
 			</object>
 
 			<object class="enigma.Starfield" name="move.starfield">
-				<property name="numSrcVertex" source="data.starfield.vertexDataLength" />
+				<property name="numSrcVertex" source="data.starfield.vertexCount" />
 				<property name="srcVertexData" source="data.starfield.vertexData" />
 				<property name="z_movement" source="z_move.starfield" />
 			</object>
 
 			<object class="gl.DrawPoints" name="render_drawstars">
-				<property name="vertexDataLength" source="move.starfield.vertexDataLength" />
+				<property name="vertexCount" source="move.starfield.vertexCount" />
 				<property name="vertexData" source="move.starfield.vertexData" />
 			</object>
 

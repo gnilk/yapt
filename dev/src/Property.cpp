@@ -50,6 +50,8 @@ PropertyInstance::PropertyInstance(const char *szName, kPropertyType type, const
 	property = new Property();
 	property->v = new PropertyValue();
 	property->type = type;
+	// zero out the values
+	memset(property->v, 0, sizeof(PropertyValue));
 
 	this->sDescription = strdup(sDescription);
 
@@ -381,6 +383,10 @@ void PropertyInstance::SetValue(const char *sValue)
 			Logger::GetLogger("PropertyInstance")->Warning("SetValue, Unsupported property type: %d",(int)GetPropertyType());
 			break;
 	}
+
+	IDocNode *pNode = GetContext()->GetDocument()->FindNode(GetPluginObjectInstance());
+	GetContext()->GetDocumentController()->SetDirty(pNode);
+	
 }
 
 const char *PropertyInstance::GetUnboundRawValue() {

@@ -431,6 +431,7 @@ namespace yapt
     FPSController fpsController;
     ISystem *pSys;
     IDocument *pDocument;
+    std::vector<IDocNode *> dirtyNodes;
   private:
     void UpdateRenderVars(double sample_time);
     bool BindAllProperties(IDocNode *node);
@@ -440,6 +441,8 @@ namespace yapt
     virtual ~DocumentController();
 
     virtual IRenderVars *GetRenderVars();
+
+    virtual void SetDirty(IDocNode *pNode);
   
     virtual bool Initialize();
     virtual void InitializeNode(IDocNode *node); 
@@ -449,7 +452,7 @@ namespace yapt
     virtual void Render(double sample_time);
     virtual void RenderResources();
     virtual void RenderNode(IDocNode *pNode, bool bForce);
-    virtual void RenderTimeline();    
+    virtual void RenderTimeline();
      // internal
   public:
     void SetDocument(IDocument *pDocument);

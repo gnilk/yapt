@@ -549,16 +549,27 @@ private:
 	std::string nodeNameFilter;
 };
 
-class ConsoleCommandWatch : IConsoleCommandHandler, IDocumentTraversalSink
+class ConsoleCommandWatch : public IConsoleCommandHandler, IDocumentTraversalSink
 {
 public:
 	virtual void OnNode(IDocNode *node, int depth);
 	virtual bool Execute(IConsole *pConsole, std::string raw, std::vector<std::string> arguments);
+	virtual void HandleSearchResult();
+	virtual std::string GetCommandName();
 	static IConsoleCommandHandler *GetInstance();
-private:
+protected:
 	IConsole *pConsole;
+	std::string setValue;
 	std::string nodeNameFilter;
 	std::vector<IBaseInstance *>filterSearchResult;
+};
+
+class ConsoleCommandSet : ConsoleCommandWatch
+{
+public:
+	virtual std::string GetCommandName();
+	virtual void HandleSearchResult();
+	static IConsoleCommandHandler *GetInstance();
 };
 
 
@@ -566,6 +577,7 @@ static CONSOLE_COMMAND consoleCommandFactoryList[] =
 {
 	"dump", ConsoleCommandDumpDoc::GetInstance,
 	"watch", ConsoleCommandWatch::GetInstance,
+	"set", ConsoleCommandSet::GetInstance,
 	"", NULL,
 };
 
@@ -647,44 +659,60 @@ IConsoleCommandHandler *ConsoleCommandDumpDoc::GetInstance() {
 //
 // watch
 //
+std::string ConsoleCommandWatch::GetCommandName() {
+	return std::string("watch");
+}
+
 bool ConsoleCommandWatch::Execute(IConsole *pConsole, std::string raw, std::vector<std::string> arguments) {
 	this->pConsole = pConsole;
 	bool addAll = false;
 	nodeNameFilter = "";
+	setValue = "";
 
 	for(int i=1;i<arguments.size();i++) {
 		if (arguments[i][0]=='-' || arguments[i][0]=='/') {
 			switch(arguments[i][1]) {
 				case 'a' : addAll = true; break;
+				case 'v' : setValue = std::string(arguments[++i]); break;
 				default :
 					pConsole->WriteLine("Unknown option: "+arguments[i]);
-					pConsole->WriteLine("Usage: watch [-a] <filter>");
+					pConsole->WriteLine("Usage: "+GetCommandName()+" [-a] [-v <value>] <filter> ");
 					return false;
 			}
 
 		} else {
-			nodeNameFilter = arguments[i];
+			if (nodeNameFilter == "") {
+				nodeNameFilter = arguments[i];				
+			} else {
+				setValue = arguments[i];
+			}
+
 		}
 	}
+
 	if (!nodeNameFilter.empty()) {
 		yapt::ISystem *system = GetYaptSystemInstance();
 		system->GetActiveDocumentController()->TraverseDocument(this);	
-		// TODO: Check result of traverse
-		if (filterSearchResult.size() > 1) {
-			pConsole->WriteLine("Multiple matches, narrow or use -a to add all");
-			for(int i=0;i<filterSearchResult.size();i++) {
-				pConsole->WriteLine(filterSearchResult[i]->GetFullyQualifiedName());
-			}
-		} else {
-			ConsolePropertyWatcher *pWatch  = new ConsolePropertyWatcher(filterSearchResult[0]);
-			pConsole->AddWatch(pWatch);
-		}
+		HandleSearchResult();
 
 	} else {
-		pConsole->WriteLine("use: watch <propertyname>");
+		pConsole->WriteLine("use: "+GetCommandName()+" <propertyname>");
 	}
 
 	return false;
+}
+void ConsoleCommandWatch::HandleSearchResult() {
+	if (filterSearchResult.size() == 1) {
+		ConsolePropertyWatcher *pWatch  = new ConsolePropertyWatcher(filterSearchResult[0]);
+		pConsole->AddWatch(pWatch);		
+	} else if (filterSearchResult.size() > 1) {
+		pConsole->WriteLine("Multiple matches, narrow or use -a to add all");
+		for(int i=0;i<filterSearchResult.size();i++) {
+			pConsole->WriteLine(filterSearchResult[i]->GetFullyQualifiedName());
+		}
+	} else {
+		pConsole->WriteLine("No match");
+	}
 }
 
 void ConsoleCommandWatch::OnNode(IDocNode *node, int depth) {
@@ -707,6 +735,34 @@ void ConsoleCommandWatch::OnNode(IDocNode *node, int depth) {
 
 IConsoleCommandHandler *ConsoleCommandWatch::GetInstance() {
 	return new ConsoleCommandWatch();
+}
+
+
+std::string ConsoleCommandSet::GetCommandName() {
+	return std::string("set");
+}
+
+void ConsoleCommandSet::HandleSearchResult() {
+
+	if (filterSearchResult.size() == 1) {
+		IBaseInstance *pObject = filterSearchResult[0];
+		IPropertyInstance *pProperty = dynamic_cast<IPropertyInstance *>(pObject);
+		if (setValue != std::string("")) {
+			pProperty->SetValue(setValue.c_str());
+			pConsole->WriteLine(std::string(pObject->GetFullyQualifiedName()) + "="+setValue);
+		}
+	} else if (filterSearchResult.size() > 1) {
+		pConsole->WriteLine("Multiple matches, narrow or use -a to add all");
+		for(int i=0;i<filterSearchResult.size();i++) {
+			pConsole->WriteLine(filterSearchResult[i]->GetFullyQualifiedName());
+		}
+	} else {
+		pConsole->WriteLine("No Match");
+	}
+}
+
+IConsoleCommandHandler *ConsoleCommandSet::GetInstance() {
+	return new ConsoleCommandSet();
 }
 
 
