@@ -458,7 +458,10 @@ Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType 
 {
   Property *result = NULL;
   PropertyInstance *prop = NULL;
-  result = GetProperty(sName);
+  result = GetProperty(sName, bOutput);
+
+  //Logger::GetLogger("PluginObjectInstance")->Debug("CreateProperty: '%s' output %s, found %s",sName, bOutput?"yes":"no", result?"yes":"no");
+
   bool hasUnboundValue = false;
   if (bOutput == false) {
     if ((result != NULL) && (result->type == kPropertyType_Unbound)) {
@@ -531,6 +534,27 @@ kPropertyHint PluginObjectInstance::GetPropertyHint(const char *sName)
   return prop->GetPropertyHint();
 
 }
+
+Property *PluginObjectInstance::GetProperty(const char *name, bool isOutput)
+{
+  Property *prop = NULL;
+  PropertyInstance *pInst;
+
+  if (isOutput) {
+    pInst = GetPropertyInstance(&output_properties, name);    
+  } else {
+    pInst= GetPropertyInstance(&input_properties, name);
+  }
+
+  if (pInst != NULL)
+  {
+    prop = pInst->GetProperty();
+  }
+
+  return prop;
+
+}
+
 
 Property *PluginObjectInstance::GetProperty(const char *name)
 {

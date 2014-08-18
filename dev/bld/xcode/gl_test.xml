@@ -14,6 +14,15 @@
 	  	<property name="numVertex">2048</property>
 	  	<property name="range">1.0, 0.5, 1.0</property>
 	  </object>
+	  <object class="geom.Cube" name="data.cube">
+	  	<property name="range">0.5, 0.5, 0.5</property>
+	  </object>
+	  <object class="geom.EdgeList" name="data.cube.edges">
+	  	<property name="vertexData" source="data.cube.vertexData" />
+	  	<property name="vertexCount" source="data.cube.vertexCount" />
+	  	<property name="triangleCount" source="data.cube.triangleCount" />
+	  	<property name="indexData" source="data.cube.indexData" />
+	  </object>
 
 	</resources>
 	
@@ -30,19 +39,13 @@
 				<property name="z" source="campos_z"/>
 			</object>
 			<object class="gl.Camera" name="camera">
-				<!-- <property name="position" source="campos" /> -->
-				<property name="position">0,0,2.0</property>
+				<property name="position" source="campos" />
+				<!-- <property name="position">0,0,2.0</property> -->
 				<property name="target">0,0,0</property>
 				<property name="upvector">0,1,0</property>
 			</object>
 			<object class="Animation.ExpSolver" name="rotspeed">
 				<property name="expression">40 * t + (sin(t))</property>
-			</object>
-			<object class="gl.DrawTriangle" name="triangle">
-				<property name="numIndex" source="tri.numIndex"/>
-				<property name="indexData" source="tri.indexData"/>
-				<property name="vertexData" source="tri.vertexData"/>
-				<property name="speed" source="rotspeed" />
 			</object>
 
 			<object class="Animation.ExpSolver" name="campos_x">
@@ -70,6 +73,13 @@
 			<object class="gl.DrawPoints" name="render_drawstars">
 				<property name="vertexCount" source="move.starfield.vertexCount" />
 				<property name="vertexData" source="move.starfield.vertexData" />
+			</object>
+
+			<object class="gl.DrawLines" name="render_cube">
+				<property name="indexCount" source="data.cube.edges.indexCount" />
+				<property name="indexData" source="data.cube.edges.indexData" />
+				<property name="vertexCount" source="data.cube.edges.vertexCount" />
+				<property name="vertexData" source="data.cube.edges.vertexData" />
 			</object>
 
 <!--

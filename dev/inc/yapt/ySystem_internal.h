@@ -632,6 +632,9 @@ namespace yapt
     bool IsDirty();
     void SetDirty(bool dirty);
     void RenderPropertyDependencies(RenderVars *pRenderVars);
+    Property *GetProperty(const char *name, bool isOutput);
+
+
   public:
     PluginObjectInstance(PluginObjectDefinition *definition);
     PluginObjectInstance(IPluginObjectDefinition *definition);

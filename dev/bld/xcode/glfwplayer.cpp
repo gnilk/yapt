@@ -243,11 +243,15 @@ int main(int argc, char **argv) {
 		glfwPollEvents();
 	}
 
+	pLogger->Debug("Cleaning up");
+
 	// Close OpenGL window and terminate GLFW
 	console.Close();
 	player.Close();
 	glfwTerminate();
 	StopWebService();
+	system->DisposeActiveDocument();
+	pLogger->Debug("Disposed");
 
 	exit(EXIT_SUCCESS);
 }

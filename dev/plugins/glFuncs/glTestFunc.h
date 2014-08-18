@@ -20,9 +20,9 @@ protected:
 	Property *fov;
 };
 
-class OpenGLTriangle: public PluginObjectImpl {
+class OpenGLDrawTriangles: public PluginObjectImpl {
 private:
-	Property *numIndex;
+	Property *indexCount;
 	Property *indexData;
 	Property *vertexData;
 	Property *speed;
@@ -44,4 +44,16 @@ public:
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
 };
 
+class OpenGLDrawLines : public PluginObjectImpl {
+private:
+	Property *indexCount;
+	Property *indexData;
+	Property *vertexData;
+public:
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+
+};
 

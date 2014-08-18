@@ -62,13 +62,6 @@ void OpenGLRenderContext::PostRender(double t,
 }
 
 ////////
-void OpenGLTriangle::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
-	numIndex = pInstance->CreateProperty("numindex", kPropertyType_Integer, "0","");
-	indexData = pInstance->CreateProperty("indexData", kPropertyType_UserPtr, NULL, "");
-	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
-	speed = pInstance->CreateProperty("speed", kPropertyType_Float, "100", "");
-}
-
 static void renderBoundingSphere(float *mid, double radius)
 {
 	glColor3f(1,0.5,0.5);
@@ -102,21 +95,26 @@ static void renderBoundingSphere(float *mid, double radius)
 	glEnd();
 }	
 
-void OpenGLTriangle::Render(double t, IPluginObjectInstance *pInstance) {
-	// float m_speed = speed->v->float_val;
-	// glBegin(GL_TRIANGLES);
-	// int idx = 0;
-	// float *pVtx = (float *) vertexData->v->userdata;
-	// int *pIdx = (int *) indexData->v->userdata;
+void OpenGLDrawTriangles::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	indexCount = pInstance->CreateProperty("indexCount", kPropertyType_Integer, "0","");
+	indexData = pInstance->CreateProperty("indexData", kPropertyType_UserPtr, NULL, "");
+	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
+	speed = pInstance->CreateProperty("speed", kPropertyType_Float, "100", "");
+}
 
-	// glColor3f(1.0f, 0.0f, 0.0f);
-	// glVertex3fv(&pVtx[pIdx[0] * 3]);
-	// glColor3f(0.0f, 1.0f, 0.0f);
-	// glVertex3fv(&pVtx[pIdx[1] * 3]);
-	// glColor3f(0.0f, 0.0f, 1.0f);
-	// glVertex3fv(&pVtx[pIdx[2] * 3]);
+void OpenGLDrawTriangles::Render(double t, IPluginObjectInstance *pInstance) {
+	float *vtx = (float *)vertexData->v->userdata;
+	int *idx = (int *)indexData->v->userdata;
+	glBegin(GL_TRIANGLES);
+	int ti = 0;
+	while (ti < indexCount->v->int_val) {
+		glVertex3fv (&vtx[idx[ti+0]*3]);
+		glVertex3fv (&vtx[idx[ti+1]*3]);
+		glVertex3fv (&vtx[idx[ti+2]*3]);
+		ti+=3;
+	}
+	glEnd();
 
-	// glEnd();
 
 	float mid[3] = {0,0,0};
 	renderBoundingSphere(mid, 1.0f);
@@ -124,10 +122,10 @@ void OpenGLTriangle::Render(double t, IPluginObjectInstance *pInstance) {
 
 }
 
-void OpenGLTriangle::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+void OpenGLDrawTriangles::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
 }
-void OpenGLTriangle::PostRender(double t, IPluginObjectInstance *pInstance) {
+void OpenGLDrawTriangles::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
 
@@ -158,6 +156,42 @@ void OpenGLDrawPoints::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
 
+////
+void OpenGLDrawLines::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	indexCount = pInstance->CreateProperty("indexCount", kPropertyType_Integer, "0","");
+	indexData = pInstance->CreateProperty("indexData", kPropertyType_UserPtr, NULL, "");
+	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
+}
+
+void OpenGLDrawLines::Render(double t, IPluginObjectInstance *pInstance) {
+	float *vtx = (float *)vertexData->v->userdata;
+	int *idx = (int *)indexData->v->userdata;
+	glBegin(GL_LINES);
+	int li = 0;
+	while (li < indexCount->v->int_val) {
+		// ok, this is fake!
+		glVertex3fv (&vtx[idx[li+0]*3]);
+		glVertex3fv (&vtx[idx[li+1]*3]);
+		glVertex3fv (&vtx[idx[li+1]*3]);
+		glVertex3fv (&vtx[idx[li+2]*3]);
+		glVertex3fv (&vtx[idx[li+2]*3]);
+		glVertex3fv (&vtx[idx[li+0]*3]);
+		li+=3;
+	}
+	glEnd();
+
+	float mid[3] = {0,0,0};
+	renderBoundingSphere(mid, 1.0f);
+
+
+}
+
+void OpenGLDrawLines::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
+}
+void OpenGLDrawLines::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+}
 
 
 

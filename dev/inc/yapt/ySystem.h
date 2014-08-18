@@ -564,6 +564,7 @@ namespace yapt
   extern "C"
   {
     ISystem * CALLCONV GetYaptSystemInstance();
+    void CALLCONV DisposeYaptSystemInstance();
     void CALLCONV SetYaptLastError(kErrorClass eClass, kError eCode);
     void CALLCONV GetYaptLastError(kErrorClass *eClass, kError *eCode);
     char * CALLCONV GetYaptErrorTranslation(char *dst, int maxlen);

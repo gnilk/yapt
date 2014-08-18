@@ -76,6 +76,10 @@ ISystem * CALLCONV yapt::GetYaptSystemInstance()
 	}
 	return dynamic_cast<ISystem *>(pSystemInstance);
 }
+void CALLCONV DisposeYaptSystemInstance() 
+{
+	// TODO: Implement this
+}
 
 void CALLCONV yapt::SetYaptLastError(kErrorClass eClass, kError eCode)
 {	

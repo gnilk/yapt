@@ -66,8 +66,11 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.DrawPoints")) {
 		pObject = dynamic_cast<IPluginObject *> (new OpenGLDrawPoints());
   }
-  if (!strcmp(identifier, "gl.DrawTriangle")) {
-    pObject = dynamic_cast<IPluginObject *>(new OpenGLTriangle());
+  if (!strcmp(identifier, "gl.DrawTriangles")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawTriangles());
+  }
+  if (!strcmp(identifier, "gl.DrawLines")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawLines());
   }
   if (pObject != NULL) {
     pLogger->Debug("Ok");
@@ -87,8 +90,9 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Camera");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Transform");
 
-  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawTriangle");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawTriangles");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawPoints");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawLines");
   // Real stuff
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.FullScreenImage");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.LoadTexture2D");
