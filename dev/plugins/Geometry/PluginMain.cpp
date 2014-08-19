@@ -360,14 +360,17 @@ void EdgeList::Render(double t, IPluginObjectInstance *pInstance) {
     AddEdge(i2,i3);
     AddEdge(i3,i1);
   }
+  //printf("NumEdges: %d\n",edges.size()*2);
+  // indexCount->v->int_val = edges.size() * 2;
+  // int *pIndex = (int *)malloc(sizeof(int) * edges.size() * 2);
+  // for(int i=0;i<edges.size();i++) {
+  //   pIndex[i*2+0] = edges[i].i1;
+  //   pIndex[i*2+1] = edges[i].i2;
+  // }
+  // indexData->v->userdata = pIndex;
 
-  indexCount->v->int_val = edges.size() * 2;
-  int *pIndex = (int *)malloc(sizeof(int) * edges.size() * 2);
-  for(int i=0;i<edges.size();i++) {
-    pIndex[i*2+0] = edges[i].i1;
-    pIndex[i*2+1] = edges[i].i2;
-  }
-  indexData->v->userdata = pIndex;
+  indexCount->v->int_val = inTriangleCount->v->int_val;
+  indexData->v->userdata = inIndexData->v->userdata;
 
   vertexData->v->userdata = inVertexData->v->userdata;
   vertexCount->v->userdata = inVertexCount->v->userdata;
