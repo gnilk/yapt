@@ -192,7 +192,8 @@ IBaseInstance *Document::GetObjectFromSimpleName(const char *name) {
 IBaseInstance *Document::GetObject(const char *fullQualifiedName)
 {
 	// TODO: Need lookup str::BasInstance	
-	return Lookup::GetBaseFromString(fullQualifiedName);
+	//return Lookup::GetBaseFromString(fullQualifiedName);
+	return NULL;
 }
 
 void Document::SwapNodes(IDocNode *pNodeA, IDocNode *pNodeB)
@@ -301,29 +302,33 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 	        (nodeType != kNodeType_Timeline) &&
 	    	(nodeType != kNodeType_RenderNode)) {
 
+
+	    	// NOTE [2014-08-19]: This is not required (I think) but I don't understand why I did it in the first place
+
+
 			  // object with this name already registered?
 			  // append a number to the name until it gets unique
-			  if (Lookup::GetBaseFromString(qName) != NULL)
-			  {
-				  int extCount = 1;
-				  // Can't reuse the const char * return value since if we update the
-				  // attribute in the while loop it will be deallocated
-				  std::string baseName(pBase->GetAttributeValue("name"));
+			  // if (Lookup::GetBaseFromString(qName) != NULL)
+			  // {
+				 //  int extCount = 1;
+				 //  // Can't reuse the const char * return value since if we update the
+				 //  // attribute in the while loop it will be deallocated
+				 //  std::string baseName(pBase->GetAttributeValue("name"));
 
-				  // will update the name with a numbered version
-				  while (Lookup::GetBaseFromString(qName) != NULL)
-				  {				
-					  char tmp[32];
+				 //  // will update the name with a numbered version
+				 //  while (Lookup::GetBaseFromString(qName) != NULL)
+				 //  {				
+					//   char tmp[32];
 
-					  std::string curName(baseName);
-					  snprintf(tmp, 32, "%d", extCount);
-					  curName.append(tmp);		// itoa not supported..
-					  pBase->AddAttribute("name",curName.c_str());
-					  qName = BuildQualifiedName(pNode);
+					//   std::string curName(baseName);
+					//   snprintf(tmp, 32, "%d", extCount);
+					//   curName.append(tmp);		// itoa not supported..
+					//   pBase->AddAttribute("name",curName.c_str());
+					//   qName = BuildQualifiedName(pNode);
 
-					  extCount++;
-				  }
-			  }
+					//   extCount++;
+				 //  }
+			  // }
 	    } // node type
 
 		pBase->SetFullyQualifiedName(qName.c_str());
@@ -331,7 +336,7 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 		pLogger->Debug("AddObjectToTree, %s",qName.c_str());
 
 		// add a lookup for this one..
-		Lookup::RegisterStrBase(qName, object);
+//		Lookup::RegisterStrBase(qName, object);
 	}
 
 	return pNode;
@@ -340,18 +345,12 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 IDocNode *Document::AddObject(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType)
 {
 	IDocNode *pNode = AddObjectToTree(parent,object, nodeType);
-  //if(pDocumentController) {
-	 // pDocumentController->InitializeNode(pNode);
-  //}
 	return pNode;
 }
 
 IDocNode *Document::AddRenderObject(IBaseInstance *parent, IBaseInstance *object)
 {
 	IDocNode *pNode = AddObjectToTree(parent,object,kNodeType_ObjectInstance);
-  //if(pDocumentController) {
-	 // pDocumentController->InitializeNode(pNode);
-  //}
 	return pNode;
 }
 IDocNode *Document::AddToTimeline(IBaseInstance *object) {
@@ -364,18 +363,12 @@ void Document::AddResourceObject(IBaseInstance *parent, IBaseInstance *object)
 	IDocNode *pNode = AddObjectToTree(parent,object,kNodeType_ObjectInstance);
 	IPluginObjectInstance *pInst = dynamic_cast<IPluginObjectInstance *>(object);
 	resources->AddResourceInstance(pInst);
-  //if(pDocumentController) {
-	 // pDocumentController->InitializeNode(pNode);
-  //}
 }
 
 IDocNode *Document::AddMetaObject(IBaseInstance *parent) 
 {
 	IBaseInstance *pMeta = new MetaInstance(this);
 	IDocNode *pNode = AddObjectToTree(parent, pMeta, kNodeType_Meta);
-  //if(pDocumentController) {
-	 // pDocumentController->InitializeNode(pNode);
-  //}
 	return pNode;
 }
 
