@@ -257,6 +257,11 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstanceFromRoot(const char
   }
   return NULL;
 }
+
+bool PluginObjectInstance::IsEqualPropertyTypes(PropertyInstance *p1,  PropertyInstance *p2) {
+  return p1->IsEqualType(p2);
+}
+
 //
 // Property binding is based on the following rule
 // 1) Search from parent first, see if there is an object matching the source string
@@ -281,19 +286,25 @@ bool PluginObjectInstance::BindProperties()
       if (pSourceInst == NULL) {       
         Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Looking from root for %s",propertyReference);
         pSourceInst = FindPropertyInstanceFromRoot(propertyReference);
+      } else {
+        // Source found, do type check
+        PropertyInstance *pSource = dynamic_cast<PropertyInstance *>(pSourceInst);
+        if (IsEqualPropertyTypes(pInput, pSource))
+        {
+          Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Succesfully bound property for %s.%s to %s",GetInstanceName(), pInput->GetName(), pSource->GetFullyQualifiedName());
+          Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, tIn: %s, tOut: %s", pInput->GetTypeName().c_str(), pSource->GetTypeName().c_str());
+          pInput->SetSource(pSource);
+        } else
+        {			
+          // type check failed
+          Logger::GetLogger("PluginObjectInstance")->Warning("BindProperties, type mismatch (%s, %s) failed to bind property for %s.%s to %s",
+            pInput->GetTypeName().c_str(), pSource->GetTypeName().c_str(),
+            GetDefinition()->GetDescription(), pInput->GetName(), propertyReference);
+          SetYaptLastError(kErrorClass_ObjectDefinition, kError_PropertyBindFailed);
+          return false;
+        }            
       }
 
-      if (pSourceInst != NULL)
-      {
-        PropertyInstance *pSource = dynamic_cast<PropertyInstance *>(pSourceInst);
-        Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Succesfully bound property for %s.%s to %s",GetInstanceName(), pInput->GetName(), pSource->GetFullyQualifiedName());
-        pInput->SetSource(pSource);
-      } else
-      {			
-        Logger::GetLogger("PluginObjectInstance")->Warning("BindProperties, failed to bind property for %s.%s to %s",GetDefinition()->GetDescription(), pInput->GetName(), propertyReference);
-        SetYaptLastError(kErrorClass_ObjectDefinition, kError_PropertyBindFailed);
-        return false;
-      }            
     }
   } // for
   return true;

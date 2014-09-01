@@ -510,7 +510,7 @@ namespace yapt
     int iSourceReferences;
 
     void ParseDescriptionString();
-   
+
   public:
     static void StrSplit(std::vector<std::string> &strings, const char *strInput, int splitChar);
     char *GetEnumFromValue(char *sDest, int nMax, int val, const char *def);
@@ -527,7 +527,7 @@ namespace yapt
     
     const char *GetName();
     const char *GetDescription();
-    
+    bool IsEqualType(PropertyInstance *pOther);    
     void SetDescription(const char *strDesc);
     
     const char *GetUnboundRawValue();
@@ -539,6 +539,8 @@ namespace yapt
     
     void SetObjectInstance(PluginObjectInstance *owner);
     PluginObjectInstance *GetPluginObjectInstance();
+
+    std::string GetTypeName();
 
     virtual void Dump();
 
@@ -639,7 +641,7 @@ namespace yapt
     void SetDirty(bool dirty);
     void RenderPropertyDependencies(RenderVars *pRenderVars);
     Property *GetProperty(const char *name, bool isOutput);
-
+    bool IsEqualPropertyTypes(PropertyInstance *p1,  PropertyInstance *p2);
 
   public:
     PluginObjectInstance(PluginObjectDefinition *definition);

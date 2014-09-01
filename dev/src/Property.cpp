@@ -295,6 +295,28 @@ void PropertyInstance::ParseDescriptionString() {
 
 }
 
+bool PropertyInstance::IsEqualType(PropertyInstance *pOther) {
+	// not user ptr, are they equal??
+	if (GetPropertyType() != kPropertyType_UserPtr) {
+		return (GetPropertyType() == pOther->GetPropertyType());
+	}
+		
+	// They are both user ptr, check if type names are same
+	if ((GetPropertyType() == pOther->GetPropertyType()) && (GetPropertyType() == kPropertyType_UserPtr)) {
+		// should work for 'empty' type names as well
+		// todo: add config option to relax this
+		return (GetTypeName() == pOther->GetTypeName());
+	}
+
+	return false;
+}
+
+std::string PropertyInstance::GetTypeName() {
+	char tmp[256];
+	GetPropertyTypeName(tmp, 256);
+	return std::string(tmp);
+}
+
 char *PropertyInstance::GetPropertyTypeName(char *sDest, int maxLen) {
     switch(GetPropertyType()) {
 		case kPropertyType_Float:
