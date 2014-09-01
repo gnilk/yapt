@@ -18,6 +18,7 @@
 	  	<property name="range">0.5, 0.5, 0.5</property>
 	  </object>
 	  <object class="geom.EdgeList" name="data.cube.edges">
+	  	<property name="optimizeAdjecent">true</property>
 	  	<property name="vertexData" source="data.cube.vertexData" />
 	  	<property name="vertexCount" source="data.cube.vertexCount" />
 	  	<property name="triangleCount" source="data.cube.triangleCount" />

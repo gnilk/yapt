@@ -154,6 +154,15 @@ void PluginObjectInstance::SetDocument(IDocument *pDoc)
   pDocument = pDoc;
 }
 
+bool PluginObjectInstance::IsResource() {
+  IDocNode *node = GetDocumentNode();
+  while(node != NULL) {
+    if (node->GetNodeType() == kNodeType_ResourceContainer) 
+      return true;
+    node = node->GetParent();
+  }
+  return false;
+}
 
 static std::string GetEquallyDottedString(std::string propRef, std::string fqName) {
   int nDots = 0;
@@ -669,8 +678,10 @@ void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
 
     if (pInst->IsSourced()) {
       PropertyInstance *pSourceInst = dynamic_cast<PropertyInstance *>(pInst->GetSource());
-      if (pSourceInst->GetPluginObjectInstance()->IsPropertyRefRendering()) {
-        pSourceInst->GetPluginObjectInstance()->ExtRender(pRenderVars); 
+      PluginObjectInstance *pSourceObject = dynamic_cast<PluginObjectInstance *>(pSourceInst->GetPluginObjectInstance());
+      if (pSourceObject->IsResource()) return;
+      if (pSourceObject->IsPropertyRefRendering()) {
+        pSourceObject->ExtRender(pRenderVars); 
       }
     }
   }

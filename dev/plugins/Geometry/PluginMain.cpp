@@ -106,6 +106,7 @@ private:
   Property *inVertexData;
   Property *inTriangleCount;
   Property *inIndexData;
+  Property *optimizeAdjecent;
 
   Property *vertexCount;
   Property *vertexData;
@@ -316,14 +317,21 @@ void CubeGenerator::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
 
-
-
+//
+// Computes an optimized edgelist for a triangle mesh (i.e. removes duplicate edges)
+// Very slow and inefficent
+//
+// Note: This does not remove edges 
+//
 void EdgeList::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   inVertexCount = pInstance->CreateProperty("vertexCount", kPropertyType_Integer, "0", "");
   inVertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
 
   inTriangleCount = pInstance->CreateProperty("triangleCount", kPropertyType_Integer, "0", "");
   inIndexData = pInstance->CreateProperty("indexData", kPropertyType_UserPtr, NULL, "");
+
+  // perhaps add a boolean..  =)
+  optimizeAdjecent = pInstance->CreateProperty("optimizeAdjecent", kPropertyType_Bool, "true", "");
 
 
   vertexCount = pInstance->CreateOutputProperty("vertexCount", kPropertyType_Integer, "0", "");
@@ -334,10 +342,20 @@ void EdgeList::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
 }
 
+// TODO: Take normal into account
 bool EdgeList::AddEdge(int i1, int i2) {
   Edge edge(i1, i2);
   for(int i=0;i<edges.size();i++) {
-    if (edges[i].IsEqual(edge)) return true;
+    if (edges[i].IsEqual(edge)) {
+      // TODO:
+      //  1) check if 'optimizeAdjecent' is true
+      if (optimizeAdjecent->v->boolean) {
+      //  2) check if normal of incoming face is equal
+      //  3) tag edge as 'invalid'
+        
+      }
+      return true;
+    }
   }
   edges.push_back(edge);
   return false;
@@ -347,30 +365,33 @@ void EdgeList::Render(double t, IPluginObjectInstance *pInstance) {
 
   edges.clear();
 
-
-  int *pInput = (int *)inVertexData->v->userdata;  
+  int *pInput = (int *)inIndexData->v->userdata;  
   int numTri = inTriangleCount->v->int_val;
 
   for(int i=0;i<numTri;i++) {
     int i1 = pInput[i*3+0];
     int i2 = pInput[i*3+1];
     int i3 = pInput[i*3+2];
-
+    // TODO: Calculate and supply normal
     AddEdge(i1,i2);
     AddEdge(i2,i3);
     AddEdge(i3,i1);
   }
-  //printf("NumEdges: %d\n",edges.size()*2);
-  // indexCount->v->int_val = edges.size() * 2;
-  // int *pIndex = (int *)malloc(sizeof(int) * edges.size() * 2);
-  // for(int i=0;i<edges.size();i++) {
-  //   pIndex[i*2+0] = edges[i].i1;
-  //   pIndex[i*2+1] = edges[i].i2;
-  // }
-  // indexData->v->userdata = pIndex;
 
-  indexCount->v->int_val = inTriangleCount->v->int_val;
-  indexData->v->userdata = inIndexData->v->userdata;
+  if (optimizeAdjecent->v->boolean) {
+    // TODO: purge all invalid edges    
+  }
+
+  indexCount->v->int_val = edges.size() * 2;
+  int *pIndex = (int *)malloc(sizeof(int) * edges.size() * 2);
+  for(int i=0;i<edges.size();i++) {
+    pIndex[i*2+0] = edges[i].i1;
+    pIndex[i*2+1] = edges[i].i2;
+  }
+  indexData->v->userdata = pIndex;
+
+  // indexCount->v->int_val = inTriangleCount->v->int_val;
+  // indexData->v->userdata = inIndexData->v->userdata;
 
   vertexData->v->userdata = inVertexData->v->userdata;
   vertexCount->v->userdata = inVertexCount->v->userdata;

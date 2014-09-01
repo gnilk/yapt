@@ -24,6 +24,7 @@ public:
 private:
 	Property *fileName;
 	Property *fileData;
+	Property *byteSize;
     ISystem *pSys;
 };
 

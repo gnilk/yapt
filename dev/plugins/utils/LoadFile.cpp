@@ -31,6 +31,7 @@ LoadFile::~LoadFile() {
 void LoadFile::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 	fileName = pInstance->CreateProperty("fileName", kPropertyType_String, "file.txt", "");
 	fileData = pInstance->CreateOutputProperty("fileData", kPropertyType_UserPtr, NULL, "");
+	byteSize = pInstance->CreateOutputProperty("byteSize", kPropertyType_Integer, 0, "");
     pSys = ySys;
 }
 
@@ -46,6 +47,8 @@ void LoadFile::Render(double t, IPluginObjectInstance *pInstance) {
 			void *pBuffer = malloc(szData);
 
 			pStream->Read(pBuffer, szData);
+			byteSize->v->int_val = (int)szData;			
+
 		} else {
 			//pLogger->Error("Unable to open stream");
 		}

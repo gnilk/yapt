@@ -505,7 +505,12 @@ namespace yapt
     char *unboundRawValue;
     char *sourceString;
     char *sDescription;
+    char *textDescription;
+    char *userTypeName;
     int iSourceReferences;
+
+    void ParseDescriptionString();
+   
   public:
     static void StrSplit(std::vector<std::string> &strings, const char *strInput, int splitChar);
     char *GetEnumFromValue(char *sDest, int nMax, int val, const char *def);
@@ -536,6 +541,7 @@ namespace yapt
     PluginObjectInstance *GetPluginObjectInstance();
 
     virtual void Dump();
+
   public: // BaseInstance overrides
     void OnAttributeChanged(Attribute *pAttribute);
 
@@ -644,6 +650,7 @@ namespace yapt
     void SetDefinition(PluginObjectDefinition *pDef);
     // TODO: Rename, this is creating the ext object
     bool CreateInstance();
+    bool IsResource();
     virtual IPluginObject *GetExtObject();
     void SetExtObject(IPluginObject *pObject);
     

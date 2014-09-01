@@ -172,18 +172,12 @@ void OpenGLDrawLines::Render(double t, IPluginObjectInstance *pInstance) {
 		// ok, this is fake!
 		glVertex3fv (&vtx[idx[li+0]*3]);
 		glVertex3fv (&vtx[idx[li+1]*3]);
-		glVertex3fv (&vtx[idx[li+1]*3]);
-		glVertex3fv (&vtx[idx[li+2]*3]);
-		glVertex3fv (&vtx[idx[li+2]*3]);
-		glVertex3fv (&vtx[idx[li+0]*3]);
-		li+=3;
+		li+=2;
 	}
 	glEnd();
 
 	float mid[3] = {0,0,0};
 	renderBoundingSphere(mid, 1.0f);
-
-
 }
 
 void OpenGLDrawLines::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {

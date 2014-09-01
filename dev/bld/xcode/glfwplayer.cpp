@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdint>
+#include <vector>
 #include <GL/GLEW.h>
 #include <GLFW/glfw3.h>
 
@@ -15,6 +17,9 @@
 #include "WebService.h"
 
 using namespace yapt;
+
+int64_t mint = 0;
+std::vector<int> vmv { 1, 2, 3, 4 };
 
 
 static int window_width = 1280;

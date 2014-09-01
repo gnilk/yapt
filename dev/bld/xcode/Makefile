@@ -39,7 +39,7 @@ INCLUDE_FILES = -I/opt/local/include/freetype2 -I/opt/local/include -I/usr/local
 LIB_FILES = -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo -L/opt/local/lib -lGLEW -lglfw -lexpat -lfreetype
 
 
-CPPFLAGS = -g -arch x86_64 -stdlib=libc++
+CPPFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11
 CPPFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 CPPFLAGS += $(INCLUDE_FILES)
 

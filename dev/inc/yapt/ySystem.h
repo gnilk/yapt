@@ -129,6 +129,7 @@ namespace yapt
     kPropertyType_UserPtr,
   //	kPropertyType_Resource,
     kPropertyType_Enum,
+    kPropertyType_Bool,
     kPropertyType_Unbound,  // property created first through XML but not yet attached by plugin (after initialization all object properties which are unbound are declared wrong)
   } kPropertyType;
 
@@ -174,6 +175,7 @@ namespace yapt
   {
     float matrix[16];
     float rgba[4];
+    int boolean;
     int int_val;
     int int_tuple[2];
     float float_val;

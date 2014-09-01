@@ -54,7 +54,9 @@ PropertyInstance::PropertyInstance(const char *szName, kPropertyType type, const
 	memset(property->v, 0, sizeof(PropertyValue));
 
 	this->sDescription = strdup(sDescription);
-
+	this->textDescription = NULL;
+	this->userTypeName = NULL;
+	ParseDescriptionString();
 	// Distinguish between them, in order to easily source/unsource the same property
 	v_unsourced = NULL;
 	unboundRawValue = NULL;
@@ -182,17 +184,14 @@ int PropertyInstance::DecSourceRef()
 }
 
 // Set the property sourcing, supply NULL to break an already sourced property
-void PropertyInstance::SetSource(PropertyInstance *pSource)
-{
+void PropertyInstance::SetSource(PropertyInstance *pSource) {
 	// Already sourced? Decrease previous target reference, don't backup the value
-	if (isSourced && sourcedProperty!=NULL)
-	{
+	if (isSourced && sourcedProperty!=NULL) {
 		sourcedProperty->DecSourceRef();
 	}
 
 	// if NULL then we should break sourceing and go back to old value
-	if(pSource != NULL)
-	{
+	if(pSource != NULL)	{
 		if (!isSourced)
 		{
 			// first time we are sourced, save the orginal value
@@ -216,14 +215,11 @@ void PropertyInstance::SetSource(PropertyInstance *pSource)
 	sourcedProperty = pSource;
 }
 
-IPropertyInstance *PropertyInstance::GetSource()
-{
+IPropertyInstance *PropertyInstance::GetSource() {
 	return sourcedProperty;
 }
 
-
-kPropertyType PropertyInstance::GetPropertyType()
-{
+kPropertyType PropertyInstance::GetPropertyType() {
   // No need to check source type (if sourced) can bind to different type than self..
   if (GetSource() != NULL) {
     return GetSource()->GetPropertyType();
@@ -231,33 +227,72 @@ kPropertyType PropertyInstance::GetPropertyType()
 	return property->type;
 }
 
-const char *PropertyInstance::GetName()
-{
+const char *PropertyInstance::GetName() {
 	return GetAttributeValue("name");
 }
 
-const char *PropertyInstance::GetDescription()
-{
+const char *PropertyInstance::GetDescription() {
 	return sDescription;
 }
-void PropertyInstance::SetDescription(const char *strDesc)
-{
+
+void PropertyInstance::SetDescription(const char *strDesc) {
   if (sDescription==NULL) free(sDescription);
   this->sDescription = strdup(strDesc);
 }
 
-
-void PropertyInstance::SetObjectInstance(PluginObjectInstance *owner)
-{
+void PropertyInstance::SetObjectInstance(PluginObjectInstance *owner) {
 	this->objectInstance = owner;
 }
-PluginObjectInstance *PropertyInstance::GetPluginObjectInstance()
-{
+
+PluginObjectInstance *PropertyInstance::GetPluginObjectInstance() {
 	return this->objectInstance;	
 }
-IBaseInstance *PropertyInstance::GetObjectInstance()
-{
+
+IBaseInstance *PropertyInstance::GetObjectInstance() {
 	return dynamic_cast<IBaseInstance *>(this->objectInstance);
+}
+
+// The description string can be
+//
+// ';' and '=' reserved 
+//
+// ex1;	plain text description of the property
+// ex1: type=MyType;description=holds my type
+//
+void PropertyInstance::ParseDescriptionString() {
+	std::vector<std::string> params;
+
+	// if no arguments - assume plain text description
+	if (std::string(this->sDescription).find(';') == std::string::npos) {
+		this->textDescription = this->sDescription;	// same
+		return;
+	}
+
+	StrSplit(params, this->sDescription, ';');
+
+	for(int i=0;i<params.size();i++) {
+		std::vector<std::string> tokens;
+		StrSplit(tokens, params[i].c_str(), '=');
+		if (tokens.size() != 2) {
+			pLogger->Error("Description string parse error on '%s'",params[i].c_str());
+			continue;
+		}
+
+		switch(StrConfCaseCmp(tokens[0].c_str(), "type description desc")) {
+			case 1 : // 'type' - user type name
+				this->userTypeName = strdup(tokens[1].c_str());
+				break;
+			case 2 :
+			case 3 :
+				// plain text description for property
+				this->textDescription = strdup(tokens[1].c_str());
+				break;
+			default:
+				pLogger->Debug("Unknown token in type descriptor '%s'", tokens[0].c_str());
+				break;
+		}
+	}
+
 }
 
 char *PropertyInstance::GetPropertyTypeName(char *sDest, int maxLen) {
@@ -289,8 +324,15 @@ char *PropertyInstance::GetPropertyTypeName(char *sDest, int maxLen) {
 		case kPropertyType_Enum :
             snprintf(sDest, maxLen, "enum");
 			break;
+		case kPropertyType_Bool :
+            snprintf(sDest, maxLen, "bool");
+			break;
 		case kPropertyType_UserPtr :
-            snprintf(sDest, maxLen, "ptr");
+			if (userTypeName != NULL) {
+				snprintf(sDest, maxLen, "%s",userTypeName);
+			} else {
+            	snprintf(sDest, maxLen, "ptr");				
+			}
 			break;
 		case kPropertyType_Unbound :
             snprintf(sDest, maxLen, "-int-");
@@ -308,6 +350,7 @@ static int hexStrToValue(const char *s, int len) {
 	strncpy(tmp, s, len);
 	return std::strtoul(tmp, NULL, 16);
 }
+
 void PropertyInstance::SetValue(const char *sValue)
 {
 	switch (GetPropertyType())
@@ -371,6 +414,13 @@ void PropertyInstance::SetValue(const char *sValue)
 			{
 				// error
 				property->v->int_val = 0;
+			}
+			break;
+		case kPropertyType_Bool :
+			if (!StrConfCaseCmp(sValue,"true")) {
+				property->v->boolean = 1;
+			} else {
+				property->v->boolean = 0;
 			}
 			break;
 		case kPropertyType_UserPtr :
@@ -445,6 +495,13 @@ char *PropertyInstance::GetValue(char *sValueDest, int maxlen)
 				pLogger->Error("Unable to resolve enum for current value: %d",property->v->int_val);
 			}
 			break;
+		case kPropertyType_Bool :
+			if (property->v->boolean != 0) {
+				snprintf(sValueDest, maxlen, "true");
+			} else {
+				snprintf(sValueDest, maxlen, "false");
+			}
+			break;
 		case kPropertyType_UserPtr :
 			snprintf(sValueDest, maxlen, "N/A");
 			break;
@@ -464,7 +521,7 @@ void PropertyInstance::StrSplit(std::vector<std::string> &strings, const char *s
 	while(iPos != -1)
 	{
 		size_t iStart = iPos;
-		iPos = input.find(',',iPos);
+		iPos = input.find(splitChar,iPos);
 		if (iPos != -1)
 		{
 			strings.push_back(input.substr(iStart, iPos-iStart));
