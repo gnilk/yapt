@@ -298,6 +298,7 @@ typedef enum
   kElementAction_AddAsRenderContainer,
   kElementAction_AddToTimeline,
 } kElementAction;
+
 void ExpatXMLParser::doStartElement(const char *name, const char **atts)
 {
   int i;
@@ -353,6 +354,8 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
         instanceStack.push(pInstance);
         IncludeFromURL(atts[idx+1], atts);
         instanceStack.pop();
+
+        // TODO: Needs to go in to the node tree..
       }
 
     }
@@ -495,6 +498,15 @@ void ExpatXMLParser::doHandleCharData(const XML_Char *s,int len)
     cdata.append(buf);
   }
 }
+
+void ExpatXMLParser::doHandleComment(const char *data)
+{
+  IDocNode *pNode = pDocument->AddCommentObject(instanceStack.top());
+  IBaseInstance *pInstance = pNode->GetNodeObject();
+  ICommentInstance *pComment = dynamic_cast<ICommentInstance *>(pInstance);
+
+  pComment->SetComment((char *)data);
+}
 // --> Start of XML Parser callback's
 // -- not used
 static void XMLCALL startCdataSection(void *userData)
@@ -527,6 +539,11 @@ static void XMLCALL endElement(void *userData, const char *name)
   parser->doEndElement(name);
 }
 
+static void XMLCALL commentHandler(void *userData, const char *data) {
+  ExpatXMLParser *parser = (ExpatXMLParser *)userData;
+  parser->doHandleComment(data);
+}
+
 bool ExpatXMLParser::ReadStream(noice::io::IStream *pStream)
 {
   bool bRes = true;
@@ -540,6 +557,7 @@ bool ExpatXMLParser::ReadStream(noice::io::IStream *pStream)
   XML_SetElementHandler(parser, startElement, endElement);
   XML_SetCdataSectionHandler(parser, startCdataSection, endCdataSection);
   XML_SetCharacterDataHandler(parser, characterDataHandler);
+  XML_SetCommentHandler(parser, commentHandler);
 
   instanceStack.push(NULL);
   stateStack.push(kParserState_Root);

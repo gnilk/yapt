@@ -160,6 +160,22 @@ namespace yapt
     virtual IDocument *GetDocument();
   };
 
+  class CommentInstance : 
+    public ICommentInstance,
+    public BaseInstance
+    
+  {
+  protected:
+    char *comment;
+  public:
+    CommentInstance();
+    virtual ~CommentInstance();
+
+    virtual char *GetComment();
+    virtual void SetComment(char *);
+  };
+
+
   typedef std::pair<IPluginObject *, IDocNode *> PluginNodePair;
   typedef std::map<IPluginObject *, IDocNode *> PluginNodeMap;
   //struct INodeMapper
@@ -412,7 +428,7 @@ namespace yapt
       virtual IDocNode *AddToTimeline(IBaseInstance *object);
       virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object);
       virtual IDocNode *AddMetaObject(IBaseInstance *parent);
-
+      virtual IDocNode *AddCommentObject(IBaseInstance *parent);
       virtual void DumpRenderTree();
 
       virtual int GetNumChildren(IPluginObjectInstance *pObject);

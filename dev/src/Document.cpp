@@ -372,6 +372,12 @@ IDocNode *Document::AddMetaObject(IBaseInstance *parent)
 	return pNode;
 }
 
+IDocNode *Document::AddCommentObject(IBaseInstance *parent) {
+	IBaseInstance *pComment = new CommentInstance();
+	IDocNode *pNode = AddObjectToTree(parent, pComment, kNodeType_Comment);
+	return pNode;
+}
+
 //
 // Removes a node and tracks all objects
 //

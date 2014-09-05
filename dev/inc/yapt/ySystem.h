@@ -147,6 +147,7 @@ namespace yapt
     kInstanceType_MetaNode = 9,
     kInstanceType_Timeline = 10,
     kInstanceType_TimelineExecute = 11,
+    kInstanceType_Comment = 12,
   } kInstanceType;
 
   typedef enum
@@ -163,6 +164,7 @@ namespace yapt
     kNodeType_Meta = 8,	// This is a meta node
     kNodeType_Include = 9,
     kNodeType_Timeline = 10,
+    kNodeType_Comment = 11,    
   } kNodeType;
 
   typedef enum  
@@ -373,6 +375,14 @@ namespace yapt
   public:
     virtual IDocument *GetDocument() = 0;
   };
+
+  struct ICommentInstance
+  {
+  public:
+    virtual char *GetComment() = 0;
+    virtual void SetComment(char *) = 0;
+  };
+
    
   struct IDocNode
   {
@@ -438,6 +448,7 @@ namespace yapt
     virtual IDocNode *AddToTimeline(IBaseInstance *object) = 0;
     virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object) = 0;
     virtual IDocNode *AddMetaObject(IBaseInstance *parent) = 0;
+    virtual IDocNode *AddCommentObject(IBaseInstance *parent) = 0;
 
     virtual IBaseInstance *SearchFromNode(IDocNode *pRootNode, const char *name) = 0;
     virtual IBaseInstance *GetObjectFromSimpleName(const char *name) = 0;

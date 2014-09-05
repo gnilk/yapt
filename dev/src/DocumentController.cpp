@@ -240,6 +240,7 @@ void DocumentController::Render(double sample_time)
 
 void DocumentController::RenderTimeline() {
   if (!pDocument->HasTimeline()) return;
+
   ITimeline *pTimeline = pDocument->GetTimeline();
   int n = pTimeline->GetNumExecutors();
   for(int i=0;i<n;i++) {
@@ -248,6 +249,7 @@ void DocumentController::RenderTimeline() {
       char *simpleName =pExec->GetObjectName();
       IBaseInstance *pObject=pDocument->GetObjectFromSimpleName(simpleName);
       IDocNode *pNode=pDocument->FindNode(pObject);
+      //pLogger->Debug("TimeLine, render object: %s (%p)", simpleName, pNode);
       RenderNode(pNode, true);  // Override timings of object (if any) since controlled by the timeline
     }
   }
@@ -271,42 +273,40 @@ void DocumentController::RenderResources()
 void DocumentController::RenderNode(IDocNode *node, bool bForce)
 {
   IBaseInstance *pObject = node->GetNodeObject();
-  bool bDoChildren = true;	
+  PluginObjectInstance *pInst = NULL;
+  bool bDoChildren = false;	
   
-  if (pObject != NULL)
-  {
-    switch(pObject->GetInstanceType())
-    {
-      case kInstanceType_Object :
-      {
-        PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
-        if ((pInst->ShouldRender(renderVars)) || (bForce))
-        {
-          double tStart = atof(pInst->GetAttributeValue("start"));
-          renderVars->PushLocal(tStart);
+  if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_Object)) {
 
-          // TODO: Need to update bound properties if not rendered
+    pInst = dynamic_cast<PluginObjectInstance *>(pObject);
 
-          // TODO: add check for debugging and so forth
-          //pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
-          
-          // TODO: call system hook handler
-          pInst->ExtRender(renderVars);
-          renderVars->PopLocal();
-        } else
-        {
-          bDoChildren = false;
-        }
-      }
-        break;
+    if ((pInst->ShouldRender(renderVars)) || (bForce)) {
+      //pLogger->Debug("Render: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
+
+      double tStart = pInst->GetStartTime();
+      renderVars->PushLocal(tStart);
+
+      //pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
+      
+      // TODO: call system hook handler
+      pInst->ExtRender(renderVars);
+      renderVars->PopLocal();
+      bDoChildren = true;
     }
   }
   
-  int i,nChildren;
-  nChildren = node->GetNumChildren();
-  for(i=0;i<nChildren;i++)
-  {
-    IDocNode *child = node->GetChildAt(i);
-    RenderNode(child, bForce);
+  if ((bDoChildren) && (pInst != NULL)) {
+    // TODO: push external object as "context"
+    // pInst->GetExtObject();
+
+    int i,nChildren;
+    nChildren = node->GetNumChildren();
+    for(i=0;i<nChildren;i++)
+    {
+      IDocNode *child = node->GetChildAt(i);
+      RenderNode(child, bForce);
+    }
+    // TODO: Pop external context
   }
+
 }

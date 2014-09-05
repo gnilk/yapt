@@ -76,8 +76,8 @@ PluginObjectInstance::~PluginObjectInstance()
 
 void PluginObjectInstance::CreateDefaultAttributes()
 {
-  AddAttribute("start","0.0");	
-  AddAttribute("duration","-1.0");	// infinte
+//  AddAttribute("start","0.0");	
+//  AddAttribute("duration","-1.0");	// infinte
 }
 
 void PluginObjectInstance::Dump()
@@ -272,11 +272,13 @@ bool PluginObjectInstance::IsEqualPropertyTypes(PropertyInstance *p1,  PropertyI
 bool PluginObjectInstance::BindProperties()
 {
   size_t i;
+  Logger::GetLogger("PluginObjectInstance")->Debug("Bind properties for object '%s'",GetFullyQualifiedName());
   for (i=0;i<input_properties.size();i++)
   {
     PropertyInstance *pInput = input_properties[i];
     if (pInput->IsSourced())
     {
+      Logger::GetLogger("PluginObjectInstance")->Debug("%s bound to %s - resolving",pInput->GetFullyQualifiedName(), pInput->GetSourceString());
       // bind to sibling...
       char *propertyReference = pInput->GetSourceString();
       IPropertyInstance *pSourceInst;
@@ -286,25 +288,24 @@ bool PluginObjectInstance::BindProperties()
       if (pSourceInst == NULL) {       
         Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Looking from root for %s",propertyReference);
         pSourceInst = FindPropertyInstanceFromRoot(propertyReference);
-      } else {
-        // Source found, do type check
-        PropertyInstance *pSource = dynamic_cast<PropertyInstance *>(pSourceInst);
-        if (IsEqualPropertyTypes(pInput, pSource))
-        {
-          Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Succesfully bound property for %s.%s to %s",GetInstanceName(), pInput->GetName(), pSource->GetFullyQualifiedName());
-          Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, tIn: %s, tOut: %s", pInput->GetTypeName().c_str(), pSource->GetTypeName().c_str());
-          pInput->SetSource(pSource);
-        } else
-        {			
-          // type check failed
-          Logger::GetLogger("PluginObjectInstance")->Warning("BindProperties, type mismatch (%s, %s) failed to bind property for %s.%s to %s",
-            pInput->GetTypeName().c_str(), pSource->GetTypeName().c_str(),
-            GetDefinition()->GetDescription(), pInput->GetName(), propertyReference);
-          SetYaptLastError(kErrorClass_ObjectDefinition, kError_PropertyBindFailed);
-          return false;
-        }            
       }
 
+      // Source found, do type check
+      PropertyInstance *pSource = dynamic_cast<PropertyInstance *>(pSourceInst);
+      if (IsEqualPropertyTypes(pInput, pSource))
+      {
+        Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Succesfully bound property for %s.%s to %s",GetInstanceName(), pInput->GetName(), pSource->GetFullyQualifiedName());
+        Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, tIn: %s, tOut: %s", pInput->GetTypeName().c_str(), pSource->GetTypeName().c_str());
+        pInput->SetSource(pSource);
+      } else
+      {			
+        // type check failed
+        Logger::GetLogger("PluginObjectInstance")->Warning("BindProperties, type mismatch (%s, %s) failed to bind property for %s.%s to %s",
+          pInput->GetTypeName().c_str(), pSource->GetTypeName().c_str(),
+          GetDefinition()->GetDescription(), pInput->GetName(), propertyReference);
+        SetYaptLastError(kErrorClass_ObjectDefinition, kError_PropertyBindFailed);
+        return false;
+      }            
     }
   } // for
   return true;
@@ -397,8 +398,8 @@ bool PluginObjectInstance::ShouldRender(RenderVars *pRenderVars)
 {
   bool bRes = false;
   double glbTime = pRenderVars->GetTime();
-  double start = atof(GetAttributeValue("start"));
-  double duration = atof(GetAttributeValue("duration"));
+  double start = GetStartTime();
+  double duration = GetDuration();
 
   if (duration < 0) duration = 1.0+glbTime;	// does not matter but makes the rest of logic pass
   if ((glbTime >= start) && (glbTime < (start+duration))) 
@@ -689,6 +690,12 @@ void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
 
     if (pInst->IsSourced()) {
       PropertyInstance *pSourceInst = dynamic_cast<PropertyInstance *>(pInst->GetSource());
+      // DEBUG CODE
+      if (pSourceInst == NULL) {
+        Logger::GetLogger("PluginObjectInstance")->Error("RenderPropertyDependencies, source instance NULL for %s\n",pInst->GetFullyQualifiedName());    
+
+      }
+
       PluginObjectInstance *pSourceObject = dynamic_cast<PluginObjectInstance *>(pSourceInst->GetPluginObjectInstance());
       if (pSourceObject->IsResource()) return;
       if (pSourceObject->IsPropertyRefRendering()) {

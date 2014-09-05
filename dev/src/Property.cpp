@@ -190,6 +190,10 @@ void PropertyInstance::SetSource(PropertyInstance *pSource) {
 		sourcedProperty->DecSourceRef();
 	}
 
+	Logger::GetLogger("PropertyInstance")->Debug("SetSource for '%s' to '%s'",
+		this->GetFullyQualifiedName(),
+		pSource->GetFullyQualifiedName());
+
 	// if NULL then we should break sourceing and go back to old value
 	if(pSource != NULL)	{
 		if (!isSourced)

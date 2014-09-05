@@ -97,6 +97,8 @@ bool ExportXML::WritePropertyData(IBaseInstance *pBase)
 {
 	IPropertyInstance *pInst = dynamic_cast<IPropertyInstance *>(pBase);
 
+	//TODO: Check if value is default -> skip node!
+
 	if (pInst == NULL) {
 		pLogger->Error("Not a property, identification object type mismatch");
 		return false;
@@ -187,6 +189,15 @@ void ExportXML::ExportMetaNode(IBaseInstance *pNode)
     }
 }
 
+void ExportXML::ExportCommentNode(IBaseInstance *pNode) {
+    ICommentInstance *pComment = dynamic_cast<ICommentInstance *>(pNode);
+    if (pComment->GetComment() != NULL) {
+    	char tmp[256];
+    	char *pData = pComment->GetComment();
+    	snprintf(tmp,256,"%s<!-- %s -->\n",sIndent.c_str(),pData);
+    	pStream->Write(tmp, (int)strlen(tmp));
+    }
+}
 
 bool ExportXML::WriteNode(IDocNode *pNode)
 {
@@ -213,8 +224,7 @@ bool ExportXML::WriteNode(IDocNode *pNode)
                 break;
             case kInstanceType_TimelineExecute :
                 Begin(kDocument_ExecuteTagName, pBase, true, true);
-                bSkipEndTag = true;
-                
+                bSkipEndTag = true;                
                 break;
             case kInstanceType_RenderNode:
                 Begin(kDocument_RenderTagName, pBase,true,false);
@@ -232,6 +242,10 @@ bool ExportXML::WriteNode(IDocNode *pNode)
                 Begin(kDocument_IncludeTagName, pBase, true, true);
                 bSkipEndTag = true;
                 break;
+            case kInstanceType_Comment :
+            	ExportCommentNode(pBase);
+            	bSkipEndTag = true;
+            	break;
             default:
                 pLogger->Error("Unknown instance type: %d, can't export node");
                 bSkipEndTag = true;

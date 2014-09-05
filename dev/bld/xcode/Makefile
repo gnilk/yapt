@@ -93,6 +93,7 @@ YAPT_SRC_FILES = \
 	$(YAPT_SRC_DIR)/FPSController.cpp \
 	$(YAPT_SRC_DIR)/logger.cpp \
 	$(YAPT_SRC_DIR)/Lookup.cpp \
+	$(YAPT_SRC_DIR)/CommentInstance.cpp \
 	$(YAPT_SRC_DIR)/MetaInstance.cpp \
 	$(YAPT_SRC_DIR)/ObjectDefinition.cpp \
 	$(YAPT_SRC_DIR)/ObjectInstance.cpp \

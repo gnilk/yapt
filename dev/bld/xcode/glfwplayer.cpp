@@ -164,6 +164,7 @@ void OnGlfwShouldClose(GLFWwindow* window)
 
 int main(int argc, char **argv) {
 
+	char *saveName = NULL;
 	int logLevel = Logger::kMCDebug;
 	char *docFileName = "file://gl_test.xml";
 	char *objName = NULL;
@@ -176,6 +177,9 @@ int main(int argc, char **argv) {
 					break;
 				case 'o':
 					objName = argv[++i];
+					break;
+				case 's' :
+					saveName = argv[++i];
 					break;
 				case 'h':
 				case 'H':
@@ -202,7 +206,7 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 
-	LoadDocument(docFileName);
+	LoadDocument(docFileName);	
 	StartWebService();
 
 	if (!glfwInit()) {
@@ -216,6 +220,11 @@ int main(int argc, char **argv) {
 	yapt::ISystem *system = GetYaptSystemInstance();
 	window_width = system->GetConfigInt(kConfig_ResolutionWidth,1280);  
   	window_height = system->GetConfigInt(kConfig_ResolutionHeight,720);  
+
+	if (saveName != NULL) {
+		pLogger->Info("Saving document to: %s", saveName);
+		system->SaveDocumentAs(saveName, system->GetActiveDocument());
+	}
 
 
 	pLogger->Debug("Opening Console Window");

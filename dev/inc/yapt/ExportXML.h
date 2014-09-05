@@ -29,7 +29,8 @@ namespace yapt
 		bool WritePropertyData(IBaseInstance *pBase);
 		bool ExportDocument();
 		bool WriteNode(IDocNode *pNode);
-    void ExportMetaNode(IBaseInstance *pNode);
+    	void ExportMetaNode(IBaseInstance *pNode);
+    	void ExportCommentNode(IBaseInstance *pNode);
 	public:
 		ExportXML(IDocument *pDocument);
 		virtual ~ExportXML();

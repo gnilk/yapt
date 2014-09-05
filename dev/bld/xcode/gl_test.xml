@@ -47,7 +47,7 @@
 			</object>
 			<object class="Animation.ExpSolver" name="rotspeed">
 				<!-- <property name="expression">40 * t + (sin(t))</property> -->
-				<property name="expression" source="campos" />
+				<property name="expression">40 * t + (sin(t))</property>
 
 			</object>
 
@@ -81,7 +81,7 @@
 			<object class="gl.DrawLines" name="render_cube">
 				<property name="indexCount" source="data.cube.edges.indexCount" />
 				<property name="indexData" source="data.cube.edges.indexData" />
-				<property name="vertexCount" source="data.cube.edges.vertexCount" />
+				<!-- <property name="vertexCount" source="data.cube.edges.vertexCount" /> -->
 				<property name="vertexData" source="data.cube.edges.vertexData" />
 			</object>
 

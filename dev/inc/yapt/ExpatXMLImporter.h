@@ -64,6 +64,7 @@ namespace yapt
     void SetRoot(IMetaInstance *_pRoot) { this->pRoot = _pRoot; }
 
 		// - 
+    	void doHandleComment(const char *data);
 		void doStartElement(const char *name, const char **atts);
 		void doEndElement(const char *name);
 		void doHandleCharData(const XML_Char *s,int len);
