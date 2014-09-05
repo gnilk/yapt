@@ -254,6 +254,9 @@ IPluginObjectInstance *ExpatXMLParser::CreateObjectInstance(const char *name, co
         yapt::SetYaptLastError(kErrorClass_Import, kError_NoInstance);
         pLogger->Error("Unable to create object instance for '%s' at line %d",atts[idx+1],XML_GetCurrentLineNumber(parser));
       }
+
+//      pInst_if->ExtInitialize();
+
     } else
     {
       yapt::SetYaptLastError(kErrorClass_Import, kError_ObjectNotFound);

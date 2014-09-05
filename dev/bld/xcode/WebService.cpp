@@ -199,6 +199,7 @@ protected:
 		pPlugInst->GetExtObject()->Initialize(system, pPlugInst);
 
 
+
 		str_plugins += ListObjectProperties(pPlugInst, false);
 		str_plugins += ListObjectProperties(pPlugInst, true);
     }

@@ -72,8 +72,6 @@ void DocumentController::UpdateRenderVars(double sample_time)
   renderVars->SetTime(sample_time);
 
   // Calculate FPS here
-
-
 }
 
 //
@@ -99,7 +97,6 @@ void DocumentController::InitializeNode(IDocNode *node)
     {
       case kInstanceType_Object :
       {
-        // TODO: Reroute call through instance in order to track states
         PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
         pInst->ExtInitialize();
       }
@@ -257,12 +254,14 @@ void DocumentController::RenderTimeline() {
 
 void DocumentController::RenderResources()
 {
+  pLogger->Debug("RenderResources");
   // TODO: Solve this with function in Document
   IDocNode *pNodeResourceContainer = pDocument->FindNode(dynamic_cast<IBaseInstance *>(pDocument->GetResources()));
-  if(pNodeResourceContainer != NULL)
-  {
+  if(pNodeResourceContainer != NULL) {
     RenderNode(pNodeResourceContainer,true);
-  }	
+  }	else {
+    pLogger->Warning("Resource container not found");
+  }
 }
 
 //
@@ -293,9 +292,11 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
       renderVars->PopLocal();
       bDoChildren = true;
     }
+  } else if (pObject->GetInstanceType() == kInstanceType_ResourceContainer) {
+    bDoChildren = true;
   }
   
-  if ((bDoChildren) && (pInst != NULL)) {
+  if (bDoChildren) {
     // TODO: push external object as "context"
     // pInst->GetExtObject();
 

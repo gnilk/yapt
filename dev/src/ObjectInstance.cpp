@@ -10,7 +10,16 @@ Modified: $Date: $ by $Author: Fkling $
 ---------------------------------------------------------------------------
 TODO: [ -:Not done, +:In progress, !:Completed]
 <pre>
-- Clean up constructor
+! Clean up constructor
+- Prune properties before we try to bind them
+  Properties  are created when reading the XML and mapped during object initialization
+  if they are not mapped they should be removed (otherwise strange side effects may occur)
+
+  For instance, a property coming from XML can contain a source. There will be a source binding
+  error if the XML property has not been properly matched.
+
+  Can't remove this two step process without changing the plugin interface!
+
 </pre>
 
 
@@ -695,10 +704,11 @@ void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
         Logger::GetLogger("PluginObjectInstance")->Error("RenderPropertyDependencies, source instance NULL for %s\n",pInst->GetFullyQualifiedName());    
 
       }
+//       Logger::GetLogger("PluginObjectInstance")->Error("RenderPropertyDependencies, for %s\n",pInst->GetFullyQualifiedName());    
 
       PluginObjectInstance *pSourceObject = dynamic_cast<PluginObjectInstance *>(pSourceInst->GetPluginObjectInstance());
       if (pSourceObject->IsResource()) return;
-      if (pSourceObject->IsPropertyRefRendering()) {
+      if (pSourceObject->IsPropertyRefRendering()) {        
         pSourceObject->ExtRender(pRenderVars); 
       }
     }

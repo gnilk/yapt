@@ -201,14 +201,6 @@ void YaptCurveFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	this->result->v->vector[0] = 1.0f;
 	this->result->v->vector[1] = 2.0f;
 	this->result->v->vector[2] = 4711.0f;
-
-	//this->channels = ySys->CreateProperty(dynamic_cast<IPluginObject *>(this), "channels", kPropertyType_Integer, "1");
-	//// make sure the curvetype matches the kCurveClass_ in Curve.h
-	//this->curveType = ySys->CreateProperty(dynamic_cast<IPluginObject *>(this),"type",kPropertyType_Enum, "enum={unknown,hold,linear,linearsmooth,cubic,hermite,kbspline,kbquatspline}");
-	//this->curveType->v->int_val = (int)kCurveClass_Hermite; // this is the default
-	//this->testVector = ySys->CreateProperty(dynamic_cast<IPluginObject *>(this),"vector",kPropertyType_Vector, "1");
-	//// TODO: Fix this, need to create this one during post-initialize since it depends on the number of channels.. 
-	//this->result = ySys->CreateOutputProperty(dynamic_cast<IPluginObject *>(this), "result",kPropertyType_Vector, "");
 }
 
 void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance)
