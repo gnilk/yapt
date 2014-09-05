@@ -297,17 +297,17 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
   }
   
   if (bDoChildren) {
-    // TODO: push external object as "context"
-    // pInst->GetExtObject();
-
     int i,nChildren;
+    
+    pObject->GetContext()->PushRenderObject(pObject);
     nChildren = node->GetNumChildren();
     for(i=0;i<nChildren;i++)
     {
       IDocNode *child = node->GetChildAt(i);
       RenderNode(child, bForce);
     }
-    // TODO: Pop external context
+
+    pObject->GetContext()->PopRenderObject();
   }
 
 }

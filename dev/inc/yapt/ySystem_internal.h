@@ -591,6 +591,7 @@ namespace yapt
     std::string namePrefix;
     //void *contextParamObject;
     std::stack<CtxNameObjectPair> contexParamObjectStack;
+    std::stack<IBaseInstance *> renderObjectStack;
   public:
     Context();
     virtual ~Context();
@@ -603,6 +604,12 @@ namespace yapt
     virtual IDocumentController *GetDocumentController();
     virtual void SetObject(const char *name, void *pObject);
     virtual void *GetObject(const char *name);
+
+
+    virtual void PushRenderObject(IBaseInstance *);
+    virtual void PopRenderObject();
+    virtual IBaseInstance *TopRenderObject();
+
     virtual void PushContextParamObject(void *pObject, const char *name);
     virtual void PopContextParamObject();
     virtual void *TopContextParamObject();

@@ -295,6 +295,10 @@ namespace yapt
     virtual void SetObject(const char *name, void *pObject) = 0;
     virtual void *GetObject(const char *name) = 0;
 
+    virtual void PushRenderObject(IBaseInstance *) = 0;
+    virtual void PopRenderObject() = 0;
+    virtual IBaseInstance *TopRenderObject() = 0;
+
     virtual void PushContextParamObject(void *pObject, const char *name) = 0;
     virtual void PopContextParamObject() = 0;
     virtual void *TopContextParamObject() = 0;

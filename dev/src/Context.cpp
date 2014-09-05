@@ -97,6 +97,18 @@ void *Context::GetObject(const char *name)
 	return pObject;
 }
 
+void Context::PushRenderObject(IBaseInstance *obj) {
+	renderObjectStack.push(obj);
+}
+
+void Context::PopRenderObject() {
+	renderObjectStack.pop();
+}
+
+IBaseInstance *Context::TopRenderObject() {
+	return renderObjectStack.top();
+}
+
 void Context::PushContextParamObject(void *pObject, const char *name)
 {
 	CtxNameObjectPair ctxObject(std::string(name), pObject);

@@ -164,6 +164,7 @@ void OpenGLDrawLines::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 }
 
 void OpenGLDrawLines::Render(double t, IPluginObjectInstance *pInstance) {
+
 	float *vtx = (float *)vertexData->v->userdata;
 	int *idx = (int *)indexData->v->userdata;
 
