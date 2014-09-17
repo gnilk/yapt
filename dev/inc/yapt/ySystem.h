@@ -497,6 +497,14 @@ namespace yapt
     //virtual void PropertyCreated(IBaseInstance *pInstance) = 0;
     //virtual void ObjectDefinitionRegistered(IBaseInstance *pDefinition) = 0;
   };
+
+  struct IFileWatcher
+  {
+  public:
+    virtual void OnFileChanged(const char *filename) = 0;
+    //virtual void OnFileRemoved(const char *filename) = 0;
+  };
+
   // provides system hook interface - must implement all
   struct ISystemDocumentHooks
   {
@@ -543,6 +551,9 @@ namespace yapt
 
     // --> back to global
     // Stream management interface
+    virtual void WatchFile(const char *filename, IFileWatcher *callback) = 0;
+    virtual void RemoveFileWatcher(const char *filename) = 0;
+    virtual void *LoadData(const char *filename, unsigned int flags, long *outszdata) = 0;
     virtual noice::io::IStream *CreateStream(const char *uri, unsigned int flags) = 0;
     virtual noice::io::IStreamDevice *GetIODevice(const char *url_identifier) = 0;
     virtual void SetIODevice(noice::io::IStreamDevice *pDevice, const char *url_identifier) = 0;

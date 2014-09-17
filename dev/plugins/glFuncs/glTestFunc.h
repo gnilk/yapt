@@ -33,22 +33,9 @@ public:
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
 };
 
-class OpenGLDrawPoints: public PluginObjectImpl {
+class OpenGLRenderToTexture : public PluginObjectImpl {
 private:
-	Property *numVertex;
-	Property *vertexData;
-public:
-	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
-	virtual void Render(double t, IPluginObjectInstance *pInstance);
-	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
-	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
-};
 
-class OpenGLDrawLines : public PluginObjectImpl {
-private:
-	Property *indexCount;
-	Property *indexData;
-	Property *vertexData;
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
@@ -56,4 +43,16 @@ public:
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
 
 };
+// class OpenGLDrawLines : public PluginObjectImpl {
+// private:
+// 	Property *indexCount;
+// 	Property *indexData;
+// 	Property *vertexData;
+// public:
+// 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+// 	virtual void Render(double t, IPluginObjectInstance *pInstance);
+// 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+// 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+
+// };
 

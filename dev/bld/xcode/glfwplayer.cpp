@@ -45,12 +45,6 @@ static void LoadDocument(char *filename) {
 		//fprintf(stderr, "Unable to load: %s\n", filename);
 		//exit(1);
 	}
-	if (system->GetActiveDocument()) {
-		pLogger->Debug("Initialize");
-		if (!system->GetActiveDocumentController()->Initialize()) {
-			perror();
-		}
-	}
 }
 static void testBindParser() {
 
@@ -201,25 +195,27 @@ int main(int argc, char **argv) {
 
 	Initialize(logLevel);
 	ILogger *pLogger = Logger::GetLogger("main");
-	if (objName != NULL) {
-		printObjectProperties(objName);
-		exit(1);
-	}
-
-	LoadDocument(docFileName);	
-	StartWebService();
+	pLogger->Debug("Initialize glfw");
 
 	if (!glfwInit()) {
 		fprintf(stderr, "Failed to initialize GLFW\n");
 		exit(EXIT_FAILURE);
 	}
 
-
-
 	// Get window height, can be overridden by the system
+	pLogger->Debug("Load document");
+
+	LoadDocument(docFileName);	
+	StartWebService();
+	if (objName != NULL) {
+		printObjectProperties(objName);
+		exit(1);
+	}
+	
+
 	yapt::ISystem *system = GetYaptSystemInstance();
-	window_width = system->GetConfigInt(kConfig_ResolutionWidth,1280);  
-  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,720);  
+	window_width = system->GetConfigInt(kConfig_ResolutionWidth,640);  
+  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,360);  
 
 	if (saveName != NULL) {
 		pLogger->Info("Saving document to: %s", saveName);
@@ -249,6 +245,20 @@ int main(int argc, char **argv) {
 	console.WriteLine("YAPT2 v0.1 - (c) Fredrik Kling 2009");
 	console.WriteLine("Document: "+ std::string(docFileName));
 	console.WriteLine("Running render loop");
+
+	// Need to initialize late if GL plugins are using GLEW - initialized by player window
+	if (system->GetActiveDocument()) {
+		pLogger->Debug("Initialize");
+		if (!system->GetActiveDocumentController()->Initialize()) {
+			perror();
+		}
+	}
+
+	if (system->GetActiveDocument()) {
+		system->GetActiveDocumentController()->RenderResources();
+	}
+
+
 
 	while (!player.ShouldClose())
 	{

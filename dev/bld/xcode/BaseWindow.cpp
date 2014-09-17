@@ -48,7 +48,7 @@ void BaseWindow::OnChar(unsigned int code) {
 }
 
 void BaseWindow::OnKey(int key, int scancode, int action, int mods) {
-	printf("OnKey: key:%d, scancode: %d, action: %d, mods: %d\n", key, scancode, action, mods);
+	//printf("OnKey: key:%d, scancode: %d, action: %d, mods: %d\n", key, scancode, action, mods);
 	switch(action) {
 		case GLFW_PRESS   : OnKeyDown(key, scancode, mods); break;
 		case GLFW_RELEASE : OnKeyUp(key, scancode, mods); break;
@@ -87,12 +87,12 @@ void BaseWindow::CommitInputString(bool isChange) {
 }
 
 void BaseWindow::OnStringInputChanged(std::string input) {
-	printf("CHANGE STRING: %s\n",input.c_str());
+//	printf("CHANGE STRING: %s\n",input.c_str());
 }
 
 void BaseWindow::OnStringInputCommit(std::string input)
 {
-	printf("COMMIT STRING: %s\n",input.c_str());
+//	printf("COMMIT STRING: %s\n",input.c_str());
 }
 
 

@@ -16,6 +16,7 @@
   
 // Plugin objects
 #include "PluginObjectImpl.h"
+#include "RayTracer.h"
 
 using namespace yapt;
 
@@ -61,6 +62,12 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "enigma.Starfield")) {
      pObject = dynamic_cast<IPluginObject *>(new Starfield());
   }
+  if (!strcmp(identifier, "enigma.RayTracer")) {
+     pObject = dynamic_cast<IPluginObject *>(new RayTracer());
+  }
+  if (!strcmp(identifier, "enigma.RayTracer.Sphere")) {
+     pObject = dynamic_cast<IPluginObject *>(new Sphere());
+  }
   if (pObject != NULL) {
     pLogger->Debug("Ok");
   } else
@@ -75,6 +82,8 @@ static void perror() {
 int CALLCONV yaptInitializePlugin(ISystem *ySys) {
 
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=enigma.Starfield");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=enigma.RayTracer");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=enigma.RayTracer.Sphere");
   
   return 0;
 }

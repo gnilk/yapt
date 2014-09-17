@@ -126,6 +126,25 @@ public:
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 };
 
+class YaptVecExpSolverFacade :
+	public YaptExpSolverFacade
+{
+protected:
+    Property *expression_x;
+    Property *expression_y;
+    Property *expression_z;
+    Property *result;   // output
+
+    ExpSolver *pExpSolver_x; 
+    ExpSolver *pExpSolver_y; 
+    ExpSolver *pExpSolver_z; 
+    // interface
+public:
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+};
+
 
 static CurveFactory factory;
 
@@ -149,6 +168,10 @@ IPluginObject *CurveFactory::CreateObject(ISystem *pSys, const char *identifier)
 	if (!strcmp(identifier,"Animation.ExpSolver"))
 	{
 		pObject = dynamic_cast<IPluginObject *> (new YaptExpSolverFacade());
+	}
+	if (!strcmp(identifier,"Animation.VectorExpression"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new YaptVecExpSolverFacade());
 	}
 	if (!strcmp(identifier,"Numeric.VectorMux"))
 	{
@@ -385,6 +408,40 @@ void YaptExpSolverFacade::Render(double t, IPluginObjectInstance *pInstance) {
     result->v->float_val = pExpSolver->Evaluate();
 }
 
+// vector expression
+
+void YaptVecExpSolverFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+    expression_x = pInstance->CreateProperty("x",kPropertyType_String,"0.0","");
+    expression_y = pInstance->CreateProperty("y",kPropertyType_String,"0.0","");
+    expression_z = pInstance->CreateProperty("z",kPropertyType_String,"0.0","");
+    result = pInstance->CreateOutputProperty("result",kPropertyType_Vector, "", "");
+}
+
+void YaptVecExpSolverFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+    pExpSolver_x = new ExpSolver(expression_x->v->string);
+    pExpSolver_x->RegisterUserVariableCallback(cbExpVariable,this);
+    pExpSolver_x->RegisterUserFunctionCallback(cbExpFunc,this);
+    pExpSolver_x->Prepare();    
+
+    pExpSolver_y = new ExpSolver(expression_y->v->string);
+    pExpSolver_y->RegisterUserVariableCallback(cbExpVariable,this);
+    pExpSolver_y->RegisterUserFunctionCallback(cbExpFunc,this);
+    pExpSolver_y->Prepare();    
+
+    pExpSolver_z = new ExpSolver(expression_z->v->string);
+    pExpSolver_z->RegisterUserVariableCallback(cbExpVariable,this);
+    pExpSolver_z->RegisterUserFunctionCallback(cbExpFunc,this);
+    pExpSolver_z->Prepare();    
+
+}
+
+void YaptVecExpSolverFacade::Render(double t, IPluginObjectInstance *pInstance) {
+    timeCurrent = t;
+    result->v->vector[0] = pExpSolver_x->Evaluate();
+    result->v->vector[1] = pExpSolver_y->Evaluate();
+    result->v->vector[2] = pExpSolver_z->Evaluate();
+}
+
 
 VectorMux::VectorMux() {
 
@@ -422,6 +479,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys)
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Key");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorKey");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.ExpSolver");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorExpression");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Numeric.VectorMux");
 	return 0;
 }

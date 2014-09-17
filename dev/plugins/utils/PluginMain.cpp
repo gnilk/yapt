@@ -11,6 +11,7 @@
 
 #include "LoadFile.h"
 #include "WriteLine.h"
+#include "Container.h"
 
 using namespace yapt;
 
@@ -48,6 +49,11 @@ IPluginObject *UtilsFactory::CreateObject(ISystem *pSys, const char *identifier)
 	ILogger *pLogger = pSys->GetLogger("Utils.Factory");//Logger::GetLogger("StdCurve.Factory");
 	IPluginObject *pObject = NULL;
 	pLogger->Debug("Trying '%s'", identifier);
+	if (!strcmp(identifier,"utils.Container"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new Container());
+	}
+
 	if (!strcmp(identifier,"utils.LoadFile"))
 	{
 		pObject = dynamic_cast<IPluginObject *> (new LoadFile());
@@ -66,6 +72,7 @@ IPluginObject *UtilsFactory::CreateObject(ISystem *pSys, const char *identifier)
 int CALLCONV yaptInitializePlugin(ISystem *ySys)
 {
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.LoadFile");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.Container");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.WriteLine");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.TestProperties");
 	return 0;

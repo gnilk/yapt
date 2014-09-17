@@ -28,6 +28,7 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 
 #include "yapt/logger.h"
 #include "yapt/ySystem.h"
+#include "yapt/FileWatcher.h"
 
 #include "noice/io/io.h"
 using namespace noice::io;
@@ -821,12 +822,15 @@ namespace yapt
 
     std::vector<PluginContainer *> plugins;
 
+    FileWatcher fileWatcher;    
+
     PluginContainer *pLastLoadedContainer;
     IContext *pContext;	// Current context - created indirectly when creating a document
     
   protected:
     //PluginObjectInstance *GetCurrentObject();
     //void SetCurrentObject(PluginObjectInstance *pObject);				
+
   public:
     System();
     virtual ~System();
@@ -852,7 +856,13 @@ namespace yapt
     virtual IBaseInstance *GetControllerObject(IPluginObject *pObject);
     virtual IBaseInstance *GetControllerObject(const char *name);
 
+    // File watching functions
+    virtual void WatchFile(const char *filename, IFileWatcher *callback);
+    virtual void RemoveFileWatcher(const char *filename);
+
+
     // Stream interface
+    virtual void *LoadData(const char *filename, unsigned int flags, long *outszdata);
     virtual noice::io::IStream *CreateStream(const char *uri, unsigned int flags);
     virtual noice::io::IStreamDevice *GetIODevice(const char *url_identifier);
     virtual void SetIODevice(noice::io::IStreamDevice *pDevice, const char *url_identifier);

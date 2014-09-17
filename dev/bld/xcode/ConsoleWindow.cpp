@@ -6,6 +6,7 @@
 #include <GL/GLEW.h>
 #include <GLFW/glfw3.h>
 
+#include <math.h>
 #include <string>
 #include <vector>
 
@@ -18,6 +19,11 @@
 #include <vector>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+#ifndef M_PI
+#define M_PI 3.1415926535897932384
+#endif
+
 
 static const char *text_f_glsl=""		\
 "varying vec2 texpos;\n"					\
@@ -57,7 +63,7 @@ static int StrExplode(std::vector<std::string> *strList, char *mString, int chrS
 using namespace yapt;
 
 ConsoleWindow::ConsoleWindow() {
-	fontSize = 24;
+	fontSize = 12;
 	watchScreenHeight = 250;
 }
 ConsoleWindow::~ConsoleWindow() {
@@ -78,6 +84,15 @@ bool ConsoleWindow::InitializeFreeType()
 		pLogger->Error("No support for OpenGL 2.0 found\n");
 		return false;
 	}
+
+	if (glewIsSupported("GL_VERSION_3_3")) {
+		pLogger->Debug("Ok, Open GL version 3.3 supported");		
+	}
+	else {
+		pLogger->Error("OpenGL 3.3 not supported");
+		//exit(1);
+	}
+
 
 	if(FT_Init_FreeType(&ft)) {
   		printf("Could not init freetype library\n");
@@ -102,22 +117,65 @@ bool ConsoleWindow::InitializeFreeType()
     if(attribute_coord == -1 || uniform_tex == -1 || uniform_color == -1)
         return false;
 
-// Create the vertex buffer object
+	// Create the vertex buffer object
     glGenBuffers(1, &vbo);
+
+	pLogger->Debug("Creating CreateBackBufferTexture");    
+ 	CreateBackBufferTexture();
 
     ProcessStringCommand("watch camera.pos");
 
+	pLogger->Debug("Ok, console window initialized ok");    
+
+	Invalidate();
+
 	return true;
+}
+
+bool ConsoleWindow::CreateBackBufferTexture() {
+	GLenum status;
+
+	glGenFramebuffers(1, &idFrameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, idFrameBuffer);
+
+	glGenTextures(1, &fbTexture);
+	glBindTexture(GL_TEXTURE_2D, fbTexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, frameBufferWidth, frameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fbTexture, 0);
+
+	status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+	if (status != GL_FRAMEBUFFER_COMPLETE) {
+		pLogger->Debug("OpenGL FAILED!");
+		exit(1);
+	}
+	pLogger->Debug("Ok, render target configured");
 }
 
 void ConsoleWindow::Prepare()
 {
 	glDisable(GL_DEPTH_TEST);
+	glViewport(0,0,width,height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, width, 0, height, -5, 1);       
+//    glOrtho(0, width, 0, height, -5, 1);       
+    gluOrtho2D(0, width, 0, height);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+}
+
+void ConsoleWindow::PrepareBackBufferView() {
+	glDisable(GL_DEPTH_TEST);
+	glViewport(0,0,frameBufferWidth,frameBufferHeight);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    //glOrtho(0, width, 0, height, -5, 1);       
+   	gluOrtho2D(0, width, 0, height);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();	
 }
 
 
@@ -130,18 +188,71 @@ void ConsoleWindow::SetDirty(bool bIsDirty) {
 
 void ConsoleWindow::Render()
 {
-	Prepare();
+	// Restore frambuffer
+	bool renderToPrimary = false;
 
+	if (NeedRedraw()) {
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		RenderToTexture(renderToPrimary);
+		glPopAttrib();
+		this->needRedraw = false;		
+	}
+	if (!renderToPrimary) {
+		RenderLastTextureToScreen();
+	}
+}
+static void renderBoundingSphere(float *mid, double radius)
+{
+	glColor3f(1,0.5,0.5);
+	glBegin(GL_LINE_LOOP);
+		for(int i=0;i<16;i++)
+		{
+			double x = radius * sin((double)i * M_PI/8.0);
+			double z = radius * cos((double)i * M_PI/8.0);
+			glVertex3f(mid[0]+x, mid[1], mid[2]+z);
+		}
+	glEnd();
+
+	glColor3f(0.5,1,0.5);
+	glBegin(GL_LINE_LOOP);
+		for(int i=0;i<16;i++)
+		{
+			double y = radius * sin((double)i * M_PI/8.0);
+			double z = radius * cos((double)i * M_PI/8.0);
+			glVertex3f(mid[0], mid[1]+y, mid[2]+z);
+		}
+	glEnd();
+
+	glColor3f(0.5,0.5,1);
+	glBegin(GL_LINE_LOOP);
+		for(int i=0;i<16;i++)
+		{
+			double x = radius * sin((double)i * M_PI/8.0);
+			double y = radius * cos((double)i * M_PI/8.0);
+			glVertex3f(mid[0]+x, mid[1]+y, mid[2]);
+		}
+	glEnd();
+}	
+
+
+void ConsoleWindow::RenderToTexture(bool renderToPrimary) {
 	float sx = 2.0 / width;
 	float sy = 2.0 / height;
 
-
-	glUseProgram(program);
+	if (!renderToPrimary) {
+		glBindFramebuffer(GL_FRAMEBUFFER, idFrameBuffer);
+		PrepareBackBufferView();
+	} else {
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		Prepare();
+	}
 
 	/* White background */
 	glClearColor(1, 1, 1, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+	glUseProgram(program);
 	/* Enable blending, necessary for our alpha texture */
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -170,7 +281,46 @@ void ConsoleWindow::Render()
 
 	RenderDividers();
 
+	glDisable(GL_BLEND);
+	// restore frame buffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+void ConsoleWindow::RenderLastTextureToScreen() {
+	// - render full screen quad
+	Prepare();
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glViewport(0,0,width,height); // Ensure,if someone did change it
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, width, 0, height);
+	glScalef(1, 1, 1);
+	//glTranslatef(0, -height, 0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//glDisable(GL_CULL_FACE);
+
+    glBindTexture(GL_TEXTURE_2D,fbTexture);
+    glEnable(GL_TEXTURE_2D);
+    //glColor3f(0,1,0);
+    glBegin(GL_QUADS);
+      glTexCoord2f(0.0f,0.0f);
+      glVertex2f(0.0f, 0.0f);
+      glTexCoord2f(1.0f,0.0f);
+      glVertex2f(width, 0.0f);
+      glTexCoord2f(1.0f,1.0f);
+      glVertex2f(width, height);
+      glTexCoord2f(0.0f,1.0f);
+      glVertex2f(0.0f, height);
+     glEnd();  //glBegin(GL_QUADS);
+    glDisable(GL_TEXTURE_2D);
+    //glEnable(GL_CULL_FACE);
+
+}
+
 void ConsoleWindow::RenderWatchers(float sx, float sy) {
 
 	int yPos = 1;
@@ -260,6 +410,7 @@ void ConsoleWindow::ProcessStringCommand(std::string input)
 void ConsoleWindow::OnStringInputChanged(std::string input)
 {
 	consoleInputString = input;
+	Invalidate();
 }
 void ConsoleWindow::OnStringInputCommit(std::string input)
 {
@@ -273,6 +424,7 @@ void ConsoleWindow::AddWatch(IConsoleWatch *pWatch) {
 	// TODO: Check watch list for duplicates
 	watchList.push_back(pWatch);
 	WriteLine("Ok, added watch: "+pWatch->GetName());
+	Invalidate();
 }
 void ConsoleWindow::WriteLine(const char *string) {
 	WriteLine(std::string(string));
@@ -280,6 +432,7 @@ void ConsoleWindow::WriteLine(const char *string) {
 
 void ConsoleWindow::WriteLine(std::string string) {
 	inputHistoryBuffer.push_back(string);
+	Invalidate();
 }
 
 // TODO: Refactor this to own TextRendering class

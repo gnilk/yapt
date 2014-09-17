@@ -1,0 +1,49 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="gl.RenderContext" name="mycontext">
+			<property name="fov">35.0</property>
+
+			<object class="Animation.ExpSolver" name="sphere_pos_x">
+				<!-- <property name="expression">40 * t + (sin(t))</property> -->
+				<property name="expression">4 * sin(t)</property>
+			</object>
+			<object class="Animation.ExpSolver" name="sphere_pos_z">
+				<property name="expression">8 + 4 * cos(t)</property>
+			</object>
+			<object class="Numeric.VectorMux" name="sphere_pos">
+				<property name="x" source="sphere_pos_x"/>
+				<property name="y">0</property>
+				<property name="z" source="sphere_pos_z"/>
+			</object>
+			<object class="Numeric.VectorMux" name="sphere_pos2">
+				<property name="x">0</property>
+				<property name="y"  source="sphere_pos_x"/>
+				<property name="z">4</property>
+			</object>
+
+
+			<object class="enigma.RayTracer">
+				<object class="enigma.RayTracer.Sphere">
+					<property name="radius">1</property>
+					<property name="position" source="sphere_pos" />
+				</object>
+				<object class="enigma.RayTracer.Sphere">
+					<property name="position" source="sphere_pos2" />
+				</object>
+			</object>
+		
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="mycontext" />
+	</timeline>
+</yapt2>				

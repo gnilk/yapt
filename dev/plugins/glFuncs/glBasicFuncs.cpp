@@ -47,6 +47,9 @@ void OpenGLTransform::Render(double t, IPluginObjectInstance *pInstance) {
 	glMatrixMode(GL_MODELVIEW);
 	glTranslatef(position->v->vector[0],position->v->vector[1],position->v->vector[2]);
 	//glRotate3f();
+	glRotatef(rotation->v->vector[0],1,0,0);
+	glRotatef(rotation->v->vector[1],0,1,0);
+	glRotatef(rotation->v->vector[2],0,0,1);
 }
 void OpenGLTransform::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 

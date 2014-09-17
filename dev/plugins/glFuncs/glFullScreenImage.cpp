@@ -15,8 +15,6 @@ using namespace yapt;
 // -- Render context
 //
 void OpenGLFullScreenImage::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
-  width = ySys->GetConfigInt(kConfig_ResolutionWidth,1280);  
-  height = ySys->GetConfigInt(kConfig_ResolutionWidth,720);  
   texture = pInstance->CreateProperty("texture", kPropertyType_Integer, "0", "");
 
 }
@@ -27,8 +25,8 @@ void OpenGLFullScreenImage::BeginOrtho() {
   glPushMatrix();
   glLoadIdentity();
   gluOrtho2D(0, width, 0, height);
-  glScalef(1, -1, 1);
-  glTranslatef(0, -height, 0);
+  // glScalef(1, -1, 1);
+  // glTranslatef(0, -height, 0);
   glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
   glLoadIdentity();
@@ -42,10 +40,18 @@ void OpenGLFullScreenImage::EndOrtho(){
 }
 
 void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
+  IContext *pContext = dynamic_cast<IBaseInstance *>(pInstance)->GetContext();
+  IRenderContextParams *contextParams = (IRenderContextParams *)pContext->TopContextParamObject();
+  width = contextParams->GetFrameBufferWidth();
+  height = contextParams->GetFrameBufferHeight();
+
+
   BeginOrtho();
   if (texture->v->int_val != 0) {
     glBindTexture(GL_TEXTURE_2D,texture->v->int_val);
     glEnable(GL_TEXTURE_2D);
+//        glColor3f(0,0,1);
+
     glBegin(GL_QUADS);
       glTexCoord2f(0.0f,0.0f);
       glVertex2f(0.0f, 0.0f);
@@ -55,18 +61,18 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
       glVertex2f(width, height);
       glTexCoord2f(0.0f,1.0f);
       glVertex2f(0.0f, height);
-      glEnd();  //glBegin(GL_QUADS);
-    EndOrtho();
+    glEnd();  //glBegin(GL_QUADS);
     glDisable(GL_TEXTURE_2D);
   } else {
+    glColor3f(0,1,0);
     glBegin(GL_QUADS);
       glVertex2f(0, 0);
       glVertex2f(width, 0);
       glVertex2f(width, height);
       glVertex2f(0, height);
-      glEnd();  //glBegin(GL_QUADS);
-    EndOrtho();
+   glEnd();  //glBegin(GL_QUADS);
   }
+  EndOrtho();
 }
 
 void OpenGLFullScreenImage::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {

@@ -281,6 +281,18 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 	IDocNode *parentNode = NULL;
 	IDocNode *pNode = NULL;
 
+	// pLogger->Debug("AddObjectToTree, nodeType=%d",nodeType);
+	// if (nodeType == kNodeType_PropertyInstance) {
+	// 	char tmp[256];
+	// 	IPropertyInstance *pInst = dynamic_cast<IPropertyInstance *>(object);
+	// 	pLogger->Debug("AddObjectToTree, Property Type=%d",pInst->GetPropertyType());
+	// 	pInst->GetPropertyTypeName(tmp,256);
+	// 	pLogger->Debug("AddObjectToTree, Property TypeName=%s",tmp);
+	// 	pInst->GetValue(tmp,256);
+	// 	pLogger->Debug("AddObjectToTree, Property Value=%s",tmp);
+	// }
+
+
 	// Ensure we have an attribute "name"
 	if (!object->GetAttribute("name"))
 	{
@@ -291,6 +303,7 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 	parentNode = FindNode(parent);
 	if (parentNode != NULL)
 	{
+		//pLogger->Debug("Parent node ok, addNode");
 		pNode = AddNode(parentNode, object, nodeType);
 
 		BaseInstance *pBase = dynamic_cast<BaseInstance *>(object);
@@ -331,6 +344,7 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 			  // }
 	    } // node type
 
+//		pLogger->Debug("Setting Qualified name");
 		pBase->SetFullyQualifiedName(qName.c_str());
 
 		pLogger->Debug("AddObjectToTree, %s",qName.c_str());

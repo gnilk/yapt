@@ -1,0 +1,24 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="gl.RenderContext" name="mycontext">
+			<property name="fov">35.0</property>
+
+
+			<object class="gl.RenderToTexture">
+			</object>
+	
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="10000" object="mycontext" />
+	</timeline>
+</yapt2>				

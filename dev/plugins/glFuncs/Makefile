@@ -24,7 +24,7 @@ CFLAGS += -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NO
 # Linker settings
 LD = clang++
 LDFLAGS =  -dynamiclib -arch x86_64 -stdlib=libc++
-LDFLAGS += -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+LDFLAGS += -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo -L/opt/local/lib -lGLEW
 
 PLUGIN_NAME_LIB = lib$(PLUGIN_NAME).dylib
 PLUGIN_SRC_FILES = $(wildcard *.cpp)

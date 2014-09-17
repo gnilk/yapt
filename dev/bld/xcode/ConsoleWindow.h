@@ -91,6 +91,10 @@ private:
 	bool IsDirty();
 	void SetDirty(bool bIsDirty);
 	void Prepare();
+	void PrepareBackBufferView();
+	bool CreateBackBufferTexture();
+	void RenderToTexture(bool renderToPrimary);
+	void RenderLastTextureToScreen();
 	void RenderText(const char *text, float x, float y, float sx, float sy);
 	// TODO: Move to shader help
 	GLuint CreateProgram(const char *vertexsource, const char *fragmentsource);
@@ -98,6 +102,8 @@ private:
 	GLint GetAttrib(GLuint program, const char *name);
 	GLint GetUniform(GLuint program, const char *name);
 	void PrintLog(GLuint object);
+	void Invalidate() { needRedraw = true; }
+	bool NeedRedraw() { return needRedraw; }
 
 	std::vector<std::string> inputHistoryBuffer;
 	std::vector<IConsoleWatch *>watchList;
@@ -117,6 +123,15 @@ private:
 	std::string consoleInputString;
 
 	bool dirty;
+	bool needRedraw;
 	yapt::ILogger *pLogger;
+
+	// backbuffer texture
+	const int frameBufferWidth = 1024;
+	const int frameBufferHeight = 1024;
+	GLuint idFrameBuffer;
+	GLuint fbTexture;
+
+
 
 };

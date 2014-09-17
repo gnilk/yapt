@@ -274,13 +274,14 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
   IBaseInstance *pObject = node->GetNodeObject();
   PluginObjectInstance *pInst = NULL;
   bool bDoChildren = false;	
+  bool bPostRender = false;
   
   if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_Object)) {
 
     pInst = dynamic_cast<PluginObjectInstance *>(pObject);
 
     if ((pInst->ShouldRender(renderVars)) || (bForce)) {
-      //pLogger->Debug("Render: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
+      // pLogger->Debug("Render: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
 
       double tStart = pInst->GetStartTime();
       renderVars->PushLocal(tStart);
@@ -291,6 +292,7 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
       pInst->ExtRender(renderVars);
       renderVars->PopLocal();
       bDoChildren = true;
+      bPostRender = true;
     }
   } else if (pObject->GetInstanceType() == kInstanceType_ResourceContainer) {
     bDoChildren = true;
@@ -298,7 +300,7 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
   
   if (bDoChildren) {
     int i,nChildren;
-    
+
     pObject->GetContext()->PushRenderObject(pObject);
     nChildren = node->GetNumChildren();
     for(i=0;i<nChildren;i++)
@@ -306,8 +308,13 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
       IDocNode *child = node->GetChildAt(i);
       RenderNode(child, bForce);
     }
-
     pObject->GetContext()->PopRenderObject();
   }
+  
+  // post render the instance after all children
+  if (bPostRender) {
+    pInst->ExtPostRender();
+  }
+
 
 }

@@ -1,0 +1,219 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+
+ 		<object class="gl.LoadTexture2D" name="texture1">
+	       <property name="fileName">texture.tga</property>
+	   	</object>
+
+	  <object class="geom.Triangle" name="tri" />
+	  <object class="geom.PointCloud" name="data.starfield">
+	  	<property name="numVertex">2048</property>
+	  	<property name="range">1.0, 0.5, 1.0</property>
+	  </object>
+	  <object class="geom.Cube" name="data.cube">
+	  	<property name="range">0.5, 0.5, 0.5</property>
+	  </object>
+	  <object class="geom.EdgeList" name="data.cube.edges">
+	  	<property name="optimizeAdjecent">true</property>
+	  	<property name="vertexData" source="data.cube.vertexData" />
+	  	<property name="vertexCount" source="data.cube.vertexCount" />
+	  	<property name="triangleCount" source="data.cube.triangleCount" />
+	  	<property name="indexData" source="data.cube.indexData" />
+	  </object>
+
+	  <object class="gnilk.engine.mesh.loader.objloader" name="mesh1">
+	  	<property name="filename">mesh.obj</property>
+	  	<property name="loadmaterial">true</property>
+	  </object>
+
+	  <object class="gnilk.engine.mesh.generator.cube" name="cube">
+	  	<object class="gnilk.engine.mesh.modifier.edgelist" />
+	  	<object class="gnilk.engine.mesh.modifier.uvmap" />
+	  	<object class="gnilk.engine.mesh.modifier.groupfaces" />
+	  </object>
+
+	  <object class="gnilk.engine.render">
+	  	<object class="gnilk.engine.mesh.render">
+	  		<property name="mesh" source="cube" />
+	  		<property name="material" source="mesh_mtrl" />
+	  	</object>
+	  </object>
+
+
+
+
+
+	  <object class="material.simple" name="mesh_mtrl">
+	  	<property name="shading">flat</property>
+	  	<property name="diffuse">1,1,1,0</property>
+	  	<property name="specular">1,1,1,0</property>
+	  	<property name="ambient">1,1,1,0</property>
+	  	<property name="emission">1,1,1,0</property>
+	  </object>
+	  <object class="material.textured" name="mesh_mtrl_texture">
+	  	<property name="diffuse_texture">diffuse.png</property>
+	  	<property name="specular_texture">diffuse.png</property>
+	  	<property name="ambient_texture">diffuse.png</property>
+	  	<property name="emission_texture">diffuse.png</property>
+	  </object>
+
+	  <object class="material.shader" name="mesh_mtrl_shader">
+	  	<property name="vertexShader">vertex.shader</property>
+	  	<property name="pixelShader">pixel.shader</property>
+	  	<property name="autorefresh">true</property>
+	  </object>
+
+	</resources>
+	
+	<render>
+		<object class="gl.RenderContext" name="mycontext">
+			<property name="fov">35.0</property>
+
+			<object class="Numeric.PRS" name="mesh_prs">
+				<property name="position" />
+				<property name="rotation" />
+				<property name="scale" />
+			</object>
+
+			<object class="gl.3dengine" name="engine_context">
+				<object class="gl.engine.scene" name="scene">
+					<!-- dynamic variables -->
+					<object class="material.shader.variables">
+						<proeprty name="variables">apa,bpa</property>
+						<property name="apa" source=""></property>
+					</object>
+					<object class="gl.engine.mesh" name="mesh1">
+						<property name="pivot" />
+						<property name="prs" />
+						<property name="material" source="mesh_geom" />
+						<property name="geom" source="mesh_geom" />
+					</object>
+					<object class="gl.engine.particles.directionalEmitter" name="emitter">
+						<property name="position" />
+						<property name="direction" />
+						<property name="speed" />
+						<property name="energy" />
+						<property name="fallOff" />
+						<property name="spawnOnCollision" />
+					</object>
+					<object class="gl.engine.particles" name="particles">
+						<property name="max" />
+						<property name="material" />
+						<property name="emitter" source="emitter" />
+					</object>
+				</oject>
+			</object>
+			<object class="gl.metagrid">
+				<object class="metagrid.sphere">
+					<property name="position" />
+					<property mame="energy" />
+					<property name="radius" />
+					<property name="falloff" />
+					<property name="material" />
+				</object>
+			</object>
+			<object class="gl.raytracer" name="raytracer">
+				<object class="gl.raytracer.sphere" name="sph1">
+					<property name="position" />
+					<property name="radius" />
+					<property name="material" />
+				</object>
+				<object name="gl.raytracer.plane" name="ground">
+					<property name="normal" />
+					<property name="p" />
+					<property name="material" />
+				</object>
+				<object name="gl.raytracer.quad" name="quad">
+					<property name="normal" />
+					<property name="p" />
+					<property name="size" />
+					<property name="material" />
+				</object>
+			</object>
+
+
+			<object class="utils.TestProperties" name="test">
+				<property name="color_rgba">#102030</property>
+			</object>
+			<object class="Numeric.VectorMux" name="campos">
+				<property name="x" source="campos_x"/>
+				<property name="y">0</property>
+				<property name="z" source="campos_z"/>
+			</object>
+			<object class="gl.Camera" name="camera">
+				<property name="position" source="campos" />
+				<!-- <property name="position">0,0,2.0</property> -->
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="Animation.ExpSolver" name="rotspeed">
+				<!-- <property name="expression">40 * t + (sin(t))</property> -->
+				<property name="expression">40 * t + (sin(t))</property>
+
+			</object>
+
+			<object class="Animation.ExpSolver" name="campos_x">
+				<property name="expression">3*sin(t)</property>
+			</object>
+			<object class="Animation.ExpSolver" name="campos_z">
+				<property name="expression">3*cos(t*0.5)</property>
+			</object>
+			<object class="Animation.GenericCurve" name="TestSpline">
+				<property name="channels">3</property>
+				<property name="type">hold</property>
+				<property name="vector">1.000,3.00,6.000</property>
+			</object>
+
+			<object class="Animation.ExpSolver" name="z_move.starfield">
+				<property name="expression">t</property>
+			</object>
+
+			<object class="enigma.Starfield" name="move.starfield">
+				<property name="numSrcVertex" source="data.starfield.vertexCount" />
+				<property name="srcVertexData" source="data.starfield.vertexData" />
+				<property name="z_movement" source="z_move.starfield" />
+			</object>
+
+			<object class="gl.DrawPoints" name="render_drawstars">
+				<property name="vertexCount" source="move.starfield.vertexCount" />
+				<property name="vertexData" source="move.starfield.vertexData" />
+			</object>
+
+			<object class="gl.DrawLines" name="render_cube">
+				<property name="indexCount" source="data.cube.edges.indexCount" />
+				<property name="indexData" source="data.cube.edges.indexData" />
+				<!-- <property name="vertexCount" source="data.cube.edges.vertexCount" /> -->
+				<property name="vertexData" source="data.cube.edges.vertexData" />
+			</object>
+
+<!--
+			<object class="gl.FullScreenImage" name="feedback">
+			 <property name="texture" source="previous"/> 
+			</object>		
+			<object class="gl.FullScreenImage" name="fscreen">
+			 <property name="texture" source="texture1"/> 
+			</object>		
+-->
+		
+		</object>
+		<!-- Take a copy of the context and store for next frame 
+		    'allowRefUpdates' disables circular dependency updates
+            Anybody referencing this effect will not force an update
+        -->
+        <object class="gl.RenderContext" name="previous" allowRefUpdate="false">
+			<object class="gl.FullScreenImage" name="fscreen">
+			 <property name="color">0.25,0.25,0.25,0.25</property>
+			 <property name="texture" source="texture1"/> 
+			</object>		
+        </object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="mycontext" />
+	</timeline>
+</yapt2>				

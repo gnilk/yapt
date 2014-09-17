@@ -17,7 +17,7 @@ protected:
   void BeginOrtho();
   void EndOrtho();
 protected:
-  int width, height;
+  float width, height;
   Property *texture;
 
 };

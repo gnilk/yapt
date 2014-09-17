@@ -23,13 +23,17 @@ public:
 
 	virtual bool ShouldClose();
 	void InitalizeYapt();
+	virtual void OnKeyDown(int key, int scancode, int mods);
+	virtual void OnKeyUp(int key, int scancode, int mods);
 
 protected:
 	virtual void Render();
 private:
 	void Prepare();
+	float tLast;
 	yapt::ISystem *system;
 	OpenGLRenderContextParams contextParams;
+	bool pausePlayer;
 
 
 };

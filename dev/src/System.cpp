@@ -265,7 +265,37 @@ IBaseInstance *System::GetControllerObject(const char *name)
 	return pResult;
 }
 
+void System::WatchFile(const char *filename, IFileWatcher *callback) {
+	fileWatcher.AddFile(filename, callback);
+}
+
+void System::RemoveFileWatcher(const char *filename) {
+	fileWatcher.RemoveFile(filename);
+}
+
+
 // - Wrapped and refactored to IO library
+void *System::LoadData(const char *filename, unsigned int flags, long *outszdata)
+{
+	void *pData = NULL;
+	std::string name = std::string("file://")+std::string(filename);
+    noice::io::IStream *pStream = CreateStream(name.c_str(),0);
+
+	if (pStream != NULL) {
+		if (pStream->Open(kStreamOp_ReadOnly)) {
+			*outszdata = pStream->Size();
+			pData = malloc(*outszdata);
+			pStream->Read(pData, *outszdata);
+		} else {
+			//pLogger->Error("Unable to open stream");
+		}
+		pStream->Close();
+	} else {
+		pLogger->Error("Failed to load '%s'",name.c_str());
+	}
+	return pData;
+}
+
 noice::io::IStream *System::CreateStream(const char *uri, unsigned int flags)
 {
 	return DeviceManager::GetInstance()->CreateStream(uri, flags);

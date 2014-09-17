@@ -15,7 +15,7 @@ EXPAT_ROOT   = $(EXT_ROOT)/expat/lib
 YAPT_SRC_DIR = $(ROOT)/src
 YAPT_INC_DIR = $(ROOT)/inc
 
-CFLAGS = -g -arch x86_64 -stdlib=libc++
+CFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11
 #CFLAGS += -macosx_version_min 10.8
 CFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 CFLAGS += -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NOICE_IO_INC) -I$(EXPAT_ROOT)

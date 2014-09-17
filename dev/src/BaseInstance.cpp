@@ -87,7 +87,6 @@ Attribute *BaseInstance::GetAttributeAsClass(const char *name)
 	size_t i;
 	for (i=0;(i<attributes.size()) && (result == NULL);i++)
 	{
-		//if (!strcmp(name, attributes[i]->GetName()))
 		if (!StrConfCaseCmp(name, attributes[i]->GetName()))
 		{
 			result = attributes[i];

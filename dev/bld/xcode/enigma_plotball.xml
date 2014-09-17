@@ -1,0 +1,79 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+
+	  <object class="geom.Sphere" name="data.plotball">
+	  	<property name="radius">1.0</property>
+	  	<property name="segment_lat">32</property>
+	  	<property name="segment_long">32</property>
+	  </object>
+	</resources>
+	
+	<render>
+		<object class="utils.Container" name="part_plotball">
+			<object class="gl.RenderToTexture" name="plotball_target">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>
+
+				<object class="Animation.ExpSolver" name="rotspeed">
+					<property name="expression">40 * t + (sin(t))</property>
+				</object>
+
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,2</property>
+					<!-- <property name="position">0,0,2.0</property> -->
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="plotball.bounce.y">
+					<property name="expression">abs(cos(t*2.0))-0.3</property>
+				</object>
+
+				<object class="Numeric.VectorMux" name="plotball.bounce.position">
+					<property name="x">0</property>
+					<property name="y" source="plotball.bounce.y" />
+					<property name="z">-4</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="plotball.rotation">
+					<property name="x">t*64</property>
+					<property name="y">t*-48</property>
+					<property name="z">t*32</property>
+				</object>
+
+				<object class="gl.ShaderQuad">
+					<property name="depthwrite">false</property>
+					<property name="pixelshader">enigma_bgballs.frag.glsl</property>
+					<property name="vertexshader">enigma_bgballs.vtx.glsl</property>
+				</object>
+
+				<object class="gl.Transform" name="prs_ball">
+					<property name="position" source="plotball.bounce.position" />
+					<property name="rotation" source="plotball.rotation" />
+				</object>
+
+				<object class="gl.DrawPoints" name="render_ball">
+					<property name="vertexCount" source="data.plotball.vertexCount" />
+					<property name="vertexData" source="data.plotball.vertexData" />
+					<property name="vertexShader">enigma_plotball.vtx.glsl</property>
+					<property name="fragmentShader">enigma_plotball.frag.glsl</property>
+				</object>			
+			</object>
+			<object class="gl.RenderContext" name="render_to_screen">
+				<object class="gl.FullScreenImage" name="feedback">
+					<property name="texture" source="plotball_target.texture"/> 
+				</object>		
+			</object>
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="part_plotball" />
+	</timeline>
+</yapt2>				

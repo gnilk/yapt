@@ -88,8 +88,10 @@ YAPT_SRC_FILES = \
 	$(YAPT_SRC_DIR)/DocNode.cpp \
 	$(YAPT_SRC_DIR)/Document.cpp \
 	$(YAPT_SRC_DIR)/DocumentController.cpp \
+	$(YAPT_SRC_DIR)/event.cpp \
 	$(YAPT_SRC_DIR)/ExpatXMLImporter.cpp \
 	$(YAPT_SRC_DIR)/ExportXML.cpp \
+	$(YAPT_SRC_DIR)/FileWatcher.cpp \
 	$(YAPT_SRC_DIR)/FPSController.cpp \
 	$(YAPT_SRC_DIR)/logger.cpp \
 	$(YAPT_SRC_DIR)/Lookup.cpp \
@@ -105,6 +107,7 @@ YAPT_SRC_FILES = \
 	$(YAPT_SRC_DIR)/ResourceContainer.cpp \
 	$(YAPT_SRC_DIR)/System.cpp \
 	$(YAPT_SRC_DIR)/SystemHookHandler.cpp \
+	$(YAPT_SRC_DIR)/thread.cpp \
 	$(YAPT_SRC_DIR)/Timeline.cpp \
 	$(YAPT_SRC_DIR)/Timer.cpp \
 	$(YAPT_SRC_DIR)/TopLevel.cpp \

@@ -6,6 +6,7 @@
 #include "yapt/ySystem.h"
 #include "yapt/logger.h"
 
+#include "vec.h"
 
 #include <math.h>
 #include <OpenGl/glu.h>
@@ -20,7 +21,6 @@ using namespace yapt;
 void OpenGLRenderContext::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 	this->ySys = ySys;
 	fov = pInstance->CreateProperty("fov", kPropertyType_Float, "65.0", "");
-
 }
 
 void OpenGLRenderContext::Render(double t, IPluginObjectInstance *pInstance) {
@@ -43,19 +43,17 @@ void OpenGLRenderContext::Render(double t, IPluginObjectInstance *pInstance) {
 	// Select and setup the modelview matrix
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0.0f, 20.0f, 0.0f,    // Eye-position
+	gluLookAt(0.0f, 0.0f, -5.0f,    // Eye-position
 			0.0f, 0.0f, 0.0f,   // View-point
-			0.0f, 0.0f, 1.0f);  // Up-vector
+			0.0f, 1.0f, 0.0f);  // Up-vector
 
 }
 
-void OpenGLRenderContext::PostInitialize(ISystem *ySys,
-		IPluginObjectInstance *pInstance) {
+void OpenGLRenderContext::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
 }
 
-void OpenGLRenderContext::PostRender(double t,
-		IPluginObjectInstance *pInstance) {
+void OpenGLRenderContext::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 	// TODO: Copy to texture here!
 
@@ -125,70 +123,149 @@ void OpenGLDrawTriangles::Render(double t, IPluginObjectInstance *pInstance) {
 void OpenGLDrawTriangles::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
 }
+
 void OpenGLDrawTriangles::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
 
-/// Draw points
-void OpenGLDrawPoints::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
-	numVertex = pInstance->CreateProperty("vertexCount", kPropertyType_Integer, "0","");
-	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
+// ////
+// void OpenGLDrawLines::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+// 	indexCount = pInstance->CreateProperty("indexCount", kPropertyType_Integer, "0","");
+// 	indexData = pInstance->CreateProperty("indexData", kPropertyType_UserPtr, NULL, "");
+// 	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
+// }
+
+// void OpenGLDrawLines::Render(double t, IPluginObjectInstance *pInstance) {
+
+// 	float *vtx = (float *)vertexData->v->userdata;
+// 	int *idx = (int *)indexData->v->userdata;
+
+// 	glColor3f(1,1,1);
+// 	glBegin(GL_LINES);
+// 	int li = 0;
+// 	while (li < indexCount->v->int_val) {
+// 		// ok, this is fake!
+// 		glVertex3fv (&vtx[idx[li+0]*3]);
+// 		glVertex3fv (&vtx[idx[li+1]*3]);
+// 		li+=2;
+// 	}
+// 	glEnd();
+
+// 	// float mid[3] = {0,0,0};
+// 	// renderBoundingSphere(mid, 1.0f);
+// }
+
+// void OpenGLDrawLines::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
+// }
+// void OpenGLDrawLines::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+// }
+
+
+static	GLuint framebuffer, texture;
+
+void OpenGLRenderToTexture::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
 }
 
+void OpenGLRenderToTexture::Render(double t, IPluginObjectInstance *pInstance) {
+	// Render to texture
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	IContext *pContext = dynamic_cast<IBaseInstance *>(pInstance)->GetContext();
+	IRenderContextParams *contextParams = (IRenderContextParams *)pContext->TopContextParamObject();
+	float width = contextParams->GetFrameBufferWidth();
+   	float height = contextParams->GetFrameBufferHeight();
 
-void OpenGLDrawPoints::Render(double t, IPluginObjectInstance *pInstance) {
+	glViewport(0, 0, 512, 512);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Select and setup the projection matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(35.0, (GLfloat) width/ (GLfloat) height, 1.0f, 100.0f);
+
+	// Select and setup the modelview matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(0.0f, 0.0f, -5.0f,    // Eye-position
+			0.0f, 0.0f, 0.0f,   // View-point
+			0.0f, 1.0f, 0.0f);  // Up-vector
+
+	float mid[3];
+	vIni(mid,0,0,0);
+	glRotatef(t*48,1,0,0);
+	glRotatef(t*64,0,1,0);
+	renderBoundingSphere(mid,2);
 
 
-	float *pVertex = (float *) vertexData->v->userdata;
-	glColor3f(1,1,1);
-	glBegin(GL_POINTS);
-	for(int i=0;i<numVertex->v->int_val;i++) {
-		glVertex3fv(&pVertex[i*3]);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glViewport(0,0,width,height); // Ensure,if someone did change it
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, width, 0, height);
+	glScalef(1, -1, 1);
+	glTranslatef(0, -height, 0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+    glBindTexture(GL_TEXTURE_2D,texture);
+    glEnable(GL_TEXTURE_2D);
+    glBegin(GL_QUADS);
+      glTexCoord2f(0.0f,0.0f);
+      glVertex2f(0.0f, 0.0f);
+      glTexCoord2f(1.0f,0.0f);
+      glVertex2f(width, 0.0f);
+      glTexCoord2f(1.0f,1.0f);
+      glVertex2f(width, height);
+      glTexCoord2f(0.0f,1.0f);
+      glVertex2f(0.0f, height);
+     glEnd();  //glBegin(GL_QUADS);
+    glDisable(GL_TEXTURE_2D);
+
+
+
+}
+
+void OpenGLRenderToTexture::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	// Setup texture here
+
+	GLenum status;
+
+	glGenFramebuffers(1, &framebuffer);
+
+// Set up the FBO with one texture attachment
+
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+	glGenTextures(1, &texture);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+
+	status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+
+	if (status != GL_FRAMEBUFFER_COMPLETE_EXT) {
+		ySys->GetLogger("RenderToTexture")->Debug("OpenGL FAILED!");
+		exit(1);
 	}
-	glEnd();
+
+	ySys->GetLogger("RenderToTexture")->Debug("Ok, render target configured");
 
 }
 
-void OpenGLDrawPoints::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+void OpenGLRenderToTexture::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
-void OpenGLDrawPoints::PostRender(double t, IPluginObjectInstance *pInstance) {
-
-}
-
-////
-void OpenGLDrawLines::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
-	indexCount = pInstance->CreateProperty("indexCount", kPropertyType_Integer, "0","");
-	indexData = pInstance->CreateProperty("indexData", kPropertyType_UserPtr, NULL, "");
-	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
-}
-
-void OpenGLDrawLines::Render(double t, IPluginObjectInstance *pInstance) {
-
-	float *vtx = (float *)vertexData->v->userdata;
-	int *idx = (int *)indexData->v->userdata;
-
-	glBegin(GL_LINES);
-	int li = 0;
-	while (li < indexCount->v->int_val) {
-		// ok, this is fake!
-		glVertex3fv (&vtx[idx[li+0]*3]);
-		glVertex3fv (&vtx[idx[li+1]*3]);
-		li+=2;
-	}
-	glEnd();
-
-	float mid[3] = {0,0,0};
-	renderBoundingSphere(mid, 1.0f);
-}
-
-void OpenGLDrawLines::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
-
-}
-void OpenGLDrawLines::PostRender(double t, IPluginObjectInstance *pInstance) {
-
-}
-
-
-
 

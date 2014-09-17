@@ -21,8 +21,11 @@
 #include "glLoadTexture.h"
 #include "glTestFunc.h"
 #include "glBasicFuncs.h"
-
-
+#include "glShaderQuad.h"
+#include "glShaderBase.h"
+#include "glDrawPoints.h"
+#include "glDrawQuads.h"
+#include "glDrawLines.h"
 
 
 using namespace yapt;
@@ -45,7 +48,7 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   ILogger *pLogger = pSys->GetLogger("glFuncs.Factory");
   IPluginObject *pObject = NULL;
   pLogger->Debug("Trying '%s'", identifier);
-  if (!strcmp(identifier, "gl.RenderTarget")) {
+  if (!strcmp(identifier, "gl.RenderToTexture")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLRenderTarget());
   }
   if (!strcmp(identifier, "gl.RenderContext")) {
@@ -72,6 +75,15 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.DrawLines")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawLines());
   }
+  if (!strcmp(identifier, "gl.DrawQuads")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawQuads());
+  }
+  if (!strcmp(identifier, "gl.ShaderQuad")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLShaderQuad());
+  }
+  if (!strcmp(identifier, "gl.RenderTest")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLRenderToTexture());
+  }
   if (pObject != NULL) {
     pLogger->Debug("Ok");
   } else
@@ -85,7 +97,9 @@ static void perror() {
 // This function must be exported from the lib/dll
 int CALLCONV yaptInitializePlugin(ISystem *ySys) {
 
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.RenderTest");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.RenderContext");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.RenderToTexture");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Plot");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Camera");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Transform");
@@ -93,8 +107,10 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawTriangles");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawPoints");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawLines");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawQuads");
   // Real stuff
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.FullScreenImage");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.ShaderQuad");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.LoadTexture2D");
   
   return 0;
