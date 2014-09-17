@@ -31,6 +31,11 @@ void OpenGLRenderTarget::Initialize(ISystem *ySys, IPluginObjectInstance *pInsta
 void OpenGLRenderTarget::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   GLenum status;
 
+  // int depthParams;
+  // glGetFramebufferAttachmentParameteriv(GL_RENDERBUFFER, GL_DEPTH, GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE, &depthParams);
+  // printf("DEPTH: %d\n",depthParams);
+
+  // Create frame buffer with texture
   glGenFramebuffers(1, &idFramebuffer);
   glBindFramebuffer(GL_FRAMEBUFFER, idFramebuffer);
   glGenTextures(1, &idTexture);
@@ -39,6 +44,12 @@ void OpenGLRenderTarget::PostInitialize(ISystem *ySys, IPluginObjectInstance *pI
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, textureWidth->v->int_val, textureHeight->v->int_val, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, idTexture, 0);
+
+  // Create and attach depth buffer
+  glGenRenderbuffers(1, &idDepthRenderBuffer);
+  glBindRenderbuffer(GL_RENDERBUFFER, idDepthRenderBuffer);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, textureWidth->v->int_val, textureHeight->v->int_val);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, idDepthRenderBuffer);
 
   status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 

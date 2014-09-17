@@ -31,7 +31,7 @@ public:
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
 private:
-	unsigned int idFramebuffer, idTexture;
+	unsigned int idFramebuffer, idTexture, idDepthRenderBuffer;
 	TargetContextParamObject contextParameters;
 
 };
