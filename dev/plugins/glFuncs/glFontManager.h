@@ -1,3 +1,6 @@
+//
+// Generate bitmap fonts for use with OpenGL texturing
+//
 #pragma once
 
 #include <ft2build.h>
@@ -15,6 +18,25 @@
 using namespace yapt;
 
 
+class Font;
+
+
+// Font manager has a 'cache' of already generated fonts
+class FontManager
+{
+private:
+	static FontManager *instance;
+	std::vector<Font *> fonts;
+	FT_Library ft;
+private:
+	FontManager();
+public:
+	static FontManager *GetInstance(ISystem *ysys);
+	Font *GetFont(std::string family, int size);
+};
+
+
+// Encapsulation of a bitmap
 class Bitmap {
 private:
 	int width;
@@ -80,36 +102,3 @@ public:
 	std::string Family() { return family; }
 };
 
-class FontManager
-{
-private:
-	static FontManager *instance;
-	std::vector<Font *> fonts;
-	FT_Library ft;
-private:
-	FontManager();
-public:
-	static FontManager *GetInstance();
-	Font *GetFont(std::string family, int size);
-};
-
-
-class OpenGLDrawText: public PluginObjectImpl, public OpenGLShaderBase {
-private:
-	// input
-	Property *font;
-	Property *fontSize;
-	Property *text;
-	Property *vshader;
-	Property *fshader;
-	Property *alignment;
-	Property *position;
-	bool useShaders;
-public:
-	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
-	virtual void Render(double t, IPluginObjectInstance *pInstance);
-	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
-	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
-private:
-	Font *textureFont;
-};
