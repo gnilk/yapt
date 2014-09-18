@@ -1,5 +1,8 @@
 #version 120
 
+
+// TODO: Rewrite this one!!
+
 uniform vec2 iResolution;
 uniform float iGlobalTime;
 
@@ -225,7 +228,7 @@ vec3 trace(vec3 P, vec3 V, vec3 H)
 void main(void)
 {
 	vec3 rayOrigin, rayDir;
-	sampleCamera(vec2(0.5,0.5), rayOrigin, rayDir);
+	sampleCamera(vec2(0.0,0.0), rayOrigin, rayDir);
 
 
 	vec3 H=normalize(lightPos-rayDir);				
