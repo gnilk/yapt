@@ -60,5 +60,6 @@ public:
 	void Detach();
 	unsigned int ProgramId() { return idProgram; }
 	unsigned int GetUniform(const char *name);
+	unsigned int GetAttrib(const char *name);
 
 };

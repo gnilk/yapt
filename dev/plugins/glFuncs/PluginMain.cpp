@@ -26,7 +26,7 @@
 #include "glDrawPoints.h"
 #include "glDrawQuads.h"
 #include "glDrawLines.h"
-
+#include "glDrawText.h"
 
 using namespace yapt;
 
@@ -81,6 +81,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.ShaderQuad")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLShaderQuad());
   }
+  if (!strcmp(identifier, "gl.DrawText")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawText());
+  }
   if (!strcmp(identifier, "gl.RenderTest")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLRenderToTexture());
   }
@@ -108,7 +111,8 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawPoints");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawLines");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawQuads");
-  // Real stuff
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawText");
+
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.FullScreenImage");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.ShaderQuad");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.LoadTexture2D");

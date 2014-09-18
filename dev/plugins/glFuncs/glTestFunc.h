@@ -18,6 +18,7 @@ protected:
 	int height;
 	ISystem *ySys;
 	Property *fov;
+	Property *clear;
 };
 
 class OpenGLDrawTriangles: public PluginObjectImpl {

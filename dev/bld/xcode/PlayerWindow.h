@@ -34,6 +34,7 @@ private:
 	yapt::ISystem *system;
 	OpenGLRenderContextParams contextParams;
 	bool pausePlayer;
+	double tPause;
 
 
 };

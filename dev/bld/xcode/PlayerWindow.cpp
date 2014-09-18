@@ -76,30 +76,60 @@ void PlayerWindow::Render()
 	IBaseInstance *pBase = dynamic_cast<IBaseInstance *>(system->GetActiveDocument());
 	IContext *pContext = pBase->GetContext();
 	pContext->PushContextParamObject(&contextParams,"RenderContext");
-	if (!pausePlayer) {
-		tLast = glfwGetTime();		
+	float tRender = glfwGetTime();
+	if (pausePlayer) {
+		tRender = tPause;		
 	}
-	system->GetActiveDocumentController()->Render(tLast);
+	system->GetActiveDocumentController()->Render(tRender);
 	pContext->PopContextParamObject();	// Need to pop
 	// Swap buffers done by base window
 }
 
 void PlayerWindow::OnKeyDown(int key, int scancode, int mods) {
 	BaseWindow::OnKeyDown(key, scancode, mods);
-	switch(key) {
-		case GLFW_KEY_SPACE : 	// Send input string
-			pausePlayer = true;
-			break;
+	float dt = 1;	// default is jump one second
+	if ((mods & GLFW_MOD_ALT)) {
+		dt = 10;		// jump 10 seconds if ALT is pressed
 	}
+	switch(key) {
+		case GLFW_KEY_SPACE :	// pause replay
+			if (pausePlayer) {
+				glfwSetTime(tPause);
+				pausePlayer = false;
+			}
+			else {
+				tPause = glfwGetTime();
+				pausePlayer = true;
+			}
+			break;
+		case GLFW_KEY_LEFT :	// fast forward in time
+			{				
+				if (!pausePlayer) {
+					float nt = glfwGetTime() - dt;
+					if (nt < 0) nt = 0;
+					glfwSetTime(nt); 					
+				} else {
+					tPause -= dt;
+					if (tPause < 0) tPause = 0;
+				}
+
+			}
+			break;
+		case GLFW_KEY_RIGHT :	// reverse time
+			{
+				if (!pausePlayer) {
+					float nt = glfwGetTime() + dt;
+					glfwSetTime(nt); 									
+				} else {
+					tPause += dt;
+				}
+			}
+			break;
+	} // switch
 }
 
 void PlayerWindow::OnKeyUp(int key, int scancode, int mods) {
 	BaseWindow::OnKeyUp(key, scancode, mods);
-	switch(key) {
-		case GLFW_KEY_SPACE :
-		pausePlayer = false;
-		break;
-	}
 }
 
 

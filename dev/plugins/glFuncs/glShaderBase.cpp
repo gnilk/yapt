@@ -202,6 +202,14 @@ bool ShaderProgram::Load(char *vsSrc, char *psSrc) {
   return true;
 }
 
+unsigned int ShaderProgram::GetAttrib(const char *name) {
+  GLint attribute = glGetAttribLocation(idProgram, name);
+  if(attribute == -1) {
+//    fprintf(stderr, "Could not bind attribute %s\n", name);
+  }
+  return attribute;
+}
+
 unsigned int ShaderProgram::GetUniform(const char *name) {
   GLint uniform = glGetUniformLocation(idProgram, name);
   if(uniform == -1) {

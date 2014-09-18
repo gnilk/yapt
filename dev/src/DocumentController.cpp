@@ -237,7 +237,7 @@ void DocumentController::Render(double sample_time)
 
 void DocumentController::RenderTimeline() {
   if (!pDocument->HasTimeline()) return;
-
+  //pLogger->Debug("RenderTimeLine, t=%f",renderVars->GetTime());
   ITimeline *pTimeline = pDocument->GetTimeline();
   int n = pTimeline->GetNumExecutors();
   for(int i=0;i<n;i++) {
@@ -246,7 +246,7 @@ void DocumentController::RenderTimeline() {
       char *simpleName =pExec->GetObjectName();
       IBaseInstance *pObject=pDocument->GetObjectFromSimpleName(simpleName);
       IDocNode *pNode=pDocument->FindNode(pObject);
-      //pLogger->Debug("TimeLine, render object: %s (%p)", simpleName, pNode);
+     // pLogger->Debug("TimeLine, render object: %s (%p)", simpleName, pNode);
       RenderNode(pNode, true);  // Override timings of object (if any) since controlled by the timeline
     }
   }

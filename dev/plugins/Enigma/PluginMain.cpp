@@ -113,9 +113,9 @@ void Starfield::Render(double t, IPluginObjectInstance *pInstance) {
 
 
   for(int i=0;i<nVertex;i++) {
-    pVertex[i*3+0] = fmod(pSrcVertex[i*3+0]+x_movement->v->float_val+1,2.0) - 1.0f;
-    pVertex[i*3+1] = fmod(pSrcVertex[i*3+1]+y_movement->v->float_val+1,2.0) - 1.0f;
-    pVertex[i*3+2] = fmod(pSrcVertex[i*3+2]+z_movement->v->float_val+1,2.0) - 1.0f;
+    pVertex[i*3+0] = fmod(pSrcVertex[i*3+0]+x_movement->v->float_val+2,4.0) - 2.0f;
+    pVertex[i*3+1] = fmod(pSrcVertex[i*3+1]+y_movement->v->float_val+2,4.0) - 2.0f;
+    pVertex[i*3+2] = fmod(pSrcVertex[i*3+2]+z_movement->v->float_val+2,4.0) - 2.0f;
   }
 
   vertexCount->v->int_val = nVertex;
