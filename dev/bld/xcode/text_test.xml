@@ -1,0 +1,172 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="gl.RenderContext" name="intro_text_screen_1">
+			<property name="fov">35.0</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">THE PHENOMENAL</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0,0</property>
+				<property name="text">PHENOMENA</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.20,0</property>
+				<property name="text">ASSOCIATION</property>
+			</object>
+
+		</object>
+
+		<object class="gl.RenderContext" name="intro_text_screen_2">
+			<property name="fov">35.0</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">PROUDLY PRESENTS</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">A BRAND NEW</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">PRODUCTION</property>
+			</object>
+		</object>
+
+		<object class="gl.RenderContext" name="intro_text_screen_3">
+			<property name="fov">35.0</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">CODING MATHEMATICS AND DESIGN</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">BY</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">AZATOTH</property>
+			</object>
+		</object>
+
+		<object class="gl.RenderContext" name="intro_text_screen_4">
+			<property name="fov">35.0</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">MUSIC COMPOSED</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">BY</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">FIREFOX AND TIP</property>
+			</object>
+		</object>
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_5">
+			<property name="fov">35.0</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">GRAPHICS CREATED</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">BY</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">UNO</property>
+			</object>
+		</object>
+
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="2" object="intro_text_screen_1" />
+	   <execute start="3" duration="5" object="intro_text_screen_2" />
+	   <execute start="6" duration="8" object="intro_text_screen_3" />
+	   <execute start="9" duration="11" object="intro_text_screen_4" />
+	   <execute start="12" duration="1000" object="intro_text_screen_5" />
+	</timeline>
+</yapt2>				
