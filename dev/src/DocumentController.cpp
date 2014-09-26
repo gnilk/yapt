@@ -239,20 +239,28 @@ void DocumentController::RenderTimeline() {
   if (!pDocument->HasTimeline()) return;
   ITimeline *pTimeline = pDocument->GetTimeline();
   int n = pTimeline->GetNumExecutors();
-  pLogger->Debug("RenderTimeLine, t=%f exec=%d, doc=%p",renderVars->GetTime(), n, pDocument);
+//  pLogger->Debug("RenderTimeLine, t=%f exec=%d, doc=%p",renderVars->GetTime(), n, pDocument);
 
   for(int i=0;i<n;i++) {
-    ITimelineExecute *pExec = dynamic_cast<ITimelineExecute *>(pTimeline->GetExecutorAtIndex(i));
+    TimelineExecute *pExec = dynamic_cast<TimelineExecute *>(pTimeline->GetExecutorAtIndex(i));
     if ((pExec != NULL) && (pExec->ShouldRender(renderVars->GetTime()))) {
-      char *simpleName =pExec->GetObjectName();
 
-      IBaseInstance *pObject=pDocument->GetObjectFromSimpleName(simpleName);
-      IDocNode *pNode=pDocument->FindNode(pObject);
-
+      IDocNode *pNode = pExec->GetNode();
       if (pNode == NULL) {
-        pLogger->Error("Document node is NULL for '%s'",simpleName);
-        exit(1);
+        // resolve and cache
+        char *simpleName =pExec->GetObjectName();
+        // TODO: cache this one - no need to look this up each time!
+        IBaseInstance *pObject=pDocument->GetObjectFromSimpleName(simpleName);
+        pNode=pDocument->FindNode(pObject);
+
+        if (pNode == NULL) {
+          pLogger->Error("Document node is NULL for '%s' (%p)",simpleName, pObject);
+          exit(1);
+        }
+        // cache it - this will not change during runtime
+        pExec->SetNode(pNode);
       }
+
       RenderNode(pNode, true);  // Override timings of object (if any) since controlled by the timeline
     }
   }
@@ -261,7 +269,6 @@ void DocumentController::RenderTimeline() {
 void DocumentController::RenderResources()
 {
   pLogger->Debug("RenderResources");
-  // TODO: Solve this with function in Document
   IDocNode *pNodeResourceContainer = pDocument->FindNode(dynamic_cast<IBaseInstance *>(pDocument->GetResources()));
   if(pNodeResourceContainer != NULL) {
     RenderNode(pNodeResourceContainer,true);
@@ -269,9 +276,11 @@ void DocumentController::RenderResources()
   }	else {
     pLogger->Warning("Resource container not found, skipping");
   }
+
+  // TODO: Recurse through tree, find all meta nodes and render their resources
+
 }
 
-//
 //
 // Renders a single node and recursivley all children
 // Force is used to override timing information

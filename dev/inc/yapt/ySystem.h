@@ -288,6 +288,7 @@ namespace yapt
   {
   public:
     virtual IDocument *GetDocument() = 0;
+    virtual void SetDocument(IDocument *pDocument) = 0;
     virtual IDocumentController *GetDocumentController() = 0;
     virtual void SetObject(const char *name, void *pObject) = 0;
     virtual void *GetObject(const char *name) = 0;
@@ -303,6 +304,11 @@ namespace yapt
     virtual void SetNamePrefix(const char *prefix) = 0;
     virtual char *GetNamePrefix(char *pdest, int nmaxlen) = 0;
     virtual char *CreatePrefixName(const char *name, char *prefixedname, int nmaxlen) = 0;
+
+    virtual void AddNode(IBaseInstance *instance, IDocNode *node) = 0;
+    virtual IDocNode *FindNode(IBaseInstance *pObject) = 0;
+    virtual void EraseNode(IBaseInstance *instance) = 0;
+
   };
 
   struct IRenderVars
