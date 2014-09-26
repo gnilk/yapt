@@ -63,7 +63,7 @@ static int StrExplode(std::vector<std::string> *strList, char *mString, int chrS
 using namespace yapt;
 
 ConsoleWindow::ConsoleWindow() {
-	fontSize = 12;
+	fontSize = 24;
 	watchScreenHeight = 250;
 }
 ConsoleWindow::~ConsoleWindow() {

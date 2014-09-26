@@ -1,0 +1,26 @@
+<yapt2 name="doc">
+  <resources name="resources">
+      <object class="utils.TestProperties" name="test">
+        <property name="color_rgba">257.000000,513.000000,769.000000,0.000000</property>
+        <property name="integer">0</property>
+        <property name="integer_tuple">0,0</property>
+        <property name="float">0.000000</property>
+        <property name="float_tuple">0.000000,0.000000</property>
+        <property name="vector">0.000000,0.000000,0.000000</property>
+        <property name="quat">0.000000,0.000000,0.000000,0.000000</property>
+        <property name="string">--text--</property>
+        <property name="usrptr">N/A</property>
+        <property name="enum">val1</property>
+        <property name="floatarray">10,20,30,40,50</property>
+      </object>
+  </resources>
+  <render name="render">
+    <object class="gl.RenderContext" name="mycontext">
+      <property name="fov">35.000000</property>
+    </object>
+  </render>
+  <timeline name="timeline">
+    <!--  <execute start="0" duration="1000" object="fscreen" />  -->
+    <execute start="0" duration="1000" object="mycontext" name="noname"/>
+  </timeline>
+</yapt2>

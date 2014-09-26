@@ -28,10 +28,12 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <cstdlib>
 
 #include "yapt/ySystem.h"
 #include "yapt/ySystem_internal.h"
+#include "yapt/StringUtil.h"
 
 #ifdef WIN32
 #define snprintf _snprintf
@@ -449,6 +451,9 @@ void PropertyInstance::SetValue(const char *sValue)
 				property->v->boolean = 0;
 			}
 			break;
+		case kPropertyType_FloatArray :
+			ParseFloatArrayToProperty(property, sValue);
+			break;
 		case kPropertyType_UserPtr :
 			property->v->userdata = (void*)sValue;
 			break;
@@ -467,6 +472,21 @@ void PropertyInstance::SetValue(const char *sValue)
 
 const char *PropertyInstance::GetUnboundRawValue() {
     return unboundRawValue;
+}
+
+template<typename Target, typename Source>
+Target lexical_cast(Source arg, bool &ok)
+{
+	std::stringstream interpreter;
+	Target result;
+
+	ok = true;
+	if(!(interpreter << arg) ||
+	 !(interpreter >> result) ||
+	 !(interpreter >> std::ws).eof()) {
+		ok = false;
+	}
+	return result;
 }
 
 //
@@ -528,6 +548,21 @@ char *PropertyInstance::GetValue(char *sValueDest, int maxlen)
 				snprintf(sValueDest, maxlen, "false");
 			}
 			break;
+		case kPropertyType_FloatArray :
+			{
+				std::string str;
+				for(int i=0;i<property->v->float_array.size;i++) {
+					bool ok;
+					str += lexical_cast<string>(property->v->float_array.items[i], ok);
+					if (i<(property->v->float_array.size-1))
+						str += ",";
+				}
+				snprintf(sValueDest, maxlen, "%s",str.c_str());
+			}
+			// snprintf(sValueDest, maxlen,"NOT IMPLEMENTED: GetValue for property type FloatArray");
+			// pLogger->Error("NOT IMPLEMENTED: GetValue for property type FloatArray");
+//			exit(1);
+			break;
 		case kPropertyType_UserPtr :
 			snprintf(sValueDest, maxlen, "N/A");
 			break;
@@ -540,25 +575,6 @@ char *PropertyInstance::GetValue(char *sValueDest, int maxlen)
 
 
 //////////////////////////////////////////////////////////////////////////
-void PropertyInstance::StrSplit(std::vector<std::string> &strings, const char *strInput, int splitChar)
-{
-	std::string input(strInput);
-	size_t iPos = 0;
-	while(iPos != -1)
-	{
-		size_t iStart = iPos;
-		iPos = input.find(splitChar,iPos);
-		if (iPos != -1)
-		{
-			strings.push_back(input.substr(iStart, iPos-iStart));
-			iPos++;
-		} else
-		{
-			strings.push_back(input.substr(iStart, input.length()-iStart));
-		}
-	}
-}
-
 //
 // returns the possible enumeration values
 //
@@ -570,6 +586,66 @@ std::vector<std::string> PropertyInstance::GetValidEnumValues()
 		values.clear();
 	}
 	return values;
+}
+
+char *PropertyInstance::GetEnumFromValue(char *sDest, int nMax, int val, const char *def)
+{
+	char *sRet = NULL;
+	std::vector<std::string> enumvalues;
+	if (PrepareEnumString(enumvalues,def))
+	{
+		if ((val >= 0) && (val < (int)enumvalues.size()))
+		{
+			snprintf(sDest, nMax, "%s", enumvalues[val].c_str());
+			sRet = sDest;
+		} else
+		{
+			snprintf(sDest, nMax, "%s", enumvalues[0].c_str());
+		}
+	} // error handled by parser
+	return sRet;
+}
+
+int PropertyInstance::ParseFloatArrayToProperty(Property *property, const char *val) {
+	std::vector<std::string> strings;
+
+	StrSplit(strings,val,',');
+
+	// TODO: Need a few checks here
+
+	property->v->float_array.size = strings.size();
+	property->v->float_array.items = (float *)malloc(sizeof(float) * strings.size());
+	for(int i=0;i<strings.size();i++) {
+		std::string str = strings[i];
+		StringUtil::Trim(str);
+		float val = std::atof(str.c_str());
+		property->v->float_array.items[i] = val;
+	}
+	return strings.size();
+}
+
+int PropertyInstance::ParseEnumString(const char *val, const char *def) {
+
+	int iRes =-1;
+	ILogger *pLogger = Logger::GetLogger("PropertyInstance");
+
+	std::vector<std::string> enumvalues;
+	if (PrepareEnumString(enumvalues,def))
+	{
+		size_t i;
+		for(i=0;i<enumvalues.size();i++)
+		{
+			pLogger->Debug("%d:%s",i,enumvalues[i].c_str());
+			//if (!strcmp(val, enumvalues[i].c_str()))
+			if (!StrConfCaseCmp(val, enumvalues[i].c_str()))
+			{
+				iRes = (int)i;
+				break;
+			}
+		}
+	}
+	
+	return iRes;
 }
 
 //
@@ -622,45 +698,31 @@ bool PropertyInstance::PrepareEnumString(std::vector<std::string> &strings, cons
 	return bRes;
 }
 
-char *PropertyInstance::GetEnumFromValue(char *sDest, int nMax, int val, const char *def)
+//
+// Helpers - consider moving to StringUtil
+//
+
+void PropertyInstance::StrSplit(std::vector<std::string> &strings, const char *strInput, int splitChar)
 {
-	char *sRet = NULL;
-	std::vector<std::string> enumvalues;
-	if (PrepareEnumString(enumvalues,def))
+	std::string input(strInput);
+	size_t iPos = 0;
+	while(iPos != -1)
 	{
-		if ((val >= 0) && (val < (int)enumvalues.size()))
+		size_t iStart = iPos;
+		iPos = input.find(splitChar,iPos);
+		if (iPos != -1)
 		{
-			snprintf(sDest, nMax, "%s", enumvalues[val].c_str());
-			sRet = sDest;
+			std::string str = input.substr(iStart, iPos-iStart);
+			StringUtil::Trim(str);
+			strings.push_back(str);
+			iPos++;
 		} else
 		{
-			snprintf(sDest, nMax, "%s", enumvalues[0].c_str());
-		}
-	} // error handled by parser
-	return sRet;
-}
-int PropertyInstance::ParseEnumString(const char *val, const char *def)
-{
-	int iRes =-1;
-	ILogger *pLogger = Logger::GetLogger("PropertyInstance");
-
-	std::vector<std::string> enumvalues;
-	if (PrepareEnumString(enumvalues,def))
-	{
-		size_t i;
-		for(i=0;i<enumvalues.size();i++)
-		{
-			pLogger->Debug("%d:%s",i,enumvalues[i].c_str());
-			//if (!strcmp(val, enumvalues[i].c_str()))
-			if (!StrConfCaseCmp(val, enumvalues[i].c_str()))
-			{
-				iRes = (int)i;
-				break;
-			}
+			std::string str = input.substr(iStart, input.length()-iStart);
+			StringUtil::Trim(str);
+			strings.push_back(str);
 		}
 	}
-	
-	return iRes;
 }
 
 // - this is more or less same as in Curve

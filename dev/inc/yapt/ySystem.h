@@ -116,7 +116,6 @@ namespace yapt
   typedef enum
   {
     kPropertyType_Unknown = 0,
-  //	kPropertyType_Matrix,
     kPropertyType_Color,
     kPropertyType_Integer,
     kPropertyType_IntegerTuple,
@@ -124,12 +123,11 @@ namespace yapt
     kPropertyType_FloatTuple,
     kPropertyType_Vector,
     kPropertyType_Quaternion,
-  //	kPropertyType_AngleAxis,
     kPropertyType_String,
     kPropertyType_UserPtr,
-  //	kPropertyType_Resource,
     kPropertyType_Enum,
     kPropertyType_Bool,
+    kPropertyType_FloatArray,
     kPropertyType_Unbound,  // property created first through XML but not yet attached by plugin (after initialization all object properties which are unbound are declared wrong)
   } kPropertyType;
 
@@ -189,10 +187,9 @@ namespace yapt
     void *userdata;
     struct
     {
-      char *name;
       int size;
-      void *data;
-    } resource;
+      float *items;
+    } float_array;
   };
 
   

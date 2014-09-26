@@ -188,11 +188,19 @@ void ExpatXMLParser::IncludeFromURL(const char *url, const char **atts)
   noice::io::IStream *pStream = system->CreateStream(url, 0);
   if (pStream != NULL)
   {
+    pLogger->Debug("Processing include directive for '%s'",url);
+
     pStream->Open(kStreamOp_ReadOnly);
     ExpatXMLParser *xml = new ExpatXMLParser(system);
     IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(instanceStack.top());
     pMeta->GetDocument();
     xml->SetRoot(pMeta);
+
+    IDocument *oldDocument = ySys->GetActiveDocument();
+    ySys->SetActiveDocument(pMeta->GetDocument());
+
+    pLogger->Debug("Swapping docs, old=%p, new=%p", oldDocument, pMeta->GetDocument());
+
     // Idea on how to support name prefixing during node creation
     char prefixCurrent[128];
     int newPrefixIdx = GetAttributeIndex("prefix",atts);
@@ -205,7 +213,7 @@ void ExpatXMLParser::IncludeFromURL(const char *url, const char **atts)
 
     if (xml->ImportFromStream(pStream, false))
     {
-      pLogger->Debug("Include from '%s' ok",url);
+      pLogger->Debug("Include ok");
     }
     pStream->Close();
 
@@ -215,23 +223,9 @@ void ExpatXMLParser::IncludeFromURL(const char *url, const char **atts)
       yapt::IContext *pContext = system->GetCurrentContext();
       pContext->SetNamePrefix(prefixCurrent);
     }
-    //pContext->SetNameCreationPrefix(tmp);
-
-    //TODO: Post process meta node here
-    // - resource container objects should be placed linked from the main resource container
-    // - render container objects should be linked from the main render container
-//    IDocument *pMetaDoc = pMeta->GetDocument();
-//    yapt::IBaseInstance *pInst = pMetaDoc->GetRenderRoot();
-//    yapt::IDocNode *pNode = pMetaDoc->GetRenderTree();
-////    pNode->GetParent()->AddChild(pNode);
-//    int nChild = pNode->GetNumChildren();
-//    for(int i=0;i<nChild;i++) {
-//      pDocument->GetRenderTree()->AddChild(pNode->GetChildAt(i));
-//    }
-
-    
   
-    delete xml;	// ?
+    ySys->SetActiveDocument(oldDocument);
+    delete xml;	
   }	
 }
 
@@ -278,6 +272,7 @@ IPluginObjectInstance *ExpatXMLParser::CreateObjectInstance(const char *name, co
 //
 ITimelineExecute *ExpatXMLParser::CreateExecuteInstance(const char *name, const char **atts) {
   ITimeline *pTimeline = ySys->GetActiveDocument()->GetTimeline();
+  pLogger->Debug("Create Execute instance, doc=%p, timeline=%p", ySys->GetActiveDocument(), pTimeline);
   ITimelineExecute *pInst = NULL;
   int idxObject = GetAttributeIndex("object",atts);
   int idxStart = GetAttributeIndex("start",atts);
@@ -458,6 +453,7 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
     pDocument->AddRenderObject(instanceStack.top(),pInstance);
     break;
   case kElementAction_AddToTimeline :
+  pLogger->Debug("Addto Timeline, doc=%p",pDocument);
     pDocument->AddToTimeline(pInstance);
     break;
   case kElementAction_None :

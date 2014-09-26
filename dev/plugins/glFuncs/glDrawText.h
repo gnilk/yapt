@@ -1,36 +1,37 @@
 #pragma once
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+#include <unordered_set>
+
+
 #include "yapt/ySystem.h"
 #include "yapt/logger.h"
 
 #include "PluginObjectImpl.h"
 #include "glShaderBase.h"
+#include "glFontManager.h"
 
 using namespace yapt;
 
-class OpenGLDrawQuads: public PluginObjectImpl, public OpenGLShaderBase {
+
+class OpenGLDrawText: public PluginObjectImpl, public OpenGLShaderBase {
 private:
-	Property *numVertex;
-	Property *vertexData;
-	Property *numQuads;
-	Property *quadData;
+	// input
+	Property *font;
+	Property *fontSize;
+	Property *text;
 	Property *vshader;
 	Property *fshader;
-	Property *uselighting;
-	Property *wireframe;
-	Property *solidcolor;
-
-	Property *mat_specular;
-	Property *mat_shininess;
-
-	Property *light_ambient;
-	Property *light_diffuse;
-	Property *light_specular;
-
+	Property *alignment;
+	Property *position;
 	bool useShaders;
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+private:
+	Font *textureFont;
 };

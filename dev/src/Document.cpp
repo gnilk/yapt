@@ -367,10 +367,21 @@ IDocNode *Document::AddRenderObject(IBaseInstance *parent, IBaseInstance *object
 	IDocNode *pNode = AddObjectToTree(parent,object,kNodeType_ObjectInstance);
 	return pNode;
 }
+
 IDocNode *Document::AddToTimeline(IBaseInstance *object) {
+	int n = GetTimeline()->GetNumExecutors();
+	pLogger->Debug("Add to timeline, for doc %p - num exec before: %d", this, n);
+	for(int i=0;i<n;i++) {		
+	    ITimelineExecute *pExec = dynamic_cast<ITimelineExecute *>(timeline->GetExecutorAtIndex(i));
+		pLogger->Debug("  %d, %s", i, pExec->GetObjectName());
+	}
+	// GetTimeline()->GetNodeObject()
+	//IDocNode *timeLineNode = FindNode(timeline);
+	DumpNode(FindNode(timeline));
+
+
 	return AddObjectToTree(timeline, object, kNodeType_ObjectInstance);
 }
-
 
 void Document::AddResourceObject(IBaseInstance *parent, IBaseInstance *object)
 {

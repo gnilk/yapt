@@ -17,6 +17,7 @@
 // Plugin objects
 #include "PluginObjectImpl.h"
 #include "RayTracer.h"
+#include "tvbox.h"
 
 using namespace yapt;
 
@@ -39,6 +40,7 @@ private:
   Property *vertexCount;
   Property *vertexData;
   // could be vector, but most likely you want just to control one component
+  Property *range;
   Property *x_movement;
   Property *y_movement;
   Property *z_movement;
@@ -59,6 +61,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   // if (!strcmp(identifier, "enigma.Starfield")) {
   //   pObject = dynamic_cast<IPluginObject *>(new TestTriangleGenerator());
   // }
+  if (!strcmp(identifier, "enigma.RenderTVBox")) {
+     pObject = dynamic_cast<IPluginObject *>(new EnigmaTVBox());
+  }
   if (!strcmp(identifier, "enigma.Starfield")) {
      pObject = dynamic_cast<IPluginObject *>(new Starfield());
   }
@@ -81,6 +86,7 @@ static void perror() {
 // This function must be exported from the lib/dll
 int CALLCONV yaptInitializePlugin(ISystem *ySys) {
 
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=enigma.RenderTVBox");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=enigma.Starfield");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=enigma.RayTracer");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=enigma.RayTracer.Sphere");
@@ -100,6 +106,8 @@ void Starfield::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   y_movement = pInstance->CreateProperty("y_movement", kPropertyType_Float, "0", "");
   z_movement = pInstance->CreateProperty("z_movement", kPropertyType_Float, "0", "");
 
+  range = pInstance->CreateProperty("range", kPropertyType_Float, "2", "");
+
   vertexCount = pInstance->CreateOutputProperty("vertexCount", kPropertyType_Integer, "1024", "");
   vertexData = pInstance->CreateOutputProperty("vertexData", kPropertyType_UserPtr, NULL, "");
 }
@@ -112,10 +120,13 @@ void Starfield::Render(double t, IPluginObjectInstance *pInstance) {
   float *pSrcVertex = (float *)srcVertexData->v->userdata;
 
 
+  float r = range->v->float_val;
+  float r2 = r*2;
+
   for(int i=0;i<nVertex;i++) {
-    pVertex[i*3+0] = fmod(pSrcVertex[i*3+0]+x_movement->v->float_val+2,4.0) - 2.0f;
-    pVertex[i*3+1] = fmod(pSrcVertex[i*3+1]+y_movement->v->float_val+2,4.0) - 2.0f;
-    pVertex[i*3+2] = fmod(pSrcVertex[i*3+2]+z_movement->v->float_val+2,4.0) - 2.0f;
+    pVertex[i*3+0] = fmod(pSrcVertex[i*3+0]+x_movement->v->float_val+r,r2) - r;
+    pVertex[i*3+1] = fmod(pSrcVertex[i*3+1]+y_movement->v->float_val+r,r2) - r;
+    pVertex[i*3+2] = fmod(pSrcVertex[i*3+2]+z_movement->v->float_val+r,r2) - r;
   }
 
   vertexCount->v->int_val = nVertex;

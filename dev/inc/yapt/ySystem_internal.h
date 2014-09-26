@@ -221,7 +221,7 @@ namespace yapt
     public ITimeline,
     public BaseInstance
   {
-    protected:
+  protected:
     std::vector<ITimelineExecute *> executeObjects;
   public:
     Timeline();
@@ -366,6 +366,8 @@ namespace yapt
 
       Timeline *timeline;	// timeline object
       ResourceContainer *resources;	// default resource container (TODO: Replace)
+
+      // TODO: Must move this one to context - several documents can share context
       BaseNodeMap treemap;	// lookup baseinstance/inode
     protected:
       void RegisterNode(IDocNode *pNode, IBaseInstance *pObject);
@@ -533,6 +535,7 @@ namespace yapt
     char *GetEnumFromValue(char *sDest, int nMax, int val, const char *def);
     bool PrepareEnumString(std::vector<std::string> &strings, const char *def);
     int ParseEnumString(const char *val, const char *def);
+    int ParseFloatArrayToProperty(Property *property, const char *val);
   public:
     PropertyInstance(const char *szName, kPropertyType type, const char *sDescription);
     virtual ~PropertyInstance();

@@ -4,33 +4,38 @@
 #include "yapt/logger.h"
 
 #include "PluginObjectImpl.h"
-#include "glShaderBase.h"
 
 using namespace yapt;
 
-class OpenGLDrawQuads: public PluginObjectImpl, public OpenGLShaderBase {
+class EnigmaTVBox: public PluginObjectImpl {
 private:
 	Property *numVertex;
 	Property *vertexData;
 	Property *numQuads;
 	Property *quadData;
-	Property *vshader;
-	Property *fshader;
-	Property *uselighting;
 	Property *wireframe;
 	Property *solidcolor;
 
-	Property *mat_specular;
-	Property *mat_shininess;
+	Property *tex0;
+	Property *tex1;
+	Property *tex2;
+	Property *tex3;
+	Property *tex4;
+	Property *tex5;
 
-	Property *light_ambient;
-	Property *light_diffuse;
-	Property *light_specular;
+	// Property *mat_specular;
+	// Property *mat_shininess;
 
-	bool useShaders;
+	// Property *light_ambient;
+	// Property *light_diffuse;
+	// Property *light_specular;
+
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+
+private:
+	void RenderTextureQuad(int quad, Property *tex);
 };

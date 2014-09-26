@@ -26,6 +26,8 @@ void OpenGLDrawQuads::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	numQuads = pInstance->CreateProperty("quadCount", kPropertyType_Integer, "0","");
 	quadData = pInstance->CreateProperty("quadData", kPropertyType_UserPtr, NULL, "");
 
+	wireframe = pInstance->CreateProperty("wireframe", kPropertyType_Bool, "false", "");
+	solidcolor = pInstance->CreateProperty("solidcolor", kPropertyType_Color, "0.75, 0.75, 0.75, 1.0", "");
 	uselighting = pInstance->CreateProperty("lighting", kPropertyType_Bool, "true", "");
 	mat_specular = pInstance->CreateProperty("material_specular", kPropertyType_Color, "1.0, 1.0, 1.0, 1.0","");
 	mat_shininess = pInstance->CreateProperty("material_shininess", kPropertyType_Float, "10.0","");
@@ -93,29 +95,39 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 
 	glFrontFace(GL_CW);
 	glEnable(GL_CULL_FACE);
-	glBegin(GL_QUADS);
 
-	for(int i=0;i<numQuads->v->int_val;i++) {
-		vSub(v1, &pVertex[pQuads[i*4+3]*3], &pVertex[pQuads[i*4+0]*3]);
-		vSub(v2, &pVertex[pQuads[i*4+1]*3], &pVertex[pQuads[i*4+0]*3]);
-		vCross(normal, v1, v2);
-		vNorm(normal,normal);
+	if (wireframe->v->boolean == true) {
+		glColor3f(solidcolor->v->rgba[0], solidcolor->v->rgba[1], solidcolor->v->rgba[2]);
+		for(int i=0;i<numQuads->v->int_val;i++) {
+			glBegin(GL_LINE_LOOP);
+				glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
+				glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
+				glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
+				glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
+			glEnd();
+		}
+	} else {
+		glBegin(GL_QUADS);
+		for(int i=0;i<numQuads->v->int_val;i++) {
+			vSub(v1, &pVertex[pQuads[i*4+3]*3], &pVertex[pQuads[i*4+0]*3]);
+			vSub(v2, &pVertex[pQuads[i*4+1]*3], &pVertex[pQuads[i*4+0]*3]);
+			vCross(normal, v1, v2);
+			vNorm(normal,normal);
 
-	//	glColor3f(normal[0],normal[1],normal[2]);
+			glNormal3fv(normal);
+			glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
 
-		glNormal3fv(normal);
-		glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
+			glNormal3fv(normal);
+			glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
 
-		glNormal3fv(normal);
-		glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
+			glNormal3fv(normal);
+			glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
 
-		glNormal3fv(normal);
-		glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
-
-		glNormal3fv(normal);
-		glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
+			glNormal3fv(normal);
+			glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
+		}
+		glEnd();
 	}
-	glEnd();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 

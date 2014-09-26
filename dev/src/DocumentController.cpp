@@ -237,16 +237,22 @@ void DocumentController::Render(double sample_time)
 
 void DocumentController::RenderTimeline() {
   if (!pDocument->HasTimeline()) return;
-  //pLogger->Debug("RenderTimeLine, t=%f",renderVars->GetTime());
   ITimeline *pTimeline = pDocument->GetTimeline();
   int n = pTimeline->GetNumExecutors();
+  pLogger->Debug("RenderTimeLine, t=%f exec=%d, doc=%p",renderVars->GetTime(), n, pDocument);
+
   for(int i=0;i<n;i++) {
     ITimelineExecute *pExec = dynamic_cast<ITimelineExecute *>(pTimeline->GetExecutorAtIndex(i));
     if ((pExec != NULL) && (pExec->ShouldRender(renderVars->GetTime()))) {
       char *simpleName =pExec->GetObjectName();
+
       IBaseInstance *pObject=pDocument->GetObjectFromSimpleName(simpleName);
       IDocNode *pNode=pDocument->FindNode(pObject);
-     // pLogger->Debug("TimeLine, render object: %s (%p)", simpleName, pNode);
+
+      if (pNode == NULL) {
+        pLogger->Error("Document node is NULL for '%s'",simpleName);
+        exit(1);
+      }
       RenderNode(pNode, true);  // Override timings of object (if any) since controlled by the timeline
     }
   }
@@ -259,8 +265,9 @@ void DocumentController::RenderResources()
   IDocNode *pNodeResourceContainer = pDocument->FindNode(dynamic_cast<IBaseInstance *>(pDocument->GetResources()));
   if(pNodeResourceContainer != NULL) {
     RenderNode(pNodeResourceContainer,true);
+    pLogger->Debug("Resource container ok");
   }	else {
-    pLogger->Warning("Resource container not found");
+    pLogger->Warning("Resource container not found, skipping");
   }
 }
 
@@ -294,10 +301,10 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
       bDoChildren = true;
       bPostRender = true;
     }
-  } else if (pObject->GetInstanceType() == kInstanceType_ResourceContainer) {
+  } else if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_ResourceContainer)) {
     bDoChildren = true;
   }
-  
+
   if (bDoChildren) {
     int i,nChildren;
 
@@ -309,6 +316,7 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
       RenderNode(child, bForce);
     }
     pObject->GetContext()->PopRenderObject();
+
   }
   
   // post render the instance after all children

@@ -1,5 +1,20 @@
 <yapt2>
+	<resources>
+		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+		<object class="utils.TestProperties" name="test">
+			<property name="color_rgba">#102030</property>
+		</object>
+	</resources>
     <render>
+    	<object class="utils.Container" name="container1">
+    	</object>
 	</render>
+	<timeline>
+	   <execute start="0" duration="1000" object="container1" />
+	</timeline>
+
     <include url="file://file_to_inc.xml" />
 </yapt2>
