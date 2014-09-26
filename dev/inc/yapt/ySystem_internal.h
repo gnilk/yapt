@@ -206,15 +206,23 @@ namespace yapt
   public:
       TimelineExecute();
       virtual ~TimelineExecute();
+      // interface
       virtual float GetStart();
       virtual float GetDuration();
       virtual char *GetObjectName();
       virtual bool ShouldRender(double t);
+  public:
       void SetParam(float _start, float _duration, char *_objectName);
+
+      IDocNode *GetNode() { return node; };
+      void SetNode(IDocNode *node) { this->node = node; }
   private:
       float start;
       float duration;
       char *objectName;
+  private:
+      // runtime cache variables
+      IDocNode *node;
   };
 
   class Timeline :
@@ -372,7 +380,9 @@ namespace yapt
     protected:
       void RegisterNode(IDocNode *pNode, IBaseInstance *pObject);
       void DeregisterNode(IDocNode *pNode);
-      IDocNode *AddNode(IDocNode *parent, IBaseInstance *pObject, kNodeType type);
+      IDocNode *CreateNode(IDocNode *parent, IBaseInstance *pObject, kNodeType type);
+//      IDocNode *AddNode(IDocNode *parent, IBaseInstance *pObject, kNodeType type);
+      void AddNode(IBaseInstance *instance, IDocNode *node);
 
   //		void RenderNode(ISystem *ySys, IDocNode *node, bool bForce);
       
@@ -589,6 +599,7 @@ namespace yapt
     public IContext
   {
   private:
+    ILogger *pLogger;
     Document *pDocument;
     DocumentController *pDocumentController;
     CtxNameObjectMap objects;
@@ -596,15 +607,17 @@ namespace yapt
     //void *contextParamObject;
     std::stack<CtxNameObjectPair> contexParamObjectStack;
     std::stack<IBaseInstance *> renderObjectStack;
+
+    BaseNodeMap baseNodeMap;  // lookup baseinstance/inode
   public:
     Context();
     virtual ~Context();
     
-    void SetDocument(Document *pDocument);
     void SetDocumentController(DocumentController *pController);
     // interface
   public:
     virtual IDocument *GetDocument();
+    virtual void SetDocument(IDocument *pDocument);
     virtual IDocumentController *GetDocumentController();
     virtual void SetObject(const char *name, void *pObject);
     virtual void *GetObject(const char *name);
@@ -622,7 +635,10 @@ namespace yapt
     virtual char *GetNamePrefix(char *pdest, int nmaxlen);
     virtual char *CreatePrefixName(const char *name, char *prefixedname, int nmaxlen);
 
-
+  public:
+    virtual void AddNode(IBaseInstance *instance, IDocNode *node);
+    virtual IDocNode *FindNode(IBaseInstance *pObject);
+    virtual void EraseNode(IBaseInstance *instance);
   };
   
 

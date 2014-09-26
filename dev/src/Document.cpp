@@ -45,15 +45,16 @@ using namespace yapt;
 Document::Document() :
 	BaseInstance(kInstanceType_Document)
 {
-  Initialize();
+	pContext = NULL;
+	Initialize();
 }
 
 
 Document::Document(IContext *pContext) :
 	BaseInstance(kInstanceType_Document)
 {
-	Initialize();
 	SetContext(pContext);	// set the context in the base class 
+	Initialize();
 	// setup default objects
 	// currently we setup a resource container and a render node
 
@@ -91,7 +92,11 @@ void Document::DisposeTree(IDocNode *root)
 void Document::Initialize() 
 {
 	pLogger = Logger::GetLogger("Document");
-	pContext = NULL;
+
+	if (pContext == NULL) {
+		pLogger->Error("No context, failure!");
+		exit(1);
+	}
 
 	this->pDocumentController = NULL;
 	std::string fqName; 
@@ -102,7 +107,10 @@ void Document::Initialize()
 	AddAttribute("name","doc");
 	fqName = BuildQualifiedName(root);
 	SetFullyQualifiedName(fqName.c_str());
-	treemap.insert(BaseNodePair(dynamic_cast<IBaseInstance *>(this),root));
+
+
+	pContext->AddNode(dynamic_cast<IBaseInstance *>(this),root);
+	//treemap.insert(BaseNodePair(dynamic_cast<IBaseInstance *>(this),root));
 }
 
 void Document::SetDocumentController(IDocumentController *pDocumentController)
@@ -165,25 +173,34 @@ IResourceContainer *Document::GetResources()
 }
 
 IBaseInstance *Document::SearchFromNode(IDocNode *pRootNode, const char *name) {
+
 	int i;
 	for (i=0;i<pRootNode->GetNumChildren();i++)
 	{
 		IDocNode *pChild = pRootNode->GetChildAt(i);
 		IBaseInstance *pObject = pChild->GetNodeObject();
-    if (pObject == NULL) continue;
-    // Do depth first search -
-    IBaseInstance *pRet = SearchFromNode(pChild, name);
-    if (pRet != NULL) return pRet;
+	    if (pObject == NULL) continue;
+	    // Do depth first search -
+	    IBaseInstance *pRet = SearchFromNode(pChild, name);
+	    if (pRet != NULL) return pRet;
 
-    // Only pluggable objects may be referenced
-    PluginObjectInstance *pNamedInstance = dynamic_cast<PluginObjectInstance *>(pObject);
-    if(pNamedInstance == NULL) continue;
+	    // Only pluggable objects may be referenced
+	    PluginObjectInstance *pNamedInstance = dynamic_cast<PluginObjectInstance *>(pObject);
+	    if(pNamedInstance == NULL) continue;
 
-    const char *sName = pNamedInstance->GetInstanceName();
-    if (!StrConfCaseCmp(name,sName)) {
-    	return pChild->GetNodeObject();
-    }
+	    const char *sName = pNamedInstance->GetInstanceName();
+	    if (!StrConfCaseCmp(name,sName)) {
+	    	return pChild->GetNodeObject();
+	    }
 	}
+
+	// If meta - continue in the contained document
+	if (pRootNode->GetNodeType() == kNodeType_Meta) {
+		IBaseInstance *instance = pRootNode->GetNodeObject();	
+		IMetaInstance *meta = dynamic_cast<IMetaInstance *>(instance);
+		return meta->GetDocument()->GetObjectFromSimpleName(name);
+	}
+
 	return NULL;
 }
 IBaseInstance *Document::GetObjectFromSimpleName(const char *name) {
@@ -231,29 +248,23 @@ void Document::DeregisterNode(IDocNode *pNode)
 // looks in hash for node
 IDocNode *Document::FindNode(IBaseInstance *pObject)
 {
-	if (treemap.find(pObject)!=treemap.end())
-	{
-		return treemap[pObject];
-	} else
-	{
-		pLogger->Debug("Failed to find node for object=%p",pObject);
-	}
-	return NULL;
+	return pContext->FindNode(pObject);
 }
 
-// Better helper, works with root tree
-IDocNode *Document::AddNode(IDocNode *parent, IBaseInstance *pObject, kNodeType type)
-{
+IDocNode *Document::CreateNode(IDocNode *parent, IBaseInstance *pObject, kNodeType type) {
 	IDocNode *pNode = new DocNode(dynamic_cast<IDocument *>(this));
 	pNode->SetNodeObject(pObject, type);
 	parent->AddChild(pNode);
+	return pNode;	
+}
 
-	treemap.insert(BaseNodePair(pObject,pNode));
-	RegisterNode(pNode, pObject);
+// Better helper, works with root tree
+void Document::AddNode(IBaseInstance *instance, IDocNode *node)
+{
+	pContext->AddNode(instance, node);
+	RegisterNode(node, instance);
+
 	
-	//pLogger->Debug("AddNode, node=(%p) for object=%p",pNode, pObject);
-
-	return pNode;
 }
 // Assigns a fully qualified name to the object in the document
 std::string Document::BuildQualifiedName(IDocNode *pNode)
@@ -304,53 +315,16 @@ IDocNode *Document::AddObjectToTree(IBaseInstance *parent, IBaseInstance *object
 	if (parentNode != NULL)
 	{
 		//pLogger->Debug("Parent node ok, addNode");
-		pNode = AddNode(parentNode, object, nodeType);
+		pNode = CreateNode(parentNode, object, nodeType);
 
 		BaseInstance *pBase = dynamic_cast<BaseInstance *>(object);
 		std::string qName = BuildQualifiedName(pNode);
 
-	    // Don't assign funky names to implicit nodes (doc, resources and render)
-	    if ((nodeType != kNodeType_Document) &&
-	        (nodeType != kNodeType_ResourceContainer) &&
-	        (nodeType != kNodeType_Timeline) &&
-	    	(nodeType != kNodeType_RenderNode)) {
-
-
-	    	// NOTE [2014-08-19]: This is not required (I think) but I don't understand why I did it in the first place
-
-
-			  // object with this name already registered?
-			  // append a number to the name until it gets unique
-			  // if (Lookup::GetBaseFromString(qName) != NULL)
-			  // {
-				 //  int extCount = 1;
-				 //  // Can't reuse the const char * return value since if we update the
-				 //  // attribute in the while loop it will be deallocated
-				 //  std::string baseName(pBase->GetAttributeValue("name"));
-
-				 //  // will update the name with a numbered version
-				 //  while (Lookup::GetBaseFromString(qName) != NULL)
-				 //  {				
-					//   char tmp[32];
-
-					//   std::string curName(baseName);
-					//   snprintf(tmp, 32, "%d", extCount);
-					//   curName.append(tmp);		// itoa not supported..
-					//   pBase->AddAttribute("name",curName.c_str());
-					//   qName = BuildQualifiedName(pNode);
-
-					//   extCount++;
-				 //  }
-			  // }
-	    } // node type
-
-//		pLogger->Debug("Setting Qualified name");
 		pBase->SetFullyQualifiedName(qName.c_str());
 
-		pLogger->Debug("AddObjectToTree, %s",qName.c_str());
+		AddNode(object, pNode);
 
-		// add a lookup for this one..
-//		Lookup::RegisterStrBase(qName, object);
+
 	}
 
 	return pNode;
@@ -377,7 +351,7 @@ IDocNode *Document::AddToTimeline(IBaseInstance *object) {
 	}
 	// GetTimeline()->GetNodeObject()
 	//IDocNode *timeLineNode = FindNode(timeline);
-	DumpNode(FindNode(timeline));
+	//DumpNode(FindNode(timeline));
 
 
 	return AddObjectToTree(timeline, object, kNodeType_ObjectInstance);
@@ -422,7 +396,9 @@ bool Document::RemoveNodeTraceObjects(IDocNode *pNode, std::vector<IBaseInstance
 	IBaseInstance *pBaseObject = pNode->GetNodeObject();
 	if (pBaseObject!=NULL)
 	{
-		treemap.erase(pBaseObject);
+
+		pContext->EraseNode(pBaseObject);
+		//treemap.erase(pBaseObject);
 		nodeObjects.push_back(pBaseObject);
 	}
 

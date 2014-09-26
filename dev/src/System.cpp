@@ -158,6 +158,15 @@ void System::SetActiveDocument(IDocument *pDocument)
 		IBaseInstance *pBase = dynamic_cast<IBaseInstance *>(pDocument);
 		IContext *pContext = pBase->GetContext();
 		this->pContext = pContext;
+
+		// Check if the context points to the requested active document (can't be sure)
+		// documents may share context and an application should be able to swap the root around
+		if (pContext->GetDocument() != pDocument) {
+			pLogger->Warning("Context Document differs from requested active document - swapping");
+			pContext->SetDocument(pDocument);
+		}
+
+		pLogger->Debug("SetActiveDocument, doc=%p, context=%p (context_doc=%p)", pDocument, pContext,pContext->GetDocument());
 	} else {
 		this->pContext = NULL;
 	}

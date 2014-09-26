@@ -42,6 +42,9 @@ using namespace yapt;
 
 Context::Context()
 {
+	pLogger = Logger::GetLogger("Context");
+
+
 	pDocument = new Document(dynamic_cast<IContext *>(this));
 	// link document and controller together via the interfaces
 	// this is ok, interfaces are not circular depending only the current implementation
@@ -49,7 +52,6 @@ Context::Context()
 	pDocument->SetDocumentController(pDocumentController);
 	pDocument->SetContext(dynamic_cast<IContext *>(this));
 	namePrefix = "";
-	//contextParamObject = NULL;
 }
 Context::~Context()
 {
@@ -59,9 +61,9 @@ Context::~Context()
 
 }
 
-void Context::SetDocument(Document *pDocument)
+void Context::SetDocument(IDocument *pDocument)
 {
-	this->pDocument = pDocument;
+	this->pDocument = dynamic_cast<Document *>(pDocument);
 }
 void Context::SetDocumentController(DocumentController *pController)
 {
@@ -142,4 +144,29 @@ char *Context::CreatePrefixName(const char *name, char *prefixedname, int nmaxle
 {
 	snprintf(prefixedname, nmaxlen, "%s.%s",namePrefix.c_str(), name);
 	return prefixedname;
+}
+
+//
+// Node/Instance cache routines
+//
+void Context::AddNode(IBaseInstance *instance, IDocNode *node) {
+
+	pLogger->Debug("AddNode, %s (node=%p, context=%p)",instance->GetFullyQualifiedName(), node, this);
+
+	baseNodeMap.insert(BaseNodePair(instance,node));
+}
+
+IDocNode *Context::FindNode(IBaseInstance *pObject) {
+	if (baseNodeMap.find(pObject)!=baseNodeMap.end())
+	{
+		return baseNodeMap[pObject];
+	} else
+	{
+		pLogger->Debug("Failed to find node for object=%p",pObject);
+	}
+	return NULL;	
+}
+
+void Context::EraseNode(IBaseInstance *instance) {
+	baseNodeMap.erase(instance);
 }

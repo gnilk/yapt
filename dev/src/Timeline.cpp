@@ -51,10 +51,14 @@ IBaseInstance *Timeline::GetExecutorAtIndex(int idx) {
 }
 
 TimelineExecute::TimelineExecute() : BaseInstance(kInstanceType_TimelineExecute) {
-
+  node = NULL;
+  objectName = NULL;
 }
 
 TimelineExecute::~TimelineExecute() {
+  if(objectName != NULL) {
+    free(objectName);
+  }
 }
 
 float TimelineExecute::GetStart() {
@@ -79,7 +83,12 @@ bool TimelineExecute::ShouldRender(double t) {
 void TimelineExecute::SetParam(float _start, float _duration, char *_objectName) {
   start = _start;
   duration = _duration;
+  if (objectName != NULL) {
+    free(objectName);
+  }
   objectName = strdup(_objectName);
+
+  node = NULL;  // invalidate the cache variable
 }
 
 

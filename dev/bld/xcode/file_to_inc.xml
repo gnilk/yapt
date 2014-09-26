@@ -8,6 +8,17 @@
 	</resources>
     <render>
     	<object class="utils.Container" name="container2">
+   		
+			<object class="Animation.ExpSolver" name="plotball.bounce.y">
+				<property name="expression">abs(cos(t*2.0))-0.3</property>
+			</object>
+
+			<object class="Numeric.VectorMux" name="plotball.bounce.position">
+				<property name="x">0</property>
+				<property name="y" source="plotball.bounce.y" />
+				<property name="z">0</property>
+			</object>
+
     	</object>
 	</render>
 	<timeline>

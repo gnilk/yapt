@@ -14,7 +14,8 @@
 	</render>
 	<timeline>
 	   <execute start="0" duration="1000" object="container1" />
+	   <execute start="0" duration="1000" object="part2.container2" />	   
 	</timeline>
 
-    <include url="file://file_to_inc.xml" />
+    <include url="file://file_to_inc.xml" prefix="part2"/>
 </yapt2>
