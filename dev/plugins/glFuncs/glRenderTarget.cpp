@@ -26,6 +26,7 @@ void OpenGLRenderTarget::Initialize(ISystem *ySys, IPluginObjectInstance *pInsta
   textureHeight = pInstance->CreateProperty("height", kPropertyType_Integer, "512", "");  
 
   texture = pInstance->CreateOutputProperty("texture", kPropertyType_Integer, "0", "");  
+  framebuffer = pInstance->CreateOutputProperty("framebuffer", kPropertyType_Integer, "0", "");  
 }
 
 void OpenGLRenderTarget::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
@@ -61,6 +62,7 @@ void OpenGLRenderTarget::PostInitialize(ISystem *ySys, IPluginObjectInstance *pI
   ySys->GetLogger("RenderToTexture")->Debug("Ok, render target configured (size: %dx%d)",textureWidth->v->int_val, textureHeight->v->int_val);
 
   this->texture->v->int_val = idTexture;
+  this->framebuffer->v->int_val = idFramebuffer;
 
 }
 

@@ -25,6 +25,7 @@ private:
 	Property *fov;
 	// output
 	Property *texture;
+	Property *framebuffer;
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
