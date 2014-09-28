@@ -105,6 +105,7 @@ YAPT_SRC_FILES = \
 	$(YAPT_SRC_DIR)/Property.cpp \
 	$(YAPT_SRC_DIR)/RenderVars.cpp \
 	$(YAPT_SRC_DIR)/ResourceContainer.cpp \
+	$(YAPT_SRC_DIR)/Signals.cpp \
 	$(YAPT_SRC_DIR)/StringUtil.cpp \
 	$(YAPT_SRC_DIR)/System.cpp \
 	$(YAPT_SRC_DIR)/SystemHookHandler.cpp \

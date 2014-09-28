@@ -199,6 +199,66 @@ namespace yapt
 
   class PluginObjectInstance;
   
+  class Signal : 
+    public ISignal,
+    public BaseInstance 
+  {
+  public:    
+    Signal();
+    Signal(float t, int val);
+    virtual ~Signal();
+    virtual double GetTime();
+    virtual int GetValue();
+  private:
+    float t;
+    int value;
+  };
+
+  class SignalChannel :
+    public ISignalChannel,
+    public BaseInstance 
+  {
+  public:
+    SignalChannel();
+    SignalChannel(int id, const char *name, float accuracy);
+    virtual ~SignalChannel();
+    virtual int GetId();
+    virtual const char *GetName();
+    virtual void SetName(const char *name);
+    virtual int GetNumSignals();
+    virtual ISignal *GetSignalAt(int idx);
+    virtual ISignal *AddSignal(double t, int sigvalue);
+    virtual void RemoveSignal(int idx);
+    virtual ISignal *RaiseNext(double t);
+    virtual void RegisterSinkObject(IPluginObjectInstance *sink);
+    virtual void SendToSinks(ISignal *signal);
+  private:
+    int idxCurrentSignal;
+    int id;
+    std::string name;
+    float accuracy;
+    std::vector<Signal *>signals;
+    std::vector<IPluginObjectInstance *>sinks;
+  };
+
+  class Signals :
+    public ISignals,
+    public BaseInstance
+  {
+  public:
+    Signals();
+    virtual ~Signals();
+    virtual int GetNumChannels();
+    virtual ISignalChannel *GetChannel(int idx);
+    virtual ISignalChannel *GetChannel(const char *name);
+    virtual ISignalChannel *AddChannel(int id, const char *name, double accuracy);
+    virtual void RemoveChannel(int idChannel);
+    virtual void RemoveChannel(const char *name);
+  private:
+    std::vector<SignalChannel *> channels;
+  };
+
+
   class TimelineExecute :
     public ITimelineExecute,
     public BaseInstance
@@ -372,6 +432,7 @@ namespace yapt
 
       IDocumentController *pDocumentController;		// Current assigned engine
 
+      Signals *signals;
       Timeline *timeline;	// timeline object
       ResourceContainer *resources;	// default resource container (TODO: Replace)
 
@@ -417,6 +478,7 @@ namespace yapt
       
       virtual IBaseInstance *GetRenderRoot();
       virtual IResourceContainer *GetResources();	// returns resource container
+      virtual ISignals *GetSignals();
       virtual ITimeline *GetTimeline();
       virtual bool HasTimeline();
     /*	
@@ -439,6 +501,7 @@ namespace yapt
       virtual IDocNode *AddObject(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType);
       virtual IDocNode *AddRenderObject(IBaseInstance *parent, IBaseInstance *object);
       virtual IDocNode *AddToTimeline(IBaseInstance *object);
+      virtual IDocNode *AddSignalChannel(ISignalChannel *object);
       virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object);
       virtual IDocNode *AddMetaObject(IBaseInstance *parent);
       virtual IDocNode *AddCommentObject(IBaseInstance *parent);
@@ -465,6 +528,7 @@ namespace yapt
     void UpdateRenderVars(double sample_time);
     bool BindAllProperties(IDocNode *node);
     void TraverseNode(IDocumentTraversalSink *sink, IDocNode *node, int depth);
+    void RenderSignals(double t);
   public:
     DocumentController(IDocument *pDocument);
     virtual ~DocumentController();

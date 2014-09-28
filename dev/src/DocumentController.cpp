@@ -98,6 +98,19 @@ void DocumentController::InitializeNode(IDocNode *node)
       case kInstanceType_Object :
       {
         PluginObjectInstance *pInst = dynamic_cast<PluginObjectInstance *>(pObject);
+
+
+        const char *channelName = pObject->GetAttributeValue("sigchannel");
+        if (channelName != NULL) {
+            ISignalChannel *channel = pDocument->GetSignals()->GetChannel(channelName);            
+            if (channel != NULL) {
+              pLogger->Debug("Register '%s' to signal channel %s", pInst->GetInstanceName(), channelName);
+              channel->RegisterSinkObject(pInst);
+            } else {
+              pLogger->Debug("Unable to find channel named '%s' for object '%s'", channelName, pObject->GetAttributeValue("name"));
+            }
+        }
+
         pInst->ExtInitialize();
       }
       break;
@@ -216,8 +229,21 @@ bool DocumentController::Initialize() {
   return result;
 }
 
-void DocumentController::Render(double sample_time)
-{
+void DocumentController::RenderSignals(double t) {
+  ISignals *signals = pDocument->GetSignals();
+  int nChannels = signals->GetNumChannels();
+  for(int i=0;i<nChannels;i++) {
+
+    ISignalChannel *channel = signals->GetChannel(i);
+    ISignal *sig = channel->RaiseNext(t);
+    if (sig != NULL) {      
+      pLogger->Debug("Signal raised (t=%f) on channel '%s' with value '%d'", t, channel->GetName(), sig->GetValue());
+      channel->SendToSinks(sig);
+    }
+  }
+}
+
+void DocumentController::Render(double sample_time) {
   if (dirtyNodes.size() > 0) {
     // we have dirty nodes - poort mans solution - reinitialize the whole tree!
     // This will be costly if the document grows..
@@ -227,6 +253,8 @@ void DocumentController::Render(double sample_time)
 
   UpdateRenderVars(sample_time);
   fpsController.Update(sample_time);
+
+  RenderSignals(sample_time);
 
   if (!pDocument->HasTimeline()) {
     RenderNode(pDocument->GetRenderTree(), false);

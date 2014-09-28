@@ -515,7 +515,7 @@ Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType 
     // Create instance object and add node in document
     prop = new PropertyInstance(sName, type, sDescription);
     if (pDocument) {
-      pDocument->AddObject(dynamic_cast<IBaseInstance *>(this),dynamic_cast<IBaseInstance *>(prop),kNodeType_PropertyInstance);            
+      pDocument->AddObject(dynamic_cast<IBaseInstance *>(this),dynamic_cast<IBaseInstance *>(prop),kNodeType_PropertyInstance);
     }
     AddPropertyInstance(prop, bOutput);        
   }

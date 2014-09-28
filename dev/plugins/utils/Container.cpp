@@ -19,3 +19,5 @@ void Container::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) 
 void Container::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
+void Container::Signal(int channelId, const char *channelName, int sigval, double sigtime) {
+}

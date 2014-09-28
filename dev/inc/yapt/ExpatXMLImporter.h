@@ -27,6 +27,9 @@ namespace yapt
 		kParserState_Include,
 		kParserState_Timeline,
 		kParserState_Timeline_Execute,
+		kParserState_Signals,
+		kParserState_SignalChannel,
+		kParserState_Signal,
 
 	} kParserState;
 
@@ -51,6 +54,7 @@ namespace yapt
 		void ParseError(const char *errString);
 		IPluginObjectInstance *CreateObjectInstance(const char *name, const char **atts);
 		ITimelineExecute *CreateExecuteInstance(const char *name, const char **atts);
+		ISignalChannel *CreateSignalChannelInstance(const char *name, const char **atts);
 		void IncludeFromURL(const char *url, const char **atts);
 
 		bool ReadStream(noice::io::IStream *pStream);

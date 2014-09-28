@@ -63,7 +63,7 @@ static int StrExplode(std::vector<std::string> *strList, char *mString, int chrS
 using namespace yapt;
 
 ConsoleWindow::ConsoleWindow() {
-	fontSize = 24;
+	fontSize = 12;
 	watchScreenHeight = 250;
 }
 ConsoleWindow::~ConsoleWindow() {
@@ -779,6 +779,23 @@ void ConsoleCommandDumpDoc::OnNode(IDocNode *node, int depth) {
 
 	nodeinfo += name;
 
+	// push attributes
+	int nattrib = pObject->GetNumAttributes();
+	if (nattrib > 0) {
+		nodeinfo += "[";
+	}
+	for(int i=0;i<nattrib;i++) {
+		IAttribute *attrib = pObject->GetAttribute(i);
+		nodeinfo += std::string(attrib->GetName()) + std::string("=") + std::string(attrib->GetValue());
+		if (i < (nattrib-1)) {
+			nodeinfo += ", ";		
+		}
+	}
+	if (nattrib > 0) {
+		nodeinfo += "]";
+	}
+
+
 	//nodeinfo += std::string(pObject->GetAttributeValue("name"));
 
 	// How to extract a property value from a specifically named node
@@ -798,6 +815,8 @@ void ConsoleCommandDumpDoc::OnNode(IDocNode *node, int depth) {
 	        }
 	    }
 	}
+
+
 	// print node info
 	pConsole->WriteLine(nodeinfo);
 

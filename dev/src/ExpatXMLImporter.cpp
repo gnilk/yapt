@@ -68,14 +68,21 @@ using namespace noice::io;
 // Defines list of tags allowed and at which level, second list (synchronized to tag names) define the parser state for a sub-tag
 static const char *lRootTags[]={kDocument_RootTagName,NULL};
 static kParserState lRootChange[]={kParserState_Doc};
-static const char *lDocTags[]={kDocument_ResourceTagName,kDocument_RenderTagName,kDocument_IncludeTagName,kDocument_TimelineTagName, NULL};
-static kParserState lDocChange[]={kParserState_Resources, kParserState_Render, kParserState_Include, kParserState_Timeline};
+static const char *lDocTags[]={kDocument_ResourceTagName,kDocument_RenderTagName,kDocument_IncludeTagName,kDocument_TimelineTagName, kDocument_SignalsTagName, NULL};
+static kParserState lDocChange[]={kParserState_Resources, kParserState_Render, kParserState_Include, kParserState_Timeline, kParserState_Signals};
 static const char *lResourceTags[]={kDocument_ObjectTagName,NULL};
 static kParserState lResourceChange[]={kParserState_Object};
 static const char *lRenderTags[]={kDocument_ObjectTagName,NULL};
 static kParserState lRenderChange[]={kParserState_Object};
 static const char *lTimelineTags[]={kDocument_ExecuteTagName,NULL};
 static kParserState lTimelineChange[]={kParserState_Timeline_Execute};
+
+static const char *lSignalsTags[]={kDocument_SignalChannelTagName,NULL};
+static kParserState lSignalsChange[]={kParserState_SignalChannel};
+
+static const char *lSignalChannelTags[]={kDocument_SignalTagName,NULL};
+static kParserState lSignalChannelChange[]={kParserState_Signal};
+
 static const char *lObjectTags[]={kDocument_ObjectTagName,kDocument_PropertyTagName,NULL};
 static kParserState lObjectChange[]={kParserState_Object, kParserState_Property};
 
@@ -98,7 +105,7 @@ ExpatXMLParser::~ExpatXMLParser()
 
 void ExpatXMLParser::ParseError(const char *errString)
 {
-  fprintf(stderr,"%s at line %l\n",XML_ErrorString(XML_GetErrorCode(parser)),XML_GetCurrentLineNumber(parser));
+  fprintf(stderr,"%s at line %d\n",XML_ErrorString(XML_GetErrorCode(parser)),(int)XML_GetCurrentLineNumber(parser));
   pLogger->Error("%s  (%s at line %d)",
     errString,
     XML_ErrorString(XML_GetErrorCode(parser)),
@@ -162,6 +169,12 @@ bool ExpatXMLParser::IsElementAllowed(const char *name)
     break;
   case kParserState_Timeline:
     CHECK_STATE_CHANGE(name, lTimelineTags, lTimelineChange);
+    break;
+  case kParserState_Signals:
+    CHECK_STATE_CHANGE(name, lSignalsTags, lSignalsChange);
+    break;
+  case kParserState_SignalChannel:
+    CHECK_STATE_CHANGE(name, lSignalChannelTags, lSignalChannelChange);
     break;
   case kParserState_Render :
     CHECK_STATE_CHANGE(name,lRenderTags, lRenderChange);
@@ -286,6 +299,22 @@ ITimelineExecute *ExpatXMLParser::CreateExecuteInstance(const char *name, const 
   return pInst;
 }
 
+ISignalChannel *ExpatXMLParser::CreateSignalChannelInstance(const char *name, const char **atts) {
+  ISignals *signals = ySys->GetActiveDocument()->GetSignals();
+  pLogger->Debug("Create signal channel instance, doc=%p, timeline=%p", ySys->GetActiveDocument(), signals);
+  ISignalChannel *channel = NULL;
+  int idxId = GetAttributeIndex("id",atts);
+  int idxName = GetAttributeIndex("name",atts);
+  int idxAccuracy = GetAttributeIndex("accuracy",atts);
+  if ((idxId!=-1)&&(idxName!=-1)&&(idxAccuracy!=-1)) {
+    channel = signals->AddChannel(atoi(atts[idxId+1]),atts[idxName+1],atof(atts[idxAccuracy+1]));
+  } else {
+    yapt::SetYaptLastError(kErrorClass_Import, kError_MissingIdentifier);
+    pLogger->Error("Unable to create signal channel for '%s' at line %d - one or more attribute(s) failed!",name,XML_GetCurrentLineNumber(parser));
+  }
+  return channel;
+}
+
 // callback when expat find the start of an element
 typedef enum 
 {
@@ -295,6 +324,7 @@ typedef enum
   kElementAction_AddAsResourceContainer,
   kElementAction_AddAsRenderContainer,
   kElementAction_AddToTimeline,
+  kElementAction_AddToSignals,
 } kElementAction;
 
 void ExpatXMLParser::doStartElement(const char *name, const char **atts)
@@ -335,7 +365,10 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
     } else if (!strcmp(name, kDocument_TimelineTagName))
     {
       pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetTimeline());
-    }
+    } else if (!strcmp(name, kDocument_SignalsTagName))
+    {
+      pInstance = dynamic_cast<IBaseInstance *>(pDocument->GetSignals());
+    }    
     else if (!strcmp(name,kDocument_IncludeTagName))
     {
       int idx = GetAttributeIndex("url",atts);
@@ -366,6 +399,31 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
     {
       pInstance = dynamic_cast<IBaseInstance *>(CreateObjectInstance(name,atts));
       action = kElementAction_AddAsResource;
+    }
+    break;
+  case kParserState_Signals :
+    if (!strcmp(name, kDocument_SignalChannelTagName)) {
+      pInstance = dynamic_cast<IBaseInstance *>(CreateSignalChannelInstance(name, atts));
+      action = kElementAction_AddToSignals;
+    }
+    break;
+  case kParserState_SignalChannel :
+    if (!strcmp(name, kDocument_SignalTagName)) {
+      pInstance = instanceStack.top();
+      ISignalChannel *channel = dynamic_cast<ISignalChannel *>(pInstance);
+      if (channel != NULL) {
+        int idxAt = GetAttributeIndex("at", atts);
+        int idxValue = GetAttributeIndex("value", atts);
+        if ((idxAt != -1) && (idxValue != -1)) {
+            ISignal *sig = channel->AddSignal(atof(atts[idxAt+1]), atoi(atts[idxValue+1]));
+            pDocument->AddObject(pInstance,dynamic_cast<IBaseInstance *>(sig),kNodeType_ObjectInstance);
+        } else {
+            pLogger->Error("Unable to create signal at line %d - one or more attribute(s) failed!",XML_GetCurrentLineNumber(parser));
+            yapt::SetYaptLastError(kErrorClass_Import, kError_MissingIdentifier);
+        }
+      } else {
+        pLogger->Error("Unable to create signal at line %d - channel is NULL", XML_GetCurrentLineNumber(parser));
+      }
     }
     break;
   case kParserState_Timeline :
@@ -453,8 +511,10 @@ void ExpatXMLParser::doStartElement(const char *name, const char **atts)
     pDocument->AddRenderObject(instanceStack.top(),pInstance);
     break;
   case kElementAction_AddToTimeline :
-  pLogger->Debug("Addto Timeline, doc=%p",pDocument);
     pDocument->AddToTimeline(pInstance);
+    break;
+  case kElementAction_AddToSignals :
+    pDocument->AddSignalChannel(dynamic_cast<ISignalChannel *>(pInstance));
     break;
   case kElementAction_None :
     break;

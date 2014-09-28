@@ -30,6 +30,7 @@ public:
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+	virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime);
 private:
 	std::vector<Property *> properties;
 };
@@ -111,6 +112,8 @@ void PropertyTest::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstanc
 }
 void PropertyTest::PostRender(double t, IPluginObjectInstance *pInstance) {
 
+}
+void PropertyTest::Signal(int channelId, const char *channelName, int sigval, double sigtime) {
 }
 
 

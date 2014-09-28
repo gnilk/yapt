@@ -69,6 +69,9 @@ namespace yapt
   #define kDocument_IncludeTagName ("include")
   #define kDocument_TimelineTagName ("timeline")
   #define kDocument_ExecuteTagName ("execute")
+  #define kDocument_SignalsTagName ("signals")
+  #define kDocument_SignalChannelTagName ("channel")
+  #define kDocument_SignalTagName ("signal")
 
 
   // defines the module/logical unit of where the error occured
@@ -145,7 +148,10 @@ namespace yapt
     kInstanceType_MetaNode = 9,
     kInstanceType_Timeline = 10,
     kInstanceType_TimelineExecute = 11,
-    kInstanceType_Comment = 12,
+    kInstanceType_Signals = 12,
+    kInstanceType_SignalChannel = 13,
+    kInstanceType_Signal = 14,
+    kInstanceType_Comment = 15,
   } kInstanceType;
 
   typedef enum
@@ -162,7 +168,8 @@ namespace yapt
     kNodeType_Meta = 8,	// This is a meta node
     kNodeType_Include = 9,
     kNodeType_Timeline = 10,
-    kNodeType_Comment = 11,    
+    kNodeType_Signals = 11,
+    kNodeType_Comment = 12,    
   } kNodeType;
 
   typedef enum  
@@ -170,6 +177,11 @@ namespace yapt
     kPropertyHint_None = 0,
     kPropertyHint_File,
   } kPropertyHint;
+
+  typedef enum {
+    kPluginInterfaceId_Core = 0,    // this is the base interface
+    kPluingInterfaceId_UI = 1,      // UI interaction interface
+  } kPluginInterfaceIdentifier;
 
   union PropertyValue
   {
@@ -207,21 +219,40 @@ namespace yapt
     // Called once after the constructor has been called
     // You should create your properties in this call
     virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) = 0;
+
     // Called anytime after initialized when the render tree has changed
     // is called bottom up (i.e. first all children) an object can use this
     // in order to cache data from its children. If any data is changed the
     // whole tree is normally post initialized. Resources need not to care about
     // this function.
     virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) = 0;
+
     // Called when the object should render it self, can be called any time after
     // the object has been initialized (this is a tree down stream call)
     virtual void Render(double t, IPluginObjectInstance *pInstance) = 0;
+
     // Called after all childs of the object has rendered them selfs
     // on the way back from the recursive rendering. Objects implementing
     // rendering surfaces have a change to store texture data here
     // Render states can be restored, otherwise no rendering should
     // be done during PostRender
     virtual void PostRender(double t, IPluginObjectInstance *pInstance) = 0;
+
+    // Called when a signal was raised in a channel
+    virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime) = 0;
+
+    // Called by the system to check if the plugin wan't it interact with additional parts of the system
+    // other than the main rendering part
+    // NULL as return means that the interface is unsupported    
+    //virtual void *QueryInterface(kPluginInterfaceIdentifier interfaceIdentifier) = 0;
+  };
+
+  // Interface for UI callback's
+  struct IPluginUi {
+  public:
+    virtual void MouseMove();
+    virtual void MouseButtonPress();
+    virtual int HitTest();
   };
 
   // The factory must be implemented and registered to the system
@@ -323,12 +354,43 @@ namespace yapt
     virtual void CreateTimer(unsigned int idTimer, unsigned int flags) = 0;
     virtual void UpdateTimer(unsigned int idTimer, double newTime) = 0;
   };
+
   struct ITimer
   {
   public:
     virtual double GetTime() = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
+  };
+
+  struct ISignal {
+  public:
+    virtual double GetTime() = 0;
+    virtual int GetValue() = 0;
+  };
+
+  struct ISignalChannel {
+  public:
+    virtual int GetId() = 0;
+    virtual const char *GetName() = 0;
+    virtual void SetName(const char *name) = 0;
+    virtual int GetNumSignals() = 0;
+    virtual ISignal *GetSignalAt(int idx) = 0;
+    virtual ISignal *AddSignal(double t, int sigvalue) = 0;
+    virtual void RemoveSignal(int idx) = 0;
+    virtual ISignal *RaiseNext(double t) = 0;
+    virtual void RegisterSinkObject(IPluginObjectInstance *sink) = 0;
+    virtual void SendToSinks(ISignal *signal) = 0;
+  };
+
+  struct ISignals {
+  public:
+    virtual int GetNumChannels() = 0;
+    virtual ISignalChannel *GetChannel(int idx) = 0;
+    virtual ISignalChannel *GetChannel(const char *name) = 0;
+    virtual ISignalChannel *AddChannel(int id, const char *name, double accuracy) = 0;
+    virtual void RemoveChannel(int idChannel) = 0;
+    virtual void RemoveChannel(const char *name) = 0;
   };
 
   struct IResourceContainer
@@ -432,6 +494,7 @@ namespace yapt
     virtual void RenderNode(IDocNode *node, bool bForce) = 0;
     
   };
+
   struct IDocument
   {
   public:
@@ -443,6 +506,7 @@ namespace yapt
     virtual IBaseInstance *GetRenderRoot() = 0;
     virtual IResourceContainer *GetResources() = 0;	// returns root of resource tree
     virtual ITimeline *GetTimeline() = 0;
+    virtual ISignals *GetSignals() = 0;
     virtual bool HasTimeline() = 0;
 
     virtual void MoveNode (IDocNode *pNewParent, IDocNode *pNode) = 0;
@@ -453,6 +517,7 @@ namespace yapt
     virtual IDocNode *AddObject(IBaseInstance *parent, IBaseInstance *object, kNodeType nodeType) = 0;
     virtual IDocNode *AddRenderObject(IBaseInstance *parent, IBaseInstance *object) = 0;
     virtual IDocNode *AddToTimeline(IBaseInstance *object) = 0;
+    virtual IDocNode *AddSignalChannel(ISignalChannel *object) = 0;
     virtual void AddResourceObject(IBaseInstance *parent, IBaseInstance *object) = 0;
     virtual IDocNode *AddMetaObject(IBaseInstance *parent) = 0;
     virtual IDocNode *AddCommentObject(IBaseInstance *parent) = 0;
