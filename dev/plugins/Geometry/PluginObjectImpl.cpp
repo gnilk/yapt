@@ -22,3 +22,5 @@ void PluginObjectImpl::PostInitialize(ISystem *ySys, IPluginObjectInstance *pIns
 }
 void PluginObjectImpl::PostRender(double t, IPluginObjectInstance *pInstance) {
 }
+void PluginObjectImpl::Signal(int channelId, const char *channelName, int sigval, double sigtime) {
+}

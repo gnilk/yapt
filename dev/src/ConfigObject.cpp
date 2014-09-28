@@ -54,6 +54,7 @@ public:
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+	virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime);
 };
 
 
@@ -76,11 +77,11 @@ void ConfigObject::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstanc
 //	ySys->SetConfigValue("Resolution.BPP", bpp->v->int_val);
 }
 
-void ConfigObject::Render(double t, IPluginObjectInstance *pInstance)
-{
+void ConfigObject::Render(double t, IPluginObjectInstance *pInstance) {
 }
-void ConfigObject::PostRender(double t, IPluginObjectInstance *pInstance)
-{
+void ConfigObject::PostRender(double t, IPluginObjectInstance *pInstance) {
+}
+void ConfigObject::Signal(int channelId, const char *channelName, int sigval, double sigtime) {
 }
 
 IPluginObject *InternalPluginFactory::CreateObject(ISystem *pSys, const char *identifier)

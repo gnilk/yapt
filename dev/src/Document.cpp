@@ -46,6 +46,8 @@ Document::Document() :
 	BaseInstance(kInstanceType_Document)
 {
 	pContext = NULL;
+	timeline = NULL;
+	signals = NULL;
 	Initialize();
 }
 
@@ -59,6 +61,7 @@ Document::Document(IContext *pContext) :
 	// currently we setup a resource container and a render node
 
 	timeline = NULL;	// time line is optional
+	signals = NULL;
 
 	// Since we "inject" predefined stuff in the object tree it is important that we force
 	// resources first. During initalization the tree is simply traversed - resource should be initialized
@@ -147,15 +150,24 @@ IBaseInstance *Document::GetRenderRoot()
 }
 
 ITimeline *Document::GetTimeline() {
-  if (timeline == NULL) {
-    // Lazy create the time line object
-	  timeline = new Timeline();
-	  timeline->SetContext(pContext);
-	  timeline->AddAttribute("name","timeline");
-	  AddObjectToTree(dynamic_cast<IBaseInstance *>(this), timeline, kNodeType_Timeline);
-  }
+	if (timeline == NULL) {
+		// Lazy create the time line object
+		timeline = new Timeline();
+		timeline->SetContext(pContext);
+		timeline->AddAttribute("name","timeline");
+		AddObjectToTree(dynamic_cast<IBaseInstance *>(this), timeline, kNodeType_Timeline);
+	}
 	return timeline;
 }
+
+ISignals *Document::GetSignals() {
+	if (signals == NULL) {
+		signals = new Signals();
+		AddObjectToTree(dynamic_cast<IBaseInstance *>(this), signals, kNodeType_Signals);
+	}
+	return signals;
+}
+
 
 bool Document::HasTimeline() {
   return ((timeline==NULL)?false:true);
@@ -355,6 +367,10 @@ IDocNode *Document::AddToTimeline(IBaseInstance *object) {
 
 
 	return AddObjectToTree(timeline, object, kNodeType_ObjectInstance);
+}
+
+IDocNode *Document::AddSignalChannel(ISignalChannel *channel) {
+	return AddObjectToTree(signals, dynamic_cast<IBaseInstance *>(channel), kNodeType_ObjectInstance);
 }
 
 void Document::AddResourceObject(IBaseInstance *parent, IBaseInstance *object)

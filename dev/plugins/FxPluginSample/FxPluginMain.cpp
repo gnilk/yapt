@@ -30,6 +30,7 @@ public:
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+	virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime);
 };
 class MyEffect :
 	public MyBaseEffect
@@ -127,6 +128,9 @@ void MyBaseEffect::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstanc
 }
 void MyBaseEffect::PostRender(double t, IPluginObjectInstance *pInstance)
 {
+}
+void MyBaseEffect::Signal(int channelId, const char *channelName, int sigval, double sigtime) {
+	
 }
 
 // -- My effect
