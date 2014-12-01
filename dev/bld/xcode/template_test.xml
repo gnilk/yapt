@@ -8,6 +8,22 @@
 			<property name="numVertex">2048</property>
 			<property name="range">2.0, 2.0, 2.0</property>
 		</object>
+		
+		<template class="gl.DrawText" name="template_printtext">
+			<property name="font">Army.ttf</property>
+			<property name="fontsize">32</property>
+			<property name="alignment">center</property>
+			<property name="useblend">true</property>
+			<property name="color">0.1, 0.1, 0.8, 1.0</property>
+		</template>
+		<template class="gl.DrawText" name="template_printtext_large">
+			<property name="font">Army.ttf</property>
+			<property name="fontsize">64</property>
+			<property name="alignment">center</property>
+			<property name="useblend">true</property>
+			<property name="color">0.1, 0.1, 0.8, 1.0</property>
+		</template>
+
 	</resources>
 	
 	<render>
@@ -65,27 +81,18 @@
 				<property name="expression">sin(t)</property>
 			</object>
 
-			<object class="gl.DrawText" name="printtext">
-				<property name="font">Army.ttf</property>
-				<property name="fontsize">32</property>
-				<property name="alignment">center</property>
+
+
+			<object template="template_printtext" name="printtext">
 				<property name="position">0,0.32,0</property>
 				<property name="text">THE PHENOMENAL</property>
-				<property name="useblend">true</property>
-				<property name="color">0.1, 0.1, 0.8, 1.0</property>
 				<property name="alpha" source="text1.alpha" />
 			</object>
-			<object class="gl.DrawText" name="printtext2">
-				<property name="font">Army.ttf</property>
-				<property name="fontsize">64</property>
-				<property name="alignment">center</property>
+			<object template="template_printtext_large" name="printtext2">
 				<property name="position">0,0,0</property>
 				<property name="text">NOICE</property>
 			</object>
-			<object class="gl.DrawText" name="printtext2">
-				<property name="font">Army.ttf</property>
-				<property name="fontsize">32</property>
-				<property name="alignment">center</property>
+			<object template="template_printtext" name="printtext2">
 				<property name="position">0,-0.20,0</property>
 				<property name="text">ASSOCIATION</property>
 			</object>

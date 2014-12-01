@@ -15,6 +15,7 @@
 
 using namespace yapt;
 using namespace Goat;	// Curve is within the Goat namespace...
+using namespace gnilk;	// Expression solver
 
 ISystem *pSysPtr; // Used by curve to query the logger..
 
@@ -120,7 +121,7 @@ protected:
     // events
 public:
     double OnConstantUserExpression(const char *data, int *bOk_out);
-    double OnFunctionExpression(const char *data, double arg, int *bOk_out);
+    double OnFunctionExpression(const char *data, int args, double *arg, int *bOk_out);
     // interface
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
@@ -357,9 +358,9 @@ extern "C" {
         YaptExpSolverFacade *pFacade = (YaptExpSolverFacade *)pUser;
         return pFacade->OnConstantUserExpression(pData, bOk_out);
     }    
-    static  double CALLCONV cbExpFunc(void *pUser, const char *pData, double arg, int *bOk_out) {
+    static  double CALLCONV cbExpFunc(void *pUser, const char *pData, int args, double *arg, int *bOk_out) {
         YaptExpSolverFacade *pFacade = (YaptExpSolverFacade *)pUser;
-        return pFacade->OnFunctionExpression(pData, arg, bOk_out);
+        return pFacade->OnFunctionExpression(pData, args, arg, bOk_out);
     }    
 }
 
@@ -376,18 +377,21 @@ double YaptExpSolverFacade::OnConstantUserExpression(const char *data, int *bOk_
     
     return result;
 }
-double YaptExpSolverFacade::OnFunctionExpression(const char *data, double arg, int *bOk_out) {
+double YaptExpSolverFacade::OnFunctionExpression(const char *data, int args, double *arg, int *bOk_out) {
     double result = 0.0;
     *bOk_out = 0;
     if (!strcmp(data,"sin")) {
         *bOk_out = 1;
-        result = sin(arg);
+        result = sin(arg[0]);
     } else  if (!strcmp(data,"cos")) {
         *bOk_out = 1;
-        result = cos(arg);
+        result = cos(arg[0]);
     } else  if (!strcmp(data,"abs")) {
         *bOk_out = 1;
-        result = fabs(arg);
+        result = fabs(arg[0]);
+    } else  if ((!strcmp(data,"pow")) && (args == 2)) {
+        *bOk_out = 1;
+        result = pow(arg[0],arg[1]);
     }    
     
     return result;

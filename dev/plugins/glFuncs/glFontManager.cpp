@@ -1,10 +1,17 @@
 #include "glShaderBase.h"
 #include "glFontManager.h"
 
+#include "StringUtil.h"
+
+#include "Bitmap.h"
+
+
 #include "yapt/ySystem.h"
 #include "yapt/logger.h"
 
 
+#include <vector>
+#include <fstream>
 #include <math.h>
 #include <OpenGl/glu.h>
 
@@ -39,15 +46,43 @@ FontManager *FontManager::GetInstance(ISystem *ysys) {
 	return instance;
 }
 
+static bool StrEnds (std::string const &fullString, std::string const &ending)
+{
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
+
 Font *FontManager::GetFont(std::string family, int size) {
+
 	Font *font = NULL;
-	// Look through cache
-	for(int i=0;i<fonts.size();i++) {
-		if ((family == fonts[i]->Family()) && (size == fonts[i]->Size())) {
-			psys->GetLogger("FontManager")->Debug("Found font '%s' with size %d in cached",family.c_str(), size);
-			return fonts[i];
-		}
+	if (StrEnds(family, std::string(".fnt"))) {
+		font = LoadBitmapFont(family);
+	} else {
+		font = LoadTrueTypeFont(family, size);	
 	}
+
+	return font;
+}
+
+Font *FontManager::LoadBitmapFont(std::string filename) {
+	Font *font = GetFromCache(filename, 0);	// bitmap font's have no size
+	if (font != NULL) return font;
+
+	psys->GetLogger("FontManager")->Debug("Loading bitmap font '%s'", filename.c_str());
+
+	font = new BitmapFont(filename);
+	font->Build();
+	fonts.push_back(font);
+
+	return font;
+}
+Font *FontManager::LoadTrueTypeFont(std::string family, int size) {
+	Font *font = GetFromCache(family, size);
+
+	if (font != NULL) return font;
 
 	psys->GetLogger("FontManager")->Debug("Building font '%s' with size %d (not cached), building",family.c_str(), size);
 	// not cached, create new and cache
@@ -65,9 +100,155 @@ Font *FontManager::GetFont(std::string family, int size) {
 	return font;
 }
 
+Font *FontManager::GetFromCache(std::string name, int size) {
+	// Look through cache
+	for(int i=0;i<fonts.size();i++) {
+		if ((name == fonts[i]->Family()) && (size == fonts[i]->Size())) {
+			psys->GetLogger("FontManager")->Debug("Found font '%s' with size %d in cached",name.c_str(), size);
+			return fonts[i];
+		}
+	}
+	return NULL;	
+}
+
+
+//
+// -- Bitmap font
+//
+
+BitmapFont::BitmapFont(std::string filename) :
+	Font(filename)
+{
+	this->filename = filename;
+	for(int i=0;i<256;i++) {
+		chardefs[i] = new BitmapCharDef(i);
+	}
+	bitmap = NULL;
+
+}
+
+void BitmapFont::Build() {
+
+	if (isBuilt) return;
+
+	if (!LoadFontMap()) {
+		psys->GetLogger("BitmapFont")->Error("Failed to load font map");
+		return;
+	}
+
+	for(int i=0;i<256;i++) {
+		if (chardefs[i]->Used()) {
+			BitmapCharDef *character = chardefs[i];
+
+			psys->GetLogger("BitmapFont")->Debug("Char '%c' (X:%d, Y:%d), (W:%d, H:%d)",i,character->X(), character->Y(), character->Width(), character->Height());
+			Bitmap *bmpChar = bitmap->CopyToNew(character->X(), character->Y(), character->Width(), character->Height());
+
+			FontChar *fc = new FontChar(i, 0, 0, bmpChar->Width(), bmpChar->Height(), bmpChar);
+			//FontChar *fc = new FontChar(i, 0, 0, bitmap->Width(), bitmap->Height(), bitmap);
+			fc->GenerateTexture();
+			AddChar(i, fc);
+		}
+	}
+
+	isBuilt = true;
+}
+
+FontChar *BitmapFont::Draw(int character, float x, float y) {
+	FontChar *c = GetChar(character);
+
+	if (c != NULL) {
+		c->Draw(x,y,sx,sy);
+	} else {
+		//printf("not found\n");
+	}
+	return c;
+
+}
+void BitmapFont::Draw(std::string str, float x, float y) {
+
+	for(int i=0;i<str.length();i++) {
+		FontChar *c = GetChar(str.at(i));
+		if (!c)	{
+			continue;
+		}
+		//printf("%c at %f,%f\n",str.at(i),x,y);
+		c->Draw(x,y,sx,sy);
+		x+=c->AdvanceX() * sx;
+		//y+=c->AdvanceY();
+	}
+}
+
+void BitmapFont::Estimate(std::string str, float *out_width, float *out_height) {
+	float x,y;
+	x = y = 0;
+	for(int i=0;i<str.length();i++) {
+		FontChar *c = GetChar(str.at(i));
+		if (!c)	continue;
+		x+=c->AdvanceX() * sx;
+		y =c->AdvanceY() * sy;
+	}
+	*out_width = x;
+	*out_height = y;
+}
+
+bool BitmapFont::LoadFontMap() {
+    const char *fn = filename.c_str();
+    FILE *f = fopen(fn, "rb");			// TODO: Replace with noice.io
+    if (f == NULL) {
+    	psys->GetLogger("BitmapFont")->Error("Unable to open file '%s'",fn);
+    	return false;
+    }
+
+	bool result = true;
+    char tmp[256];
+    while (!feof(f)) {
+        fgets(tmp, 256, f);
+        std::vector<std::string> tokens;
+        StringUtil::Split(tokens, tmp, ',');
+        if (tokens[0] == std::string("image")) {
+            // image
+            bitmap = Bitmap::LoadPNGImage(tokens[1]);
+            if (bitmap == NULL) {
+                //qDebug() << "Failed to load image file: " << tokens[1].c_str();
+                psys->GetLogger("BitmapFont")->Error("Unable to open image file '%s'",tokens[1].c_str());
+                result = false;
+                break;
+            }
+            //qDebug() << "Ok, Loaded Font Map Image";
+        } else if (tokens[0] == std::string("char")) {
+            // char mapping
+            int ch = atoi(tokens[1].c_str());
+            int x = atoi(tokens[2].c_str());
+            int y = atoi(tokens[3].c_str());
+            int w = atoi(tokens[4].c_str());
+            int h = atoi(tokens[5].c_str());
+
+            chardefs[ch]->SetPos(x,y,w,h);
+            //qDebug() << "Ok, Mapped char " << ch;
+        }
+    }
+    fclose(f);
+    return result;
+}
+
+
+
+
+
 //
 // -- Font
 //
+Font::Font(std::string family) {
+	this->family = family;
+	this->size = 0;
+
+	for(int i=0;i<256;i++) {
+		characters[i] = NULL;
+	}
+	isBuilt = false;
+	this->sx = this->sy = 1;
+
+}
 Font::Font(std::string family, int size, FT_Face face) {
 	this->family = family;
 	this->size = size;
@@ -76,9 +257,13 @@ Font::Font(std::string family, int size, FT_Face face) {
 	for(int i=0;i<256;i++) {
 		characters[i] = NULL;
 	}
+	isBuilt = false;
 }
 
 void Font::Build() {
+
+	if (isBuilt) return;
+
 	static std::string lowerCase="abcdefghijklmnopqrstuvwxyzåäö";
 	static std::string upperCase="ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ ";
 	static std::string otherChars="01234567890!@#$\'\"";
@@ -86,6 +271,8 @@ void Font::Build() {
 	BuildTexturesForString(lowerCase);
 	BuildTexturesForString(upperCase);
 	BuildTexturesForString(otherChars);
+
+	isBuilt = true;
 }
 
 void Font::BuildTexturesForString(std::string &string) {
@@ -129,13 +316,14 @@ void Font::SetRenderScaling(float sx, float sy) {
 	this->sy = sy;
 }
 
-void Font::Draw(int character, float x, float y) {
+FontChar *Font::Draw(int character, float x, float y) {
 	FontChar *c = GetChar(character);
 	if (c != NULL) {
 		c->Draw(x,y,sx,sy);
 	} else {
-		printf("not found\n");
+		//printf("not found\n");
 	}
+	return c;
 }
 void Font::Draw(std::string str, float x, float y) {
 	for(int i=0;i<str.length();i++) {
@@ -241,24 +429,4 @@ void FontChar::Draw(float x, float y, float sx, float sy) {
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 }
-
-//
-// -- bitmap data for font
-//
-Bitmap::Bitmap(int w, int h, unsigned char *buffer) {
-	this->width = w;
-	this->height = h;
-	this->buffer = (unsigned char *)malloc(sizeof(char) * w * h *4);
-	for(int i=0;i<w*h;i++) {
-		this->buffer[i*4+0] = buffer[i];
-		this->buffer[i*4+1] = buffer[i];
-		this->buffer[i*4+2] = buffer[i];
-		this->buffer[i*4+3] = buffer[i];
-	}
-}
-Bitmap::~Bitmap() {
-	free(this->buffer);
-}
-
-
 

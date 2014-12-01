@@ -1,6 +1,6 @@
 # Blender v2.71 (sub 0) OBJ File: 'enigma_helicopter_v2_tri.blend'
 # www.blender.org
-mtllib enigma_helicopter_v2.mtl
+mtllib enigma_helicopter_v2_tri.mtl
 o Cube
 v -0.967008 -1.000000 1.000000
 v -0.967008 -1.000000 -1.000000

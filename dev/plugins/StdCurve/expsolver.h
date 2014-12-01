@@ -2,7 +2,7 @@
 
 #include "tokenizer.h"
 
-namespace Goat
+namespace gnilk
 {
 
 	#ifdef WIN32
@@ -11,10 +11,15 @@ namespace Goat
 	#define CALLCONV
 	#endif
 
+	#define EXP_SOLVER_MAX_ARGS 32
+
+	using namespace Goat;
+
+
 	extern "C"
 	{
 		typedef double (CALLCONV *PFNEVALUATE)(void *pUser, const char *data, int *bOk_out);
-		typedef double (CALLCONV *PFNEVALUATEFUNC)(void *pUser, const char *data, double arg, int *bOk_out);
+		typedef double (CALLCONV *PFNEVALUATEFUNC)(void *pUser, const char *data, int args, double *arg, int *bOk_out);
 	}
 
 	class BaseNode
@@ -30,7 +35,7 @@ namespace Goat
 	protected:
 		double numeric;
 	public:
-		ConstNode(const char *input);
+		ConstNode(const char *input, bool negative);
 		virtual ~ConstNode();
 		double Evaluate();
 	};
@@ -53,9 +58,11 @@ namespace Goat
 		void *pUser;
 		const char *sFuncName;
 		PFNEVALUATEFUNC pCallback;
-		BaseNode *pArgument;
+		int args;
+		BaseNode *pArgument[EXP_SOLVER_MAX_ARGS];
 	public:
 		FuncNode(PFNEVALUATEFUNC func, void *pUser, const char *name, BaseNode *pArg);
+		FuncNode(PFNEVALUATEFUNC func, void *pUser, const char *name, int args, BaseNode **pArg);
 		virtual ~FuncNode();
 		double Evaluate();
 	};
@@ -72,6 +79,7 @@ namespace Goat
 		double Evaluate();
 	};
 
+
 	class ExpSolver
 	{
 	protected:
@@ -80,6 +88,9 @@ namespace Goat
 
 		void *pVariableContext;
 		void *pFunctionContext;
+
+		// int argcounter;
+		// BaseNode *funcargs[EXP_SOLVER_MAX_ARGS];
 
 		Tokenizer *tokenizer;
 		BaseNode *tree;
@@ -105,6 +116,7 @@ namespace Goat
 		void RegisterUserFunctionCallback(PFNEVALUATEFUNC pFunc, void *pUser);
 		bool Prepare();
 		double Evaluate();
+        static bool Solve(double *out, const char *expression);
 	};
 
 }

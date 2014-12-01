@@ -1,5 +1,5 @@
 #include "glShaderBase.h"
-#include "glDrawText.h"
+#include "glTextScroll.h"
 #include "glFontManager.h"
 
 #include "yapt/ySystem.h"
@@ -19,7 +19,7 @@ using namespace yapt;
 #define M_PI 3.1415926535897932384
 #endif
 
-void OpenGLDrawText::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+void OpenGLTextScroll::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 	font = pInstance->CreateProperty("font", kPropertyType_String, "Arial.ttf", "");
 	fontSize = pInstance->CreateProperty("fontsize", kPropertyType_Integer, "24", "");
 	text = pInstance->CreateProperty("text", kPropertyType_String, "hello world!", "");
@@ -34,10 +34,10 @@ void OpenGLDrawText::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance)
 	useShaders = false;
 }
 
-void OpenGLDrawText::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+void OpenGLTextScroll::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
-	//textureFont = FontManager::GetInstance(ySys)->GetFont(std::string(font->v->string), fontSize->v->int_val);
-	textureFont = FontManager::GetInstance(ySys)->LoadBitmapFont(std::string("fontmap.fnt"));
+	textureFont = FontManager::GetInstance(ySys)->GetFont(std::string(font->v->string), fontSize->v->int_val);
+	//textureFont = FontManager::GetInstance(ySys)->LoadBitmapFont(std::string("fontmap.fnt"));
 	//new Font(std::string(font->v->string), fontSize->v->int_val, face);
 	textureFont->Build();
 
@@ -58,7 +58,7 @@ void OpenGLDrawText::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInsta
 	}
 }
 
-void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
+void OpenGLTextScroll::Render(double t, IPluginObjectInstance *pInstance) {
 	// Render bitmaps
 	IContext *pContext = dynamic_cast<IBaseInstance *>(pInstance)->GetContext();
 	IRenderContextParams *contextParams = (IRenderContextParams *)pContext->TopContextParamObject();
@@ -106,15 +106,25 @@ void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 			break;
 	}
 
-//	printf("alignment: %d\n",alignment->v->int_val);
 	if (useblend->v->boolean == true) {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glColor4f(color->v->rgba[0], color->v->rgba[1], color->v->rgba[2], alpha->v->float_val);
-//		glColor4f(1,1,1, alpha->v->float_val);
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);		
 	}
-	textureFont->Draw(str,xp,yp);
+
+	float dxp = width * sx + xp;
+
+	textureFont->Draw(str,dxp,yp);
+
+	// std::string text("HELLO WORLD THIS IS A DYCP TESTING OF SCROLLER FUNCTIONALITY");
+	// for(int i = 0; i<text.length(); i++) {
+	// 	FontChar *ch = textureFont->Draw(text.at(i), dxp, sin(t + i*3.14/24.0f));
+	// 	dxp += ch->AdvanceX() * sx;
+
+	// 	if (dxp > ((width/2.0)*sx)) break;
+	// }
+
 	glPopMatrix();
 
 	if (useShaders) {
@@ -126,6 +136,6 @@ void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 
 }
 
-void OpenGLDrawText::PostRender(double t, IPluginObjectInstance *pInstance) {
+void OpenGLTextScroll::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }

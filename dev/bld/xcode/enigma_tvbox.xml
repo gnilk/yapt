@@ -107,10 +107,19 @@
 				</object>
 
 				<object class="Numeric.VectorMux" name="plotball.bounce.position">
-					<property name="x">0</property>
-					<property name="y" source="plotball.bounce.y" />
+					<property name="x">cos(t*2.0)*2.0</property>
+					<!-- <property name="y" source="plotball.bounce.y" /> -->
+					<property name="y">0</property>
 					<property name="z">0</property>
 				</object>
+
+				<object class="Animation.VectorExpression" name="plotball.position">
+					<property name="x">2.0*cos(t)</property>
+					<!-- <property name="y">abs(cos(t*2.0))-0.3</property> -->
+					<property name="y">0</property>
+					<property name="z">2.0*sin(t)</property>
+				</object>
+	
 
 				<object class="Animation.VectorExpression" name="plotball.rotation">
 					<property name="x">t*64</property>
@@ -120,7 +129,7 @@
 
 
 				<object class="gl.Transform" name="prs_ball">
-					<property name="position" source="plotball.bounce.position" />
+					<property name="position" source="plotball.position" />
 					<property name="rotation" source="plotball.rotation" />
 				</object>
 
@@ -143,12 +152,45 @@
 					<property name="tex5" source="tvbox_starfield.texture" />
 				</object>
 
+
+			<!-- scroller -->
+			<object class="gl.RenderContext" name="drawtext">
+				<property name="fov">35.0</property>
+				<property name="clear">false</property>
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,-4</property>
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="text1.alpha">
+					<property name="expression">1</property>
+				</object>
+				<object class="Animation.VectorExpression" name="text1.scrollpos">
+					<property name="x">2+-1*t</property>
+					<property name="y">-0.75</property>
+					<property name="z">0</property>
+				</object>
+				<object class="gl.TextScroll" name="scroller">
+					<property name="font">Army.ttf</property>
+					<property name="fontsize">32</property>
+					<property name="alignment">none</property>
+					<!-- <property name="position">0,0.32,0</property> -->
+					<property name="position" source="text1.scrollpos" />
+					<property name="text">LOOK A NICE DEMO WITH A SCROLLER ABCDEFGHIJKLMNOPQRSTUVWXYZ</property>
+					<property name="useblend">true</property>
+					<property name="color">1.0, 1.0, 1.0, 1.0</property>					
+				</object>
+			</object>
+
+
+
 			</object>
 
 			<object class="gl.RenderContext" name="render_to_screen">
+				
 				<object class="gl.FullScreenImage" name="feedback">
 					<property name="texture" source="tvbox_main_target.texture"/>
-					<!-- <property name="texture" source="tvbox_starfield.texture"/> -->
 				</object>		
 
 			</object>
