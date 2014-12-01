@@ -16,7 +16,7 @@
 using namespace yapt;
 
 
-class OpenGLDrawText: public PluginObjectImpl, public OpenGLShaderBase {
+class OpenGLTextScroll: public PluginObjectImpl, public OpenGLShaderBase {
 private:
 	// input
 	Property *font;

@@ -14,6 +14,7 @@
 
 #include "PluginObjectImpl.h"
 #include "glShaderBase.h"
+#include "Bitmap.h"
 
 using namespace yapt;
 
@@ -33,23 +34,13 @@ private:
 public:
 	static FontManager *GetInstance(ISystem *ysys);
 	Font *GetFont(std::string family, int size);
-};
-
-
-// Encapsulation of a bitmap
-class Bitmap {
+	Font *LoadBitmapFont(std::string filename);
+	Font *LoadTrueTypeFont(std::string filename, int size);
 private:
-	int width;
-	int height;
-	unsigned char *buffer;
-public:
-	Bitmap(int w, int h, unsigned char *buffer);
-	virtual ~Bitmap();	
-
-	int Width() { return width; }
-	int Height() { return height; }
-	unsigned char *Buffer() { return buffer; }
+	Font *GetFromCache(std::string name, int size);
 };
+
+
 
 class FontChar {
 private:
@@ -74,20 +65,58 @@ private:
 	unsigned int idTexture;	
 };
 
+class BitmapCharDef {
+private:
+	int ch;
+	int used;
+	int x,y,width,height;
+public:
+	BitmapCharDef(int ch) {
+		this->used = 0;
+        this->ch = ch;
+	}
+    void SetPos(int x, int y, int w, int h) {
+        this->x = x;
+        this->y = y;
+        this->width = w;
+        this->height = h;
+        this->used = 1;
+    }
+    int X() {
+        return x;
+    }
+    int Y() {
+        return y;
+    }
+    int Width() {
+        return width;
+    }
+    int Height() {
+        return height;
+    }
+	bool Used() {
+		return this->used==1?true:false;
+	}
+};
+
+
 class Font {
 private:
 	std::string family;
 	int size;
 	FT_Face face; 
 	int numChars;
-	float sx, sy;
 	//FontChar *chars;
 	FontChar *characters[256];;
+protected:
+	float sx, sy;
+	bool isBuilt;
 public:
+	Font(std::string family);
 	Font(std::string family, int size, FT_Face face);
-	void Build();
-	void BuildTexturesForString(std::string &string);
+	virtual void Build();
 
+	void BuildTexturesForString(std::string &string);
 
 	int Count() { return numChars; }
 	void AddChar(int character, FontChar *fc);
@@ -95,10 +124,26 @@ public:
 	// render stuff
 	void Bind(int character);
 	void SetRenderScaling(float sx, float sy);
-	void Draw(int character, float x, float y);
-	void Draw(std::string str, float x, float y);
-	void Estimate(std::string str, float *out_width, float *out_height);
-	int Size() { return size; }
-	std::string Family() { return family; }
+	virtual FontChar *Draw(int character, float x, float y);
+	virtual void Draw(std::string str, float x, float y);
+	virtual void Estimate(std::string str, float *out_width, float *out_height);
+	virtual int Size() { return size; }
+	virtual std::string Family() { return family; }
 };
 
+
+class BitmapFont : public Font {
+	std::string filename;
+	Bitmap *bitmap;	// raw bitmap
+	BitmapCharDef *chardefs[256];	// induvidual bitmaps per char
+
+public:
+	BitmapFont(std::string filename);
+	virtual void Build();
+	virtual FontChar *Draw(int character, float x, float y);
+	virtual void Draw(std::string str, float x, float y);
+	virtual void Estimate(std::string str, float *out_width, float *out_height);
+private:
+	bool LoadFontMap();
+
+};

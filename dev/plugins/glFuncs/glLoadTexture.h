@@ -4,6 +4,7 @@
 #include "yapt/logger.h"
 
 #include "PluginObjectImpl.h"
+#include "Bitmap.h"
 
 using namespace yapt;
 
@@ -16,5 +17,7 @@ public:
 private:
   Property *filename;
   Property *outputTexture;
+  unsigned int idTexture;
+  Bitmap *bitmap;
 };
 

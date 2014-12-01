@@ -1,4 +1,5 @@
 #include "glLoadTexture.h"
+#include "Bitmap.h"
 
 #include "yapt/ySystem.h"
 #include "yapt/logger.h"
@@ -15,34 +16,44 @@ using namespace yapt;
 // -- Render context
 //
 void OpenGLLoadTexture::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
-  filename = pInstance->CreateProperty("filename",kPropertyType_String,"texture.jpg","");
+  filename = pInstance->CreateProperty("filename",kPropertyType_String,"texture.png","");
   pInstance->SetPropertyHint("filename",kPropertyHint_File);
   outputTexture = pInstance->CreateOutputProperty("texture",kPropertyType_Integer,"0","");
 }
 void OpenGLLoadTexture::Render(double t, IPluginObjectInstance *pInstance) {
-  GLuint textureID;
-
-  // Generate and bind our texture ID
-  glGenTextures(1, &textureID);
-  glBindTexture(GL_TEXTURE_2D, textureID);
-
-  // Load texture from file into video memory, including mipmap levels
-  // if(!glfwLoadTexture2D(filename->v->string, GLFW_BUILD_MIPMAPS_BIT))
-  // {
-  //   fprintf(stderr, "Failed to load texture %s\n", filename->v->string);
-  //   glfwTerminate();
-  //   exit(EXIT_FAILURE);
-  // }
-
-  // Use trilinear interpolation (GL_LINEAR_MIPMAP_LINEAR)
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-  outputTexture->v->int_val = textureID;
+  outputTexture->v->int_val = idTexture;
 }
 
 void OpenGLLoadTexture::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
+  bitmap = Bitmap::LoadPNGImage(filename->v->string);
+  if (bitmap == NULL) {
+    ySys->GetLogger("gl.LoadTexture")->Error("Unable to load PNG file from: %s", filename->v->string);
+    return;
+  }
+
+  glGenTextures(1, &idTexture);
+  glBindTexture(GL_TEXTURE_2D, idTexture);
+  //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+
+  // TODO:
+  // - Add parametes to control clamping, magnification and mip-maps
+
+
+  /* Clamping to edges is important to prevent artifacts when scaling */
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+  /* Linear filtering usually looks best for text */
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bitmap->Width(), bitmap->Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap->Buffer());
+
+  outputTexture->v->int_val = idTexture;
+
+  ySys->GetLogger("gl.LoadTexture")->Debug("PNG File '%s' loaded ok", filename->v->string);
 }
 
 void OpenGLLoadTexture::PostRender(double t, IPluginObjectInstance *pInstance) {

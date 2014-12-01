@@ -1,0 +1,27 @@
+#pragma once
+
+#include <string>
+
+// Encapsulation of a bitmap
+class Bitmap {
+private:
+	int width;
+	int height;
+	unsigned char *buffer;
+public:
+	Bitmap(int w, int h);
+	Bitmap(int w, int h, unsigned char *buffer);
+	virtual ~Bitmap();	
+
+	static Bitmap *FromAlpha(int w, int h, unsigned char *srcData);
+	static Bitmap *FromRGBA(int w, int h, unsigned char *srcData);
+	static Bitmap *LoadPNGImage(std::string imagefile);
+
+	int Width() { return width; }
+	int Height() { return height; }
+	unsigned char *Buffer() { return buffer; }
+	unsigned char *Buffer(int x, int y);
+
+	Bitmap *CopyToNew(int x, int y, int w, int h);
+};
+

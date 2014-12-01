@@ -10,12 +10,16 @@ Modified: $Date: $ by $Author: FKling $
 ---------------------------------------------------------------------------
 TODO: [ -:Not done, +:In progress, !:Completed]
 <pre>
- - implement negative numbers 
- - Multiple function arguments
+ ! implement negative numbers 
+ ! Multiple function arguments
 </pre>
 
 
 \History
+- 04.08.14, FKling, Fixed bug related to priority of expressions and functions
+                    Added multiple function arguments
+                    Support for nested function calls
+- 14.03.14, FKling, published on git hub
 - 25.10.09, FKling, Implementation
 
 ---------------------------------------------------------------------------*/
@@ -29,6 +33,7 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 #include "tokenizer.h"
 #include "expsolver.h"
 
+using namespace gnilk;
 using namespace Goat;
 
 BaseNode::~BaseNode()
@@ -36,9 +41,12 @@ BaseNode::~BaseNode()
 	// nothing
 }
 
-ConstNode::ConstNode(const char *input)
+ConstNode::ConstNode(const char *input, bool negative)
 {
 	numeric = atof(input);
+	if (negative) {
+		numeric *= -1;
+	}
 }
 
 ConstNode::~ConstNode()
@@ -50,6 +58,7 @@ double ConstNode::Evaluate()
 {
 	return numeric;
 }
+
 
 ConstUserNode::ConstUserNode(PFNEVALUATE func, void *pUser, const char *input)
 {
@@ -77,21 +86,41 @@ FuncNode::FuncNode(PFNEVALUATEFUNC func, void *pUser, const char *name, BaseNode
 {
 	this->pUser = pUser;
 	pCallback = func;
+	args=0;
 	sFuncName = strdup(name);
-	pArgument = pArg;
+	pArgument[args++] = pArg;
 }
+
+FuncNode::FuncNode(PFNEVALUATEFUNC func, void *pUser, const char *name, int args, BaseNode **pArg)
+{
+	this->pUser = pUser;
+	pCallback = func;
+	sFuncName = strdup(name);
+	this->args = 0;
+	for(int i = 0; i<args; i++) {
+		pArgument[this->args++] = pArg[i];
+	}
+}
+
 
 FuncNode::~FuncNode()
 {
 	free((void *)sFuncName);
-	delete (pArgument);
+	for(int i=0;i<args;i++)
+		delete (pArgument[i]);
+	args = 0;
 }
 
 double FuncNode::Evaluate()
 {
 	int ok = 0;
-	double arg = pArgument->Evaluate();
-	return pCallback(pUser, sFuncName, arg, &ok);
+
+	//printf("Calling '%s' with %d arguments\n", sFuncName, args);
+	double values[EXP_SOLVER_MAX_ARGS];
+	for(int i=0;i<args;i++) {
+		values[i] = pArgument[i]->Evaluate();
+	}
+	return pCallback(pUser, sFuncName, args, values, &ok);
 }
 
 //
@@ -130,9 +159,17 @@ double BinOpNode::Evaluate()
 ExpSolver::ExpSolver(const char *expression)
 {
 	//this->expression = strdup(expression);
-	tokenizer = new Tokenizer(expression,"*/+-()");
+	tokenizer = new Tokenizer(expression,"*/+-(),");
 	pVariableCallback = NULL;
+	pFuncCallback = NULL;
 	tree = NULL;
+}
+bool ExpSolver::Solve(double *out, const char *expression)
+{
+    ExpSolver solver(expression);
+    if (!solver.Prepare()) return false;
+    *out = solver.Evaluate();
+    return true;
 }
 
 ExpSolver::~ExpSolver()
@@ -167,7 +204,7 @@ void ExpSolver::RegisterUserFunctionCallback(PFNEVALUATEFUNC pFunc, void *pUser)
 //
 static bool IsNumeric(char c)
 {
-	static char *num="0123456789";
+	static char *num="-0123456789";
 	if (!strchr(num,c)) return false;
 	return true;
 }
@@ -194,21 +231,41 @@ ExpSolver::kTokenClass ExpSolver::ClassifyFactor(const char *token)
 BaseNode *ExpSolver::BuildUserCall()
 {
 	BaseNode *exp = NULL;
+	BaseNode *arg = NULL;
+	int argcounter = 0;
+	BaseNode *funcargs[EXP_SOLVER_MAX_ARGS];
+
+
 	const char *token = tokenizer->Next();
 
 	const char *next = tokenizer->Peek();
 	if ((next != NULL) && (next[0]=='('))
 	{
 		next = tokenizer->Next();
-		BaseNode *arg = BuildTree();
+
+		// Assume arguments to function call..
+		arg = BuildTree();
+
+		// null == Empty expression - i.e. no parameters to function call
+		if (arg != NULL) {
+			funcargs[argcounter++] = arg;			
+		}
 		next = tokenizer->Peek();
-		// TODO: if next == ',' create tree and push on argument stack
+
+		// Parse additional arguments
+		while(next[0] == ',') {
+			tokenizer->Next();
+			arg = BuildTree();
+			funcargs[argcounter++] = arg;
+			next = tokenizer->Peek();
+		}			
+
 		if (next[0] == ')')
 		{
 			tokenizer->Next();
 			if (pFuncCallback != NULL)
 			{
-				exp = new FuncNode(pFuncCallback, pFunctionContext, token, arg);
+				exp = new FuncNode(pFuncCallback, pFunctionContext, token, argcounter, funcargs);
 			} else
 			{
 				printf("[!] Error: No functional callback assigned\n");
@@ -239,23 +296,11 @@ BaseNode *ExpSolver::BuildFact()
 	BaseNode *exp = NULL;
 	kTokenClass tc = kTokenClass_Unknown;
 	const char *token = tokenizer->Peek();
-
 	// classify next 
-	if ((tc = ClassifyFactor(token)) != kTokenClass_Unknown)
-	{
-		switch (tc)
-		{
-		case kTokenClass_Numeric :
-			token = tokenizer->Next();
-			exp = new ConstNode(token);
-			break;
-		case kTokenClass_Variable :
-			exp = BuildUserCall();
-			break;
-		}
-	} else if (token[0]=='(')	// Start of new expression, ok, build tree..
+	if (token[0]=='(')	// Start of new expression, ok, build tree..
 	{
 		token = tokenizer->Next();
+
 		exp = BuildTree();
 
 		token = tokenizer->Peek();
@@ -267,6 +312,32 @@ BaseNode *ExpSolver::BuildFact()
 			return NULL;
 		}
 		tokenizer->Next();
+	} else if (token[0]==')')	// empty expression
+	{
+		return NULL;
+	} else if ((tc = ClassifyFactor(token)) != kTokenClass_Unknown)
+	{
+		switch (tc)
+		{
+		case kTokenClass_Numeric :
+			{
+				bool negative = false;
+				token = tokenizer->Next();
+				// Ugly - but I want to avoid string concat
+				// will not handle multiple '--'
+				if (token[0] == '-') {
+					// negative numeric token
+					token = tokenizer->Next();
+					negative = true;
+
+				}
+				exp = new ConstNode(token, negative);
+			}
+			break;
+		case kTokenClass_Variable :
+			exp = BuildUserCall();
+			break;
+		}
 	} else
 	{
 		printf("[!] Error: Unexpected token: %s\n",token);
@@ -330,6 +401,7 @@ bool ExpSolver::Prepare()
 		delete tree;
 		tree = NULL;
 	}
+	//argcounter = 0;
 	tree = BuildTree();
 	return true;
 }

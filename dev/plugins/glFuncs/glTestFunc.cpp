@@ -41,7 +41,7 @@ void OpenGLRenderContext::Render(double t, IPluginObjectInstance *pInstance) {
 	// Select and setup the projection matrix
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(fov->v->float_val, (GLfloat) width/ (GLfloat) height, 1.0f, 100.0f);
+	gluPerspective(fov->v->float_val, (GLfloat) width/ (GLfloat) height, 1.0f, 1000.0f);
 
 	// Select and setup the modelview matrix
 	glMatrixMode(GL_MODELVIEW);

@@ -27,6 +27,9 @@
 #include "glDrawQuads.h"
 #include "glDrawLines.h"
 #include "glDrawText.h"
+#include "glTextScroll.h"
+#include "glWavefront.h"
+#include "glPreserveState.h"
 
 using namespace yapt;
 
@@ -78,11 +81,20 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.DrawQuads")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawQuads());
   }
+  if (!strcmp(identifier, "gl.DrawWaveFront")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLWaveFront());
+  }
+  if (!strcmp(identifier, "gl.PreserveState")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLPreserveState());
+  }
   if (!strcmp(identifier, "gl.ShaderQuad")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLShaderQuad());
   }
   if (!strcmp(identifier, "gl.DrawText")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawText());
+  }
+  if (!strcmp(identifier, "gl.TextScroll")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLTextScroll());
   }
   if (!strcmp(identifier, "gl.RenderTest")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLRenderToTexture());
@@ -111,7 +123,12 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawPoints");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawLines");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawQuads");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawWaveFront");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawText");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.TextScroll");
+
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.PreserveState");
+
 
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.FullScreenImage");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.ShaderQuad");
