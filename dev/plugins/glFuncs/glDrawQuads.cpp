@@ -8,7 +8,14 @@
 
 
 #include <math.h>
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#else
 #include <OpenGl/glu.h>
+#endif
 
 using namespace yapt;
 

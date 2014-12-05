@@ -1,1 +1,7 @@
 dev/ext/*
+*.ilk
+*.log
+*.suo
+*.tlog
+*.idb
+*.pdb

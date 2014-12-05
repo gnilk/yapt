@@ -1,5 +1,5 @@
 LIBRARY	glFuncs
-VERSION 2.0.0
+VERSION 2
 EXPORTS
     yaptInitializePlugin       @1
 

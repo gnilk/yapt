@@ -16,7 +16,19 @@
 #include <string>
 
 #include <math.h>
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <gl/glew.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
+#include <algorithm>
+#define fmax(__x__,__y__) max(__x__,__y__)
+#define fmin(__x__,__y__) min(__x__,__y__)
+#else
 #include <OpenGl/glu.h>
+#endif
 
 using namespace yapt;
 using namespace gnilk;

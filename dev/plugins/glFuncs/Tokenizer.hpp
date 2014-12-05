@@ -53,7 +53,7 @@ namespace gnilk
 				return std::string(1,*it++);
 			}
 			std::string::iterator start = it;
-			while (!isspace(*it) && !isOperator(it) && (it != data.end())) it++;
+			while ((it != data.end()) && (!isspace(*it)) && (!isOperator(it))) it++;
 			return std::string(start, it);
 		}
 

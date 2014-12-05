@@ -12,14 +12,17 @@
 #include "yapt/ExpatXMLImporter.h"
 #include "yapt/ExportXML.h"
 
+#ifndef WIN32
 #include "ConsoleWindow.h"
-#include "PlayerWindow.h"
 #include "WebService.h"
+#endif
+
+#include "PlayerWindow.h"
 
 using namespace yapt;
 
 int64_t mint = 0;
-std::vector<int> vmv { 1, 2, 3, 4 };
+//std::vector<int> vmv { 1, 2, 3, 4 };
 
 
 static int window_width = 1280;
@@ -206,7 +209,9 @@ int main(int argc, char **argv) {
 	pLogger->Debug("Load document");
 
 	LoadDocument(docFileName);	
+#ifndef WIN32
 	StartWebService();
+#endif
 	if (objName != NULL) {
 		printObjectProperties(objName);
 		exit(1);
@@ -222,7 +227,7 @@ int main(int argc, char **argv) {
 		system->SaveDocumentAs(saveName, system->GetActiveDocument());
 	}
 
-
+#ifndef WIN32
 	pLogger->Debug("Opening Console Window");
 	ConsoleWindow console;
 	console.Open(640, 500, "console");
@@ -231,7 +236,7 @@ int main(int argc, char **argv) {
 		pLogger->Error("Failed to initalize text rendering");
 		exit(1);
 	}
-
+#endif
 	pLogger->Debug("Opening Rendering Window");
 	pLogger->Debug("  Width: %d", window_width);
 	pLogger->Debug("  Height: %d", window_height);  	
@@ -239,14 +244,18 @@ int main(int argc, char **argv) {
 	PlayerWindow player;
 	player.Open(window_width, window_height, "player");
 	player.InitalizeYapt();
+#ifndef WIN32
 	player.SetPos(0,0);
+#endif
 	pLogger->Debug("Running render loop");
 
+#ifndef WIN32
 	console.WriteLine("YAPT2 v0.1 - (c) Fredrik Kling 2009");
 	console.WriteLine("Document: "+ std::string(docFileName));
 	console.WriteLine("Running render loop");
+#endif
 
-	// Need to initialize late if GL plugins are using GLEW - initialized by player window
+  // Need to initialize late if GL plugins are using GLEW - initialized by player window
 	if (system->GetActiveDocument()) {
 		pLogger->Debug("Initialize");
 		if (!system->GetActiveDocumentController()->Initialize()) {
@@ -263,17 +272,21 @@ int main(int argc, char **argv) {
 	while (!player.ShouldClose())
 	{
 		player.Update();
+#ifndef WIN32
 		console.Update();
+#endif
 		glfwPollEvents();
 	}
 
 	pLogger->Debug("Cleaning up");
 
 	// Close OpenGL window and terminate GLFW
+#ifndef WIN32
 	console.Close();
+  StopWebService();
+#endif
 	player.Close();
 	glfwTerminate();
-	StopWebService();
 	system->DisposeActiveDocument();
 	pLogger->Debug("Disposed");
 

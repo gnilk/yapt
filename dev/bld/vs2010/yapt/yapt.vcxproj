@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Attribute.cpp" />
     <ClCompile Include="..\..\..\src\BaseInstance.cpp" />
+    <ClCompile Include="..\..\..\src\CommentInstance.cpp" />
     <ClCompile Include="..\..\..\src\ConfigObject.cpp" />
     <ClCompile Include="..\..\..\src\Context.cpp" />
     <ClCompile Include="..\..\..\src\DocNode.cpp" />
@@ -20,6 +21,8 @@
     <ClCompile Include="..\..\..\src\DocumentController.cpp" />
     <ClCompile Include="..\..\..\src\ExpatXMLImporter.cpp" />
     <ClCompile Include="..\..\..\src\ExportXML.cpp" />
+    <ClCompile Include="..\..\..\src\FileWatcher_Win32.cpp" />
+    <ClCompile Include="..\..\..\src\FPSController.cpp" />
     <ClCompile Include="..\..\..\src\Lookup.cpp" />
     <ClCompile Include="..\..\..\src\MetaInstance.cpp" />
     <ClCompile Include="..\..\..\src\ObjectDefinition.cpp" />
@@ -29,6 +32,8 @@
     <ClCompile Include="..\..\..\src\Property.cpp" />
     <ClCompile Include="..\..\..\src\RenderVars.cpp" />
     <ClCompile Include="..\..\..\src\ResourceContainer.cpp" />
+    <ClCompile Include="..\..\..\src\Signals.cpp" />
+    <ClCompile Include="..\..\..\src\StringUtil.cpp" />
     <ClCompile Include="..\..\..\src\System.cpp" />
     <ClCompile Include="..\..\..\src\SystemHookHandler.cpp" />
     <ClCompile Include="..\..\..\src\Timeline.cpp" />
@@ -46,6 +51,17 @@
     <ClInclude Include="..\..\..\inc\yapt\ySystem.h" />
     <ClInclude Include="..\..\..\inc\yapt\ySystem_internal.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ext\expat\lib\expat.vcxproj">
+      <Project>{1e5a6f59-05ad-4b19-9b3d-78029e31a6c7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\noice.io\dev\bld\vs2010\noice.io\noice.io.vcxproj">
+      <Project>{aeadf802-5ab3-4ed7-8e2b-c797df451294}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\common\common.vcxproj">
+      <Project>{d82d609d-bfef-46bb-b543-0c7c3193ec17}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1C07E4C9-7B53-4E85-B7AD-B72CE39A8AE6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -53,15 +69,17 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -87,10 +105,17 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <UndefinePreprocessorDefinitions>GetObject</UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>$(SolutionDir)../../src/yapt.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

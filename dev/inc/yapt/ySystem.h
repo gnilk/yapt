@@ -41,6 +41,7 @@ namespace yapt
 
 #ifdef WIN32
 #define CALLCONV __stdcall
+#undef GetObject
 #else
 #define CALLCONV
 #endif

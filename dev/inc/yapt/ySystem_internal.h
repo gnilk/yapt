@@ -33,6 +33,11 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 #include "noice/io/io.h"
 using namespace noice::io;
 
+
+#ifdef WIN32
+#undef GetObject
+#endif
+
 namespace yapt
 {
   // TODO:

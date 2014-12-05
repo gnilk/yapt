@@ -5,7 +5,15 @@
 
 #include <math.h>
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <gl/glew.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#else
 #include <OpenGl/glu.h>
+#endif
 
 #ifndef M_PI
 #define M_PI 3.1415926535897932384

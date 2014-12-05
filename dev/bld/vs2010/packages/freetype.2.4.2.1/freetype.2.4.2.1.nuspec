@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>freetype</id>
+    <version>2.4.2.1</version>
+    <title>freetype</title>
+    <authors>David Turner,  Robert Wilhelm,  Werner Lemberg,  freetype contributors</authors>
+    <owners>David Turner,  Robert Wilhelm,  Werner Lemberg,  freetype contributors</owners>
+    <licenseUrl>http://www.freetype.org/license.html</licenseUrl>
+    <projectUrl>http://github.com/coapp-packages/freetype</projectUrl>
+    <iconUrl>http://www.freetype.org/image/fond3.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>FreeType is a freely available software library to render fonts.
+Homepage: http://www.freetype.org/index.html</description>
+    <summary>FreeType is a freely available software library to render fonts.</summary>
+    <releaseNotes>Release of freetype 2.4.2 libraries.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>freetype font native CoApp</tags>
+    <dependencies>
+      <dependency id="freetype.redist" version="2.4.2.1" />
+    </dependencies>
+  </metadata>
+</package>

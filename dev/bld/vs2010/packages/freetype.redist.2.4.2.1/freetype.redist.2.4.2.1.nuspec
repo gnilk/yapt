@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>freetype.redist</id>
+    <version>2.4.2.1</version>
+    <title>freetype Redist</title>
+    <authors>David Turner,  Robert Wilhelm,  Werner Lemberg,  freetype contributors</authors>
+    <owners>David Turner,  Robert Wilhelm,  Werner Lemberg,  freetype contributors</owners>
+    <licenseUrl>http://www.freetype.org/license.html</licenseUrl>
+    <projectUrl>http://github.com/coapp-packages/freetype</projectUrl>
+    <iconUrl>http://www.freetype.org/image/fond3.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Redistributable components for package 'freetype'. This package should only be installed as a dependency. 
+(This is not the package you are looking for).</description>
+    <summary>Redistributable components for for package 'freetype'</summary>
+    <releaseNotes>Release of freetype 2.4.2 libraries.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>freetype font native CoApp</tags>
+  </metadata>
+</package>

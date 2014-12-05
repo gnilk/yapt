@@ -1,18 +1,5 @@
-﻿  URLParser.cpp
-c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\urlparser.cpp(64): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\urlparser.cpp(76): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-  TextReader.cpp
-  DeviceManager.cpp
-  DeviceFactoryHolder.cpp
-c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\devicefactoryholder.cpp(42): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\devicefactoryholder.cpp(43): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-  BasicFileStream.cpp
-c:\users\chfrkl\documents\github\yapt\dev\ext\noice.io\dev\src\basicfilestream.cpp(44): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(238) : see declaration of 'strdup'
-  BasicFileDevice.cpp
-  Generating Code...
-  noice.io.vcxproj -> C:\Users\chfrkl\Documents\GitHub\yapt\dev\bld\vs2010\Debug\noice.io.lib
+﻿Build started 02/12/2014 22:40:15.
+
+Build succeeded.
+
+Time Elapsed 00:00:00.00

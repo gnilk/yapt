@@ -1,7 +1,13 @@
 LIBRARY	yapt
-VERSION 2.0.0
+VERSION 2
 EXPORTS
     GetYaptSystemInstance	@1
 	SetYaptLastError		@10
 	GetYaptLastError		@11
 	GetYaptErrorTranslation	@12
+	?GetLogger@Logger@yapt@@SAPAVILogger@2@PBD@Z
+	?Initialize@Logger@yapt@@SAXXZ
+	?SetAllSinkDebugLevel@Logger@yapt@@SAXH@Z
+	?AddSink@Logger@yapt@@SAXPAVILogOutputSink@2@PBD@Z
+	?AddSink@Logger@yapt@@SAXPAVILogOutputSink@2@PBDHPAPAD@Z
+	?CreateSink@Logger@yapt@@SAPAVILogOutputSink@2@PBD@Z
