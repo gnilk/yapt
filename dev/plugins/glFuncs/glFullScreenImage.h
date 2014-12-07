@@ -19,6 +19,9 @@ protected:
 protected:
   float width, height;
   Property *texture;
+  Property *flipImage;
+  Property *useblend;
+  Property *alpha;
 
 };
 

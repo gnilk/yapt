@@ -45,13 +45,11 @@
 					<property name="y">t*-48</property>
 					<property name="z">t*32</property>
 				</object>
-
 				<object class="gl.ShaderQuad">
 					<property name="depthwrite">false</property>
 					<property name="pixelshader">enigma_bgballs.frag.glsl</property>
 					<property name="vertexshader">enigma_bgballs.vtx.glsl</property>
 				</object>
-
 				<object class="gl.Transform" name="prs_ball">
 					<property name="position" source="plotball.bounce.position" />
 					<property name="rotation" source="plotball.rotation" />

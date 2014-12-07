@@ -221,6 +221,10 @@ unsigned int ShaderProgram::GetUniform(const char *name) {
 
 void ShaderProgram::Attach() {
   glUseProgram(idProgram);
+  int er = glGetError();
+  if (er != GL_NO_ERROR) {
+    printf("ShaderProgram::Attach, error=%d\n",er);
+  }
 }
 
 void ShaderProgram::Detach() {

@@ -172,6 +172,10 @@ IPluginObject *CurveFactory::CreateObject(ISystem *pSys, const char *identifier)
 	{
 		pObject = dynamic_cast<IPluginObject *> (new YaptExpSolverFacade());
 	}
+	if (!strcmp(identifier,"Animation.Expression"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new YaptExpSolverFacade());
+	}
 	if (!strcmp(identifier,"Animation.VectorExpression"))
 	{
 		pObject = dynamic_cast<IPluginObject *> (new YaptVecExpSolverFacade());
@@ -485,6 +489,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys)
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Key");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorKey");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.ExpSolver");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Expression");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorExpression");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Numeric.VectorMux");
 	return 0;

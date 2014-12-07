@@ -725,13 +725,15 @@ void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
   if ((extState == kExtState_Initialized) && (lastRenderRef != pRenderVars->GetRenderRef()))
   {        
 
-//    Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, render property dependencies");
+    //Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, render property dependencies");
     RenderPropertyDependencies(pRenderVars);
-    //Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, calling ext object render: %p",extObject);
+//    Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, calling ext object render: %s (%p)",GetInstanceName(), extObject);
     extObject->Render(pRenderVars->GetTime(), dynamic_cast<IPluginObjectInstance *>(this));
     lastRenderRef = pRenderVars->GetRenderRef();
     // Set this to dirty in order to pass call's through the post-renderer
     SetDirty(true);
+  } else {
+  //  Logger::GetLogger("PluginObjectInstance")->Error("Wront stated, Object '%s' not initialized. state=%d", GetInstanceName(), extState);
   }
 }
 void PluginObjectInstance::ExtPostRender()

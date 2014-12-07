@@ -23,7 +23,9 @@ using namespace yapt;
 //
 void OpenGLFullScreenImage::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   texture = pInstance->CreateProperty("texture", kPropertyType_Integer, "0", "");
-
+  flipImage = pInstance->CreateProperty("flip", kPropertyType_Bool, "false", "");
+  useblend = pInstance->CreateProperty("useblend", kPropertyType_Bool,"false","");
+  alpha = pInstance->CreateProperty("alpha", kPropertyType_Float,"1","");
 }
 
 void OpenGLFullScreenImage::BeginOrtho() {
@@ -32,8 +34,10 @@ void OpenGLFullScreenImage::BeginOrtho() {
   glPushMatrix();
   glLoadIdentity();
   gluOrtho2D(0, width, 0, height);
-  // glScalef(1, -1, 1);
-  // glTranslatef(0, -height, 0);
+  if (flipImage->v->boolean) {
+    glScalef(1, -1, 1);
+    glTranslatef(0, -height, 0);    
+  }
   glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
   glLoadIdentity();
@@ -59,6 +63,14 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
     glEnable(GL_TEXTURE_2D);
 //        glColor3f(0,0,1);
 
+    if (useblend->v->boolean) {
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      glColor4f(1,1,1, alpha->v->float_val);
+      glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);    
+    }
+
+
     glBegin(GL_QUADS);
       glTexCoord2f(0.0f,0.0f);
       glVertex2f(0.0f, 0.0f);
@@ -79,6 +91,11 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
       glVertex2f(0, height);
    glEnd();  //glBegin(GL_QUADS);
   }
+
+  if (useblend->v->boolean) {
+    glDisable(GL_BLEND);
+  }
+ 
   EndOrtho();
 }
 

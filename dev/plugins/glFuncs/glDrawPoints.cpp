@@ -60,6 +60,7 @@ void OpenGLDrawPoints::Render(double t, IPluginObjectInstance *pInstance) {
 	float *pVertex = (float *) vertexData->v->userdata;
 	glColor3f(1,1,1);
 
+//	int er = glGetError();
 	if (useShaders) {
 		OpenGLShaderBase::ReloadIfNeeded();
 		OpenGLShaderBase::Attach();

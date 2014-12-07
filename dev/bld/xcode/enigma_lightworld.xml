@@ -1,0 +1,161 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="utils.Container" name="render">
+
+				<!-- Scroller -->
+			<object class="gl.RenderContext" name="scene">
+				<property name="fov">35.0</property>
+				<property name="clear">true</property>
+
+				<object class="Animation.VectorExpression" name="camera.position">
+					<property name="x">10.0*sin(t*0.75)</property>
+					<!-- <property name="y">abs(cos(t*2.0))-0.3</property> -->
+					<property name="y">0</property>
+					<property name="z">-20+t+10.0*cos(t*0.5)</property>
+				</object>
+				<object class="Animation.VectorExpression" name="camera.target">
+					<property name="x">0</property>
+					<!-- <property name="y">abs(cos(t*2.0))-0.3</property> -->
+					<property name="y">0</property>
+					<property name="z">-15+t</property>
+				</object>
+
+				<object class="gl.Camera" name="camera">
+					<!-- <property name="position">0,0,-10</property> -->
+					<property name="position" source="camera.position" />
+					<property name="target" source="camera.target" /> <!-- 0,0,0</property> -->
+					<property name="upvector">0,1,0</property>
+				</object>
+	
+
+				<object class="Animation.VectorExpression" name="object.rotation">
+					<property name="x">t*64</property>
+					<property name="y">t*-48</property>
+					<property name="z">t*32</property>
+				</object>
+
+				<object class="gl.PreserveState" name="">
+					<object class="gl.Transform" name="object1.prs">
+						<property name="position">-6,0,-4</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+				<object class="gl.PreserveState" name="">
+					<object class="gl.Transform" name="object2.prs">
+						<property name="position">6,0,-4</property>
+					</object>
+
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+
+
+
+
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object3.prs">
+						<property name="position">-6,0,0</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object4.prs">
+						<property name="position">6,0,0</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object5.prs">
+						<property name="position">-6,0,4</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object6.prs">
+						<property name="position">6,0,4</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object5.prs">
+						<property name="position">-6,0,8</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object6.prs">
+						<property name="position">6,0,8</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object5.prs">
+						<property name="position">-6,0,12</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+				<object class="gl.PreserveState" name="state">
+					<object class="gl.Transform" name="object6.prs">
+						<property name="position">6,0,12</property>
+					</object>
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">engima_cube.obj</property>
+					</object>
+				</object>
+
+<!--
+				<object class="gl.PreserveState" name="">
+					<object class="gl.Transform" name="object.prs">
+						<property name="position">0,0,0</property>
+						<property name="rotation" source="object.rotation" />
+					</object>
+
+					<object class="gl.DrawWaveFront" name="spin_object">
+						<property name="filename">luisobj.obj</property> 
+					</object>
+				</object>
+
+-->
+
+			</object>
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="render" />
+
+	</timeline>
+</yapt2>				

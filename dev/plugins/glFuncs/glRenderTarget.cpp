@@ -44,6 +44,8 @@ void OpenGLRenderTarget::PostInitialize(ISystem *ySys, IPluginObjectInstance *pI
   // glGetFramebufferAttachmentParameteriv(GL_RENDERBUFFER, GL_DEPTH, GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE, &depthParams);
   // printf("DEPTH: %d\n",depthParams);
 
+  glPushAttrib(GL_ALL_ATTRIB_BITS);
+
   // Create frame buffer with texture
   glGenFramebuffers(1, &idFramebuffer);
   glBindFramebuffer(GL_FRAMEBUFFER, idFramebuffer);
@@ -71,6 +73,11 @@ void OpenGLRenderTarget::PostInitialize(ISystem *ySys, IPluginObjectInstance *pI
 
   this->texture->v->int_val = idTexture;
   this->framebuffer->v->int_val = idFramebuffer;
+
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  glBindRenderbuffer(GL_RENDERBUFFER, 0);
+  glPopAttrib();
+
 
 }
 

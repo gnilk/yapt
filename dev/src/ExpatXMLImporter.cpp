@@ -203,7 +203,10 @@ void ExpatXMLParser::IncludeFromURL(const char *url, const char **atts)
   {
     pLogger->Debug("Processing include directive for '%s'",url);
 
-    pStream->Open(kStreamOp_ReadOnly);
+    if (!pStream->Open(kStreamOp_ReadOnly)) {
+      pLogger->Error("Failed to open stream for '%s'", url);
+      exit(1);
+    }
     ExpatXMLParser *xml = new ExpatXMLParser(system);
     IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(instanceStack.top());
     pMeta->GetDocument();

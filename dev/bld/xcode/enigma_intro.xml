@@ -81,6 +81,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0,0</property>
 				<property name="text">NOICE</property>
+				<property name="useblend">true</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>
+				<property name="alpha" source="text1.alpha" />
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -88,6 +91,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,-0.20,0</property>
 				<property name="text">ASSOCIATION</property>
+				<property name="useblend">true</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>
+				<property name="alpha" source="text1.alpha" />
 			</object>
 
 		</object>

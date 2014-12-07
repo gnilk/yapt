@@ -278,6 +278,7 @@ void DocumentController::RenderTimeline() {
         // resolve and cache
         char *simpleName =pExec->GetObjectName();
         // TODO: cache this one - no need to look this up each time!
+        pLogger->Debug("RenderTimeLine, t=%f, exec=%s", renderVars->GetTime(), simpleName);
         IBaseInstance *pObject=pDocument->GetObjectFromSimpleName(simpleName);
         pNode=pDocument->FindNode(pObject);
 
@@ -296,16 +297,44 @@ void DocumentController::RenderTimeline() {
 
 void DocumentController::RenderResources()
 {
-  pLogger->Debug("RenderResources");
+  pLogger->Debug("Render Resources for current Documents");
+  RenderResourcesForDocument(pDocument);
+  pLogger->Debug("Render Resources for Includes");
+  RenderResourcesForIncludes(pDocument->GetTree());
+  pLogger->Debug("All resources done!");
+}
+
+void DocumentController::RenderResourcesForIncludes(IDocNode *node) {
+    int i,nChildren;
+
+    if (node->GetNodeType() == kNodeType_Meta) {
+      IBaseInstance *baseObject = node->GetNodeObject();
+      IMetaInstance *pMeta = dynamic_cast<IMetaInstance *>(baseObject);
+      //printf("Meta node found - processing\n");
+      if (pMeta != NULL) {
+        IDocument *metaDoc = pMeta->GetDocument();
+        RenderResourcesForDocument(metaDoc);
+      } else {
+        pLogger->Debug("node object is not meta node");
+      }
+    }
+
+    nChildren = node->GetNumChildren();
+    for(i=0;i<nChildren;i++)
+    {
+      IDocNode *child = node->GetChildAt(i);
+      RenderResourcesForIncludes(child);
+    }
+}
+
+void DocumentController::RenderResourcesForDocument(IDocument *pDocument) {
   IDocNode *pNodeResourceContainer = pDocument->FindNode(dynamic_cast<IBaseInstance *>(pDocument->GetResources()));
   if(pNodeResourceContainer != NULL) {
     RenderNode(pNodeResourceContainer,true);
     pLogger->Debug("Resource container ok");
-  }	else {
+  } else {
     pLogger->Warning("Resource container not found, skipping");
   }
-
-  // TODO: Recurse through tree, find all meta nodes and render their resources
 
 }
 
@@ -325,7 +354,7 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
     pInst = dynamic_cast<PluginObjectInstance *>(pObject);
 
     if ((pInst->ShouldRender(renderVars)) || (bForce)) {
-      // pLogger->Debug("Render: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
+      //pLogger->Debug("Render: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
 
       double tStart = pInst->GetStartTime();
       renderVars->PushLocal(tStart);
@@ -340,6 +369,8 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
     }
   } else if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_ResourceContainer)) {
     bDoChildren = true;
+  } else {
+//    pLogger->Debug("Can't render node of type %d", node->GetNodeType());
   }
 
   if (bDoChildren) {

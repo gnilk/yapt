@@ -1,0 +1,110 @@
+Enigma (original)
+    Goblin
+    intro  
+    tv-box
+    mars
+    lightsourced world
+    plot ball
+    wire ball
+    lightsourced ball
+    starwars scroller (?)
+    raytrace
+end
+
+Enigma (remix - 'Hyperbased remix (omg its a CUBE) - Virgill')
+    pre-intro (piano)
+00:00
+        Goblin
+00:05
+       Get
+00:10
+        Floating original objects (helicopter, man on helipad, space ship)
+00:35
+       texts with 'new' credits
+01:00
+     intro [star field - skip credits] - 00:55 -> 01:22
+01:18 - 01:22
+     Text Window [transitional; "let's go"]
+01:22:
+    object show [move away objects and add duplicates]
+        plot ball          - 01:22
+        wire ball          - 
+        lightsourced ball  - 01:50
+01:48 - 01:52
+    Text window [transitional] -> "trip to mars"
+01:52
+    mars
+02:08
+    star wars scroller (original credits) - 02:08 - 02:22
+02:22
+    raytrace (logo, scroll part with greetings)
+        static      - 02:22 
+02:38
+        realtime 
+03:00 -> Fade away and transitional text 
+03:08                    
+    lightsourced world
+03:25
+    tv-box - 03:20 (make recursive, infinte loop) 
+    tv-box - 03:58 (make recursive, infinte loop)
+
+ 
+End
+TODO
+- pre-intro
+    - Rip graphics
+    - create 3d objects for fly by
+        - helicopter
+        - man on helipad
+        - space ship
+    - coding
+        - picture viewer
+        - small 3d object viewer
+! intro
+    ! coding
+        ! starfield
+        ! credits screen -> needs idea (not just fading)
+    ! graphics
+        ! font
+
+! object show
+    ! coding
+        ! plot ball
+        ! wire ball -> twist?
+        ! olles-ball (light sourced)
+
+- mars trip
+    - coding
+        - small 3d engine -> need twist
+    - graphics
+        - 3d world
+
+- credits (starwars scroller)
+    - coding
+        - star wars scroller (need a twist)
+    - graphics
+        - ?
+
++ raytrace
+    - graphics
+        - logo
+        - font for scroll
+        - mandel-brot
+    + coding
+        + sphere & plan tracer
+        + mandel-zoomer (fade-in/out)
+
+- light sourced world
+    - graphics
+        - 3d objects
+        - textures
+    - coding
+        - HDR rendering
+
+- tvbox
+    - graphics
+        - 3d objects
+    - coding
+        - cube box
+        - recursive infinte exit (cube on cube in cube)
+                          

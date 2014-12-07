@@ -534,6 +534,8 @@ namespace yapt
     bool BindAllProperties(IDocNode *node);
     void TraverseNode(IDocumentTraversalSink *sink, IDocNode *node, int depth);
     void RenderSignals(double t);
+    void RenderResourcesForDocument(IDocument *pDocument);
+    void RenderResourcesForIncludes(IDocNode *node);
   public:
     DocumentController(IDocument *pDocument);
     virtual ~DocumentController();

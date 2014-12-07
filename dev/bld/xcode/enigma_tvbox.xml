@@ -18,7 +18,7 @@
 	</resources>
 	
 	<render>
-		<object class="utils.Container" name="part_tvbox">
+		<object class="utils.Container" name="render">
 			<object class="gl.RenderToTexture" name="tvbox_starfield">
 				<property name="fov">35.0</property>
 				<property name="width">128</property>
@@ -172,7 +172,7 @@
 					<property name="z">0</property>
 				</object>
 				<object class="gl.TextScroll" name="scroller">
-					<property name="font">Army.ttf</property>
+					<property name="font">fontmap_cful.fnt</property>
 					<property name="fontsize">32</property>
 					<property name="alignment">none</property>
 					<!-- <property name="position">0,0.32,0</property> -->
@@ -199,6 +199,6 @@
 	
 	<timeline>
 	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
-	   <execute start="0" duration="1000" object="part_tvbox" />
+	   <execute start="0" duration="1000" object="render" />
 	</timeline>
 </yapt2>				

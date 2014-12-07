@@ -43,8 +43,8 @@ void OpenGLDrawText::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance)
 
 void OpenGLDrawText::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
-	//textureFont = FontManager::GetInstance(ySys)->GetFont(std::string(font->v->string), fontSize->v->int_val);
-	textureFont = FontManager::GetInstance(ySys)->LoadBitmapFont(std::string("fontmap.fnt"));
+	textureFont = FontManager::GetInstance(ySys)->GetFont(std::string(font->v->string), fontSize->v->int_val);
+	//textureFont = FontManager::GetInstance(ySys)->LoadBitmapFont(std::string("fontmap.fnt"));
 	//new Font(std::string(font->v->string), fontSize->v->int_val, face);
 	textureFont->Build();
 

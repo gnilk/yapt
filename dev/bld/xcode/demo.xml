@@ -1,0 +1,48 @@
+<yapt2>
+	<resources>
+		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+	</resources>
+    <include url="file://enigma_goat_intropic.xml" prefix="preintro1"/>
+    <include url="file://enigma_troll_intropic.xml" prefix="preintro2"/>
+    <include url="file://enigma_intro.xml" prefix="intro"/>
+    <include url="file://enigma_plotball.xml" prefix="plotball" />
+    <include url="file://enigma_lineball.xml" prefix="lineball" />
+    <include url="file://enigma_olleball.xml" prefix="olleball" />
+    <include url="file://enigma_tracer.xml" prefix="tracer" />
+    <include url="file://enigma_lightworld.xml" prefix="lsworld" />
+    <include url="file://enigma_tvbox.xml" prefix="tvbox" />
+
+	<timeline>
+	   <execute start="0" duration="4" object="preintro1.part" />
+	   <execute start="4" duration="6" object="preintro2.part" />	   
+	   <!-- starfield intro texts -->
+	   <execute start="10" duration="24" object="intro.mycontext" />
+	   <execute start="14" duration="2" object="intro.intro_text_screen_1" />
+	   <execute start="18" duration="2" object="intro.intro_text_screen_2" />
+	   <execute start="24" duration="2" object="intro.intro_text_screen_3" />
+	   <execute start="28" duration="2" object="intro.intro_text_screen_4" />
+	   <execute start="32" duration="2" object="intro.intro_text_screen_5" />
+	   <!-- text transition screen here 'lets go' -->
+
+	   <!-- plot/line/olles ball(s)  -->	   
+	   <execute start="34" duration="10" object="plotball.part_plotball" />
+	   <execute start="44" duration="10" object="lineball.part_lineball" />
+	   <execute start="54" duration="10" object="olleball.part_ollesball" />
+	   <!-- text transition screen here 'trip to mars' -->
+
+	   <!-- trip to mars part -->
+	   <!-- star wars scroller  -->
+	   <!-- raytrace  -->
+	   <execute start="64" duration="16" object="tracer.mycontext" />
+	   <!-- text transition screen here 'xyz' -->
+
+	   <!-- light source ship -->
+	   <execute start="80" duration="17" object="lsworld.render" />
+	   <execute start="97" duration="1000" object="tvbox.render" />
+
+	</timeline>
+	
+</yapt2>

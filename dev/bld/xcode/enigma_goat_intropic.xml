@@ -1,0 +1,31 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+
+ 		<object class="gl.LoadTexture2D" name="image.goat">
+	       <property name="fileName">goat.png</property>
+	   	</object>
+	</resources>
+	
+	<render>
+		<object class="gl.RenderContext" name="part">
+			<property name="fov">35.0</property>
+			<object class="Animation.Expression" name="goat.alpha">
+				<property name="expression">cos(t)</property>
+			</object>
+			<object class="gl.FullScreenImage">
+					<property name="texture" source="image.goat" />
+					<property name="flip">true</property>
+					<property name="useblend">false</property>
+					<property name="alpha" source="goat.alpha" />
+			</object>		
+		</object>
+	</render>	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="part" />
+	</timeline>
+</yapt2>				
