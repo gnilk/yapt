@@ -111,8 +111,7 @@ bool FileWatchItem::HasChanged() {
 	//if (_stat.st_mtimespec.tv_sec != previous.st_mtimespec.tv_sec) {
 	//	changed = true;
 	//}
-
-	previous = _stat;
+	// previous = _stat;
 
 	return changed;
 }
