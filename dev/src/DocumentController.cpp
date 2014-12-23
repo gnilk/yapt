@@ -290,7 +290,10 @@ void DocumentController::RenderTimeline() {
         pExec->SetNode(pNode);
       }
 
+      double tStart = pExec->GetStart();
+      renderVars->PushLocal(tStart);        
       RenderNode(pNode, true);  // Override timings of object (if any) since controlled by the timeline
+      renderVars->PopLocal();
     }
   }
 }
@@ -356,14 +359,20 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
     if ((pInst->ShouldRender(renderVars)) || (bForce)) {
       //pLogger->Debug("Render: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
 
-      double tStart = pInst->GetStartTime();
-      renderVars->PushLocal(tStart);
+      if (!bForce) {
+        double tStart = pInst->GetStartTime();
+        renderVars->PushLocal(tStart);        
+      }
 
       //pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
       
       // TODO: call system hook handler
       pInst->ExtRender(renderVars);
-      renderVars->PopLocal();
+
+      if (!bForce) {        
+        renderVars->PopLocal();
+      }
+
       bDoChildren = true;
       bPostRender = true;
     }

@@ -727,8 +727,15 @@ void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
 
     //Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, render property dependencies");
     RenderPropertyDependencies(pRenderVars);
+
+    // TODO: It is not clear cut which aspect of 'time' to use
+    // spline and animation curves want relative time (i.e. from start of their rendering) while other
+    // objects are more happy with the generic global time...  We don't want to leave the decision up to the
+    // object itself becaue it can lead to inconsistency...
+    //float t = pRenderVars->GetTime();
+    float t = pRenderVars->GetLocalTime();
 //    Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, calling ext object render: %s (%p)",GetInstanceName(), extObject);
-    extObject->Render(pRenderVars->GetTime(), dynamic_cast<IPluginObjectInstance *>(this));
+    extObject->Render(t, dynamic_cast<IPluginObjectInstance *>(this));
     lastRenderRef = pRenderVars->GetRenderRef();
     // Set this to dirty in order to pass call's through the post-renderer
     SetDirty(true);

@@ -137,6 +137,7 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 	}
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
+	glDisable(GL_CULL_FACE);
 
 	if (useShaders) {
 		OpenGLShaderBase::Detach();

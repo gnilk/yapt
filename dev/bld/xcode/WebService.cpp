@@ -202,6 +202,7 @@ protected:
 
 		str_plugins += ListObjectProperties(pPlugInst, false);
 		str_plugins += ListObjectProperties(pPlugInst, true);
+        str_plugins += "<br>\n";
     }
     const string listPlugins() {
     	str_plugins = "";

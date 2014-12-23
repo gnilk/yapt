@@ -28,7 +28,7 @@
 	   <!-- text transition screen here 'lets go' -->
 
 	   <!-- plot/line/olles ball(s)  -->	   
-	   <execute start="34" duration="10" object="plotball.part_plotball" />
+	   <execute start="34" duration="10" object="plotball.part_plotball" /> 
 	   <execute start="44" duration="10" object="lineball.part_lineball" />
 	   <execute start="54" duration="10" object="olleball.part_ollesball" />
 	   <!-- text transition screen here 'trip to mars' -->
@@ -40,8 +40,8 @@
 	   <!-- text transition screen here 'xyz' -->
 
 	   <!-- light source ship -->
-	   <execute start="80" duration="17" object="lsworld.render" />
-	   <execute start="97" duration="1000" object="tvbox.render" />
+	   <execute start="80" duration="10" object="lsworld.render" />
+	   <execute start="90" duration="1000" object="tvbox.render" />
 
 	</timeline>
 	

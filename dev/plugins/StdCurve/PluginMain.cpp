@@ -381,6 +381,7 @@ double YaptExpSolverFacade::OnConstantUserExpression(const char *data, int *bOk_
     
     return result;
 }
+
 double YaptExpSolverFacade::OnFunctionExpression(const char *data, int args, double *arg, int *bOk_out) {
     double result = 0.0;
     *bOk_out = 0;
