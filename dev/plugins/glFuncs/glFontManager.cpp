@@ -38,6 +38,33 @@ static ISystem *psys = NULL;
 // static
 FontManager *FontManager::instance = NULL;
 
+void OpenGLFontLoader::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	fontName = pInstance->CreateProperty("fontname", kPropertyType_String, "Arial.ttf", "");
+	fontSize = pInstance->CreateProperty("fontsize", kPropertyType_Integer, "24", "");
+	outputFontObject = pInstance->CreateOutputProperty("font",kPropertyType_UserPtr,NULL,"");
+}
+
+void OpenGLFontLoader::Render(double t, IPluginObjectInstance *pInstance) {
+
+}
+
+void OpenGLFontLoader::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	Font *font;
+	font = FontManager::GetInstance(ySys)->GetFont(std::string(fontName->v->string), fontSize->v->int_val);
+	//textureFont = FontManager::GetInstance(ySys)->LoadBitmapFont(std::string("fontmap.fnt"));
+	//new Font(std::string(font->v->string), fontSize->v->int_val, face);
+	font->Build();
+	outputFontObject->v->userdata = font;
+
+
+}
+
+void OpenGLFontLoader::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+}
+
+
+
 FontManager::FontManager() {
 	if(FT_Init_FreeType(&ft)) {
   		psys->GetLogger("FontManager")->Error("OpenGLDrawText, Could not init freetype library");

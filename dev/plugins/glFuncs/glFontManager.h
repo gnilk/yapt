@@ -21,6 +21,20 @@ using namespace yapt;
 
 class Font;
 
+class OpenGLFontLoader: public PluginObjectImpl {
+private:
+	// input
+	Property *fontName;
+	Property *fontSize;
+	Property *outputFontObject;
+public:
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+};
+
+
 
 // Font manager has a 'cache' of already generated fonts
 class FontManager

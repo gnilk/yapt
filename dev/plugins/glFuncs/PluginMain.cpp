@@ -30,6 +30,7 @@
 #include "glTextScroll.h"
 #include "glWavefront.h"
 #include "glPreserveState.h"
+#include "glFontManager.h"
 
 using namespace yapt;
 
@@ -99,6 +100,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.RenderTest")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLRenderToTexture());
   }
+  if (!strcmp(identifier, "gl.LoadFont")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLFontLoader());
+  }
   if (pObject != NULL) {
     pLogger->Debug("Ok");
   } else
@@ -133,6 +137,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.FullScreenImage");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.ShaderQuad");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.LoadTexture2D");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.LoadFont");
   
   return 0;
 }
