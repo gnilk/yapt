@@ -11,6 +11,7 @@
  ---------------------------------------------------------------------------
  TODO: [ -:Not done, +:In progress, !:Completed]
  <pre>
+ - Break up 'RenderNode' to a renderer per node type
  - Replace bUpdate with a proper state
  - Idea: Introduce different document renderes that contain
    rendering logic, we want to keep this logic!
@@ -352,7 +353,8 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
   bool bDoChildren = false;	
   bool bPostRender = false;
   
-  if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_Object)) {
+  //if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_Object)) {
+  if ((pObject != NULL) && (node->GetNodeType() == kNodeType_ObjectInstance)) {
 
     pInst = dynamic_cast<PluginObjectInstance *>(pObject);
 
@@ -376,7 +378,8 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
       bDoChildren = true;
       bPostRender = true;
     }
-  } else if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_ResourceContainer)) {
+  //} else if ((pObject != NULL) && (pObject->GetInstanceType() == kInstanceType_ResourceContainer)) {
+  } else if ((pObject != NULL) && (node->GetNodeType() == kNodeType_ResourceContainer)) {
     bDoChildren = true;
   } else {
 //    pLogger->Debug("Can't render node of type %d", node->GetNodeType());
@@ -400,6 +403,86 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
   if (bPostRender) {
     pInst->ExtPostRender();
   }
+}
 
+//
+// THIS IS A TEST ON HOW A SEPARATION OF NODE RENDERERS WOULD LOOK LIKE
+// CURRENTLY NOT USED...
+//
+// The idea is that it will become useful when introducing more complex nodes
+// like loops and scripting nodes...
+//
 
+class NodeRenderer {
+public:
+  virtual void RenderNode(IDocNode *node, bool force, IDocumentController *controller) = 0;
+  virtual void RenderChildren(IDocNode *node, bool force, IDocumentController *controller);
+};
+
+class ObjectInstanceRenderer : NodeRenderer {
+public:
+  virtual void RenderNode(IDocNode *node, bool force, IDocumentController *controller);
+};
+
+class ResourceContainerRenderer : NodeRenderer {
+  virtual void RenderNode(IDocNode *node, bool force, IDocumentController *controller);
+};
+
+void NodeRenderer::RenderChildren(IDocNode *node, bool force, IDocumentController *controller) {
+  int i,nChildren;
+  IBaseInstance *pObject = node->GetNodeObject();
+  pObject->GetContext()->PushRenderObject(pObject);
+  nChildren = node->GetNumChildren();
+  for(i=0;i<nChildren;i++)
+  {
+    IDocNode *child = node->GetChildAt(i);
+    controller->RenderNode(child, force);
+  }
+  pObject->GetContext()->PopRenderObject();
+}
+
+void ObjectInstanceRenderer::RenderNode(IDocNode *node, bool force, IDocumentController *controller) {
+  IBaseInstance *pObject = node->GetNodeObject();
+  PluginObjectInstance *pInst = NULL;
+  bool bDoChildren = false; 
+  bool bPostRender = false;
+
+  if (pObject != NULL) {
+
+    pInst = dynamic_cast<PluginObjectInstance *>(pObject);
+
+    RenderVars *renderVars = dynamic_cast<RenderVars*>(controller->GetRenderVars());
+    if ((pInst->ShouldRender(renderVars)) || (force)) {
+      //pLogger->Debug("Render: (%d) %s",pObject->GetInstanceType(),pObject->GetFullyQualifiedName());
+
+      if (!force) {
+        double tStart = pInst->GetStartTime();
+        renderVars->PushLocal(tStart);        
+      }
+
+      //pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
+      
+      // TODO: call system hook handler
+      pInst->ExtRender(renderVars);
+
+      if (!force) {        
+        renderVars->PopLocal();
+      }
+
+      bDoChildren = true;
+      bPostRender = true;
+    }
+  }
+
+  if (bDoChildren) {
+    RenderChildren(node, pObject, controller);
+  }
+
+  if (bPostRender) {
+    pInst->ExtPostRender();
+  }
+}
+
+void ResourceContainerRenderer::RenderNode(IDocNode *node, bool force, IDocumentController *controller) {
+  RenderChildren(node, force, controller);
 }
