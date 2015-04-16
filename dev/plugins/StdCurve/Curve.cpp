@@ -226,8 +226,8 @@ void Curve::Sample(double t, double *dest)
 	double t_end = keys[idxEnd]->t;
 	double t_adjust = (t - t_start) / (t_end - t_start);
 
-	pLogger->Debug("Sample t=%f (%f), idxStart=%d (t_start=%f), idxEnd=%d (t_end=%f)",
-				   t, t_adjust, idxStart, t_start, idxEnd, t_end);
+	// pLogger->Debug("Sample t=%f (%f), idxStart=%d (t_start=%f), idxEnd=%d (t_end=%f)",
+	// 			   t, t_adjust, idxStart, t_start, idxEnd, t_end);
 
 	Interpolate(t_adjust, idxStart, idxEnd, dest);
 

@@ -30,6 +30,8 @@ using namespace yapt;
 void OpenGLRenderTarget::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
   fov = pInstance->CreateProperty("fov", kPropertyType_Float, "65.0", "");  
+  clear = pInstance->CreateProperty("clear", kPropertyType_Bool, "true", "");
+
   textureWidth = pInstance->CreateProperty("width", kPropertyType_Integer, "512", "");  
   textureHeight = pInstance->CreateProperty("height", kPropertyType_Integer, "512", "");  
 
@@ -99,8 +101,10 @@ void OpenGLRenderTarget::Render(double t, IPluginObjectInstance *pInstance) {
   glViewport(0, 0, width, height);
 
   // Clear color buffer to black
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  if (clear->v->boolean) {
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  }
 
   // Select and setup the projection matrix
   glMatrixMode(GL_PROJECTION);

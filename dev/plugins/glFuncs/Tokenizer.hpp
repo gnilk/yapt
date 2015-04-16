@@ -57,6 +57,21 @@ namespace gnilk
 			return std::string(start, it);
 		}
 
+		//
+		// Returns curent token and moves to next
+		//
+		std::string NextIncludeSpace() {
+			while(it != data.end() && isspace(*it)) it++;
+			if (it == data.end()) return std::string();
+
+			if (isOperator(it)) {
+				return std::string(1,*it++);
+			}
+			std::string::iterator start = it;
+			while ((it != data.end()) && (!isOperator(it))) it++;
+			return std::string(start, it);
+		}
+
 		// Function for switch statements
 		// Tokenizer::Case("hej","apa hej wef") - returns 1
 		// -1 means no hit

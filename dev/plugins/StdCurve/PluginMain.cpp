@@ -58,6 +58,51 @@ public:
 	virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime) {}
 };
 
+class IntMinMax :
+	public IPluginObject
+{
+protected:
+	Property *iMin, *iMax, *iVal;
+	Property *result;
+public:
+	IntMinMax();
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+	virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime) {}
+};
+
+class FloatToInt :
+	public IPluginObject
+{
+protected:
+	Property *floatVal;
+	Property *intVal;
+public:
+	FloatToInt();
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+	virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime) {}
+};
+
+class VectorElement :
+	public IPluginObject
+{
+protected:
+	Property *vectorval;
+	Property *index;
+	Property *result;
+public:
+	VectorElement();
+	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void Render(double t, IPluginObjectInstance *pInstance);
+	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
+	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+	virtual void Signal(int channelId, const char *channelName, int sigval, double sigtime) {}
+};
 
 class GenericCurveKey :
 	public BaseCurveFacade
@@ -184,6 +229,19 @@ IPluginObject *CurveFactory::CreateObject(ISystem *pSys, const char *identifier)
 	{
 		pObject = dynamic_cast<IPluginObject *> (new VectorMux());
 	}
+	if (!strcmp(identifier,"Numeric.IntMinMax"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new IntMinMax());
+	}
+	if (!strcmp(identifier,"Numeric.FloatToInt"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new FloatToInt());
+	}
+	if (!strcmp(identifier,"Numeric.VectorElement"))
+	{
+		pObject = dynamic_cast<IPluginObject *> (new VectorElement());
+	}
+
 	if (pObject != NULL) 
 	{
 		pLogger->Debug("Ok");
@@ -258,7 +316,13 @@ void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInst
 		if (pCurveKey != NULL)
 		{
 			Key *pKey = pCurveKey->GetKey();
-			pCurve->AddKey(pKey);
+			if (pKey != NULL) {
+				pCurve->AddKey(pKey);
+				pLogger->Debug("Added key '%d' at t=%f",i,pKey->t);				
+			} else {
+				pLogger->Debug("Key is NULL!");
+				exit(1);
+			}
 		} else
 		{
 			pLogger->Error("Unsupported child type, Animation curves only supports 'GenericKey' derivates");
@@ -272,18 +336,27 @@ void YaptCurveFacade::Render(double t, IPluginObjectInstance *pInstance)
 	if (pCurve != NULL)
 	{
 		double *val = (double *)alloca(sizeof(double) * channels->v->int_val);
-		
-		FILE *fOut;
-		fOut = fopen("samples.csv","w");
-		for (int i=0;i<50;i++)
-		{
-			double t;
-			t = (double)i/10.0f;
-			pCurve->Sample(t, val);
-			// pLogger->Debug("%f,%f",t,val[0]);
-			fprintf(fOut,"%f,%f\n",t,val[1]);
+
+		pCurve->Sample(t, val);
+		//pLogger->Debug("%f,%f",t,val[0]);
+		//printf("%f,%f\n",t,val[0]);
+		for (int i=0;i<channels->v->int_val;i++) {
+			result->v->vector[i] = (float)val[i];
 		}
-		fclose(fOut);		
+
+		// double *val = (double *)alloca(sizeof(double) * channels->v->int_val);
+		
+		// FILE *fOut;
+		// fOut = fopen("samples.csv","w");
+		// for (int i=0;i<50;i++)
+		// {
+		// 	double t;
+		// 	t = (double)i/10.0f;
+		// 	pCurve->Sample(t, val);
+		// 	pLogger->Debug("%f,%f",t,val[0]);
+		// 	fprintf(fOut,"%f,%f\n",t,val[0]);
+		// }
+		// fclose(fOut);		
 	}
 }
 
@@ -326,14 +399,17 @@ void GenericCurveKey::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	bias = pInstance->CreateProperty("bias", kPropertyType_Float, "0.0", "");
 	continity = pInstance->CreateProperty("continity", kPropertyType_Float, "0.0", "");
 	RegisterValueType(ySys, pInstance);
-}
 
-void GenericCurveKey::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance)
-{
 	if (pKey == NULL)
 	{
 		pKey = new Key();
 	}
+
+}
+
+void GenericCurveKey::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance)
+{
+	ySys->GetLogger("GenericCurveKey")->Debug("PostInitialize");
 	pKey->t = t->v->float_val;
 	pKey->tension = tension->v->float_val;
 	pKey->bias = bias->v->float_val;
@@ -476,7 +552,71 @@ void VectorMux::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
 
+IntMinMax::IntMinMax() {
 
+}
+void IntMinMax::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	iMin = pInstance->CreateProperty("min", kPropertyType_Integer, "0", "");
+	iMax = pInstance->CreateProperty("max", kPropertyType_Integer, "0", "");
+	iVal = pInstance->CreateProperty("value", kPropertyType_Integer, "0", "");
+	result = pInstance->CreateOutputProperty("result", kPropertyType_Integer, "", "");
+}
+void IntMinMax::Render(double t, IPluginObjectInstance *pInstance) {
+
+	int v = iVal->v->int_val;
+
+	v = v<iMin->v->int_val?iMin->v->int_val:v;
+	v = v>iMax->v->int_val?iMax->v->int_val:v;
+
+	result->v->int_val = v;
+
+}
+void IntMinMax::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
+}
+void IntMinMax::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+}
+
+FloatToInt::FloatToInt() {
+
+}
+
+void FloatToInt::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	floatVal = pInstance->CreateProperty("float",kPropertyType_Float, "0.0", "");
+	intVal = pInstance->CreateOutputProperty("int", kPropertyType_Integer, "0", "");
+}
+void FloatToInt::Render(double t, IPluginObjectInstance *pInstance) {
+	intVal->v->int_val = floatVal->v->float_val;
+}
+void FloatToInt::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
+}
+void FloatToInt::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+}
+
+VectorElement::VectorElement() {
+
+}
+
+void VectorElement::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	vectorval = pInstance->CreateProperty("vector",kPropertyType_Vector, "0,0,0", "");
+	index = pInstance->CreateProperty("index", kPropertyType_Integer, "0", "");
+	result = pInstance->CreateOutputProperty("float", kPropertyType_Float, "0", "");
+}
+void VectorElement::Render(double t, IPluginObjectInstance *pInstance) {
+	int idx = index->v->int_val;
+	idx = idx>2?2:idx;
+	idx = idx<0?0:idx;
+	result->v->float_val = vectorval->v->vector[idx];
+}
+void VectorElement::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+
+}
+void VectorElement::PostRender(double t, IPluginObjectInstance *pInstance) {
+
+}
 
 static void perror()
 {
@@ -493,5 +633,9 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys)
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.Expression");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Animation.VectorExpression");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Numeric.VectorMux");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Numeric.IntMinMax");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Numeric.FloatToInt");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=Numeric.VectorElement");
+
 	return 0;
 }

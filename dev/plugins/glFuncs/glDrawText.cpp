@@ -1,6 +1,7 @@
 #include "glShaderBase.h"
 #include "glDrawText.h"
 #include "glFontManager.h"
+#include "Tokenizer.hpp"
 
 #include "yapt/ySystem.h"
 #include "yapt/logger.h"
@@ -20,6 +21,7 @@
 #include FT_FREETYPE_H
 
 using namespace yapt;
+using namespace gnilk;
 
 
 #ifndef M_PI
@@ -65,6 +67,8 @@ void OpenGLDrawText::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInsta
 	}
 }
 
+static bool rendered = false;
+
 void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 	// Render bitmaps
 	IContext *pContext = dynamic_cast<IBaseInstance *>(pInstance)->GetContext();
@@ -75,6 +79,8 @@ void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 	unsigned int uniform_tex = 0;
 	unsigned int uniform_color = 0;
 
+	if (rendered) return;
+	rendered = false;
 
 	if (useShaders) {
 		OpenGLShaderBase::ReloadIfNeeded();
@@ -94,34 +100,44 @@ void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 
 	float xp,yp;
 	float str_width, str_height;
-	std::string str = std::string(text->v->string);
-	textureFont->Estimate(str, &str_width, &str_height);
-	xp = yp = 0;
-	xp = position->v->vector[0];
-	yp = position->v->vector[1];
-	switch(alignment->v->int_val) {
-		case 0 :	// none, use position
-			break;
-		case 1 :
-			xp = 0;
-			break;
-		case 2 :	// right
-			xp = 1 - str_width;
-			break;
-		case 3 : 	// center
-			xp = 0 - str_width/2.0f;
-			break;
-	}
+	float linepos = 0;
+	std::string strBase = std::string(text->v->string);
 
-//	printf("alignment: %d\n",alignment->v->int_val);
-	if (useblend->v->boolean == true) {
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4f(color->v->rgba[0], color->v->rgba[1], color->v->rgba[2], alpha->v->float_val);
-//		glColor4f(1,1,1, alpha->v->float_val);
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);		
+
+	Tokenizer tok(strBase, "\\");
+	while (true) {
+		std::string str = tok.NextIncludeSpace();
+		if (str.empty()) break;
+
+		textureFont->Estimate(str, &str_width, &str_height);
+		xp = yp = 0;
+		xp = position->v->vector[0];
+		yp = position->v->vector[1] + linepos;
+		switch(alignment->v->int_val) {
+			case 0 :	// none, use position
+				break;
+			case 1 :
+				xp = 0;
+				break;
+			case 2 :	// right
+				xp = 1 - str_width;
+				break;
+			case 3 : 	// center
+				xp = 0 - str_width/2.0f;
+				break;
+		}
+
+	//	printf("alignment: %d\n",alignment->v->int_val);
+		if (useblend->v->boolean == true) {
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glColor4f(color->v->rgba[0], color->v->rgba[1], color->v->rgba[2], alpha->v->float_val);
+	//		glColor4f(1,1,1, alpha->v->float_val);
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);		
+		}
+		textureFont->Draw(str,xp,yp);
+		linepos -= sy * 0.5 * (float)fontSize->v->int_val;
 	}
-	textureFont->Draw(str,xp,yp);
 	glPopMatrix();
 
 	if (useShaders) {

@@ -1,0 +1,125 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+		<object class="gl.LoadFont" name="data.font">
+			<property name="fontname">Army.ttf</property>
+			<property name="fontsize">32</property>
+		</object>
+		<object class="geom.Quad" name="data.quad">
+			<property name="scale">1.0, 1.0, 1.0</property>
+			<property name="generatequads">true</property>
+			<property name="generatelines">false</property>
+		</object>
+
+		<object class="geom.Quad" name="data.logo.quad">
+			<property name="scale">1.075, 0.15, 1.0</property>
+			<property name="generatequads">true</property>
+			<property name="generatelines">false</property>
+		</object>
+ 		<object class="gl.LoadTexture2D" name="data.logo">
+	       <property name="fileName">Phenomena_Logo.png</property>
+	   	</object>
+	</resources>
+	
+	<render>
+		<!-- The container is just a dummy, makes linking easier to reference the dummy -->
+		<object class="utils.Container" name="render">
+
+			<!-- Render the scroller to a texture -->
+			<object class="gl.RenderToTexture" name="scroller_target">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>					
+				<property name="clear">true</property>
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,-4</property>
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+				<object class="Animation.ExpSolver" name="ypos">
+					<property name="expression">t*0.5</property>
+				</object>
+				<object class="Numeric.VectorMux" name="text_pos">
+					<property name="y" source="ypos" />
+				</object>
+
+				<object class="gl.DrawText" name="printtext">
+					<property name="font">Army.ttf</property>
+					<property name="fontsize">32</property>
+					<property name="alignment">center</property>
+					<property name="position" source="text_pos" />
+					<property name="text">\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ok, that was fun\ \the original Enigma demo\was done by\Phenomena in 1991\\\Credits fly out to\\code\Azatoth\\Music\Firefox and Tip\\Graphics\Uno\\\\\Let's get on with the show\\...raytraced of course...</property>
+				</object>
+			</object>
+
+
+			<!-- draw the logo + scroller to a texture -->
+			<object class="gl.RenderToTexture" name="starwars_target">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>
+
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,2</property>
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<!-- Draw logo -->
+				<object class="gl.PreserveState">
+					<object class="gl.Transform" name="">
+						<property name="position">0,0.4,0</property>
+						<property name="rotation">0,0,0</property>
+					</object>
+
+					<object class="gl.DrawQuads" name="render_logo">
+						<property name="vertexCount" source="data.logo.quad.vertexCount" />
+						<property name="vertexData" source="data.logo.quad.vertexData" />
+						<property name="vertexUVData" source="data.logo.quad.vertexUVData" />
+						<property name="quadCount" source="data.logo.quad.quadCount" />
+						<property name="quadData" source="data.logo.quad.quadData" />
+						<property name="texture" source="data.logo.texture" />
+						<property name="lighting">false</property>
+					</object>
+				</object>
+
+				<!-- draw scroller -->
+				<object class="gl.PreserveState">
+					<object class="gl.Transform" name="">
+						<property name="position">0,0,0</property>
+						<property name="rotation">-70,0,0</property>
+						<property name="scale">1,-1,1</property>
+					</object>
+					<object class="gl.DrawQuads" name="render_starwarsquad">
+						<property name="vertexCount" source="data.quad.vertexCount" />
+						<property name="vertexData" source="data.quad.vertexData" />
+						<property name="vertexUVData" source="data.quad.vertexUVData" />
+						<property name="quadCount" source="data.quad.quadCount" />
+						<property name="quadData" source="data.quad.quadData" />
+						<property name="wireframe">false</property>
+						<property name="cullface">false</property>
+						<property name="texture" source="scroller_target.texture" />
+						<property name="lighting">false</property>
+					</object>
+				</object>
+			</object>
+
+			<!-- draw full screenimage with texture -->
+			<object class="gl.RenderContext" name="render_to_screen">
+				<object class="gl.FullScreenImage" name="feedback">
+					<property name="texture" source="starwars_target.texture"/> 
+				</object>		
+
+			</object>
+		</object>		
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="render" />
+
+	</timeline>
+</yapt2>				

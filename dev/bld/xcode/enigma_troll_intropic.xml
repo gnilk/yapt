@@ -13,13 +13,41 @@
 	<render>
 		<object class="gl.RenderContext" name="part">
 			<property name="fov">35.0</property>
-			<object class="Animation.Expression" name="troll.alpha">
+			<object class="Animation.Expression" name="troll.alpha_">
 				<property name="expression">cos(t)</property>
 			</object>
+			<object class="Animation.GenericCurve" name="troll.anim.alpha">
+					<property name="channels">1</property>
+					<property name="type">linearsmooth</property>
+					<object class="Animation.Key">
+						<property name="t">0</property>
+						<property name="values">0</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">2</property>
+						<property name="values">1</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">4</property>
+						<property name="values">1</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">5.75</property>
+						<property name="values">0</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">6</property>
+						<property name="values">0</property>
+					</object>
+			</object>
+			<object class="Numeric.VectorElement" name="troll.alpha">
+				<property name="vector" source="troll.anim.alpha" />
+			</object>
+
 			<object class="gl.FullScreenImage" name="image">
 				<property name="texture" source="image.troll" />
 				<property name="flip">true</property>
-				<property name="useblend">false</property>
+				<property name="useblend">true</property>
 				<property name="alpha" source="troll.alpha" />
 
 			</object>		

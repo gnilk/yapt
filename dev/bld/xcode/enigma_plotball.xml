@@ -55,8 +55,21 @@
 					<property name="rotation" source="plotball.rotation" />
 				</object>
 
+				<object class="Animation.ExpSolver" name="plotcounter">
+					<property name="expression">t*250</property>
+				</object>
+				<object class="Numeric.FloatToInt" name="intcount">
+					<property name="float" source="plotcounter" />
+				</object>
+				<object class="Numeric.IntMinMax" name="num_plots">
+					<property name="min">0</property>
+					<property name="max" source="data.plotball.vertexCount" />
+					<property name="value" source="intcount.int" />
+				</object>
+
 				<object class="gl.DrawPoints" name="render_ball">
-					<property name="vertexCount" source="data.plotball.vertexCount" />
+					<!-- <property name="vertexCount" source="data.plotball.vertexCount" /> -->
+					<property name="vertexCount" source="num_plots.result" />
 					<property name="vertexData" source="data.plotball.vertexData" />
 					<property name="vertexShader">enigma_plotball.vtx.glsl</property>
 					<property name="fragmentShader">enigma_plotball.frag.glsl</property>

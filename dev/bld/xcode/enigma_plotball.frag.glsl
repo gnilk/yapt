@@ -4,10 +4,11 @@ varying vec4 baseVertex;
 
 void main(void) 
 {
-	vec3 col = vec3(1,1,1);
+	vec4 color = vec4(1,1,1,1);
+	vec4 col = color;
 	if (baseVertex.z < 0.0) {
-		col = vec3(0.25,0.25,0.25);
+		col = color * 0.25; 
 	} 
-	gl_FragColor = vec4(col, 0);	
+	gl_FragColor = col; //vec4(col, 0);	
 }
 

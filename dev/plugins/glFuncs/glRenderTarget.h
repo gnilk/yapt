@@ -23,6 +23,7 @@ private:
 	Property *textureWidth;
 	Property *textureHeight;
 	Property *fov;
+	Property *clear;
 	// output
 	Property *texture;
 	Property *framebuffer;

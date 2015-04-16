@@ -30,10 +30,14 @@ void OpenGLDrawQuads::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 
 	numVertex = pInstance->CreateProperty("vertexCount", kPropertyType_Integer, "0","");
 	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
+	vertexUVData = pInstance->CreateProperty("vertexUVData", kPropertyType_UserPtr, NULL, "");
 	numQuads = pInstance->CreateProperty("quadCount", kPropertyType_Integer, "0","");
 	quadData = pInstance->CreateProperty("quadData", kPropertyType_UserPtr, NULL, "");
 
+	texture = pInstance->CreateProperty("texture", kPropertyType_Integer, "0", "");
 	wireframe = pInstance->CreateProperty("wireframe", kPropertyType_Bool, "false", "");
+	ignoreZBuffer = pInstance->CreateProperty("ignorezbuffer", kPropertyType_Bool, "false","");
+	cullface = pInstance->CreateProperty("cullface", kPropertyType_Bool, "true", "");
 	solidcolor = pInstance->CreateProperty("solidcolor", kPropertyType_Color, "0.75, 0.75, 0.75, 1.0", "");
 	uselighting = pInstance->CreateProperty("lighting", kPropertyType_Bool, "true", "");
 	mat_specular = pInstance->CreateProperty("material_specular", kPropertyType_Color, "1.0, 1.0, 1.0, 1.0","");
@@ -70,12 +74,23 @@ void OpenGLDrawQuads::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInst
 
 void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 	float *pVertex = (float *) vertexData->v->userdata;
+	float *pUVData = (float *) vertexUVData->v->userdata;
 	int *pQuads = (int *) quadData->v->userdata;	
 
 	float normal[3];
 	float v1[3], v2[3];
 
 	glColor3f(1,1,1);
+
+	bool bUseTexture = false;
+	if ((texture->v->int_val != 0) && (pUVData != NULL)) {
+    	glBindTexture(GL_TEXTURE_2D,texture->v->int_val);
+    	glEnable(GL_TEXTURE_2D);
+    	bUseTexture = true;
+	}
+	if (ignoreZBuffer->v->boolean == true) {
+		glDisable(GL_DEPTH_TEST);
+	}
 
 	if (useShaders) {
 		OpenGLShaderBase::ReloadIfNeeded();
@@ -100,8 +115,10 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 		glEnable(GL_LIGHT0);
 	}
 
-	glFrontFace(GL_CW);
-	glEnable(GL_CULL_FACE);
+	if (cullface->v->boolean == true) {
+		glFrontFace(GL_CW);
+		glEnable(GL_CULL_FACE);
+	}
 
 	if (wireframe->v->boolean == true) {
 		glColor3f(solidcolor->v->rgba[0], solidcolor->v->rgba[1], solidcolor->v->rgba[2]);
@@ -122,22 +139,37 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 			vNorm(normal,normal);
 
 			glNormal3fv(normal);
+			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+0]*3]);
 			glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
 
 			glNormal3fv(normal);
+			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+1]*3]);
 			glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
 
 			glNormal3fv(normal);
+			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+2]*3]);
 			glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
 
 			glNormal3fv(normal);
+			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+3]*3]);			
 			glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
 		}
 		glEnd();
 	}
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
-	glDisable(GL_CULL_FACE);
+	if (cullface->v->boolean == true) {
+		glDisable(GL_CULL_FACE);		
+	}
+
+	if (ignoreZBuffer->v->boolean == true) {
+		glEnable(GL_DEPTH_TEST);
+	}
+
+
+	if (bUseTexture) {
+    	glDisable(GL_TEXTURE_2D);
+	}
 
 	if (useShaders) {
 		OpenGLShaderBase::Detach();

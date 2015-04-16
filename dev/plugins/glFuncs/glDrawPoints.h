@@ -12,6 +12,7 @@ class OpenGLDrawPoints: public PluginObjectImpl, public OpenGLShaderBase {
 private:
 	Property *numVertex;
 	Property *vertexData;
+	Property *color;
 	Property *vshader;
 	Property *fshader;
 	bool useShaders;

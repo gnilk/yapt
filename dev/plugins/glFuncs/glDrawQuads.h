@@ -12,13 +12,17 @@ class OpenGLDrawQuads: public PluginObjectImpl, public OpenGLShaderBase {
 private:
 	Property *numVertex;
 	Property *vertexData;
+	Property *vertexUVData;
 	Property *numQuads;
 	Property *quadData;
 	Property *vshader;
 	Property *fshader;
 	Property *uselighting;
 	Property *wireframe;
+	Property *cullface;
+	Property *texture;
 	Property *solidcolor;
+	Property *ignoreZBuffer;
 
 	Property *mat_specular;
 	Property *mat_shininess;

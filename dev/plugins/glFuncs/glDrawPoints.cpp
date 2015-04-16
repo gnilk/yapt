@@ -29,6 +29,7 @@ void OpenGLDrawPoints::Initialize(ISystem *ySys, IPluginObjectInstance *pInstanc
 
 	numVertex = pInstance->CreateProperty("vertexCount", kPropertyType_Integer, "0","");
 	vertexData = pInstance->CreateProperty("vertexData", kPropertyType_UserPtr, NULL, "");
+	color = pInstance->CreateProperty("color", kPropertyType_Color, "1,1,1,1", "");
 
 	vshader = pInstance->CreateProperty("vertexShader", kPropertyType_String, "","");
 	fshader = pInstance->CreateProperty("fragmentShader", kPropertyType_String, "","");

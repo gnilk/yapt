@@ -152,8 +152,16 @@ void DocumentController::TraverseDocument(IDocumentTraversalSink *sink)
 //
 bool DocumentController::PostInitializeNode(IDocNode *node) {
   int i,nChildren;
-
   IBaseInstance *pObject = node->GetNodeObject();
+
+  nChildren = node->GetNumChildren();
+  for(i=0;i<nChildren;i++)
+  {
+    IDocNode *child = node->GetChildAt(i);
+    if (!PostInitializeNode(child)) return false;
+  }
+
+
   if (pObject != NULL) {
     switch(pObject->GetInstanceType()) {
       case kInstanceType_Object : 
@@ -169,14 +177,6 @@ bool DocumentController::PostInitializeNode(IDocNode *node) {
       }
       break;
     }
-  }
-
-
-  nChildren = node->GetNumChildren();
-  for(i=0;i<nChildren;i++)
-  {
-    IDocNode *child = node->GetChildAt(i);
-    if (!PostInitializeNode(child)) return false;
   }
   
   return true;

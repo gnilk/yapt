@@ -5,18 +5,16 @@
 			<property name="screen.resolution.height">360</property>
 		</object>
 
- 		<object class="gl.LoadTexture2D" name="image.goat">
-	       <property name="fileName">goat.png</property>
+ 		<object class="gl.LoadTexture2D" name="image.logo">
+	       <property name="fileName">Enigma_Logo.png</property>
 	   	</object>
 	</resources>
 	
 	<render>
-		<object class="gl.RenderContext" name="part">
+		<object class="gl.RenderContext" name="render">
 			<property name="fov">35.0</property>
-			<object class="Animation.Expression" name="goat.alpha_">
-				<property name="expression">cos(t)</property>
-			</object>
-			<object class="Animation.GenericCurve" name="goat.anim.alpha">
+
+			<object class="Animation.GenericCurve" name="logo.anim.alpha">
 					<property name="channels">1</property>
 					<property name="type">linearsmooth</property>
 					<object class="Animation.Key">
@@ -24,36 +22,37 @@
 						<property name="values">0</property>
 					</object>
 					<object class="Animation.Key">
-						<property name="t">2</property>
+						<property name="t">0.5</property>
 						<property name="values">1</property>
 					</object>
 					<object class="Animation.Key">
-						<property name="t">3</property>
+						<property name="t">1.25</property>
 						<property name="values">1</property>
 					</object>
 					<object class="Animation.Key">
-						<property name="t">3.75</property>
+						<property name="t">1.8</property>
 						<property name="values">0</property>
 					</object>
 					<object class="Animation.Key">
-						<property name="t">4</property>
+						<property name="t">2</property>
 						<property name="values">0</property>
 					</object>
 			</object>
-			<object class="Numeric.VectorElement" name="goat.alpha">
-				<property name="vector" source="goat.anim.alpha" />
+			<object class="Numeric.VectorElement" name="logo.alpha">
+				<property name="vector" source="logo.anim.alpha" />
 			</object>
 
+
 			<object class="gl.FullScreenImage">
-					<property name="texture" source="image.goat" />
+					<property name="texture" source="image.logo" />
 					<property name="flip">true</property>
 					<property name="useblend">true</property>
-					<property name="alpha" source="goat.alpha" />
+					<property name="alpha" source="logo.alpha" />
 			</object>		
 		</object>
 	</render>	
 	<timeline>
 	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
-	   <execute start="0" duration="1000" object="part" />
+	   <execute start="0" duration="1000" object="render" />
 	</timeline>
 </yapt2>				

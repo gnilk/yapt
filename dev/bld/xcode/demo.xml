@@ -8,12 +8,16 @@
     <include url="file://enigma_goat_intropic.xml" prefix="preintro1"/>
     <include url="file://enigma_troll_intropic.xml" prefix="preintro2"/>
     <include url="file://enigma_intro.xml" prefix="intro"/>
+    <include url="file://enigma_logopic.xml" prefix="logo" />
+    <include url="file://enigma_transtext_1.xml" prefix="transtext1" />
     <include url="file://enigma_plotball.xml" prefix="plotball" />
     <include url="file://enigma_lineball.xml" prefix="lineball" />
     <include url="file://enigma_olleball.xml" prefix="olleball" />
+    <include url="file://enigma_transtext_2.xml" prefix="transtext2" />
     <include url="file://enigma_tracer.xml" prefix="tracer" />
     <include url="file://enigma_lightworld.xml" prefix="lsworld" />
     <include url="file://enigma_tvbox.xml" prefix="tvbox" />
+    <include url="file://enigma_starwarsscroll.xml" prefix="starwars" />
 
 	<timeline>
 	   <execute start="0" duration="4" object="preintro1.part" />
@@ -26,22 +30,25 @@
 	   <execute start="28" duration="2" object="intro.intro_text_screen_4" />
 	   <execute start="32" duration="2" object="intro.intro_text_screen_5" />
 	   <!-- text transition screen here 'lets go' -->
-
+	   <execute start="34" duration="2" object="logo.render" />
+	   <execute start="36" duration="2" object="transtext1.text_screen_1" />
 	   <!-- plot/line/olles ball(s)  -->	   
-	   <execute start="34" duration="10" object="plotball.part_plotball" /> 
-	   <execute start="44" duration="10" object="lineball.part_lineball" />
-	   <execute start="54" duration="10" object="olleball.part_ollesball" />
+	   <execute start="38" duration="10" object="plotball.part_plotball" /> 
+	   <execute start="48" duration="10" object="lineball.part_lineball" />
+	   <execute start="58" duration="10" object="olleball.part_ollesball" />
 	   <!-- text transition screen here 'trip to mars' -->
+	   <execute start="68" duration="2" object="transtext2.text_screen_2" />
 
 	   <!-- trip to mars part -->
+	   <execute start="70" duration="10" object="lsworld.render" />
 	   <!-- star wars scroller  -->
+	   <execute start="80" duration="16" object="starwars.render" />
 	   <!-- raytrace  -->
-	   <execute start="64" duration="16" object="tracer.mycontext" />
+	   <execute start="96" duration="10" object="tracer.render" />
 	   <!-- text transition screen here 'xyz' -->
 
 	   <!-- light source ship -->
-	   <execute start="80" duration="10" object="lsworld.render" />
-	   <execute start="90" duration="1000" object="tvbox.render" />
+	   <execute start="106" duration="1000" object="tvbox.render" />
 
 	</timeline>
 	
