@@ -34,33 +34,42 @@
 					<property name="upvector">0,1,0</property>
 				</object>
 	
+				<while name="i" start="0" condition="i<10" step="1.0">				
 
-				<object class="Animation.VectorExpression" name="object.rotation">
-					<property name="x">t*64</property>
-					<property name="y">t*-48</property>
-					<property name="z">t*32</property>
+					<object class="Animation.VectorExpression" name="object.rotation">
+						<property name="x">t*64</property>
+						<property name="y">t*-48</property>
+						<property name="z">t*32</property>
+					</object>
+
+					<object class="gl.PreserveState" name="">
+						<object class="gl.Transform" name="object1.prs">
+							<property name="position">-6,0,-4</property>
+						</object>
+						<object class="gl.DrawWaveFront" name="spin_object">
+							<property name="filename">engima_cube.obj</property>
+						</object>
+					</object>
+					<object class="gl.PreserveState" name="">
+						<object class="gl.Transform" name="object2.prs">
+							<property name="position">6,0,-4</property>
+						</object>
+
+						<object class="gl.DrawWaveFront" name="spin_object">
+							<property name="filename">engima_cube.obj</property>
+						</object>
+					</object>
+				</while>
+
+				<ifelse condition="xyz.result > 0.5" name="condition1">
+					<ifelse_true>
+						<object />
+					</ifelse_true>
+
+					<ifelse_false>
+						<object />
+					</ifesle_false>
 				</object>
-
-				<object class="gl.PreserveState" name="">
-					<object class="gl.Transform" name="object1.prs">
-						<property name="position">-6,0,-4</property>
-					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
-					</object>
-				</object>
-				<object class="gl.PreserveState" name="">
-					<object class="gl.Transform" name="object2.prs">
-						<property name="position">6,0,-4</property>
-					</object>
-
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
-					</object>
-				</object>
-
-
-
 
 
 				<object class="gl.PreserveState" name="state">
