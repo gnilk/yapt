@@ -9,7 +9,7 @@ public:
 	BaseWindow();
 	virtual ~BaseWindow();
 
-	virtual void Open(int width, int height, const char *name);
+	virtual void Open(int width, int height, const char *name, bool fullScreen = false);
 	virtual void SetPos(int xp, int yp);
 	virtual void Close();
 	virtual void MakeCurrent();
@@ -20,6 +20,7 @@ public:
 	virtual void OnKeyDown(int key, int scancode, int mods);
 	virtual void OnKeyUp(int key, int scancode, int mods);
 	virtual void OnKeyRepeat(int key, int scancode, int mods);
+	virtual void SetTitle(std::string title);
 private:
 	void CommitInputString(bool isChange);
 protected:

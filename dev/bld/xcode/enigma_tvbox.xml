@@ -31,15 +31,15 @@
 					<property name="upvector">0,1,0</property>
 				</object>
 
-				<object class="Animation.ExpSolver" name="x_move.starfield">
-					<property name="expression">t</property>
+				<object class="Animation.VectorExpression" name="move.starfield">
+					<property name="x">t</property>
 				</object>
 
 				<object class="enigma.Starfield" name="move.starfield">
 					<property name="numSrcVertex" source="data.starfield.vertexCount" />
 					<property name="srcVertexData" source="data.starfield.vertexData" />
 					<property name="range">1</property>
-					<property name="x_movement" source="x_move.starfield" />
+					<property name="movement" source="move.starfield" />
 				</object>
 
 				<object class="gl.DrawPoints" name="render_drawstars">

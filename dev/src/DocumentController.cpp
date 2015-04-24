@@ -246,7 +246,7 @@ void DocumentController::RenderSignals(double t) {
 
 void DocumentController::Render(double sample_time) {
   if (dirtyNodes.size() > 0) {
-    // we have dirty nodes - poort mans solution - reinitialize the whole tree!
+    // we have dirty nodes - poor mans solution - reinitialize the whole tree!
     // This will be costly if the document grows..
     PostInitializeNode(pDocument->GetTree());
     dirtyNodes.clear();

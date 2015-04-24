@@ -28,11 +28,15 @@ static void glfwOnKey(GLFWwindow *window, int key, int scancode, int action, int
 		pThis->OnKey(key, scancode, action, mods);
 	}
 }
-void BaseWindow::Open(int width, int height, const char *name) {
+void BaseWindow::Open(int width, int height, const char *name, bool fullScreen /* = false */) {
 	this->width = width;
 	this->height = height;
 
-	window = glfwCreateWindow(width, height, name, NULL, NULL);
+	if (!fullScreen) {
+		window = glfwCreateWindow(width, height, name, NULL, NULL);
+	} else {
+		window = glfwCreateWindow(width, height, name, glfwGetPrimaryMonitor(), NULL);
+	}
 	if (window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window\n");
 		return;
@@ -40,6 +44,9 @@ void BaseWindow::Open(int width, int height, const char *name) {
 	glfwSetWindowUserPointer(window, (void *)this);
 	glfwSetCharCallback(window, glfwOnChar);
 	glfwSetKeyCallback(window, glfwOnKey);
+}
+void BaseWindow::SetTitle(std::string title) {
+	glfwSetWindowTitle(window, title.c_str());
 }
 
 void BaseWindow::OnChar(unsigned int code) {

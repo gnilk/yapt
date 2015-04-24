@@ -17,6 +17,7 @@ EXT_ROOT	 = $(ROOT)/ext
 NOICE_IO_SRC = $(EXT_ROOT)/noice.io/dev/src
 NOICE_IO_INC = $(EXT_ROOT)/noice.io/dev/inc
 EXPAT_ROOT   = $(EXT_ROOT)/expat/lib
+BASS_DIR     = $(EXT_ROOT)/bass
 YAPT_SRC_DIR = $(ROOT)/src
 YAPT_INC_DIR = $(ROOT)/inc
 
@@ -39,6 +40,7 @@ INCLUDE_FILES = -I/opt/local/include/freetype2 -I/opt/local/include -I/usr/local
 LIB_FILES = -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo -L/opt/local/lib -lGLEW -lglfw -lexpat -lfreetype
 
 
+
 CPPFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11
 CPPFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 CPPFLAGS += $(INCLUDE_FILES)
@@ -54,7 +56,7 @@ LDFLAGS += $(LIB_FILES)
 
 LINK_LIBS += -framework Cocoa -framework OpenGL -L/opt/local/lib -lglfw3 -lexpat
 PLAYER_LINK_LIBS += $(LIB_FILES) -L. -lyapt
-
+BASS_LIB = $(BASS_DIR)/libbass.dylib
 
 PLAYER_SRC_FILES = \
 	glfwplayer.cpp \
@@ -136,6 +138,7 @@ player: $(PLAYER_OBJ_FILES)
 
 yapt: $(YAPT_OBJ_FILES) $(NOICE_IO_OBJ_FILES) $(MONGOOSE_OBJ_FILES)
 	$(LD) $(LDFLAGS) $(YAPT_OBJ_FILES) $(NOICE_IO_OBJ_FILES) $(MONGOOSE_OBJ_FILES) -o libyapt.a
+	cp $(BASS_LIB) $(PLUGIN_DEST_DIR)
 
 ## - compile all plugins by calling recursive make's
 plugins: $(PLUGINS_DIRS)

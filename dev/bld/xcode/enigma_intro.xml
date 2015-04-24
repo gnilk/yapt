@@ -12,7 +12,7 @@
 	
 	<render>
 		<object class="gl.RenderContext" name="mycontext">
-			<property name="fov">35.0</property>
+			<property name="fov">50.0</property>
 
 			<!-- static camera -->
 			<object class="gl.Camera" name="camera">
@@ -22,25 +22,125 @@
 				<property name="upvector">0,1,0</property>
 			</object>
 
-			<object class="Animation.ExpSolver" name="z_move.starfield">
-				<property name="expression">t</property>
+			<object class="Animation.VectorExpression" name="_move.starfield">
+				<property name="x">t</property>
+				<property name="y">0</property>
+				<property name="z">0</property>
+			</object>
+
+			<object class="Animation.GenericCurve" name="move.starfield">
+				<property name="channels">3</property>
+				<property name="type">hermite</property>
+				<object class="Animation.VectorKey">
+					<property name="t">0</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">4</property>
+					<property name="values">-4,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">8</property>
+					<property name="values">-4,0,-8</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">12</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">16</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">20</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">24</property>
+					<property name="values">-4,8,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">28</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">32</property>
+					<property name="values">-4,0,-24</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">36</property>
+					<property name="values">-4,0,-8</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">40</property>
+					<property name="values">-4,0,-24</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">44</property>
+					<property name="values">-4,0,-48</property>
+				</object>
+			</object>
+
+			<object class="Animation.GenericCurve" name="rotate.starfield">
+				<property name="channels">3</property>
+				<property name="type">hermite</property>
+				<object class="Animation.VectorKey">
+					<property name="t">0</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">12</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">16</property>
+					<property name="values">0,180,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">20</property>
+					<property name="values">0,360,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">24</property>
+					<property name="values">0,540,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">28</property>
+					<property name="values">0,720,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">32</property>
+					<property name="values">0,720,180</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">36</property>
+					<property name="values">0,720,360</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">40</property>
+					<property name="values">0,720,540</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">44</property>
+					<property name="values">0,720,720</property>
+				</object>
 			</object>
 
 			<object class="Animation.VectorExpression" name="starfield.rotation">
 				<property name="x">0</property>
-				<property name="y">180</property>
-				<property name="z">t*24</property>
+				<property name="y">0</property>
+				<property name="z">0</property>
 			</object>
 
 			<object class="gl.Transform" name="starfield.prs">
-				<property name="rotation" source="starfield.rotation" />
+				<property name="rotation" source="rotate.starfield" />
 			</object>
 
 			<object class="enigma.Starfield" name="move.starfield">
 				<property name="numSrcVertex" source="data.starfield.vertexCount" />
 				<property name="srcVertexData" source="data.starfield.vertexData" />
 				<property name="range">2</property>
-				<property name="z_movement" source="z_move.starfield" />
+				<property name="movement" source="move.starfield" />
 			</object>
 
 			<object class="gl.DrawPoints" name="render_drawstars">
@@ -61,7 +161,40 @@
 				<property name="target">0,0,0</property>
 				<property name="upvector">0,1,0</property>
 			</object>
-			<object class="Animation.ExpSolver" name="text1.alpha">
+
+			<object class="Animation.GenericCurve" name="text1.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="text1.alpha">
+				<property name="vector" source="text1.alpha.anim" />
+			</object>
+
+			<object class="Animation.ExpSolver" name="_text1.alpha">
 				<property name="expression">sin(t)</property>
 			</object>
 
@@ -71,8 +204,8 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.32,0</property>
 				<property name="text">THE PHENOMENAL</property>
-				<property name="useblend">true</property>
 				<property name="color">0.1, 0.1, 0.8, 1.0</property>
+				<property name="useblend">true</property>
 				<property name="alpha" source="text1.alpha" />
 			</object>
 			<object class="gl.DrawText" name="printtext2">
@@ -97,6 +230,38 @@
 			</object>
 
 		</object>
+			<object class="Animation.GenericCurve" name="text.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="text.alpha">
+				<property name="vector" source="text.alpha.anim" />
+			</object>
+
 
 		<object class="gl.RenderContext" name="intro_text_screen_2">
 			<property name="fov">35.0</property>
@@ -106,12 +271,47 @@
 				<property name="target">0,0,0</property>
 				<property name="upvector">0,1,0</property>
 			</object>
+			<object class="Animation.GenericCurve" name="text2.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="text2.alpha">
+				<property name="vector" source="text2.alpha.anim" />
+			</object>
+
 			<object class="gl.DrawText" name="printtext">
 				<property name="font">Army.ttf</property>
 				<property name="fontsize">32</property>
 				<property name="alignment">center</property>
 				<property name="position">0,0.32,0</property>
 				<property name="text">PROUDLY PRESENTS</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />				
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -119,6 +319,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.05,0</property>
 				<property name="text">A NEW REMAKE</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />				
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -126,6 +329,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,-0.30,0</property>
 				<property name="text">PRODUCTION</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />				
 			</object>
 		</object>
 
@@ -143,6 +349,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.32,0</property>
 				<property name="text">PROGRAMMING</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -150,6 +359,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.05,0</property>
 				<property name="text">BY</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -157,6 +369,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,-0.30,0</property>
 				<property name="text">GNILK</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
 			</object>
 		</object>
 
@@ -174,6 +389,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.32,0</property>
 				<property name="text">MUSIC REMIXED</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -181,6 +399,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.05,0</property>
 				<property name="text">BY</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -188,6 +409,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,-0.30,0</property>
 				<property name="text">VIRGILL</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
 			</object>
 		</object>
 
@@ -206,6 +430,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.32,0</property>
 				<property name="text">GRAPHICS CREATED</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -213,6 +440,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,0.05,0</property>
 				<property name="text">BY</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
 			</object>
 			<object class="gl.DrawText" name="printtext2">
 				<property name="font">Army.ttf</property>
@@ -220,6 +450,9 @@
 				<property name="alignment">center</property>
 				<property name="position">0,-0.30,0</property>
 				<property name="text">-SOMEONE-</property>
+					<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
 			</object>
 		</object>
 
@@ -228,11 +461,10 @@
 	<timeline>
 	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
 	   <execute start="0" duration="1000" object="mycontext" />
-	   <execute start="0" duration="2" object="intro_text_screen_1" />
-	   <execute start="3" duration="2" object="intro_text_screen_2" />
-	   <execute start="6" duration="2" object="intro_text_screen_3" />
-	   <execute start="9" duration="2" object="intro_text_screen_4" />
-	   <execute start="12" duration="2" object="intro_text_screen_5" />
-
+	   <execute start="0" duration="4" object="intro_text_screen_1" />
+	   <execute start="6" duration="4" object="intro_text_screen_2" />
+	   <execute start="12" duration="4" object="intro_text_screen_3" />
+	   <execute start="18" duration="4" object="intro_text_screen_4" />
+	   <execute start="24" duration="4" object="intro_text_screen_5" />
 	</timeline>
 </yapt2>				

@@ -41,15 +41,19 @@ private:
   Property *vertexData;
   // could be vector, but most likely you want just to control one component
   Property *range;
-  Property *x_movement;
-  Property *y_movement;
-  Property *z_movement;
+  // Property *x_movement;
+  // Property *y_movement;
+  // Property *z_movement;
+
+  Property *movement;
 
   virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
   virtual void Render(double t, IPluginObjectInstance *pInstance);
   virtual void PostInitialize(ISystem *ySys,
       IPluginObjectInstance *pInstance);
   virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+private:
+  float MoveDotAxis(float v, float m, float r, float r2);
 };
 
 static Factory factory;
@@ -102,9 +106,11 @@ void Starfield::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   numSrcVertex = pInstance->CreateProperty("numSrcVertex", kPropertyType_Integer, "0", "");
   srcVertexData = pInstance->CreateProperty("srcVertexData", kPropertyType_UserPtr, NULL, "");
 
-  x_movement = pInstance->CreateProperty("x_movement", kPropertyType_Float, "0", "");
-  y_movement = pInstance->CreateProperty("y_movement", kPropertyType_Float, "0", "");
-  z_movement = pInstance->CreateProperty("z_movement", kPropertyType_Float, "0", "");
+  movement = pInstance->CreateProperty("movement", kPropertyType_Vector, "0,0,0","");
+
+  // x_movement = pInstance->CreateProperty("x_movement", kPropertyType_Float, "0", "");
+  // y_movement = pInstance->CreateProperty("y_movement", kPropertyType_Float, "0", "");
+  // z_movement = pInstance->CreateProperty("z_movement", kPropertyType_Float, "0", "");
 
   range = pInstance->CreateProperty("range", kPropertyType_Float, "2", "");
 
@@ -112,6 +118,18 @@ void Starfield::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   vertexData = pInstance->CreateOutputProperty("vertexData", kPropertyType_UserPtr, NULL, "");
 }
 
+
+float Starfield::MoveDotAxis(float v, float m, float r, float r2) {
+  v = v + m;
+
+    if (v<0) v = fmod(v-r,r2)+r;
+    else if (v>0) v = fmod(v+r,r2)-r; //fmod(v-r,r2)-r;
+ 
+  // if (v>r) v -= r2;
+  // if (v<-r) v += r2;
+
+  return v;
+}
 void Starfield::Render(double t, IPluginObjectInstance *pInstance) {
   // implement movement here
   int nVertex = numSrcVertex->v->int_val;
@@ -124,9 +142,13 @@ void Starfield::Render(double t, IPluginObjectInstance *pInstance) {
   float r2 = r*2;
 
   for(int i=0;i<nVertex;i++) {
-    pVertex[i*3+0] = fmod(pSrcVertex[i*3+0]+x_movement->v->float_val+r,r2) - r;
-    pVertex[i*3+1] = fmod(pSrcVertex[i*3+1]+y_movement->v->float_val+r,r2) - r;
-    pVertex[i*3+2] = fmod(pSrcVertex[i*3+2]+z_movement->v->float_val+r,r2) - r;
+    pVertex[i*3+0] = MoveDotAxis(pSrcVertex[i*3+0],movement->v->vector[0],r,r2);
+    pVertex[i*3+1] = MoveDotAxis(pSrcVertex[i*3+1],movement->v->vector[1],r,r2);
+    pVertex[i*3+2] = MoveDotAxis(pSrcVertex[i*3+2],movement->v->vector[2],r,r2);
+
+    // pVertex[i*3+0] = fmod(pSrcVertex[i*3+0]+movement->v->vector[0]+r,r2) - r;
+    // pVertex[i*3+1] = fmod(pSrcVertex[i*3+1]+movement->v->vector[1]+r,r2) - r;
+    // pVertex[i*3+2] = fmod(pSrcVertex[i*3+2]+movement->v->vector[2]+r,r2) - r;
   }
 
   vertexCount->v->int_val = nVertex;

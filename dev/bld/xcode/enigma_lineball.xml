@@ -35,7 +35,7 @@
 				</object>
 
 				<object class="Animation.ExpSolver" name="plotball.bounce.y">
-					<property name="expression">abs(cos(t*2.0))-0.3</property>
+					<property name="expression">abs(cos(t*3.0))-0.3</property>
 				</object>
 
 				<object class="Numeric.VectorMux" name="plotball.bounce.position">

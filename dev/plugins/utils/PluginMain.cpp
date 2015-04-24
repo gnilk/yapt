@@ -12,6 +12,7 @@
 #include "LoadFile.h"
 #include "WriteLine.h"
 #include "Container.h"
+#include "BassPlayer.h"
 
 using namespace yapt;
 
@@ -67,6 +68,9 @@ IPluginObject *UtilsFactory::CreateObject(ISystem *pSys, const char *identifier)
 	{
 		pObject = dynamic_cast<IPluginObject *> (new PropertyTest());
 	}
+	if (!strcmp(identifier, "utils.BassMP3Player")) {
+		pObject = dynamic_cast<IPluginObject *> ( new BassPlayer());
+	}
   return pObject;
 }
 
@@ -76,6 +80,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys)
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.Container");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.WriteLine");
 	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.TestProperties");
+	ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory),"name=utils.BassMP3Player");
 	return 0;
 }
 

@@ -80,6 +80,11 @@ void PlayerWindow::Render()
 	if (pausePlayer) {
 		tRender = tPause;		
 	}
+
+	char timeTitle[128];
+	snprintf(timeTitle, 128, "%f", tRender);
+	SetTitle(std::string(timeTitle));
+
 	system->GetActiveDocumentController()->Render(tRender);
 	pContext->PopContextParamObject();	// Need to pop
 	// Swap buffers done by base window

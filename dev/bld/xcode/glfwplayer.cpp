@@ -165,10 +165,18 @@ int main(int argc, char **argv) {
 	int logLevel = Logger::kMCDebug;
 	char *docFileName = "file://gl_test.xml";
 	char *objName = NULL;
+	bool showConsoleWindow = false;
+	bool fullScreen = true;
 	if (argc > 1) {
 		for (int i = 1; i < argc; i++) {
 			if ((argv[i][0] == '-') || (argv[i][0] == '/')) {
 				switch (argv[i][1]) {
+				case 'w' :
+					fullScreen = false;
+					break;
+				case 'd' :
+					showConsoleWindow = true;
+					break;
 				case 'l':
 					logLevel = atoi(argv[++i]);
 					break;
@@ -210,7 +218,9 @@ int main(int argc, char **argv) {
 
 	LoadDocument(docFileName);	
 #ifndef WIN32
-	StartWebService();
+	if (showConsoleWindow) {
+		StartWebService();
+	}
 #endif
 	if (objName != NULL) {
 		printObjectProperties(objName);
@@ -219,8 +229,13 @@ int main(int argc, char **argv) {
 	
 
 	yapt::ISystem *system = GetYaptSystemInstance();
-	window_width = system->GetConfigInt(kConfig_ResolutionWidth,640);  
-  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,360);  
+	if (fullScreen) {
+		window_width = system->GetConfigInt(kConfig_ResolutionWidth,1280);  
+	  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,720);  		
+	} else {
+		window_width = system->GetConfigInt(kConfig_ResolutionWidth,640);  
+	  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,360);  		
+	}
 
 	if (saveName != NULL) {
 		pLogger->Info("Saving document to: %s", saveName);
@@ -228,13 +243,15 @@ int main(int argc, char **argv) {
 	}
 
 #ifndef WIN32
-	pLogger->Debug("Opening Console Window");
 	ConsoleWindow console;
-	console.Open(640, 500, "console");
-	console.SetPos(640,0);
-	if (!console.InitializeFreeType()) {
-		pLogger->Error("Failed to initalize text rendering");
-		exit(1);
+	if (showConsoleWindow) {
+		pLogger->Debug("Opening Console Window");
+		console.Open(640, 500, "console");
+		console.SetPos(640,0);
+		if (!console.InitializeFreeType()) {
+			pLogger->Error("Failed to initalize text rendering");
+			exit(1);
+		}		
 	}
 #endif
 	pLogger->Debug("Opening Rendering Window");
@@ -242,7 +259,11 @@ int main(int argc, char **argv) {
 	pLogger->Debug("  Height: %d", window_height);  	
 
 	PlayerWindow player;
-	player.Open(window_width, window_height, "player");
+	if (!fullScreen) {
+		player.Open(window_width, window_height, "player");
+	} else {
+		player.Open(window_width, window_height, "player", true);		
+	}
 	player.InitalizeYapt();
 #ifndef WIN32
 	player.SetPos(0,0);
@@ -250,9 +271,11 @@ int main(int argc, char **argv) {
 	pLogger->Debug("Running render loop");
 
 #ifndef WIN32
-	console.WriteLine("YAPT2 v0.1 - (c) Fredrik Kling 2009");
-	console.WriteLine("Document: "+ std::string(docFileName));
-	console.WriteLine("Running render loop");
+	if (showConsoleWindow) {
+		console.WriteLine("YAPT2 v0.1 - (c) Fredrik Kling 2009");
+		console.WriteLine("Document: "+ std::string(docFileName));
+		console.WriteLine("Running render loop");		
+	}
 #endif
 
   // Need to initialize late if GL plugins are using GLEW - initialized by player window
@@ -273,7 +296,9 @@ int main(int argc, char **argv) {
 	{
 		player.Update();
 #ifndef WIN32
-		console.Update();
+		if (showConsoleWindow) {
+			console.Update();
+		}
 #endif
 		glfwPollEvents();
 	}
@@ -282,8 +307,10 @@ int main(int argc, char **argv) {
 
 	// Close OpenGL window and terminate GLFW
 #ifndef WIN32
-	console.Close();
-  StopWebService();
+	if (showConsoleWindow) {
+		console.Close();
+	  	StopWebService();
+	}
 #endif
 	player.Close();
 	glfwTerminate();

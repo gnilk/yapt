@@ -1,0 +1,42 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+		<object class="gl.LoadFont" name="data.font">
+			<property name="fontname">Army.ttf</property>
+			<property name="fontsize">32</property>
+		</object>
+	</resources>
+	
+	<render>
+		<!-- overlay with text screens -->
+		<object class="gl.RenderContext" name="text_screen_2">
+			<property name="fov">35.0</property>
+			<property name="clear">true</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="Animation.ExpSolver" name="text1.alpha">
+				<property name="expression">sin(t)</property>
+			</object>
+
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">Another trans text\ \lets take a trip\light sourced of course</property>
+			</object>
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="text_screen_2" />
+
+	</timeline>
+</yapt2>				
