@@ -9,6 +9,12 @@
 
 using namespace yapt;
 
+static char* cmd = "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s 1280x720 -i - " \
+	                  "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
+
+static 	int* framebuffer = NULL;
+
+
 static void perror() {
 	kErrorClass eClass;
 	kError eCode;
@@ -23,14 +29,28 @@ static void perror() {
 
 PlayerWindow::PlayerWindow() {
 	pausePlayer = false;
+	recordMovie = false;
 }
 PlayerWindow::~PlayerWindow() {
+}
+
+void PlayerWindow::EnableRecordToMovie()
+{
+	recordMovie = true;
+
 }
 
 bool PlayerWindow::ShouldClose()
 {
 	bool res = BaseWindow::ShouldClose();
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) res = true;	
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) 
+	{
+		if (recordMovie) {
+			pclose(ffmpeg);
+			recordMovie = false;
+		}
+		res = true;	
+	}
 	return res;
 }
 void PlayerWindow::InitalizeYapt()
@@ -67,16 +87,35 @@ void PlayerWindow::InitalizeYapt()
 }
 void PlayerWindow::Prepare()
 {
-
 }
 void PlayerWindow::Render()
 {
+	float tRender;
+	if (recordMovie) {
+		if (framebuffer) {
+			glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, framebuffer);
+			fwrite(framebuffer, sizeof(int)*width*height, 1, ffmpeg);			
+			tRecord += 1.0 / 60.0;
+		} else {
+			ffmpeg = popen(cmd, "w");
+			if (ffmpeg == NULL) {
+				printf("Unable to open ffmpeg pipe for recording\n");
+				exit(1);
+			}
+			framebuffer = new int[width*height];
+			tRecord = 0.0;	
+		}
+		tRender = tRecord;
+	} else {
+		tRender = glfwGetTime();
+	}
+
 	contextParams.width = width;
 	contextParams.height = height;
 	IBaseInstance *pBase = dynamic_cast<IBaseInstance *>(system->GetActiveDocument());
 	IContext *pContext = pBase->GetContext();
 	pContext->PushContextParamObject(&contextParams,"RenderContext");
-	float tRender = glfwGetTime();
+
 	if (pausePlayer) {
 		tRender = tPause;		
 	}

@@ -736,6 +736,8 @@ namespace yapt
     std::vector<PropertyInstance *> output_properties;
 
     IPropertyInstance *FindPropertyInstance(const char *propertyReference, IDocNode *pRootNode);
+    IPropertyInstance *FindPropertyInstanceTopDown(const char *propertyReference, IDocNode *pRootNode);
+    IPropertyInstance *FindPropertyInstance_TEMPNAME(const char *propertyReference, IDocNode *pRootNode);
     IPropertyInstance *FindPropertyInstanceFromRoot(const char *propertyReference);
     PropertyInstance *GetPropertyInstance(std::vector<PropertyInstance *> *pList, const char *szName);
     PropertyInstance *GetPropertyInstance(std::vector<PropertyInstance *> *pList, int index);

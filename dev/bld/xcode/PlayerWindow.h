@@ -26,6 +26,8 @@ public:
 	virtual void OnKeyDown(int key, int scancode, int mods);
 	virtual void OnKeyUp(int key, int scancode, int mods);
 
+	void EnableRecordToMovie();
+
 protected:
 	virtual void Render();
 private:
@@ -34,7 +36,11 @@ private:
 	yapt::ISystem *system;
 	OpenGLRenderContextParams contextParams;
 	bool pausePlayer;
+	bool recordMovie;
 	double tPause;
+	double tRecord;
+	FILE* ffmpeg; 
+
 
 
 };

@@ -218,6 +218,7 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
       continue;
     }
     const char *sName = pObject->GetInstanceName();
+
     if (simpleRef && !StrConfCaseCmp(propertyReference, pObject->GetInstanceName())) {
       return pObject->GetPropertyInstance(0,true);
     } else {
@@ -230,8 +231,12 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
         PropertyInstance *pInst = dynamic_cast<PropertyInstance *>(pObject->GetPropertyInstance(j, true));
 
         std::string qName = GetEquallyDottedString(propRef, pInst->GetFullyQualifiedName());
+
+        //Logger::GetLogger("PluginObjectInstance")->Debug("%s - %s", qName.c_str(), propRef.c_str());
+
         if (!qName.compare(propRef)) {
           // found!
+          //Logger::GetLogger("PluginObjectInstance")->Debug("FOUND!!!");
           return pObject->GetPropertyInstance(j, true);
         }                
       }
@@ -246,22 +251,58 @@ IPropertyInstance *PluginObjectInstance::FindPropertyInstance(const char *proper
     }
   }
   // did not find node, search parent
-  if (pSource == NULL)
+  // if (pSource == NULL)
+  // {
+  //   if (pRootNode->GetParent() != NULL) {            
+  //     return FindPropertyInstance(propertyReference, pRootNode->GetParent());
+  //   } 
+  // }
+  return NULL;
+
+}
+IPropertyInstance *PluginObjectInstance::FindPropertyInstanceTopDown(const char *propertyReference, IDocNode *pRootNode)
+{
+  IPropertyInstance *pSource = NULL;
+
+  pSource = FindPropertyInstance(propertyReference, pRootNode);
+  if (pSource != NULL) {
+    return pSource;
+  }
+
+  int i;
+  for (i=0;i<pRootNode->GetNumChildren();i++)
   {
-    if (pRootNode->GetParent() != NULL) {            
-      return FindPropertyInstance(propertyReference, pRootNode->GetParent());
-    } 
+    IDocNode *pChild = pRootNode->GetChildAt(i);
+    pSource = FindPropertyInstanceTopDown(propertyReference, pChild);
+    if (pSource != NULL) return pSource;
   }
   return NULL;
 
 }
+
+IPropertyInstance *PluginObjectInstance::FindPropertyInstance_TEMPNAME(const char *propertyReference, IDocNode *pRootNode)
+{
+  IPropertyInstance *pSource = NULL;
+
+  pSource = FindPropertyInstance(propertyReference, pRootNode);
+
+  if (pSource == NULL)
+  {
+    if (pRootNode->GetParent() != NULL) {            
+      return FindPropertyInstance_TEMPNAME(propertyReference, pRootNode->GetParent());
+    } 
+  }
+  return NULL;
+  
+}
+
 
 IPropertyInstance *PluginObjectInstance::FindPropertyInstanceFromRoot(const char *propertyReference) {
   // Search from root - must be done outside
   for (size_t i=0;i<GetDocument()->GetTree()->GetNumChildren();i++)
   {
     IDocNode *pChild = GetDocument()->GetTree()->GetChildAt(i);
-    IPropertyInstance *pSourceInst = FindPropertyInstance(propertyReference, pChild);
+    IPropertyInstance *pSourceInst = FindPropertyInstanceTopDown(propertyReference, pChild);
     if (pSourceInst != NULL) return pSourceInst;
   }
   return NULL;
@@ -297,6 +338,10 @@ bool PluginObjectInstance::BindProperties()
       if (pSourceInst == NULL) {       
         Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Looking from root for %s",propertyReference);
         pSourceInst = FindPropertyInstanceFromRoot(propertyReference);
+        if (pSourceInst == NULL) {
+          Logger::GetLogger("PluginObjectInstance")->Error("BindProperties, unable to find reference for '%s'", propertyReference);
+          exit(1);
+        }
       }
 
       // Source found, do type check

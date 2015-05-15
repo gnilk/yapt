@@ -68,6 +68,7 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       glColor4f(1,1,1, alpha->v->float_val);
       glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);    
+      //printf("%f:%f\n",t,alpha->v->float_val);
     }
 
 

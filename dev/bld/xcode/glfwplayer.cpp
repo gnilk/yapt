@@ -83,7 +83,9 @@ static void Initialize(int logLevel) {
 
 	// Initialize the logger - set up console
 	Logger::Initialize();
-	Logger::AddSink(Logger::CreateSink("LogConsoleSink"), "console", 0, NULL);
+	if (logLevel != Logger::kMCNone) {
+		Logger::AddSink(Logger::CreateSink("LogConsoleSink"), "console", 0, NULL);
+	}
 	Logger::SetAllSinkDebugLevel(logLevel);
 
 	ILogger *pLogger = Logger::GetLogger("main");
@@ -98,8 +100,12 @@ static void printHelp(char *execname) {
 
 	printf("Usage: %s [options] <filename>\n", execname);
 	printf("Options\n");
+	printf(" w  Window mode\n");
+	printf(" d  Show debug/console window\n");
 	printf(" l <num>    Set log level (higher means less, default is 0)\n");
+	printf(" r <file>   Record to movie file (requires ffmpeg)\n");
 	printf(" o <class>  Dump info for object of type 'class'\n");
+	printf(" s <file>   Save document\n");
 	printf("Filename is default 'file://gl_test.xml' (don't forget the URI specifier)\n");
 }
 static void dumpProperties(IPluginObjectInstance *pInst, bool bOutput) {
@@ -162,9 +168,11 @@ void OnGlfwShouldClose(GLFWwindow* window)
 int main(int argc, char **argv) {
 
 	char *saveName = NULL;
-	int logLevel = Logger::kMCDebug;
+	//int logLevel = Logger::kMCDebug;
+	int logLevel = Logger::kMCNone;
 	char *docFileName = "file://gl_test.xml";
 	char *objName = NULL;
+	char *movieName = NULL;
 	bool showConsoleWindow = false;
 	bool fullScreen = true;
 	if (argc > 1) {
@@ -175,6 +183,7 @@ int main(int argc, char **argv) {
 					fullScreen = false;
 					break;
 				case 'd' :
+					logLevel = Logger::kMCDebug;
 					showConsoleWindow = true;
 					break;
 				case 'l':
@@ -185,6 +194,9 @@ int main(int argc, char **argv) {
 					break;
 				case 's' :
 					saveName = argv[++i];
+					break;
+				case 'r' :
+					movieName = argv[++i];
 					break;
 				case 'h':
 				case 'H':
@@ -288,6 +300,11 @@ int main(int argc, char **argv) {
 
 	if (system->GetActiveDocument()) {
 		system->GetActiveDocumentController()->RenderResources();
+	}
+
+	if (movieName != NULL)
+	{
+		player.EnableRecordToMovie();
 	}
 
 

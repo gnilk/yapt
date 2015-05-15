@@ -142,7 +142,7 @@ void Shader::Dispose() {
 bool Shader::Load(char *src, GLenum type) {
   if (loaded) return true;
 
-  printf("Create %s\n",(type==GL_VERTEX_SHADER)?"Vertex Shader":"Pixel Shader");
+  //printf("Create %s\n",(type==GL_VERTEX_SHADER)?"Vertex Shader":"Pixel Shader");
   idShader = glCreateShader(type);
   glShaderSource(idShader, 1, (const GLchar **)&src, NULL);
   glCompileShader(idShader);
