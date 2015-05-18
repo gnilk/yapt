@@ -30,6 +30,7 @@ static void perror() {
 PlayerWindow::PlayerWindow() {
 	pausePlayer = false;
 	recordMovie = false;
+	isFirstFrame = true;
 }
 PlayerWindow::~PlayerWindow() {
 }
@@ -107,6 +108,10 @@ void PlayerWindow::Render()
 		}
 		tRender = tRecord;
 	} else {
+		if (isFirstFrame) {
+			glfwSetTime(0);	// Reset timer on first frame..
+			isFirstFrame = false;
+		}
 		tRender = glfwGetTime();
 	}
 
@@ -120,9 +125,33 @@ void PlayerWindow::Render()
 		tRender = tPause;		
 	}
 
+	// Debugging code - this is only to display the timer from the player
+	float fMusicTime = 0.0;
+	char musicTime[256];
+	snprintf(musicTime, 256, "");
+	IBaseInstance *pObject = system->GetActiveDocument()->GetObjectFromSimpleName("music");
+	if (pObject != NULL) {
+		IPluginObjectInstance *po = dynamic_cast<IPluginObjectInstance *>(pObject);
+		if (po != NULL) {
+			IPropertyInstance *pProp = po->GetPropertyInstance(0,true);
+			if (pProp != NULL) {
+		        pProp->GetValue(musicTime,256);
+		        fMusicTime = atof(musicTime);
+		    } else {
+		    	snprintf(musicTime,256,"unable to cast to property");
+		    }
+		} else {
+			snprintf(musicTime, 256, "object type mismatch");
+		}
+	} else {
+		snprintf(musicTime,256,"object not found");
+	}
+
 	char timeTitle[128];
-	snprintf(timeTitle, 128, "%f", tRender);
+	float diff = tRender - fMusicTime;
+	snprintf(timeTitle, 128, "%f:%s:%f", tRender,musicTime,diff);
 	SetTitle(std::string(timeTitle));
+	// --- end debugging code
 
 	system->GetActiveDocumentController()->Render(tRender);
 	pContext->PopContextParamObject();	// Need to pop

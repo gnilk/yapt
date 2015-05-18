@@ -11,6 +11,9 @@ private:
 	bool bPlaying;
 	float tLast;
 
+	Property *fileName;
+	Property *playTime;
+
 public:
 	// IPluginObject
 	BassPlayer();

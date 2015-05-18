@@ -32,6 +32,7 @@ protected:
 	virtual void Render();
 private:
 	void Prepare();
+	bool isFirstFrame;
 	float tLast;
 	yapt::ISystem *system;
 	OpenGLRenderContextParams contextParams;
