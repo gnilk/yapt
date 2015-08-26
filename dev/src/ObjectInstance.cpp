@@ -349,7 +349,9 @@ bool PluginObjectInstance::BindProperties()
       if (IsEqualPropertyTypes(pInput, pSource))
       {
         Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, Succesfully bound property for %s.%s to %s",GetInstanceName(), pInput->GetName(), pSource->GetFullyQualifiedName());
-        Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, tIn: %s, tOut: %s", pInput->GetTypeName().c_str(), pSource->GetTypeName().c_str());
+        Logger::GetLogger("PluginObjectInstance")->Debug("BindProperties, tIn: %s (%p), tOut: %s (%p)", 
+          pInput->GetTypeName().c_str(), pInput->GetProperty(),
+          pSource->GetTypeName().c_str(), pSource->GetProperty());
         pInput->SetSource(pSource);
       } else
       {			
@@ -579,14 +581,16 @@ Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType 
 }
 
 // -- interface
-Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription)
-{
+Property *PluginObjectInstance::CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription) {
   return CreateProperty(sName, type, sInitialValue, sDescription, false);
 }
 
-Property *PluginObjectInstance::CreateOutputProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription)
-{
+Property *PluginObjectInstance::CreateOutputProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription) {
   return CreateProperty(sName, type, sInitialValue, sDescription, true);
+}
+
+bool PluginObjectInstance::BindVariable(const char *sName, kPropertyType type, const char *sDescription) {
+  return false;
 }
 
 void PluginObjectInstance::SetPropertyHint(const char *sName, kPropertyHint hint) 

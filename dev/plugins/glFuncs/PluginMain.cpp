@@ -31,6 +31,8 @@
 #include "glWavefront.h"
 #include "glPreserveState.h"
 #include "glFontManager.h"
+#include "glFog.h"
+
 
 using namespace yapt;
 
@@ -103,6 +105,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.LoadFont")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLFontLoader());
   }
+  if (!strcmp(identifier, "gl.Fog")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLFog());
+  }
   if (pObject != NULL) {
     pLogger->Debug("Ok");
   } else
@@ -122,6 +127,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Plot");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Camera");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Transform");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Fog");
 
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawTriangles");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawPoints");

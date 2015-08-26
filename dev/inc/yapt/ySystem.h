@@ -293,6 +293,9 @@ namespace yapt
     virtual IPluginObject *GetExtObject() = 0;
     virtual Property *CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription) = 0;
     virtual Property *CreateOutputProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription) = 0;
+
+    virtual bool BindVariable(const char *sName, kPropertyType type, const char *sDescription) = 0;
+
     virtual void SetPropertyHint(const char *sName, kPropertyHint hint) = 0;
     virtual kPropertyHint GetPropertyHint(const char *sName) = 0;
     virtual Property *GetProperty(const char *name) = 0;

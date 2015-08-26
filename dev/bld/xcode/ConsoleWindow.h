@@ -127,8 +127,8 @@ private:
 	yapt::ILogger *pLogger;
 
 	// backbuffer texture
-	const int frameBufferWidth = 1024;
-	const int frameBufferHeight = 1024;
+	const int frameBufferWidth = 512;
+	const int frameBufferHeight = 512;
 	GLuint idFrameBuffer;
 	GLuint fbTexture;
 

@@ -421,6 +421,47 @@ namespace yapt
   };
 
 
+  // A variable is somewhat different from a Property although serving the same purpose
+  // instead of a visible intermediate structure the app layer allows direct linkage 
+  // to the data of the plugin
+  // There is a slight overhead since the app must - per rendering - walk through and
+  // update all the variables for you while the intermediate structure allows for automatic updates
+  // directly at the data structure level
+  //
+  // Hence, variables are more convienient to use but a bit more costly
+  //
+/*
+  class Variable {    
+  protected:
+    std::string name;
+    std::string desc;
+    kPropertyType type;
+    void *ptrData;
+    Variable *link;
+    bool linked;
+
+  public:
+    bool IsType(kPropertyType other);
+    bool IsType(Variable *other);
+    kPropertyType GetType() { return type; }
+
+    virtual void Set(std::string value);
+    virtual std::string Get();
+    virtual void Update();
+
+    bool LinkTo(Variable *pOther);
+    bool IsLinked() { return linked; };
+    void *BasePointer() { return ptrData; }
+  };
+
+  class VariableManager {
+  private:
+    std::vector<Variable *> variables;
+  public:
+    Variable *BindVariable(std::string name, kPropertyType type, void *pData, std::string description);
+  };
+*/
+
   typedef std::pair<IBaseInstance *, IDocNode *> BaseNodePair;
   typedef std::map<IBaseInstance *, IDocNode *> BaseNodeMap;
 
@@ -803,6 +844,7 @@ namespace yapt
     // external interface
     virtual Property *CreateProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription);
     virtual Property *CreateOutputProperty(const char *sName, kPropertyType type, const char *sInitialValue, const char *sDescription);
+    virtual bool BindVariable(const char *sName, kPropertyType type, const char *sDescription);
     virtual void SetPropertyHint(const char *sName, kPropertyHint hint);
     virtual kPropertyHint GetPropertyHint(const char *sName);
     virtual Property *GetProperty(const char *name);

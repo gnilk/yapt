@@ -55,6 +55,7 @@ LDFLAGS =  -dynamiclib -arch x86_64 -stdlib=libc++
 LDFLAGS += $(LIB_FILES)
 
 LINK_LIBS += -framework Cocoa -framework OpenGL -L/opt/local/lib -lglfw3 -lexpat
+NP_LINK_LIBS = 
 PLAYER_LINK_LIBS += $(LIB_FILES) -L. -lyapt
 BASS_LIB = $(BASS_DIR)/libbass.dylib
 
@@ -132,6 +133,9 @@ all: yapt player plugins
 
 %.o : %.c
 	$(CC) -c $(CFLAGS)  $< -o $@
+
+nptest : newprop.o
+	$(CC) $(CFLAGS) newprop.o $(NP_LINK_LIBS) -o nptest
 
 player: $(PLAYER_OBJ_FILES)
 	$(CC) $(CFLAGS) $(PLAYER_OBJ_FILES) $(PLAYER_LINK_LIBS) -o glfwplayer

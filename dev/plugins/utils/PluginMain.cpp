@@ -106,6 +106,16 @@ void PropertyTest::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   properties.push_back(pInstance->CreateProperty("usrptr", kPropertyType_UserPtr, NULL, ""));
   properties.push_back(pInstance->CreateProperty("enum", kPropertyType_Enum, "val1", "enum={val1, val2, val3, val4}"));
   //properties.push_back(pInstance->CreateProperty("floatarray", kPropertyType_FloatArray, "0,1,2,3,4,5", ""));
+/*
+  struct Variable {
+  	std::string name;
+  	int type;
+  	void *pDest;
+  };
+
+  int myint;
+  pInstance->BindVariable("color_rgba_var", kPropertyType_Integer, &myint, "wef");
+  */
 }
   
 

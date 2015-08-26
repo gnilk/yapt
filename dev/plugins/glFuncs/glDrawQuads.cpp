@@ -80,6 +80,18 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 	float normal[3];
 	float v1[3], v2[3];
 
+	// TEST
+	// float fogColor[4]= {0.0f, 0.0f, 0.0f, 1.0f};  
+	// glFogfv(GL_FOG_COLOR, fogColor);
+	// glFogf(GL_FOG_START, 10.0f);
+	// glFogf(GL_FOG_END, 100.0f);
+	// glFogi(GL_FOG_MODE, GL_LINEAR); 
+	// glFogf(GL_FOG_DENSITY, 0.35f); 
+	// glEnable(GL_FOG);
+
+	// End test
+
+
 	glColor3f(1,1,1);
 
 	bool bUseTexture = false;
@@ -174,6 +186,10 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 	if (useShaders) {
 		OpenGLShaderBase::Detach();
 	}
+
+	// TEST
+	//glDisable(GL_FOG);
+	// end test
 
 }
 

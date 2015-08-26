@@ -4,6 +4,30 @@
 			<property name="screen.resolution.width">640</property>
 			<property name="screen.resolution.height">360</property>
 		</object>
+		<object class="gl.LoadTexture2D" name="floor.texture">
+			<property name="fileName">floorchecker.png</property>
+		</object>
+		<object class="geom.Quad" name="floor.quad">
+			<property name="scale">200,200,1</property>
+			<property name="uvscale">40,40,1</property>
+			<property name="axis">XZ</property>
+		</object>
+		<object class="geom.Cylinder" name="pole_src">
+			<property name="radius">1</property>
+			<property name="segments">16</property>
+			<property name="scale">0.1,2.5,0.1</property>
+			<property name="axis">XY</property>
+		</object>
+		<object class="geom.Array" name="pole">
+			<property name="count">32</property>
+			<property name="step">0,0,16</property>
+			<property name="vertexCount" source="pole_src.vertexCount" />
+			<property name="vertexData" source="pole_src.vertexData" />
+			<property name="quadData" source="pole_src.quadData" />
+			<property name="quadCount" source="pole_src.quadCount" />
+			<property name="lineData" source="pole_src.lineData" />
+			<property name="lineCount" source="pole_src.lineCount" />
+		</object>
 	</resources>
 	
 	<render>
@@ -11,8 +35,82 @@
 
 				<!-- Scroller -->
 			<object class="gl.RenderContext" name="scene">
-				<property name="fov">35.0</property>
+				<property name="fov">45.0</property>
 				<property name="clear">true</property>
+
+				<object class="Animation.GenericCurve" name="camera.position.anim">
+					<property name="channels">3</property>
+					<property name="type">hermite</property>
+					<object class="Animation.VectorKey">
+						<property name="t">0</property>
+						<property name="values">4,2,-6</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">1</property>
+						<property name="values">0,0,-8</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">2</property>
+						<property name="values">-8,0,8</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">3</property>
+						<property name="values">0,0,16</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">4</property>
+						<property name="values">8,0,12</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">10</property>
+						<property name="values">0,0,14</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">12</property>
+						<property name="values">-8,0,24</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">14</property>
+						<property name="values">0,0,80</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">16</property>
+						<property name="values">8,0,100</property>
+					</object>
+				</object>
+
+
+				<!-- space ship -->
+				<object class="Animation.GenericCurve" name="spaceship.position.anim">
+					<property name="channels">3</property>
+					<property name="type">hermite</property>
+					<object class="Animation.VectorKey">
+						<property name="t">0</property>
+						<property name="values">0,4,0</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">1</property>
+						<property name="values">0,1,-2</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">2</property>
+						<property name="values">0,0,4</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">4</property>
+						<property name="values">0,0,16</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">8</property>
+						<property name="values">0,0,100</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">24</property>
+						<property name="values">0,0,200</property>
+					</object>
+				</object>
+
+
 
 				<object class="Animation.VectorExpression" name="camera.position">
 					<property name="x">10.0*sin(t*0.75)</property>
@@ -29,8 +127,8 @@
 
 				<object class="gl.Camera" name="camera">
 					<!-- <property name="position">0,0,-10</property> -->
-					<property name="position" source="camera.position" />
-					<property name="target" source="camera.target" /> <!-- 0,0,0</property> -->
+					<property name="position" source="camera.position.anim" />
+					<property name="target" source="spaceship.position.anim" /> <!-- 0,0,0</property> -->
 					<property name="upvector">0,1,0</property>
 				</object>
 	
@@ -41,42 +139,117 @@
 					<property name="z">t*32</property>
 				</object>
 
+
+				<object class="gl.Fog" name="fog">
+
+					<object class="gl.PreserveState" name="">
+						<object class="gl.Transform" name="">
+							<property name="position">0,-1,0</property>
+							<property name="rotation">0,0,0</property>					
+						</object>
+
+						<object class="gl.DrawQuads">
+							<property name="vertexCount" source="floor.quad.vertexCount" />
+							<property name="vertexData" source="floor.quad.vertexData" />
+							<property name="vertexUVData" source="floor.quad.vertexUVData" />
+							<property name="quadData" source="floor.quad.quadData" />
+							<property name="quadCount" source="floor.quad.quadCount" />
+							<property name="texture" source="floor.texture" />
+							<property name="cullface">false</property>
+							<property name="wireframe">false</property>
+							<property name="lighting">false</property>
+
+						</object>
+					</object>
+
+					<object class="gl.PreserveState" name="">
+						<object class="gl.Transform" name="object1.prs">
+							<property name="position">-5,0,0</property>
+						</object>
+						<object class="gl.DrawQuads">
+							<property name="vertexCount" source="pole.vertexCount" />
+							<property name="vertexData" source="pole.vertexData" />
+							<property name="quadData" source="pole.quadData" />
+							<property name="quadCount" source="pole.quadCount" />
+							<property name="cullface">false</property>
+							<property name="wireframe">false</property>
+							<property name="lighting">true</property>
+						</object>
+					</object>
+					<object class="gl.PreserveState" name="">
+						<object class="gl.Transform" name="object1.prs">
+							<property name="position">5,0,8</property>
+						</object>
+						<object class="gl.DrawQuads">
+							<property name="vertexCount" source="pole.vertexCount" />
+							<property name="vertexData" source="pole.vertexData" />
+							<property name="quadData" source="pole.quadData" />
+							<property name="quadCount" source="pole.quadCount" />
+							<property name="cullface">false</property>
+							<property name="wireframe">false</property>
+							<property name="lighting">true</property>
+						</object>
+					</object>
+
+				</object>
+
+
 				<object class="gl.PreserveState" name="">
 					<object class="gl.Transform" name="object1.prs">
-						<property name="position">-6,0,-4</property>
-					</object>
+						<property name="position" source="spaceship.position.anim"/> <!--0,0,0</property> -->
+						<property name="rotation">95,0,0</property>
+						<property name="scale">1.5,2.5,0.75</property>
+
+					</object>					
 					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+						<property name="filename">spaceship.obj</property>
 					</object>
 				</object>
+
+
+<!--
 				<object class="gl.PreserveState" name="">
 					<object class="gl.Transform" name="object2.prs">
 						<property name="position">6,0,-4</property>
 					</object>
-
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
-
-
-
 
 
 				<object class="gl.PreserveState" name="state">
 					<object class="gl.Transform" name="object3.prs">
 						<property name="position">-6,0,0</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
 				<object class="gl.PreserveState" name="state">
 					<object class="gl.Transform" name="object4.prs">
 						<property name="position">6,0,0</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
 
@@ -84,8 +257,14 @@
 					<object class="gl.Transform" name="object5.prs">
 						<property name="position">-6,0,4</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
 
@@ -93,8 +272,14 @@
 					<object class="gl.Transform" name="object6.prs">
 						<property name="position">6,0,4</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
 
@@ -103,8 +288,14 @@
 					<object class="gl.Transform" name="object5.prs">
 						<property name="position">-6,0,8</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
 
@@ -112,8 +303,14 @@
 					<object class="gl.Transform" name="object6.prs">
 						<property name="position">6,0,8</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
 
@@ -121,8 +318,14 @@
 					<object class="gl.Transform" name="object5.prs">
 						<property name="position">-6,0,12</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
 
@@ -130,24 +333,18 @@
 					<object class="gl.Transform" name="object6.prs">
 						<property name="position">6,0,12</property>
 					</object>
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">engima_cube.obj</property>
+					<object class="gl.DrawQuads">
+						<property name="vertexCount" source="pole.vertexCount" />
+						<property name="vertexData" source="pole.vertexData" />
+						<property name="quadData" source="pole.quadData" />
+						<property name="quadCount" source="pole.quadCount" />
+						<property name="cullface">false</property>
+						<property name="wireframe">false</property>
+						<property name="lighting">true</property>
 					</object>
 				</object>
-
-<!--
-				<object class="gl.PreserveState" name="">
-					<object class="gl.Transform" name="object.prs">
-						<property name="position">0,0,0</property>
-						<property name="rotation" source="object.rotation" />
-					</object>
-
-					<object class="gl.DrawWaveFront" name="spin_object">
-						<property name="filename">luisobj.obj</property> 
-					</object>
-				</object>
-
 -->
+
 
 			</object>
 		</object>

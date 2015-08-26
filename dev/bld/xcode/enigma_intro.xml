@@ -5,7 +5,7 @@
 			<property name="screen.resolution.height">360</property>
 		</object>
 		<object class="geom.PointCloud" name="data.starfield">
-			<property name="numVertex">2048</property>
+			<property name="numVertex">8192</property>
 			<property name="range">2.0, 2.0, 2.0</property>
 		</object>
  		<object class="gl.LoadTexture2D" name="image.text1">
