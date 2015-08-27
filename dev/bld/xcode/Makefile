@@ -7,6 +7,7 @@
 #		libexpat, glfw
 #
 # Compiler settings
+
 CC     = clang++
 
 OBJDIR 	 = obj
