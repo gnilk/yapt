@@ -102,11 +102,15 @@
 					</object>
 					<object class="Animation.VectorKey">
 						<property name="t">8</property>
-						<property name="values">0,0,100</property>
+						<property name="values">0,0,80</property>
+					</object>
+					<object class="Animation.VectorKey">
+						<property name="t">16</property>
+						<property name="values">0,0,180</property>
 					</object>
 					<object class="Animation.VectorKey">
 						<property name="t">24</property>
-						<property name="values">0,0,200</property>
+						<property name="values">0,0,300</property>
 					</object>
 				</object>
 
@@ -116,7 +120,7 @@
 					<property name="x">10.0*sin(t*0.75)</property>
 					<!-- <property name="y">abs(cos(t*2.0))-0.3</property> -->
 					<property name="y">0</property>
-					<property name="z">-20+t+10.0*cos(t*0.5)</property>
+					<property name="z">-20+t*13+16.0*sin(t*0.5)</property>
 				</object>
 				<object class="Animation.VectorExpression" name="camera.target">
 					<property name="x">0</property>
@@ -127,7 +131,7 @@
 
 				<object class="gl.Camera" name="camera">
 					<!-- <property name="position">0,0,-10</property> -->
-					<property name="position" source="camera.position.anim" />
+					<property name="position" source="camera.position" />
 					<property name="target" source="spaceship.position.anim" /> <!-- 0,0,0</property> -->
 					<property name="upvector">0,1,0</property>
 				</object>
