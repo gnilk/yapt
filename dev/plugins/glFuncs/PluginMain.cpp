@@ -24,6 +24,7 @@
 #include "glShaderQuad.h"
 #include "glShaderBase.h"
 #include "glDrawPoints.h"
+#include "glBillboard.h"
 #include "glDrawQuads.h"
 #include "glDrawLines.h"
 #include "glDrawText.h"
@@ -73,7 +74,10 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLLoadTexture());
   }
   if (!strcmp(identifier, "gl.DrawPoints")) {
-		pObject = dynamic_cast<IPluginObject *> (new OpenGLDrawPoints());
+    pObject = dynamic_cast<IPluginObject *> (new OpenGLDrawPoints());
+  }
+  if (!strcmp(identifier, "gl.Billboard")) {
+    pObject = dynamic_cast<IPluginObject *> (new OpenGLBillboard());
   }
   if (!strcmp(identifier, "gl.DrawTriangles")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawTriangles());
@@ -131,6 +135,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
 
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawTriangles");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawPoints");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.Billboard");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawLines");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawQuads");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.DrawWaveFront");

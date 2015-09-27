@@ -13,8 +13,6 @@ namespace gnilk
 
 	#define EXP_SOLVER_MAX_ARGS 32
 
-	using namespace Goat;
-
 
 	extern "C"
 	{
@@ -79,6 +77,27 @@ namespace gnilk
 		double Evaluate();
 	};
 
+	class BoolOpNode :
+		public BinOpNode
+	{
+	public:
+		BoolOpNode(const char *op, BaseNode *pLeft, BaseNode *pRight);
+		virtual ~BoolOpNode();
+		double Evaluate();
+	};
+
+	class IfOperatorNode :
+		public BaseNode
+	{
+	protected:
+		BaseNode *exp;
+		BaseNode *pTrue;
+		BaseNode *pFalse;
+	public:
+		IfOperatorNode(BaseNode *exp, BaseNode *pTrue, BaseNode *pFalse);
+		virtual ~IfOperatorNode();
+		double Evaluate();
+	};
 
 	class ExpSolver
 	{
@@ -98,6 +117,9 @@ namespace gnilk
 		BaseNode *BuildUserCall();
 		BaseNode *BuildTerm();
 		BaseNode *BuildFact();
+		BaseNode *BuildBase();
+		BaseNode *BuildBool();
+		BaseNode *BuildIf();
 		BaseNode *BuildTree();
 
 		typedef enum
@@ -107,6 +129,8 @@ namespace gnilk
 			kTokenClass_Variable,
 		} kTokenClass;
 		kTokenClass ClassifyFactor(const char *token);
+
+		std::vector<BaseNode *> nodes;
 
 
 	public:

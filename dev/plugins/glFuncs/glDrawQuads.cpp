@@ -47,6 +47,8 @@ void OpenGLDrawQuads::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	light_diffuse = pInstance->CreateProperty("light_diffuse", kPropertyType_Color, "1.0, 1.0, 1.0, 1.0","");
 	light_specular = pInstance->CreateProperty("light_specular", kPropertyType_Color, "1.0, 1.0, 1.0, 1.0","");
 
+	blend_func = pInstance->CreateProperty("blend_func", kPropertyType_Enum, "none", "enum={none, add}");	
+
 	vshader = pInstance->CreateProperty("vertexShader", kPropertyType_String, "","");
 	fshader = pInstance->CreateProperty("fragmentShader", kPropertyType_String, "","");
 	useShaders = false;
@@ -132,6 +134,16 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 		glEnable(GL_CULL_FACE);
 	}
 
+
+	if (blend_func->v->int_val) {
+		glEnable(GL_BLEND);
+		switch(blend_func->v->int_val) {
+			case 1 : // add
+				glBlendFunc(GL_ONE, GL_ONE);
+				break;
+		}
+	}
+
 	if (wireframe->v->boolean == true) {
 		glColor3f(solidcolor->v->rgba[0], solidcolor->v->rgba[1], solidcolor->v->rgba[2]);
 		for(int i=0;i<numQuads->v->int_val;i++) {
@@ -185,6 +197,10 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 
 	if (useShaders) {
 		OpenGLShaderBase::Detach();
+	}
+
+	if (blend_func->v->int_val) {
+		glDisable(GL_BLEND);
 	}
 
 	// TEST

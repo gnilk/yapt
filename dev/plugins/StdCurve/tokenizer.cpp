@@ -18,16 +18,18 @@ TODO: [ -:Not done, +:In progress, !:Completed]
 
 
 \History
+- 14.03.14, FKling, published on github
 - 25.10.09, FKling, Implementation
 
 ---------------------------------------------------------------------------*/
+
 #include <stdlib.h>
 #include <vector>
 #include <string>
 
 #include "tokenizer.h"
 
-using namespace Goat;
+using namespace gnilk;
 
 Tokenizer::Tokenizer(const char *sInput, const char *sOperators)
 {

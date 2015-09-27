@@ -15,6 +15,10 @@
 			<property name="generatequads">true</property>
 			<property name="generatelines">false</property>
 		</object>
+		<object class="geom.Pyramid" name="data.pyramid">
+			<property name="scale">1.0, 1.0, 1.0</property>
+			<property name="generatelines">true</property>
+		</object>
 	</resources>
 	
 	<render>
@@ -82,7 +86,65 @@
 				</object>
 			</object>
 
+			<object class="gl.RenderToTexture" name="tvbox_side2">
+				<property name="fov">35.0</property>
+				<property name="clear">true</property>
+				<property name="width">64</property>
+				<property name="height">64</property>				
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,-4</property>
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+				<object class="Animation.VectorExpression" name="side2.rotation">
+					<property name="x">0</property>
+					<property name="y">0</property>
+					<property name="z">t*64</property>
+				</object>
 
+				<object class="gl.Transform" name="prs_side2">
+					<property name="rotation" source="side2.rotation" />
+				</object>
+
+
+				<object class="gl.DrawText" name="printtext">
+					<property name="font">Army.ttf</property>
+					<property name="fontsize">32</property>
+					<property name="alignment">center</property>
+					<property name="position">0,-0.1,0</property>
+					<property name="text">NOC</property>
+				</object>
+			</object>
+
+			<object class="gl.RenderToTexture" name="tvbox_side3">
+				<property name="fov">35.0</property>
+				<property name="clear">true</property>
+				<property name="width">256</property>
+				<property name="height">256</property>				
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,6</property>
+					<!-- <property name="position">0,0,2.0</property> -->
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="pyramid.rotation">
+					<property name="x">t*64</property>
+					<property name="y">t*-48</property>
+					<property name="z">t*32</property>
+				</object>
+
+				<object class="gl.Transform" name="prs_side2">
+					<property name="rotation" source="pyramid.rotation" />
+				</object>
+
+
+				<object class="gl.DrawLines" name="render_pyramid">
+					<property name="vertexData" source="data.pyramid.vertexData" />			
+					<property name="lineCount" source="data.pyramid.lineCount" />
+					<property name="lineData" source="data.pyramid.lineData" />
+				</object>
+			</object>
 
 
 
@@ -144,11 +206,11 @@
 					<property name="vertexData" source="data.tvbox.vertexData" />
 					<property name="quadCount" source="data.tvbox.quadCount" />
 					<property name="quadData" source="data.tvbox.quadData" />
-					<property name="tex0" source="tvbox_starfield.texture" />
-					<property name="tex1" source="tvbox_side1.texture" />
-					<property name="tex2" source="tvbox_starfield.texture" />
+					<property name="tex0" source="tvbox_side1.texture" />
+					<property name="tex1" source="tvbox_side2.texture" />
+					<property name="tex2" source="tvbox_side3.texture" />
 					<property name="tex3" source="tvbox_starfield.texture" />
-					<property name="tex4" source="tvbox_starfield.texture" />
+					<property name="tex4" source="tvbox_side3.texture" />
 					<property name="tex5" source="tvbox_starfield.texture" />
 				</object>
 

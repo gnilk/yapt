@@ -158,6 +158,8 @@ class YaptExpSolverFacade :
     public BaseCurveFacade
 {
 protected:
+    Property *var_a;
+    Property *var_b;
     Property *expression;
     Property *result;   // output
 
@@ -165,8 +167,8 @@ protected:
     ExpSolver *pExpSolver; 
     // events
 public:
-    double OnConstantUserExpression(const char *data, int *bOk_out);
-    double OnFunctionExpression(const char *data, int args, double *arg, int *bOk_out);
+    virtual double OnConstantUserExpression(const char *data, int *bOk_out);
+    virtual double OnFunctionExpression(const char *data, int args, double *arg, int *bOk_out);
     // interface
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
@@ -178,6 +180,8 @@ class YaptVecExpSolverFacade :
 	public YaptExpSolverFacade
 {
 protected:
+	Property *vec_a, *vec_b;
+
     Property *expression_x;
     Property *expression_y;
     Property *expression_z;
@@ -187,6 +191,9 @@ protected:
     ExpSolver *pExpSolver_y; 
     ExpSolver *pExpSolver_z; 
     // interface
+public:
+	virtual double OnConstantUserExpression(const char *data, int *bOk_out);
+
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
@@ -434,6 +441,7 @@ void GenericCurveKey::Render(double t, IPluginObjectInstance *pInstance)
 }
 
 extern "C" {
+
     static  double CALLCONV cbExpVariable(void *pUser, const char *pData, int *bOk_out) {
         YaptExpSolverFacade *pFacade = (YaptExpSolverFacade *)pUser;
         return pFacade->OnConstantUserExpression(pData, bOk_out);
@@ -450,6 +458,12 @@ double YaptExpSolverFacade::OnConstantUserExpression(const char *data, int *bOk_
     if (!strcmp(data,"t")) {
         *bOk_out = 1;
         result = timeCurrent;
+    } else if (!strcmp(data,"a")) {
+    	*bOk_out = 1;
+    	result = var_a->v->float_val;
+    } else if (!strcmp(data,"b")) {
+    	*bOk_out = 1;
+    	result = var_b->v->float_val;
     } else  if (!strcmp(data,"apa")) {
         *bOk_out = 1;
         result = sin(timeCurrent);
@@ -479,6 +493,8 @@ double YaptExpSolverFacade::OnFunctionExpression(const char *data, int args, dou
 }
 
 void YaptExpSolverFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	var_a = pInstance->CreateProperty("var_a", kPropertyType_Float,"0.0","");
+	var_b = pInstance->CreateProperty("var_b", kPropertyType_Float,"0.0","");
     expression = pInstance->CreateProperty("expression",kPropertyType_String,"0.0","");
     result = pInstance->CreateOutputProperty("result",kPropertyType_Float, "", "");
 }
@@ -496,8 +512,36 @@ void YaptExpSolverFacade::Render(double t, IPluginObjectInstance *pInstance) {
 }
 
 // vector expression
+double YaptVecExpSolverFacade::OnConstantUserExpression(const char *data, int *bOk_out) {
+    double result = 0.0;
+    *bOk_out = 0;
+    if (!strcmp(data,"va.x")) {
+        *bOk_out = 1;
+        result = vec_a->v->vector[0];
+    } else if (!strcmp(data,"va.y")) {
+    	*bOk_out = 1;
+    	result = vec_a->v->vector[1];
+    } else if (!strcmp(data,"va.z")) {
+    	*bOk_out = 1;
+    	result = vec_a->v->vector[2];
+    } else if (!strcmp(data,"vb.x")) {
+        *bOk_out = 1;
+        result = vec_b->v->vector[0];
+    } else if (!strcmp(data,"vb.y")) {
+    	*bOk_out = 1;
+    	result = vec_b->v->vector[1];
+    } else if (!strcmp(data,"vb.z")) {
+    	*bOk_out = 1;
+    	result = vec_b->v->vector[2];
+    } else {
+    	result = YaptExpSolverFacade::OnConstantUserExpression(data, bOk_out);
+    }
+    return result;
+}
 
 void YaptVecExpSolverFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	vec_a = pInstance->CreateProperty("vec_a", kPropertyType_Float,"0.0","");
+	vec_b = pInstance->CreateProperty("vec_b", kPropertyType_Float,"0.0","");
     expression_x = pInstance->CreateProperty("x",kPropertyType_String,"0.0","");
     expression_y = pInstance->CreateProperty("y",kPropertyType_String,"0.0","");
     expression_z = pInstance->CreateProperty("z",kPropertyType_String,"0.0","");

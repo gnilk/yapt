@@ -31,6 +31,8 @@ private:
 	Property *light_diffuse;
 	Property *light_specular;
 
+	Property *blend_func;
+
 	bool useShaders;
 public:
 	virtual void Initialize(ISystem *ySys, IPluginObjectInstance *pInstance);

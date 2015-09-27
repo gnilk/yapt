@@ -4,6 +4,9 @@
 			<property name="screen.resolution.width">640</property>
 			<property name="screen.resolution.height">360</property>
 		</object>
+		<object class="gl.LoadTexture2D" name="flare.texture">
+			<property name="fileName">whiteflare.png</property>
+		</object>		
 		<object class="gl.LoadTexture2D" name="floor.texture">
 			<property name="fileName">floorchecker.png</property>
 		</object>
@@ -12,12 +15,28 @@
 			<property name="uvscale">40,40,1</property>
 			<property name="axis">XZ</property>
 		</object>
+		<object class="geom.Quad" name="pole_light_src">
+			<property name="scale">5,8.0,0</property>
+			<property name="axis">XZ</property>
+		</object>
+
 		<object class="geom.Cylinder" name="pole_src">
 			<property name="radius">1</property>
 			<property name="segments">16</property>
 			<property name="scale">0.1,2.5,0.1</property>
 			<property name="axis">XY</property>
 		</object>
+		<object class="geom.Array" name="pole_light">
+			<property name="count">32</property>
+			<property name="step">0,0,32</property>
+			<property name="vertexCount" source="pole_light_src.vertexCount" />
+			<property name="vertexData" source="pole_light_src.vertexData" />
+			<property name="quadData" source="pole_light_src.quadData" />
+			<property name="quadCount" source="pole_light_src.quadCount" />
+			<property name="lineData" source="pole_light_src.lineData" />
+			<property name="lineCount" source="pole_light_src.lineCount" />
+		</object>
+	
 		<object class="geom.Array" name="pole">
 			<property name="count">32</property>
 			<property name="step">0,0,16</property>
@@ -182,7 +201,7 @@
 					</object>
 					<object class="gl.PreserveState" name="">
 						<object class="gl.Transform" name="object1.prs">
-							<property name="position">5,0,8</property>
+							<property name="position">5,0,0</property>
 						</object>
 						<object class="gl.DrawQuads">
 							<property name="vertexCount" source="pole.vertexCount" />
@@ -209,6 +228,36 @@
 						<property name="filename">spaceship.obj</property>
 					</object>
 				</object>
+
+				<!-- Draw lens flares -->
+				<object class="gl.PreserveState" name="">
+					<object class="gl.Transform" name="">
+						<property name="position">0,2.5,8</property>
+						<property name="rotation">0,0,0</property>					
+					</object>
+
+					<object class="gl.Billboard" name="sprites">
+						<property name="vertexData" source="pole_light.vertexData" />			
+						<property name="vertexCount" source="pole_light.vertexCount" />
+						<property name="pointSize">2.0</property>
+						<property name="generateUV">true</property>
+					</object>				
+
+					<object class="gl.DrawQuads" name="render_flares">
+						<property name="vertexCount" source="sprites.outVertexCount" />
+						<property name="vertexData" source="sprites.outVertexData" />
+						<property name="quadCount" source="sprites.outQuadCount" />
+						<property name="quadData" source="sprites.outQuadData" />
+						<property name="vertexUVData" source="sprites.outVertexUVData" />
+						<property name="texture" source="flare.texture" />
+						<property name="ignorezbuffer">true</property>
+						<property name="lighting">false</property>					
+						<property name="blend_func">add</property>					
+					</object>
+
+
+				</object>
+
 
 
 <!--

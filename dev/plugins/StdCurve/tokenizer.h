@@ -1,9 +1,11 @@
+// See tokenzier.cpp for more details
+// 14.03.14, FKling, published to github
 #pragma once
 
 #include <vector>
 #include <string>
 
-namespace Goat
+namespace gnilk
 {
 
 	class Tokenizer
