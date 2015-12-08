@@ -12,26 +12,38 @@
 	
 	<render>
 		<!-- overlay with text screens -->
-		<object class="gl.RenderContext" name="text_screen_2">
-			<property name="fov">35.0</property>
-			<property name="clear">true</property>
-			<object class="gl.Camera" name="camera">
-				<property name="position">0,0,-4</property>
-				<property name="target">0,0,0</property>
-				<property name="upvector">0,1,0</property>
-			</object>
-			<object class="Animation.ExpSolver" name="text1.alpha">
-				<property name="expression">sin(t)</property>
-			</object>
+		<object class="utils.Container" name="text_screen_2">
+			<object class="gl.RenderToTexture" name="ts2">
+				<property name="width">640</property>
+				<property name="height">360</property>
+				<property name="clearcol">0,0,0,0</property>
+				<property name="clear">true</property>	
 
-			<object class="gl.DrawText" name="printtext">
-				<property name="font">Army.ttf</property>
-				<property name="fontsize">64</property>
-				<property name="alignment">center</property>
-				<property name="position">0,0.32,0</property>
-				<property name="text">ok, that was fun\ \what about a trip to mars\new stylee</property>
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,-4</property>
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+				<object class="Animation.ExpSolver" name="text1.alpha">
+					<property name="expression">sin(t)</property>
+				</object>
+
+				<object class="gl.DrawText" name="printtext">
+					<property name="font">Army.ttf</property>
+					<property name="fontsize">64</property>
+					<property name="alignment">center</property>
+					<property name="position">0,0.70,0</property>
+					<property name="text">ok, that was fun\ \what about a trip to mars\new stylee</property>
+				</object>
 			</object>
-		</object>
+	 		<object class="gl.RenderContext" name="render_text">
+	 			<property name="clear">true</property>
+	 			<object class="gl.FullScreenImage">
+	 				<property name="useblend">false</property>
+					<property name="texture" source="ts2.texture"/>
+				</object>		
+	 		</object>
+	 	</object>
 	</render>
 	
 	<timeline>

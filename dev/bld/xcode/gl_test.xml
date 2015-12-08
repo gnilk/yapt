@@ -16,7 +16,9 @@
 	  </object>
 	  <object class="geom.Cube" name="data.cube">
 	  	<property name="range">0.5, 0.5, 0.5</property>
+	  	<property name="generateLines">true</property>
 	  </object>
+<!--	  
 	  <object class="geom.EdgeList" name="data.cube.edges">
 	  	<property name="optimizeAdjecent">true</property>
 	  	<property name="vertexData" source="data.cube.vertexData" />
@@ -24,6 +26,7 @@
 	  	<property name="triangleCount" source="data.cube.triangleCount" />
 	  	<property name="indexData" source="data.cube.indexData" />
 	  </object>
+	 -->
 
 	</resources>
 	
@@ -62,7 +65,7 @@
 				<property name="type">hold</property>
 				<property name="vector">1.000,3.00,6.000</property>
 			</object>
-
+			<!--
 			<object class="Animation.ExpSolver" name="z_move.starfield">
 				<property name="expression">t</property>
 			</object>
@@ -77,12 +80,12 @@
 				<property name="vertexCount" source="move.starfield.vertexCount" />
 				<property name="vertexData" source="move.starfield.vertexData" />
 			</object>
-
+-->
 			<object class="gl.DrawLines" name="render_cube">
-				<property name="indexCount" source="data.cube.edges.indexCount" />
-				<property name="indexData" source="data.cube.edges.indexData" />
+				<property name="indexCount" source="data.cube.lineCount" />
+				<property name="indexData" source="data.cube.lineData" />
 				<!-- <property name="vertexCount" source="data.cube.edges.vertexCount" /> -->
-				<property name="vertexData" source="data.cube.edges.vertexData" />
+				<property name="vertexData" source="data.cube.vertexData" />
 			</object>
 
 <!--

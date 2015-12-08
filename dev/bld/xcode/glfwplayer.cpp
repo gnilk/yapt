@@ -223,6 +223,11 @@ int main(int argc, char **argv) {
 	if (!glfwInit()) {
 		fprintf(stderr, "Failed to initialize GLFW\n");
 		exit(EXIT_FAILURE);
+	} else {
+		int major, minor, rev;
+		glfwGetVersion(&major, &minor, &rev);
+
+		pLogger->Info("GLFW Version %d.%d.%d",major,minor,rev);
 	}
 
 	// Get window height, can be overridden by the system

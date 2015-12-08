@@ -28,6 +28,7 @@ protected:
 	virtual void OnStringInputChanged(std::string input);
 	virtual void Render();
 	int width, height;
+	int px_width, px_height;
 	GLFWwindow *window;
 	std::string input;
 

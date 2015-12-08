@@ -65,6 +65,29 @@ Bitmap *Bitmap::CopyToNew(int x, int y, int w, int h) {
 	return newBmp;
 }
 
+void Bitmap::SetAlpha(unsigned char value) {
+	for(int y=0;y<height;y++) {
+		for(int x=0;x<width;x++) {
+			Buffer(x,y)[3] = value;
+		}
+	}
+}
+
+void Bitmap::CreateAlphaMask(unsigned char alpha_min, unsigned char alpha_max) {
+	for(int y=0;y<height;y++) {
+		for(int x=0;x<width;x++) {
+			unsigned char *pix = Buffer(x,y);
+			if ((pix[0]>0) || (pix[1]>0) || (pix[2]>0)) {
+				pix[3] = alpha_max;
+			} else {
+				pix[3] = alpha_min;
+			}
+
+		}
+	}
+
+}
+
 static void LoadFile(std::vector<unsigned char>& buffer, const std::string& filename) //designed for loading files from hard disk in an std::vector
 {
   std::ifstream file(filename.c_str(), std::ios::in|std::ios::binary|std::ios::ate);

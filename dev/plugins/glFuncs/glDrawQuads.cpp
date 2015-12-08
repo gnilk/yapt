@@ -25,7 +25,7 @@ using namespace yapt;
 #endif
 
 
-/// Draw points
+/// Draw quads - note: texture coords are UVW (3 component vector's)
 void OpenGLDrawQuads::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 
 	numVertex = pInstance->CreateProperty("vertexCount", kPropertyType_Integer, "0","");
@@ -79,8 +79,6 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 	float *pUVData = (float *) vertexUVData->v->userdata;
 	int *pQuads = (int *) quadData->v->userdata;	
 
-	float normal[3];
-	float v1[3], v2[3];
 
 	// TEST
 	// float fogColor[4]= {0.0f, 0.0f, 0.0f, 1.0f};  
@@ -146,39 +144,10 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 
 	if (wireframe->v->boolean == true) {
 		glColor3f(solidcolor->v->rgba[0], solidcolor->v->rgba[1], solidcolor->v->rgba[2]);
-		for(int i=0;i<numQuads->v->int_val;i++) {
-			glBegin(GL_LINE_LOOP);
-				glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
-				glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
-				glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
-				glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
-			glEnd();
-		}
+		DrawWireFrame(numQuads->v->int_val, pVertex, pQuads);
+
 	} else {
-		glBegin(GL_QUADS);
-		for(int i=0;i<numQuads->v->int_val;i++) {
-			vSub(v1, &pVertex[pQuads[i*4+3]*3], &pVertex[pQuads[i*4+0]*3]);
-			vSub(v2, &pVertex[pQuads[i*4+1]*3], &pVertex[pQuads[i*4+0]*3]);
-			vCross(normal, v1, v2);
-			vNorm(normal,normal);
-
-			glNormal3fv(normal);
-			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+0]*3]);
-			glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
-
-			glNormal3fv(normal);
-			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+1]*3]);
-			glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
-
-			glNormal3fv(normal);
-			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+2]*3]);
-			glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
-
-			glNormal3fv(normal);
-			if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+3]*3]);			
-			glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
-		}
-		glEnd();
+		DrawSolidPoly(numQuads->v->int_val, pVertex, pUVData, bUseTexture, pQuads);
 	}
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
@@ -212,3 +181,45 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 void OpenGLDrawQuads::PostRender(double t, IPluginObjectInstance *pInstance) {
 
 }
+
+void OpenGLDrawQuads::DrawWireFrame(int num, float *pVertex, int *pQuads) {
+		for(int i=0;i<numQuads->v->int_val;i++) {
+			glBegin(GL_LINE_LOOP);
+				glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
+				glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
+				glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
+				glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
+			glEnd();
+		}
+}
+
+void OpenGLDrawQuads::DrawSolidPoly(int num, float *pVertex, float *pUVData, bool bUseTexture, int *pQuads) {
+	float normal[3];
+	float v1[3], v2[3];
+
+	glBegin(GL_QUADS);
+	for(int i=0;i<numQuads->v->int_val;i++) {
+		vSub(v1, &pVertex[pQuads[i*4+3]*3], &pVertex[pQuads[i*4+0]*3]);
+		vSub(v2, &pVertex[pQuads[i*4+1]*3], &pVertex[pQuads[i*4+0]*3]);
+		vCross(normal, v1, v2);
+		vNorm(normal,normal);
+
+		glNormal3fv(normal);
+		if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+0]*3]);
+		glVertex3fv(&pVertex[pQuads[i*4+0]*3]);
+
+		glNormal3fv(normal);
+		if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+1]*3]);
+		glVertex3fv(&pVertex[pQuads[i*4+1]*3]);
+
+		glNormal3fv(normal);
+		if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+2]*3]);
+		glVertex3fv(&pVertex[pQuads[i*4+2]*3]);
+
+		glNormal3fv(normal);
+		if (bUseTexture) glTexCoord2fv(&pUVData[pQuads[i*4+3]*3]);			
+		glVertex3fv(&pVertex[pQuads[i*4+3]*3]);
+	}
+	glEnd();
+}
+

@@ -17,6 +17,8 @@ public:
 	static Bitmap *FromRGBA(int w, int h, unsigned char *srcData);
 	static Bitmap *LoadPNGImage(std::string imagefile);
 
+	void CreateAlphaMask(unsigned char alpha_min, unsigned char alpha_max);
+ 	void SetAlpha(unsigned char value);
 	int Width() { return width; }
 	int Height() { return height; }
 	unsigned char *Buffer() { return buffer; }

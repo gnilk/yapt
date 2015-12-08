@@ -242,6 +242,8 @@ bool BitmapFont::LoadFontMap() {
         if (tokens[0] == std::string("image")) {
             // image
             bitmap = Bitmap::LoadPNGImage(tokens[1]);
+            // should probably be optional..
+            bitmap->CreateAlphaMask(0,255);
             if (bitmap == NULL) {
                 //qDebug() << "Failed to load image file: " << tokens[1].c_str();
                 psys->GetLogger("BitmapFont")->Error("Unable to open image file '%s'",tokens[1].c_str());

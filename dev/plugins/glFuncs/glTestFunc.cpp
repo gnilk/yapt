@@ -39,6 +39,7 @@ void OpenGLRenderContext::Render(double t, IPluginObjectInstance *pInstance) {
 	width = contextParams->GetFrameBufferWidth();
    	height = contextParams->GetFrameBufferHeight();
 
+   	//printf("rc (%d,%d)\n",width,height);
 	glViewport(0, 0, width, height);
 	// Clear color buffer to black
 	if (clear->v->boolean) {

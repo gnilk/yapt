@@ -11,8 +11,11 @@ class OpenGLRenderContextParams : public IRenderContextParams
 public:	// interface
 	virtual int GetFrameBufferWidth();
     virtual int GetFrameBufferHeight();
+	virtual int GetWindowWidth();
+    virtual int GetWindowHeight();
 public:
 	int width, height;
+	int win_width, win_height;
 };
 
 class PlayerWindow : public BaseWindow

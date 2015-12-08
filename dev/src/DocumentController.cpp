@@ -366,7 +366,7 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
         renderVars->PushLocal(tStart);        
       }
 
-      //pLogger->Debug("Render: (%d) %s (tLocal=%f)",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),tStart);
+      //pLogger->Debug("Render: (%d) %s (tLocal=%f) ref=%d",pObject->GetInstanceType(),pObject->GetFullyQualifiedName(),renderVars->GetLocalTime(), renderVars->GetRenderRef());
       
       // TODO: call system hook handler
       pInst->ExtRender(renderVars);
@@ -375,6 +375,7 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
         renderVars->PopLocal();
       }
 
+      // TODO: Read from pInst
       bDoChildren = true;
       bPostRender = true;
     }
@@ -398,6 +399,10 @@ void DocumentController::RenderNode(IDocNode *node, bool bForce)
     pObject->GetContext()->PopRenderObject();
 
   }
+
+
+  // TODO: Check if (pInst->RenderAgain()) -> loop
+
   
   // post render the instance after all children
   if (bPostRender) {

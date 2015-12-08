@@ -1,0 +1,184 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+		<object class="geom.PointCloud" name="data.starfield">
+			<property name="numVertex">512</property>
+			<property name="range">4.0, 1.25, 1.0</property>
+		</object>
+ 		<object class="gl.LoadTexture2D" name="image.text1">
+	       <property name="fileName">Intro_Text_Screen_1.png</property>
+	   	</object>
+	   	<object class="gl.LoadTexture2D" name="flare.texture">
+			<property name="fileName">whiteflare.png</property>
+		</object>		
+
+	</resources>
+	
+	<render>
+		<object class="gl.RenderToTexture" name="starfield">
+			<property name="fov">35.0</property>
+			<property name="width">640</property>
+			<property name="height">360</property>
+			<property name="clear">true</property>	
+
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<!-- <property name="position">0,0,2.0</property> -->
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+
+			<!-- animate this one, should move towards 60 at the end -->
+			<!-- <property name="fov">40.0</property> -->
+			<property name="fov">55</property>
+			<property name="clear">true</property>
+
+			<!-- static camera -->
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<!-- <property name="position">0,0,2.0</property> -->
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+
+
+			<object class="Animation.GenericCurve" name="camera.curve.fov">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">40</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">34</property>
+					<property name="values">40</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">36</property>
+					<property name="values">40</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">40</property>
+					<property name="values">50</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">44</property>
+					<property name="values">60</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">48</property>
+					<property name="values">70</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="camera.fov">
+				<property name="vector" source="camera.curve.fov" />
+			</object>
+
+			<object class="Animation.VectorExpression" name="move.starfield">
+				<property name="x">t*-2</property>
+				<property name="y">0</property>
+				<property name="z">0</property>
+			</object>
+
+			<object class="enigma.Starfield" name="move.starfield">
+				<property name="numSrcVertex" source="data.starfield.vertexCount" />
+				<property name="srcVertexData" source="data.starfield.vertexData" />
+				<property name="range">4</property>
+				<property name="movement" source="move.starfield" />
+			</object>
+
+			<!-- draw sprites -->
+			<object class="gl.PreserveState" name="">
+				<object class="gl.Billboard" name="sprites">
+					<property name="vertexData" source="move.starfield.vertexData" />			
+					<property name="vertexCount" source="move.starfield.vertexCount" />
+					<property name="pointSize">0.1</property>
+					<property name="generateUV">true</property>
+				</object>				
+
+				<object class="gl.DrawQuads" name="render_flares">
+					<property name="vertexCount" source="sprites.outVertexCount" />
+					<property name="vertexData" source="sprites.outVertexData" />
+					<property name="quadCount" source="sprites.outQuadCount" />
+					<property name="quadData" source="sprites.outQuadData" />
+					<property name="vertexUVData" source="sprites.outVertexUVData" />
+					<property name="texture" source="flare.texture" />
+					<property name="ignorezbuffer">true</property>
+					<property name="lighting">false</property>					
+					<property name="blend_func">add</property>					
+				</object>
+			</object>
+		
+
+
+			<!-- text overlay -->
+			<object class="utils.Container" name="TextWriter">
+
+	 			<object class="gl.Camera" name="camera">
+					<property name="position">0,0,-4</property>
+					<!-- <property name="position">0,0,2.0</property> -->
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.GenericCurve" name="texta.alpha.anim">
+					<property name="channels">1</property>
+					<property name="type">linearsmooth</property>
+					<object class="Animation.Key">
+						<property name="t">0</property>
+						<property name="values">0</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">1</property>
+						<property name="values">1</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">2.0</property>
+						<property name="values">1</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">2.5</property>
+						<property name="values">1</property>
+					</object>
+					<object class="Animation.Key">
+						<property name="t">3</property>
+						<property name="values">0</property>
+					</object>				
+					<object class="Animation.Key">
+						<property name="t">4</property>
+						<property name="values">0</property>
+					</object>				
+				</object>
+				<object class="Numeric.VectorElement" name="texta.alpha">
+					<property name="vector" source="texta.alpha.anim" />
+				</object>
+
+
+				<object class="gl.DrawText" name="printtext">
+					<property name="font">fontmap_bw.fnt</property>
+					<property name="fontsize">48</property>
+					<property name="useblend">true</property>
+					<property name="alpha" source="texta.alpha"/>
+					<property name="alignment">center</property>
+					<property name="position">0,0.75,0</property>
+					<property name="text">YOU HAVE BEEN WATCHING\A REMAKE OF THE FAMOUS\\ENIGMA\\ORGINALLY MADE BY PHENOMENA</property>
+				</object>
+			</object>
+		</object>
+
+		<object class="gl.RenderContext" name="render_to_screen">
+			<object class="gl.PreserveState">
+	 			<object class="gl.FullScreenImage" name="feedback">
+					<property name="texture" source="starfield.texture"/>
+				</object>		
+			</object>
+ 		</object>
+	</render>
+	
+	<timeline>
+	   <execute start="0" duration="1000" object="render_to_screen" />
+	</timeline>
+</yapt2>				

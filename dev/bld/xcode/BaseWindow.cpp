@@ -32,10 +32,32 @@ void BaseWindow::Open(int width, int height, const char *name, bool fullScreen /
 	this->width = width;
 	this->height = height;
 
+	int count;
+	GLFWmonitor **monitors = glfwGetMonitors(&count);
+	for(int i=0;i<count;i++) {
+		int wmm, hmm;
+		printf("Monitor: %d\n", i);
+		const GLFWvidmode *currentmode = glfwGetVideoMode(monitors[i]);
+		glfwGetMonitorPhysicalSize(monitors[i], &wmm, &hmm);
+
+		const double dpi = currentmode->width / (wmm / 25.4);
+		printf("  Width(mm) : %d\n", wmm);
+		printf("  Height(mm): %d\n", hmm);
+		printf("  DPI.......: %f\n", dpi); 
+	}
+ 
 	if (!fullScreen) {
 		window = glfwCreateWindow(width, height, name, NULL, NULL);
 	} else {
-		window = glfwCreateWindow(width, height, name, glfwGetPrimaryMonitor(), NULL);
+		int count;
+		GLFWmonitor **monitors = glfwGetMonitors(&count);
+		GLFWmonitor *usemon = glfwGetPrimaryMonitor();
+
+		// if (count > 1) {
+		//  	usemon = monitors[1];
+		// }
+		window = glfwCreateWindow(width, height, name, usemon, NULL);
+//		glfwSetWindowSize(window, width, height);
 	}
 	if (window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window\n");
@@ -118,12 +140,12 @@ void BaseWindow::SetPos(int xp, int yp)
 void BaseWindow::MakeCurrent()
 {
 	glfwMakeContextCurrent(window);
-	glfwGetFramebufferSize(window, &width, &height);
+	glfwGetFramebufferSize(window, &px_width, &px_height);
 }
 void BaseWindow::Update() {
 
 	MakeCurrent();
-	glViewport(0, 0, width, height);	
+	glViewport(0, 0, px_width, px_height);	
 	Render();
 	glfwSwapBuffers(window);
 }

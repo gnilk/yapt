@@ -1,0 +1,466 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+		<object class="geom.PointCloud" name="data.starfield">
+			<property name="numVertex">512</property>
+			<property name="range">4.0, 4.0, 4.0</property>
+		</object>
+ 		<object class="gl.LoadTexture2D" name="image.text1">
+	       <property name="fileName">Intro_Text_Screen_1.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text2">
+	       <property name="fileName">Intro_Text_Screen_2.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text3">
+	       <property name="fileName">Intro_Text_Screen_4.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text4">
+	       <property name="fileName">Intro_Text_Screen_5.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text5">
+	       <property name="fileName">Intro_Text_Screen_6.png</property>
+	   	</object>
+	   	<object class="gl.LoadTexture2D" name="flare.texture">
+			<property name="fileName">whiteflare.png</property>
+		</object>		
+
+	</resources>
+	
+	<render>
+
+		<!-- overlay with text screens -->
+
+
+
+		<object class="gl.RenderContext" name="mycontext">
+			<!-- animate this one, should move towards 60 at the end -->
+			<!-- <property name="fov">40.0</property> -->
+
+			<!-- static camera -->
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<!-- <property name="position">0,0,2.0</property> -->
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+
+
+			<object class="Animation.GenericCurve" name="camera.curve.fov">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">40</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">34</property>
+					<property name="values">40</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">36</property>
+					<property name="values">40</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">40</property>
+					<property name="values">50</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">44</property>
+					<property name="values">60</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">48</property>
+					<property name="values">70</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="camera.fov">
+				<property name="vector" source="camera.curve.fov" />
+				</object>
+
+			<property name="fov" source="camera.fov" />
+			<property name="clear">true</property>
+
+
+			<object class="Animation.VectorExpression" name="_move.starfield">
+				<property name="x">t</property>
+				<property name="y">0</property>
+				<property name="z">0</property>
+			</object>
+
+			<object class="Animation.GenericCurve" name="move.starfield">
+				<property name="timescale">1</property>
+				<property name="channels">3</property>
+				<property name="type">hermite</property>
+				<object class="Animation.VectorKey">
+					<property name="t">0</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">4</property>
+					<property name="values">-8,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">8</property>
+					<property name="values">-8,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">12</property>
+					<property name="values">-8,0,-32</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">16</property>
+					<property name="values">-8,0,-32</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">20</property>
+					<property name="values">-8,0,-32</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">24</property>
+					<property name="values">-8,8,-32</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">28</property>
+					<property name="values">-8,0,-32</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">32</property>
+					<property name="values">-8,0,-48</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">36</property>
+					<property name="values">-8,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">40</property>
+					<property name="values">-8,0,-48</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">44</property>
+					<property name="values">-8,0,-96</property>
+				</object>
+			</object>
+
+			<object class="Animation.GenericCurve" name="rotate.starfield">
+				<property name="timescale">1</property>
+				<property name="channels">3</property>
+				<property name="type">hermite</property>
+				<object class="Animation.VectorKey">
+					<property name="t">0</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">12</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">16</property>
+					<property name="values">0,180,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">20</property>
+					<property name="values">-180,360,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">24</property>
+					<property name="values">-360,540,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">28</property>
+					<property name="values">-360,720,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">32</property>
+					<property name="values">-360,720,180</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">36</property>
+					<property name="values">-360,720,360</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">40</property>
+					<property name="values">-360,720,540</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">44</property>
+					<property name="values">-360,720,720</property>
+				</object>
+			</object>
+
+			<object class="Animation.VectorExpression" name="starfield.rotation">
+				<property name="x">0</property>
+				<property name="y">0</property>
+				<property name="z">0</property>
+			</object>
+
+			<object class="gl.Transform" name="starfield.prs">
+				<property name="rotation" source="rotate.starfield" />
+			</object>
+
+			<object class="enigma.Starfield" name="move.starfield">
+				<property name="numSrcVertex" source="data.starfield.vertexCount" />
+				<property name="srcVertexData" source="data.starfield.vertexData" />
+				<property name="range">4</property>
+				<property name="movement" source="move.starfield" />
+			</object>
+
+			<!-- draw sprites -->
+			<object class="gl.PreserveState" name="">
+				<object class="gl.Billboard" name="sprites">
+					<property name="vertexData" source="move.starfield.vertexData" />			
+					<property name="vertexCount" source="move.starfield.vertexCount" />
+					<property name="pointSize">0.1</property>
+					<property name="generateUV">true</property>
+				</object>				
+
+				<object class="gl.DrawQuads" name="render_flares">
+					<property name="vertexCount" source="sprites.outVertexCount" />
+					<property name="vertexData" source="sprites.outVertexData" />
+					<property name="quadCount" source="sprites.outQuadCount" />
+					<property name="quadData" source="sprites.outQuadData" />
+					<property name="vertexUVData" source="sprites.outVertexUVData" />
+					<property name="texture" source="flare.texture" />
+					<property name="ignorezbuffer">true</property>
+					<property name="lighting">false</property>					
+					<property name="blend_func">add</property>					
+				</object>
+			</object>
+
+		</object>
+
+		<object class="gl.RenderContext" name="intro_text_screen_1">
+			<object class="Animation.GenericCurve" name="texta.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="texta.alpha">
+				<property name="vector" source="texta.alpha.anim" />
+			</object>
+
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>	
+			<object class="gl.FullScreenImage" name="feedback">
+				<property name="texture" source="image.text1.texture"/> 
+				<property name="useblend">true</property>
+				<property name="alpha" source="texta.alpha" />				
+				<property name="flip">true</property>
+			</object>					
+		</object>
+
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_2">
+			<object class="Animation.GenericCurve" name="texta.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="texta.alpha">
+				<property name="vector" source="texta.alpha.anim" />
+			</object>
+
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>	
+			<object class="gl.FullScreenImage" name="feedback">
+				<property name="texture" source="image.text2.texture"/> 
+				<property name="useblend">true</property>
+				<property name="alpha" source="texta.alpha" />				
+				<property name="flip">true</property>
+			</object>					
+		</object>
+
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_3">
+			<object class="Animation.GenericCurve" name="texta.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="texta.alpha">
+				<property name="vector" source="texta.alpha.anim" />
+			</object>
+
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>	
+			<object class="gl.FullScreenImage" name="feedback">
+				<property name="texture" source="image.text3.texture"/> 
+				<property name="useblend">true</property>
+				<property name="alpha" source="texta.alpha" />				
+				<property name="flip">true</property>
+			</object>					
+		</object>
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_4">
+			<object class="Animation.GenericCurve" name="texta.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="texta.alpha">
+				<property name="vector" source="texta.alpha.anim" />
+			</object>
+
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>	
+			<object class="gl.FullScreenImage" name="feedback">
+				<property name="texture" source="image.text4.texture"/> 
+				<property name="useblend">true</property>
+				<property name="alpha" source="texta.alpha" />				
+				<property name="flip">true</property>
+			</object>					
+		</object>
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_5">
+			<object class="Animation.GenericCurve" name="texta.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="texta.alpha">
+				<property name="vector" source="texta.alpha.anim" />
+			</object>
+
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>	
+			<object class="gl.FullScreenImage" name="feedback">
+				<property name="texture" source="image.text5.texture"/> 
+				<property name="useblend">true</property>
+				<property name="alpha" source="texta.alpha" />				
+				<property name="flip">true</property>
+			</object>					
+		</object>
+
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="mycontext" />
+	   <execute start="2" duration="4" object="intro_text_screen_1" />
+	   <execute start="6" duration="4" object="intro_text_screen_2" />
+	   <execute start="12" duration="4" object="intro_text_screen_3" />
+	   <execute start="18" duration="4" object="intro_text_screen_4" />
+	   <execute start="24" duration="4" object="intro_text_screen_5" />
+	</timeline>
+</yapt2>				

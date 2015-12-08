@@ -73,8 +73,15 @@ void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 	// Render bitmaps
 	IContext *pContext = dynamic_cast<IBaseInstance *>(pInstance)->GetContext();
 	IRenderContextParams *contextParams = (IRenderContextParams *)pContext->TopContextParamObject();
-	float width = contextParams->GetFrameBufferWidth();
-	float height = contextParams->GetFrameBufferHeight();
+	float width = contextParams->GetWindowWidth();
+	float height = contextParams->GetWindowHeight();
+	float px_width = contextParams->GetFrameBufferWidth();
+	float px_height = contextParams->GetFrameBufferHeight();
+
+	//printf("win (%d,%d), fb (%d:%d)\n",(int)width,(int)height,(int)px_width,(int)px_height);
+
+	float xfac = px_width/width;
+	float yfac = px_height/height;
 
 	unsigned int uniform_tex = 0;
 	unsigned int uniform_color = 0;
@@ -86,12 +93,32 @@ void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 		OpenGLShaderBase::ReloadIfNeeded();
 		OpenGLShaderBase::Attach();
 	}
+	//Window mode:
+	//	win (640,360), fb (1280:720)
+	//	xfac/yfac 2.000000:2.000000
+	//	sx/sy 0.003125:0.005556
+	//Full screen:
+	//   win (1280,720), fb (2560:1600)
+	//   xfac/yfac 2.000000:2.222222
+	//   sx/sy 0.001563:0.003086
+
 
 
 	float sx = 2.0 / width;
 	float sy = 2.0 / height;
+	//float sx = xfac / width;
+	//float sy = yfac / height;
+
+	// printf("xfac/yfac %f:%f\n",xfac,yfac);
+	// printf("sx/sy %f:%f\n",sx,sy);
 
 	sx *= width/height;
+	//sy *= width/height;
+
+	// ok for retina full screen -> but NOT in windowed mode
+	// sx *= xfac;
+	// sy *= yfac;
+
 
 //	glActiveTexture(GL_TEXTURE0);
 	glPushMatrix();
@@ -134,6 +161,8 @@ void OpenGLDrawText::Render(double t, IPluginObjectInstance *pInstance) {
 			glColor4f(color->v->rgba[0], color->v->rgba[1], color->v->rgba[2], alpha->v->float_val);
 	//		glColor4f(1,1,1, alpha->v->float_val);
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);		
+		} else {
+			glColor4f(color->v->rgba[0], color->v->rgba[1], color->v->rgba[2], alpha->v->float_val);
 		}
 		textureFont->Draw(str,xp,yp);
 		linepos -= sy * 0.5 * (float)fontSize->v->int_val;

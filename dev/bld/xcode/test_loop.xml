@@ -1,0 +1,39 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="utils.Container" name="test_wavefront">
+
+			<!-- can be solved by having a 'render-again' flag in the object -->
+			<object class="utils.loop" name="loop">
+				<property name="count">10</property>
+				<object class="utils.Container" name="test_wavefront">
+				</object>
+			</object>
+
+			<!-- can be solved with a flag 'render-children' flag in the object -->
+			<object class="utils.branch" name="branch">
+				<property name="condition"></property>
+				<object class="utils.branch_if_true">
+					<property name="check" source="branch"/>
+				</object>
+				<object class="utils.branch_if_false">
+					<property name="check" source="branch"/>
+				</object>
+			</object>
+
+
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="test_wavefront" />
+
+	</timeline>
+</yapt2>				

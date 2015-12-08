@@ -26,6 +26,7 @@ void OpenGLFullScreenImage::Initialize(ISystem *ySys, IPluginObjectInstance *pIn
   flipImage = pInstance->CreateProperty("flip", kPropertyType_Bool, "false", "");
   useblend = pInstance->CreateProperty("useblend", kPropertyType_Bool,"false","");
   alpha = pInstance->CreateProperty("alpha", kPropertyType_Float,"1","");
+  depthtest = pInstance->CreateProperty("depthtest", kPropertyType_Bool,"true","");
 }
 
 void OpenGLFullScreenImage::BeginOrtho() {
@@ -68,9 +69,12 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       glColor4f(1,1,1, alpha->v->float_val);
       glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);    
+      //glBlendFunc(GL_ONE, GL_ONE);
       //printf("%f:%f\n",t,alpha->v->float_val);
     }
-
+    if (!depthtest->v->boolean) {
+      glDisable(GL_DEPTH_TEST);
+    }
 
     glBegin(GL_QUADS);
       glTexCoord2f(0.0f,0.0f);
@@ -96,6 +100,10 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
   if (useblend->v->boolean) {
     glDisable(GL_BLEND);
   }
+  if (!depthtest->v->boolean) {
+    glEnable(GL_DEPTH_TEST);
+  }
+ 
  
   EndOrtho();
 }

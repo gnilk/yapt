@@ -94,8 +94,8 @@ void PlayerWindow::Render()
 	float tRender;
 	if (recordMovie) {
 		if (framebuffer) {
-			glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, framebuffer);
-			fwrite(framebuffer, sizeof(int)*width*height, 1, ffmpeg);			
+			glReadPixels(0, 0, px_width, px_height, GL_RGBA, GL_UNSIGNED_BYTE, framebuffer);
+			fwrite(framebuffer, sizeof(int)*px_width*px_height, 1, ffmpeg);			
 			tRecord += 1.0 / 60.0;
 		} else {
 			ffmpeg = popen(cmd, "w");
@@ -103,7 +103,7 @@ void PlayerWindow::Render()
 				printf("Unable to open ffmpeg pipe for recording\n");
 				exit(1);
 			}
-			framebuffer = new int[width*height];
+			framebuffer = new int[px_width*px_height];
 			tRecord = 0.0;	
 		}
 		tRender = tRecord;
@@ -115,8 +115,13 @@ void PlayerWindow::Render()
 		tRender = glfwGetTime();
 	}
 
-	contextParams.width = width;
-	contextParams.height = height;
+	//int tmp_w, tmp_h;
+	//glfwGetFramebufferSize(window, &tmp_w, &tmp_h);
+	//printf("player: FB (%d:%d) Win(%d,%d)\n",px_width,px_height,width,height);
+	contextParams.win_width = width;
+	contextParams.win_height = height;
+	contextParams.width = px_width; //width;
+	contextParams.height = px_height; // height;
 	IBaseInstance *pBase = dynamic_cast<IBaseInstance *>(system->GetActiveDocument());
 	IContext *pContext = pBase->GetContext();
 	pContext->PushContextParamObject(&contextParams,"RenderContext");
@@ -214,4 +219,11 @@ int OpenGLRenderContextParams::GetFrameBufferWidth() {
 int OpenGLRenderContextParams::GetFrameBufferHeight() {
 	return height;
 }
+int OpenGLRenderContextParams::GetWindowWidth() {
+	return win_width;
+}
+int OpenGLRenderContextParams::GetWindowHeight() {
+	return win_height;
+}
+
 

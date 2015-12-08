@@ -43,11 +43,11 @@ LIB_FILES = -framework Cocoa -framework OpenGL -framework IOKit -framework CoreV
 
 
 CPPFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11
-CPPFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+CPPFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 CPPFLAGS += $(INCLUDE_FILES)
 
 CFLAGS = -g -arch x86_64 -std=c99
-CFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+CFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 CFLAGS += $(INCLUDE_FILES)
 
 # Linker settings
@@ -137,6 +137,10 @@ all: yapt player plugins
 
 nptest : newprop.o
 	$(CC) $(CFLAGS) newprop.o $(NP_LINK_LIBS) -o nptest
+
+mapgen : mapgen.o
+	$(CC) $(CFLAGS) mapgen.o $(NP_LINK_LIBS) -o mapgen
+
 
 player: $(PLAYER_OBJ_FILES)
 	$(CC) $(CFLAGS) $(PLAYER_OBJ_FILES) $(PLAYER_LINK_LIBS) -o glfwplayer

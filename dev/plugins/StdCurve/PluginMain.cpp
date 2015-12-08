@@ -145,6 +145,7 @@ protected:
 	Property *curveType;
 	Property *result;	// output
 	Property *testVector;
+	Property *tScale;
 	Curve *pCurve;
 public:
 	YaptCurveFacade();
@@ -291,6 +292,8 @@ void YaptCurveFacade::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	this->curveType = pInstance->CreateProperty("type",kPropertyType_Enum, "kbspline", "enum={hold,linear,linearsmooth,cubic,hermite,kbspline,kbquatspline}");
 	//this->curveType->v->int_val = (int)kCurveClass_Hermite; // this is the default
 	this->testVector = pInstance->CreateProperty("vector",kPropertyType_Vector, "1", "");
+
+	this->tScale = pInstance->CreateProperty("timescale",kPropertyType_Float, "1", "");
 	// TODO: Fix this, need to create this one during post-initialize since it depends on the number of channels.. 
 	this->result = pInstance->CreateOutputProperty("result",kPropertyType_Vector, "", "");
 	this->result->v->vector[0] = 1.0f;
@@ -306,6 +309,7 @@ void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInst
 	{
 		pLogger->Debug("Dispose curve - not implemented, leaking memory");
 	}
+
 	// 'unknown' not supported (it's pointless) so just add '1' to the incoming type
 	pCurve = Curve::CreateCurve(kCurveClass(curveType->v->int_val+1), channels->v->int_val);
 
@@ -324,6 +328,7 @@ void YaptCurveFacade::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInst
 		{
 			Key *pKey = pCurveKey->GetKey();
 			if (pKey != NULL) {
+				pKey->t *= tScale->v->float_val;
 				pCurve->AddKey(pKey);
 				pLogger->Debug("Added key '%d' at t=%f",i,pKey->t);				
 			} else {

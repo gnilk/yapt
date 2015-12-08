@@ -22,6 +22,7 @@ protected:
   Property *flipImage;
   Property *useblend;
   Property *alpha;
+  Property *depthtest;
 
 };
 

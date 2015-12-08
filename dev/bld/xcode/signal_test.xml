@@ -11,6 +11,14 @@
     <render>
     	<object class="utils.Container" name="container1"  sigchannel="channel1">
     	</object>
+
+		<object class="utils.OnSignalExecute" sigchannel="channel1">
+			<property name="enableonsignal">true</property>
+			<property name="value">1</property>
+			<object class="utils.Container" name="subcontainer">
+
+			</object>	
+		</object>
 	</render>
 	<timeline>
 	   <execute start="0" duration="1000" object="container1" />

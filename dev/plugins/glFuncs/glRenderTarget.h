@@ -16,6 +16,8 @@ public:
 	}
     virtual int GetFrameBufferWidth() { return w; }
 	virtual int GetFrameBufferHeight() { return h; }
+    virtual int GetWindowWidth() { return w; }
+	virtual int GetWindowHeight() { return h; }
 };
 class OpenGLRenderTarget: public PluginObjectImpl {
 private:
@@ -24,6 +26,7 @@ private:
 	Property *textureHeight;
 	Property *fov;
 	Property *clear;
+	Property *clearcol;
 	// output
 	Property *texture;
 	Property *framebuffer;

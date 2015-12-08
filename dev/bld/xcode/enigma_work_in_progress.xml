@@ -1,0 +1,27 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+
+ 		<object class="gl.LoadTexture2D" name="image.wip">
+	       <property name="fileName">work_in_progress.png</property>
+	   	</object>
+	</resources>
+	
+	<render>
+		<object class="gl.RenderContext" name="render">
+			<property name="fov">35.0</property>
+			<object class="gl.FullScreenImage">
+					<property name="texture" source="image.wip" />
+					<property name="flip">true</property>
+					<property name="useblend">false</property>
+			</object>		
+		</object>
+	</render>	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="part" />
+	</timeline>
+</yapt2>				

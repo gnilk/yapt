@@ -317,6 +317,8 @@ namespace yapt
   public:
     virtual int GetFrameBufferWidth() = 0;
     virtual int GetFrameBufferHeight() = 0;
+    virtual int GetWindowWidth() = 0;
+    virtual int GetWindowHeight() = 0;
   };
 
   struct IContext

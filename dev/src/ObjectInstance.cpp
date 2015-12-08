@@ -460,7 +460,9 @@ bool PluginObjectInstance::ShouldRender(RenderVars *pRenderVars)
   if (duration < 0) duration = 1.0+glbTime;	// does not matter but makes the rest of logic pass
   if ((glbTime >= start) && (glbTime < (start+duration))) 
   {
-    bRes = true;
+    if (lastRenderRef != pRenderVars->GetRenderRef()) {
+      bRes = true;
+    }
   }
 
   return bRes;
@@ -753,12 +755,17 @@ void PluginObjectInstance::RenderPropertyDependencies(RenderVars *pRenderVars) {
         Logger::GetLogger("PluginObjectInstance")->Error("RenderPropertyDependencies, source instance NULL for %s\n",pInst->GetFullyQualifiedName());    
 
       }
-//       Logger::GetLogger("PluginObjectInstance")->Error("RenderPropertyDependencies, for %s\n",pInst->GetFullyQualifiedName());    
 
       PluginObjectInstance *pSourceObject = dynamic_cast<PluginObjectInstance *>(pSourceInst->GetPluginObjectInstance());
       if (pSourceObject->IsResource()) return;
       if (pSourceObject->IsPropertyRefRendering()) {        
-        pSourceObject->ExtRender(pRenderVars); 
+        // Logger::GetLogger("PluginObjectInstance")->Info("RenderPropertyDependencies, for %s\n",pInst->GetFullyQualifiedName());    
+        // Logger::GetLogger("PluginObjectInstance")->Info("RenderPropertyDependencies, source is %s\n",pSourceObject->GetFullyQualifiedName());    
+
+
+        // 20151121, FIX - need to go through doc controller
+        IDocNode *sourceNode = pSourceObject->GetDocumentNode();
+        ::GetYaptSystemInstance()->GetActiveDocumentController()->RenderNode(sourceNode, true);
       }
     }
   }
@@ -783,7 +790,7 @@ void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
     // object itself becaue it can lead to inconsistency...
     //float t = pRenderVars->GetTime();
     float t = pRenderVars->GetLocalTime();
-//    Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, calling ext object render: %s (%p)",GetInstanceName(), extObject);
+    Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, object: %s (%d), t=%f",GetInstanceName(), pRenderVars->GetRenderRef(),t);
     extObject->Render(t, dynamic_cast<IPluginObjectInstance *>(this));
     lastRenderRef = pRenderVars->GetRenderRef();
     // Set this to dirty in order to pass call's through the post-renderer

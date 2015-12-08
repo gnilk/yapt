@@ -39,4 +39,10 @@ public:
 	virtual void Render(double t, IPluginObjectInstance *pInstance);
 	virtual void PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance);
 	virtual void PostRender(double t, IPluginObjectInstance *pInstance);
+
+
+	virtual void DrawWireFrame(int num, float *pVertex, int *pQuads);
+	virtual void DrawSolidPoly(int num, float *pVertex, float *pUVData, bool bUseTexture, int *pQuads);
+
+
 };
