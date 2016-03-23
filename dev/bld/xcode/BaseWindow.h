@@ -21,6 +21,8 @@ public:
 	virtual void OnKeyUp(int key, int scancode, int mods);
 	virtual void OnKeyRepeat(int key, int scancode, int mods);
 	virtual void SetTitle(std::string title);
+
+	void SetPreferredMonitor(int monitor);
 private:
 	void CommitInputString(bool isChange);
 protected:
@@ -31,5 +33,6 @@ protected:
 	int px_width, px_height;
 	GLFWwindow *window;
 	std::string input;
+	int preferred_monitor;
 
 };

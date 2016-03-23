@@ -1,8 +1,8 @@
 <yapt2>
 	<resources>
 		<object class="System.Config" name="Config">
-			<property name="screen.resolution.width">640</property>
-			<property name="screen.resolution.height">360</property>
+			<property name="screen.resolution.width">1280</property>
+			<property name="screen.resolution.height">720</property>
 		</object>
 	</resources>
     <include url="file://enigma_goat_intropic.xml" prefix="preintro1"/>
@@ -19,11 +19,11 @@
     <include url="file://enigma_tvbox.xml" prefix="tvbox" />
     <include url="file://enigma_starwarsscroll.xml" prefix="starwars" />
     <include url="file://enigma_work_in_progress.xml" prefix="wip" />
+    <include url="file://enigma_city_scape.xml" prefix="cityscape" />
     <include url="file://enigma_endscreen_separate.xml" prefix="endscreen" />
 
     <render>
     	<object class="utils.BassMP3Player" name="music">
-    		<!-- <property name="mp3file">act_impulse.mp3</property> -->
     		<property name="mp3file">Phenomena-Remix.mp3</property>
     	</object>
     </render>
@@ -57,7 +57,9 @@
 	   <execute start="118.5" duration="2" object="logo.render" />
 	   <!-- raytrace  -->
  
-	   <execute start="122.5" duration="25.5" object="wip.render" />
+<!--	   <execute start="122.5" duration="25.5" object="wip.render" /> -->
+	   <execute start="122.5" duration="25.5" object="cityscape.render" />
+
 	   <!-- text transition screen here 'xyz' -->
 	   <execute start="148" duration="2" object="transtext2.text_screen_2" />
 	   <!-- light source ship -->
@@ -67,9 +69,9 @@
 
 	   <!-- end screen with messages -->
 	   <execute start="192" duration="200" object="endscreen.render_to_screen" />
-	   <execute start="196" duration="4" object="endscreen.text_1" />
-	   <execute start="200" duration="4" object="endscreen.text_2" />
-	   <execute start="204" duration="4" object="endscreen.text_3" />
+	   <execute start="196" duration="8" object="endscreen.text_1" />
+	   <execute start="204" duration="8" object="endscreen.text_2" />
+	   <execute start="212" duration="8" object="endscreen.text_3" />
 
 
 	</timeline>

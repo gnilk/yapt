@@ -308,6 +308,7 @@ namespace yapt
     virtual Property *GetOutputPropertyAt(int index) = 0;
     virtual IDocument *GetDocument() = 0;
     virtual IDocNode *GetDocumentNode() = 0;
+    virtual ILogger *GetLogger() = 0;
     //virtual int GetNumChildren(kNodeType ofType) = 0;
     //virtual IPluginObjectInstance *GetChildAt(int index, kNodeType ofType) = 0;
   };

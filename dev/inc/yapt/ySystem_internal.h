@@ -858,6 +858,7 @@ namespace yapt
 
     virtual IDocument *GetDocument();
     virtual IDocNode *GetDocumentNode();
+    virtual ILogger *GetLogger();
   
   public:	// overrides from BaseInstance
     virtual void OnAttributeChanged(Attribute *pAttribute);

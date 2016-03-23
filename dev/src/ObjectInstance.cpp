@@ -706,6 +706,10 @@ IDocNode *PluginObjectInstance::GetDocumentNode()
   return Lookup::GetNodeForExtInst(extObject);
 }
 
+ILogger *PluginObjectInstance::GetLogger() {
+  return Logger::GetLogger(GetClassName());
+}
+
 
 void PluginObjectInstance::ExtInitialize()
 {
@@ -790,7 +794,7 @@ void PluginObjectInstance::ExtRender(RenderVars *pRenderVars)
     // object itself becaue it can lead to inconsistency...
     //float t = pRenderVars->GetTime();
     float t = pRenderVars->GetLocalTime();
-    Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, object: %s (%d), t=%f",GetInstanceName(), pRenderVars->GetRenderRef(),t);
+    //Logger::GetLogger("PluginObjectInstance")->Debug("ExtRender, object: %s (%d), t=%f",GetInstanceName(), pRenderVars->GetRenderRef(),t);
     extObject->Render(t, dynamic_cast<IPluginObjectInstance *>(this));
     lastRenderRef = pRenderVars->GetRenderRef();
     // Set this to dirty in order to pass call's through the post-renderer

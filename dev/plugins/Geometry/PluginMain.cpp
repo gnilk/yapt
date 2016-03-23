@@ -23,6 +23,7 @@
 #include "SphereGenerator.h"
 #include "QuadGenerator.h"
 #include "PointCloudGenerator.h"
+#include "CityGenerator.h"
 
 #ifndef M_PI
   #define M_PI (3.1415926535897932384626433832795f)
@@ -139,6 +140,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "geom.Array")) {
     pObject = dynamic_cast<IPluginObject *>(new ArrayGenerator());
   }
+  if (!strcmp(identifier, "geom.City")) {
+    pObject = dynamic_cast<IPluginObject *>(new CityGenerator());
+  }
   if (pObject != NULL) {
     pLogger->Debug("Ok");
   } else
@@ -161,6 +165,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.Quad");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.Cylinder");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.Array");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.City");
   
   return 0;
 }

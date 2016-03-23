@@ -9,9 +9,14 @@
 
 BaseWindow::BaseWindow() {
 	window = NULL;
+	preferred_monitor = 0;
 }
 BaseWindow::~BaseWindow() {
 
+}
+
+void BaseWindow::SetPreferredMonitor(int monitor) {
+	preferred_monitor = monitor;
 }
 
 static void glfwOnChar(GLFWwindow *window, unsigned int code) {
@@ -43,21 +48,39 @@ void BaseWindow::Open(int width, int height, const char *name, bool fullScreen /
 		const double dpi = currentmode->width / (wmm / 25.4);
 		printf("  Width(mm) : %d\n", wmm);
 		printf("  Height(mm): %d\n", hmm);
-		printf("  DPI.......: %f\n", dpi); 
+		printf("  DPI.......: %f\n", dpi);
+		printf("  Resolution: %d x %d at %dhz\n", currentmode->width, currentmode->height, currentmode->refreshRate);
 	}
  
 	if (!fullScreen) {
 		window = glfwCreateWindow(width, height, name, NULL, NULL);
 	} else {
-		int count;
-		GLFWmonitor **monitors = glfwGetMonitors(&count);
 		GLFWmonitor *usemon = glfwGetPrimaryMonitor();
 
+		if (preferred_monitor <= count) {
+			printf("Selecting monitor: %d\n", preferred_monitor);
+			usemon = monitors[preferred_monitor];
+		}
 		// if (count > 1) {
 		//  	usemon = monitors[1];
 		// }
+
+		const GLFWvidmode *currentmode = glfwGetVideoMode(usemon);
+		// in fullscreen w=0, h=0 means use default monitor resolution
+		if ((width==0) || (height==0)) {
+			width = currentmode->width;
+			height = currentmode->height;
+		}
+
+
+		printf("Creating window, resolution: %d x %d\n", width, height);
+		glfwWindowHint(GLFW_REFRESH_RATE, currentmode->refreshRate);
 		window = glfwCreateWindow(width, height, name, usemon, NULL);
-//		glfwSetWindowSize(window, width, height);
+		//glfwSetWindowSize(window, width, height);
+
+		const GLFWvidmode *selectedMode = glfwGetVideoMode(usemon);
+		printf("Mode is: %d x %d at %dhz\n", selectedMode->width, selectedMode->height, selectedMode->refreshRate);
+
 	}
 	if (window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window\n");

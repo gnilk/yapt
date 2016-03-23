@@ -102,6 +102,7 @@ static void printHelp(char *execname) {
 	printf("Options\n");
 	printf(" w  Window mode\n");
 	printf(" d  Show debug/console window\n");
+	printf(" m <num>    Select monitor\n");
 	printf(" l <num>    Set log level (higher means less, default is 0)\n");
 	printf(" r <file>   Record to movie file (requires ffmpeg)\n");
 	printf(" o <class>  Dump info for object of type 'class'\n");
@@ -167,6 +168,7 @@ void OnGlfwShouldClose(GLFWwindow* window)
 
 int main(int argc, char **argv) {
 
+	int monitor = 0;
 	char *saveName = NULL;
 	//int logLevel = Logger::kMCDebug;
 	int logLevel = Logger::kMCNone;
@@ -175,12 +177,23 @@ int main(int argc, char **argv) {
 	char *movieName = NULL;
 	bool showConsoleWindow = false;
 	bool fullScreen = true;
+	int fullscreen_width = 0;
+	int fullscreen_height = 0;
 	if (argc > 1) {
 		for (int i = 1; i < argc; i++) {
 			if ((argv[i][0] == '-') || (argv[i][0] == '/')) {
 				switch (argv[i][1]) {
 				case 'w' :
 					fullScreen = false;
+					break;
+				case 'x' :
+					fullscreen_width = atoi(argv[++i]);
+					break;
+				case 'y' :
+					fullscreen_height = atoi(argv[++i]);
+					break;
+				case 'm' :
+					monitor = atoi (argv[++i]);
 					break;
 				case 'd' :
 					logLevel = Logger::kMCDebug;
@@ -247,8 +260,8 @@ int main(int argc, char **argv) {
 
 	yapt::ISystem *system = GetYaptSystemInstance();
 	if (fullScreen) {
-		window_width = system->GetConfigInt(kConfig_ResolutionWidth,1280);  
-	  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,720);  		
+		window_width = system->GetConfigInt(kConfig_ResolutionWidth,fullscreen_width);  
+	  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,fullscreen_height);  		
 	} else {
 		window_width = system->GetConfigInt(kConfig_ResolutionWidth,640);  
 	  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,360);  		
@@ -279,6 +292,7 @@ int main(int argc, char **argv) {
 	if (!fullScreen) {
 		player.Open(window_width, window_height, "player");
 	} else {
+		player.SetPreferredMonitor(monitor);
 		player.Open(window_width, window_height, "player", true);		
 	}
 	player.InitalizeYapt();

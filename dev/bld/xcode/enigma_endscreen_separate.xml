@@ -131,15 +131,15 @@
 				<property name="values">1</property>
 			</object>
 			<object class="Animation.Key">
-				<property name="t">2.5</property>
+				<property name="t">6.5</property>
 				<property name="values">1</property>
 			</object>
 			<object class="Animation.Key">
-				<property name="t">3</property>
+				<property name="t">7</property>
 				<property name="values">1</property>
 			</object>				
 			<object class="Animation.Key">
-				<property name="t">4</property>
+				<property name="t">8</property>
 				<property name="values">0</property>
 			</object>				
 		</object>
@@ -263,8 +263,8 @@
 	
 	<timeline>
 	   <execute start="0" duration="1000" object="render_to_screen" />
-	   <execute start="4" duration="4" object="text_1" />
-	   <execute start="9" duration="4" object="text_2" />
-	   <execute start="14" duration="4" object="text_3" />
+	   <execute start="4" duration="8" object="text_1" />
+	   <execute start="13" duration="8" object="text_2" />
+	   <execute start="22" duration="8" object="text_3" />
 	</timeline>
 </yapt2>				

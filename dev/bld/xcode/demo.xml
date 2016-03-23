@@ -21,14 +21,15 @@
     <include url="file://enigma_work_in_progress.xml" prefix="wip" />
 
     <render>
+<!--    	
     	<object class="utils.BassMP3Player" name="music">
-    		<!-- <property name="mp3file">act_impulse.mp3</property> -->
     		<property name="mp3file">music.mp3</property>
     	</object>
+   -->
     </render>
 
 	<timeline>
-		<execute start="0" duration="1000" object="music" />
+	<!-- <execute start="0" duration="1000" object="music" /> -->
 	   <execute start="0" duration="5" object="preintro1.part" />
 	   <execute start="5" duration="7" object="preintro2.part" />	   
 	   <execute start="12" duration="20" object="wip.render" />	   

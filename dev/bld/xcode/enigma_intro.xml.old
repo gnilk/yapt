@@ -1,0 +1,545 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+		<object class="geom.PointCloud" name="data.starfield">
+			<property name="numVertex">2048</property>
+			<property name="range">2.0, 2.0, 2.0</property>
+		</object>
+		<object class="gl.RenderToTexture" name="text_target">
+			<property name="fov">35.0</property>
+			<property name="width">640</property>
+			<property name="height">360</property>					
+			<property name="clear">true</property>
+
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">THE PHENOMENAL</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0,0</property>
+				<property name="text">NOICE</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.20,0</property>
+				<property name="text">ASSOCIATION</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>
+			</object>
+		</object>
+
+ 		<object class="gl.LoadTexture2D" name="image.text1">
+	       <property name="fileName">Intro_Text_Screen_1.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text2">
+	       <property name="fileName">Intro_Text_Screen_2.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text3">
+	       <property name="fileName">Intro_Text_Screen_3.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text4">
+	       <property name="fileName">Intro_Text_Screen_4.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text5">
+	       <property name="fileName">Intro_Text_Screen_5.png</property>
+	   	</object>
+ 		<object class="gl.LoadTexture2D" name="image.text6">
+	       <property name="fileName">Intro_Text_Screen_6.png</property>
+	   	</object>	   	
+
+
+	</resources>
+	
+	<render>
+
+		<!-- overlay with text screens -->
+
+
+
+		<object class="gl.RenderContext" name="mycontext">
+			<property name="fov">50.0</property>
+			<property name="clear">true</property>
+
+			<!-- static camera -->
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<!-- <property name="position">0,0,2.0</property> -->
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+
+			<object class="Animation.VectorExpression" name="_move.starfield">
+				<property name="x">t</property>
+				<property name="y">0</property>
+				<property name="z">0</property>
+			</object>
+
+			<object class="Animation.GenericCurve" name="move.starfield">
+				<property name="channels">3</property>
+				<property name="type">hermite</property>
+				<object class="Animation.VectorKey">
+					<property name="t">0</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">4</property>
+					<property name="values">-4,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">8</property>
+					<property name="values">-4,0,-8</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">12</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">16</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">20</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">24</property>
+					<property name="values">-4,8,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">28</property>
+					<property name="values">-4,0,-16</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">32</property>
+					<property name="values">-4,0,-24</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">36</property>
+					<property name="values">-4,0,-8</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">40</property>
+					<property name="values">-4,0,-24</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">44</property>
+					<property name="values">-4,0,-48</property>
+				</object>
+			</object>
+
+			<object class="Animation.GenericCurve" name="rotate.starfield">
+				<property name="channels">3</property>
+				<property name="type">hermite</property>
+				<object class="Animation.VectorKey">
+					<property name="t">0</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">12</property>
+					<property name="values">0,0,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">16</property>
+					<property name="values">0,180,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">20</property>
+					<property name="values">0,360,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">24</property>
+					<property name="values">0,540,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">28</property>
+					<property name="values">0,720,0</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">32</property>
+					<property name="values">0,720,180</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">36</property>
+					<property name="values">0,720,360</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">40</property>
+					<property name="values">0,720,540</property>
+				</object>
+				<object class="Animation.VectorKey">
+					<property name="t">44</property>
+					<property name="values">0,720,720</property>
+				</object>
+			</object>
+
+			<object class="Animation.VectorExpression" name="starfield.rotation">
+				<property name="x">0</property>
+				<property name="y">0</property>
+				<property name="z">0</property>
+			</object>
+
+			<object class="gl.Transform" name="starfield.prs">
+				<property name="rotation" source="rotate.starfield" />
+			</object>
+
+			<object class="enigma.Starfield" name="move.starfield">
+				<property name="numSrcVertex" source="data.starfield.vertexCount" />
+				<property name="srcVertexData" source="data.starfield.vertexData" />
+				<property name="range">2</property>
+				<property name="movement" source="move.starfield" />
+			</object>
+
+			<object class="gl.DrawPoints" name="render_drawstars">
+				<property name="vertexCount" source="move.starfield.vertexCount" />
+				<property name="vertexData" source="move.starfield.vertexData" />
+				<property name="vertexShader">enigma_plotball.vtx.glsl</property>
+				<property name="fragmentShader">enigma_intro.frag.glsl</property>				
+			</object>		
+		</object>
+
+
+			<object class="Animation.GenericCurve" name="text.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="text.alpha">
+				<property name="vector" source="text.alpha.anim" />
+			</object>
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_1">
+			<object class="Animation.GenericCurve" name="texta.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="texta.alpha">
+				<property name="vector" source="texta.alpha.anim" />
+			</object>
+
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>	
+			<object class="gl.FullScreenImage" name="feedback">
+				<property name="texture" source="image.text1.texture"/> 
+				<property name="useblend">true</property>
+				<property name="alpha" source="texta.alpha" />				
+				<property name="flip">true</property>
+			</object>					
+		</object>
+
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_2">
+			<object class="Animation.GenericCurve" name="texta.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="texta.alpha">
+				<property name="vector" source="texta.alpha.anim" />
+			</object>
+
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>	
+			<object class="gl.FullScreenImage" name="feedback">
+				<property name="texture" source="image.text2.texture"/> 
+				<property name="useblend">true</property>
+				<property name="alpha" source="texta.alpha" />				
+				<property name="flip">true</property>
+			</object>					
+		</object>
+
+
+
+		<object class="gl.RenderContext" name="_intro_text_screen_2">
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="Animation.GenericCurve" name="text2.alpha.anim">
+				<property name="channels">1</property>
+				<property name="type">linearsmooth</property>
+				<object class="Animation.Key">
+					<property name="t">0</property>
+					<property name="values">0</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">1</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.0</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">2.5</property>
+					<property name="values">1</property>
+				</object>
+				<object class="Animation.Key">
+					<property name="t">3</property>
+					<property name="values">0</property>
+				</object>				
+				<object class="Animation.Key">
+					<property name="t">4</property>
+					<property name="values">0</property>
+				</object>				
+			</object>
+			<object class="Numeric.VectorElement" name="text2.alpha">
+				<property name="vector" source="text2.alpha.anim" />
+			</object>
+
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">PROUDLY PRESENTS</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />				
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">A NEW REMAKE</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />				
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">PRODUCTION</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />				
+			</object>
+		</object>
+
+		<object class="gl.RenderContext" name="intro_text_screen_3">
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">PROGRAMMING</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">BY</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">GNILK</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
+			</object>
+		</object>
+
+		<object class="gl.RenderContext" name="intro_text_screen_4">
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">MUSIC REMIXED</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">BY</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">VIRGILL</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
+			</object>
+		</object>
+
+
+		<object class="gl.RenderContext" name="intro_text_screen_5">
+			<property name="fov">35.0</property>
+			<property name="clear">false</property>
+			<object class="gl.Camera" name="camera">
+				<property name="position">0,0,-4</property>
+				<property name="target">0,0,0</property>
+				<property name="upvector">0,1,0</property>
+			</object>
+			<object class="gl.DrawText" name="printtext">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.32,0</property>
+				<property name="text">GRAPHICS CREATED</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">32</property>
+				<property name="alignment">center</property>
+				<property name="position">0,0.05,0</property>
+				<property name="text">BY</property>
+				<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />												
+			</object>
+			<object class="gl.DrawText" name="printtext2">
+				<property name="font">Army.ttf</property>
+				<property name="fontsize">64</property>
+				<property name="alignment">center</property>
+				<property name="position">0,-0.30,0</property>
+				<property name="text">-SOMEONE-</property>
+					<property name="color">0.1, 0.1, 0.8, 1.0</property>				
+				<property name="useblend">true</property>
+				<property name="alpha" source="text.alpha" />								
+			</object>
+		</object>
+
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="mycontext" />
+	   <execute start="2" duration="4" object="intro_text_screen_1" />
+	   <execute start="6" duration="4" object="intro_text_screen_2" />
+	   <execute start="12" duration="4" object="intro_text_screen_3" />
+	   <execute start="18" duration="4" object="intro_text_screen_4" />
+	   <execute start="24" duration="4" object="intro_text_screen_5" />
+	</timeline>
+</yapt2>				

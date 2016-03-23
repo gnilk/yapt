@@ -100,6 +100,7 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
     	glEnable(GL_TEXTURE_2D);
     	bUseTexture = true;
 	}
+	
 	if (ignoreZBuffer->v->boolean == true) {
 		glDisable(GL_DEPTH_TEST);
 	}
@@ -125,6 +126,10 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 
 		glEnable(GL_LIGHTING);
 		glEnable(GL_LIGHT0);
+	} else {
+		if (!bUseTexture) {
+			glColor3f(solidcolor->v->rgba[0], solidcolor->v->rgba[1], solidcolor->v->rgba[2]);
+		}
 	}
 
 	if (cullface->v->boolean == true) {

@@ -1,0 +1,163 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+
+		<object class="geom.Cube" name="data.tvbox">
+			<property name="scale">1.0, 10.0, 1.0</property>
+			<property name="generatequads">true</property>
+			<property name="generatelines">true</property>
+		</object>
+		<object class="geom.City" name="data.city">
+			<property name="range">32.0, 0.0, 32.0</property>
+			<property name="height">10.0</property>
+			<property name="count">150</property>
+			<property name="generatelines">true</property>
+			<property name="generatequads">true</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="utils.Container" name="render">
+
+			<object class="gl.RenderContext" name="render_to_screen">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>
+
+				<object class="Animation.ExpSolver" name="rotspeed">
+					<property name="expression">40 * t + (sin(t))</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="campos">
+					<property name="x">32*sin(t)</property>
+					<property name="y">10+5*cos(2*t)</property>
+					<property name="z">32*cos(0.56*t)</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="camtarget">
+					<property name="x">32*sin(t+1.5)</property>
+					<property name="y">0</property>
+					<property name="z">32*cos(0.56*t+1.5)</property>
+				</object>
+
+				<object class="gl.Camera" name="camera">
+					<property name="position" source="campos" />
+					<property name="target" source="camtarget" />
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="plotball.bounce.y">
+					<property name="expression">abs(cos(t*2.0))-0.3</property>
+				</object>
+
+				<object class="Numeric.VectorMux" name="plotball.bounce.position">
+					<property name="x">cos(t*2.0)*2.0</property>
+					<!-- <property name="y" source="plotball.bounce.y" /> -->
+					<property name="y">0</property>
+					<property name="z">0</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="plotball.position">
+					<property name="x">2.0*cos(t)</property>
+					<!-- <property name="y">abs(cos(t*2.0))-0.3</property> -->
+					<property name="y">t>2?sin(t):0</property>
+					<property name="z">2.0*sin(t)</property>
+				</object>
+	
+
+				<object class="Animation.VectorExpression" name="plotball.rotation">
+					<property name="x">t*64</property>
+					<property name="y">t*-48</property>
+					<property name="z">t*32</property>
+				</object>
+
+				<object class="gl.PreserveState">
+					<object class="gl.Transform" name="prs_ball">
+						<property name="position">0,0,0</property>
+					</object>
+
+<!-- 					<object class="gl.DrawPoints" name="render_object">
+						<property name="vertexCount" source="data.city.vertexCount" />			
+						<property name="vertexData" source="data.city.vertexData" />			
+					</object>
+ -->
+					<object class="gl.DrawLines" name="render_object">
+						<property name="vertexData" source="data.city.road_vertexData" />			
+						<property name="lineCount" source="data.city.road_lineCount" />
+						<property name="lineData" source="data.city.road_lineData" />
+					</object>
+
+					<object class="gl.DrawQuads" name="render_object">
+						<property name="vertexData" source="data.city.road_vertexData" />			
+						<property name="quadCount" source="data.city.road_quadCount" />
+						<property name="quadData" source="data.city.road_quadData" />
+					</object>
+
+					<object class="gl.DrawQuads" name="render_object">
+						<property name="vertexData" source="data.city.vertexData" />			
+						<property name="quadCount" source="data.city.quadCount" />
+						<property name="quadData" source="data.city.quadData" />
+					</object>
+
+				</object>
+
+				<object class="gl.PreserveState">
+					<object class="gl.Transform" name="prs_ball">
+						<property name="position">-10,0,-10</property>
+					</object>
+
+					<object class="gl.DrawQuads" name="render_object">
+						<property name="vertexData" source="data.tvbox.vertexData" />			
+						<property name="quadCount" source="data.tvbox.quadCount" />
+						<property name="quadData" source="data.tvbox.quadData" />
+					</object>
+				</object>
+
+
+				<object class="gl.PreserveState">
+					<object class="gl.Transform" name="prs_ball">
+						<property name="position">10,0,10</property>
+					</object>
+
+					<object class="gl.DrawQuads" name="render_object">
+						<property name="vertexData" source="data.tvbox.vertexData" />			
+						<property name="quadCount" source="data.tvbox.quadCount" />
+						<property name="quadData" source="data.tvbox.quadData" />
+					</object>
+				</object>
+
+				<object class="gl.PreserveState">
+					<object class="gl.Transform" name="prs_ball">
+						<property name="position">-10,0,10</property>
+					</object>
+
+					<object class="gl.DrawQuads" name="render_object">
+						<property name="vertexData" source="data.tvbox.vertexData" />			
+						<property name="quadCount" source="data.tvbox.quadCount" />
+						<property name="quadData" source="data.tvbox.quadData" />
+					</object>
+				</object>
+
+
+
+<!--
+				<object class="gl.DrawLines" name="render_object">
+					<property name="vertexData" source="data.tvbox.vertexData" />			
+					<property name="lineCount" source="data.tvbox.lineCount" />
+					<property name="lineData" source="data.tvbox.lineData" />
+			</object>
+-->
+
+			</object>
+
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="render" />
+	</timeline>
+</yapt2>				
