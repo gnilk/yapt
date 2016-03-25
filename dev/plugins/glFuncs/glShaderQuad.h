@@ -5,6 +5,8 @@
 
 #include "PluginObjectImpl.h"
 #include "glShaderBase.h"
+#include "glShaderParam.h"
+
 
 
 //#include <OpenGl/glu.h>
@@ -23,12 +25,17 @@ public:
 protected:
 	void BeginOrtho();
 	void EndOrtho();
+	void SetParametersFromList(IPluginObjectInstance *pInstance);
 protected:
 	ISystem *ySys;
 	int width, height;
 	Property *pixelshader_source;
 	Property *vertexshader_source;
 	Property *depthwrite;
+	Property *texture;
+	Property *flipy;
+
+	std::vector<OpenGLShaderParameter *> shaderParams;
 
 };
 

@@ -108,6 +108,22 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 	if (useShaders) {
 		OpenGLShaderBase::ReloadIfNeeded();
 		OpenGLShaderBase::Attach();
+
+		IContext *pContext = dynamic_cast<IBaseInstance *>(pInstance)->GetContext();
+		IRenderContextParams *contextParams = (IRenderContextParams *)pContext->TopContextParamObject();
+		int width = contextParams->GetFrameBufferWidth();
+		int height = contextParams->GetFrameBufferHeight();
+
+
+		unsigned int idResolution = program->GetUniform("iResolution");
+		unsigned int idGlobalTime = program->GetUniform("iGlobalTime");
+		if (idResolution != -1) {
+			glUniform2f(idResolution, (float)width, (float)height);    
+		}
+		if (idGlobalTime != -1) {
+			glUniform1f(idGlobalTime, (float)t);    
+		}
+
 	}
 
 

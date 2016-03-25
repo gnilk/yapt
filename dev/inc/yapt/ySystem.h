@@ -306,6 +306,10 @@ namespace yapt
     virtual int GetNumOutputProperties() = 0;
     virtual Property *GetInputPropertyAt(int index) = 0;
     virtual Property *GetOutputPropertyAt(int index) = 0;
+
+    virtual const char *GetClassName() = 0;
+    virtual const char *GetInstanceName() = 0;
+
     virtual IDocument *GetDocument() = 0;
     virtual IDocNode *GetDocumentNode() = 0;
     virtual ILogger *GetLogger() = 0;

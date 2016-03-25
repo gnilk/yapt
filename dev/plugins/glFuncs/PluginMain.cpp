@@ -23,6 +23,7 @@
 #include "glBasicFuncs.h"
 #include "glShaderQuad.h"
 #include "glShaderBase.h"
+#include "glShaderParam.h"
 #include "glDrawPoints.h"
 #include "glBillboard.h"
 #include "glDrawQuads.h"
@@ -97,6 +98,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "gl.ShaderQuad")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLShaderQuad());
   }
+  if (!strcmp(identifier, "gl.ShaderParam")) {
+    pObject = dynamic_cast<IPluginObject *>(new OpenGLShaderParameter());
+  }
   if (!strcmp(identifier, "gl.DrawText")) {
     pObject = dynamic_cast<IPluginObject *>(new OpenGLDrawText());
   }
@@ -147,6 +151,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
 
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.FullScreenImage");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.ShaderQuad");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.ShaderParam");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.LoadTexture2D");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=gl.LoadFont");
   

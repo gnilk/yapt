@@ -1,0 +1,79 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+
+		<object class="gl.LoadTexture2D" name="texture">
+			<property name="fileName">goat.png</property>
+		</object>
+
+		<object class="geom.Quad" name="data.quad">
+			<property name="scale">1.0, 1.0, 1.0</property>
+			<property name="generatequads">true</property>
+			<property name="generatelines">true</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="utils.Container" name="render">
+
+			<object class="gl.RenderContext" name="render_to_screen">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>
+
+				<object class="Animation.ExpSolver" name="rotspeed">
+					<property name="expression">40 * t + (sin(t))</property>
+				</object>
+
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,2</property>
+					<!-- <property name="position">0,0,2.0</property> -->
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="blurparam">
+					<property name="expression">10 * sin(t)</property>
+				</object>
+
+				<object class="gl.ShaderQuad">
+					<property name="texture" source="texture.texture" />
+					<property name="flipvertical">true</property>
+					<property name="pixelshader">blur.frag.glsl</property>
+					<property name="vertexshader">blur.vtx.glsl</property>
+					<object class="gl.ShaderParam" name="blurdist">
+						<property name="type">float</property>
+						<property name="float" source="blurparam" />
+					</object>
+
+				</object>
+
+
+<!-- 				<object class="gl.DrawQuads" name="render_tracer">
+					<property name="vertexCount" source="data.quad.vertexCount" />
+					<property name="vertexData" source="data.quad.vertexData" />
+					<property name="vertexUVData" source="data.quad.vertexUVData" />
+					<property name="quadCount" source="data.quad.quadCount" />
+					<property name="quadData" source="data.quad.quadData" />
+					<property name="ignoreZBuffer">true</property>
+					<property name="cullface">false</property>
+					<property name="texture" source="texture.texture" />
+					<property name="lighting">false</property>
+					<property name="fragmentShader">blur.frag.glsl</property>
+					<property name="vertexShader">blur.vtx.glsl</property>					
+				</object>
+ -->
+
+			</object>
+
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="render" />
+	</timeline>
+</yapt2>				

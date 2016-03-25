@@ -831,8 +831,6 @@ namespace yapt
     void SetStartTime(double time_sec);
     double GetDuration();
     void SetDuration(double durtaion_sec);
-    const char *GetClassName();
-    const char *GetInstanceName();
     void SetInstanceName(const char *sNewName);
 
   public:	// external functions
@@ -855,6 +853,10 @@ namespace yapt
     virtual int GetNumOutputProperties();
     virtual Property *GetInputPropertyAt(int index);
     virtual Property *GetOutputPropertyAt(int index);
+
+    virtual const char *GetClassName();
+    virtual const char *GetInstanceName();
+
 
     virtual IDocument *GetDocument();
     virtual IDocNode *GetDocumentNode();
