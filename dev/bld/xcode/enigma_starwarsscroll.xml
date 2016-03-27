@@ -51,12 +51,10 @@
 					<property name="fontsize">32</property>
 					<property name="alignment">center</property>
 					<property name="position" source="text_pos" />
-				<!--
-					<property name="text">\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ok, that was fun\ \the original Enigma demo\was done by\Phenomena in 1991\\\Credits fly out to\\code\Azatoth\\Music\Firefox and Tip\\Graphics\Uno\\\\\Let's get on with the show\\...raytraced of course...</property>
-					-->
-					<property name="text">
-					\\\\\\\\\\\\\\\\\\\\\\\\\\\\\--==Firefox==--\\\\\\\\--==Tip==--\\\\\\\\--==Terminator==--\\\\\\\\--==Azatoth==--\\\\\\\\--==Uno==--\\\\\\\\--==Phenomena==--\\\\\\
+				
+					<property name="text">\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ok, that was fun\ \the original Enigma demo\was done by\Phenomena in 1991\\\Credits fly out to\\code\Azatoth\\Music\Firefox and Tip\\Graphics\Uno\\\\\Let's get on with the show\\with a trip to the\\...vector world...
 					</property>
+
 <!--					
 					<property name="text">\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ok, that was fun\ \the original Enigma demo\was done by\Phenomena in 1991\\\Credits fly out to\\code\Azatoth\\Music\Firefox and Tip\\Graphics\Uno\\\\\Let's get on with the show\\...raytraced of course...</property>
 -->

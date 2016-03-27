@@ -36,37 +36,59 @@
 				</object>
 
 				<object class="Animation.ExpSolver" name="blurparam">
-					<property name="expression">10 * sin(t)</property>
+					<property name="expression">10*cos(t*1.7)</property>
 				</object>
 
+				<object class="Animation.ExpSolver" name="scale_param">
+					<property name="expression">0.5 + 0.5 * sin(t)</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="offset_param">
+					<property name="expression">1 - (0.5 + 0.5 * sin(t))</property>
+				</object>
+
+				<object class="gl.RenderToTexture" name="pass1">
+					<property name="fov">35.0</property>
+					<property name="width">640</property>
+					<property name="height">360</property>
+					<property name="clear">true</property>	
+
+
+					<object class="gl.ShaderQuad">
+						<property name="texture" source="texture.texture" />
+						<property name="flipvertical">true</property>
+						<property name="pixelshader">noise.frag.glsl</property>
+						<property name="vertexshader">noise.vtx.glsl</property>
+						<object class="gl.ShaderParam" name="noise_scale">
+							<property name="param">noise_scale</property>
+							<property name="type">float</property>
+							<property name="float" source="scale_param" />
+						</object>
+						<object class="gl.ShaderParam" name="noise_offset">
+							<property name="param">noise_offset</property>
+							<property name="type">float</property>
+							<property name="float" source="offset_param" />
+						</object>
+					</object>
+				</object>
+				<object class="gl.FullScreenImage" name="feedback">
+					<property name="texture" source="pass1.texture"/>
+				</object>		
+
+<!--				
 				<object class="gl.ShaderQuad">
-					<property name="texture" source="texture.texture" />
-					<property name="flipvertical">true</property>
+					<property name="texture" source="pass1.texture" />
+					<property name="flipvertical">false</property>
 					<property name="pixelshader">blur.frag.glsl</property>
 					<property name="vertexshader">blur.vtx.glsl</property>
 					<object class="gl.ShaderParam" name="blurdist">
-						<property name="param">blurdist</property>							
 						<property name="type">float</property>
 						<property name="float" source="blurparam" />
 					</object>
 
 				</object>
 
-
-<!-- 				<object class="gl.DrawQuads" name="render_tracer">
-					<property name="vertexCount" source="data.quad.vertexCount" />
-					<property name="vertexData" source="data.quad.vertexData" />
-					<property name="vertexUVData" source="data.quad.vertexUVData" />
-					<property name="quadCount" source="data.quad.quadCount" />
-					<property name="quadData" source="data.quad.quadData" />
-					<property name="ignoreZBuffer">true</property>
-					<property name="cullface">false</property>
-					<property name="texture" source="texture.texture" />
-					<property name="lighting">false</property>
-					<property name="fragmentShader">blur.frag.glsl</property>
-					<property name="vertexShader">blur.vtx.glsl</property>					
-				</object>
- -->
+-->
 
 			</object>
 

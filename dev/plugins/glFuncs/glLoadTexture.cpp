@@ -32,8 +32,10 @@ void OpenGLLoadTexture::Render(double t, IPluginObjectInstance *pInstance) {
 }
 
 void OpenGLLoadTexture::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+  long szData;
+  void *data = ySys->LoadData(filename->v->string, 0, &szData);
+  bitmap = Bitmap::LoadPNGImage(data, szData);
 
-  bitmap = Bitmap::LoadPNGImage(filename->v->string);
   if (bitmap == NULL) {
     ySys->GetLogger("gl.LoadTexture")->Error("Unable to load PNG file from: %s", filename->v->string);
     return;

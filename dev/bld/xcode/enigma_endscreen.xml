@@ -171,10 +171,27 @@
 
 		<object class="gl.RenderContext" name="render_to_screen">
 			<object class="gl.PreserveState">
-	 			<object class="gl.FullScreenImage" name="feedback">
+				<object class="Animation.ExpSolver" name="blurparam">
+					<property name="expression">4 * sin(t)</property>
+				</object>
+
+				<object class="gl.ShaderQuad">
+					<property name="texture" source="starfield.texture" />
+					<property name="flipvertical">true</property>
+					<property name="pixelshader">blur.frag.glsl</property>
+					<property name="vertexshader">blur.vtx.glsl</property>
+					<object class="gl.ShaderParam" name="blurdist">
+						<property name="param">blurdist</property>							
+						<property name="type">float</property>
+						<property name="float" source="blurparam" />
+					</object>
+
+				</object>
+
+<!-- 	 			<object class="gl.FullScreenImage" name="feedback">
 					<property name="texture" source="starfield.texture"/>
 				</object>		
-			</object>
+ -->			</object>
  		</object>
 	</render>
 	

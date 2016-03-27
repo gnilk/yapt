@@ -42,6 +42,7 @@ public:
 
 protected:
 	ISystem *ySys;
+	Property *paramname;
 	Property *typeconverter;
 	Property *float_value;
 	Property *int_value;	

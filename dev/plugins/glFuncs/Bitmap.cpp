@@ -129,3 +129,20 @@ Bitmap *Bitmap::LoadPNGImage(std::string imagefile) {
 	return bitmap;
 }
 
+Bitmap *Bitmap::LoadPNGImage(void *buffer, long numbytes) {
+	std::vector<unsigned char> image;
+	unsigned long w, h;
+	int error = DecodePNG(image, w, h, (unsigned char *)buffer, numbytes);
+	if (error != 0) {
+		//psys->GetLogger("BitmapFont")->Error("Decode PNG file '%s' failed, error=%d", imagefile.c_str(), error);
+		return NULL;
+	}
+
+	//psys->GetLogger("BitmapFont")->Debug("Decoded PNG ok, w=%d, h=%d",w,h);
+	// allocate and create bitmap of original font
+	//bitmap = new Bitmap(w,h, &image[0]);
+	Bitmap *bitmap = Bitmap::FromRGBA(w,h,&image[0]);
+
+	return bitmap;
+
+}

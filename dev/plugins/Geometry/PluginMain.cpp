@@ -12,7 +12,6 @@
 #ifdef WIN32
 #include <malloc.h>
 #endif
-
   
 // Plugin objects
 #include "PluginObjectImpl.h"
@@ -24,6 +23,7 @@
 #include "QuadGenerator.h"
 #include "PointCloudGenerator.h"
 #include "CityGenerator.h"
+#include "TreeGenerator.h"
 
 #ifndef M_PI
   #define M_PI (3.1415926535897932384626433832795f)
@@ -143,6 +143,9 @@ IPluginObject *Factory::CreateObject(ISystem *pSys, const char *identifier) {
   if (!strcmp(identifier, "geom.City")) {
     pObject = dynamic_cast<IPluginObject *>(new CityGenerator());
   }
+  if (!strcmp(identifier, "geom.Tree")) {
+    pObject = dynamic_cast<IPluginObject *>(new TreeGenerator());
+  }
   if (pObject != NULL) {
     pLogger->Debug("Ok");
   } else
@@ -166,6 +169,7 @@ int CALLCONV yaptInitializePlugin(ISystem *ySys) {
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.Cylinder");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.Array");
   ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.City");
+  ySys->RegisterObject(dynamic_cast<IPluginObjectFactory *>(&factory), "name=geom.Tree");
   
   return 0;
 }

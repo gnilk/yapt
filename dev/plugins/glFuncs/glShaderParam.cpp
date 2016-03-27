@@ -19,7 +19,15 @@ using namespace yapt;
 //
 void OpenGLShaderParameter::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   instanceName = pInstance->GetInstanceName();
+  IBaseInstance *pBase = dynamic_cast<IBaseInstance *>(pInstance);
+  if (pBase == NULL) {
+    pInstance->GetLogger()->Error("Can't fetch base!");
+    exit(1);
+  }
+  instanceName = pBase->GetAttributeValue("name");
+  pInstance->GetLogger()->Debug("Instance name = %s",instanceName.c_str());
   typeconverter = pInstance->CreateProperty("type", kPropertyType_Enum, "float", "enum={float,vec3,int,bool}");  
+  paramname = pInstance->CreateProperty("param", kPropertyType_String, "param", "");  
   float_value = pInstance->CreateProperty("float", kPropertyType_Float, "0", "");
   vec3_value = pInstance->CreateProperty("vec3", kPropertyType_Vector, "0,0,0", "");
   int_value = pInstance->CreateProperty("int", kPropertyType_Integer, "0", "");
@@ -50,7 +58,8 @@ void OpenGLShaderParameter::SetWarningFlag() {
 
 
 std::string OpenGLShaderParameter::GetName() {
-  return instanceName;
+  //return instanceName;
+  return std::string(paramname->v->string);
 }
 
 ShaderParamType OpenGLShaderParameter::GetType() {
