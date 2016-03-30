@@ -138,7 +138,7 @@ vec3 calcPlane(float TP, vec3 P, vec3 V, vec3 H) {
 
 }
 
-#define N_SPHERE2	12
+#define N_SPHERE2	16
 
 vec3 ApplyLight(vec3 P, vec3 X, vec3 A, vec3 V, vec3 objColor) {
 	vec3 N=normalize(X-A);	// Normal
@@ -171,15 +171,15 @@ vec3 trace2(vec3 P, vec3 V, vec3 H) {
 	vec3 C[N_SPHERE2];
 
 
-	// setup up sphere's - in a circle
-	for(int i=0;i<N_SPHERE2;i++) {
-		float t = iGlobalTime*2 + i*2.0*PI/N_SPHERE2;	// add iGlobalTime to move
-		vec3 A = vec3(2 * sin(t),1, 2 * cos(t));	// position
-		float R = 0.5; // (1.0-I)*0.33 + 0.1;
-		S[i]=vec4(A,R);	// postion and radius
+	// // setup up sphere's - in a circle
+	// for(int i=0;i<N_SPHERE2;i++) {
+	// 	float t = iGlobalTime*2 + i*2.0*PI/N_SPHERE2;	// add iGlobalTime to move
+	// 	vec3 A = vec3(2 * sin(t),1, 2 * cos(t));	// position
+	// 	float R = 0.5; // (1.0-I)*0.33 + 0.1;
+	// 	S[i]=vec4(A,R);	// postion and radius
 
-		C[i]=sphereColor1; //vec3(0,gb);
-	}
+	// 	C[i]=sphereColor1; //vec3(0,gb);
+	// }
 	
 
 	float time = iGlobalTime;

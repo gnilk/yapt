@@ -211,10 +211,10 @@ unsigned int ShaderProgram::GetAttrib(const char *name) {
 }
 
 unsigned int ShaderProgram::GetUniform(const char *name) {
+
   GLint uniform = glGetUniformLocation(idProgram, name);
   if(uniform == -1) {
-   // fprintf(stderr, "Could not bind uniform %s\n", name);
-
+   fprintf(stderr, "Could not bind uniform '%s'\n", name);
   }
   return uniform;
 }

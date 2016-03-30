@@ -18,6 +18,7 @@ typedef enum {		// note: make sure this matches the property enum declaration
 	kParamType_Vec3,
 	kParamType_Int,
 	kParamType_Bool,
+	kParamType_Texture,
 } ShaderParamType;
 
 class OpenGLShaderParameter: public PluginObjectImpl {
@@ -36,6 +37,7 @@ public:
 	float *GetVec3(float *out_vec3);
 	int GetInt();
 	bool GetBool();
+	int GetTexture();
 
 	bool WarningIssued();
 	void SetWarningFlag();
@@ -48,6 +50,7 @@ protected:
 	Property *int_value;	
 	Property *vec3_value;
 	Property *bool_value;
+	Property *texture_value;
 
 	std::string instanceName;
 

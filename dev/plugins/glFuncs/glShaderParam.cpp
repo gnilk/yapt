@@ -26,12 +26,13 @@ void OpenGLShaderParameter::Initialize(ISystem *ySys, IPluginObjectInstance *pIn
   }
   instanceName = pBase->GetAttributeValue("name");
   pInstance->GetLogger()->Debug("Instance name = %s",instanceName.c_str());
-  typeconverter = pInstance->CreateProperty("type", kPropertyType_Enum, "float", "enum={float,vec3,int,bool}");  
+  typeconverter = pInstance->CreateProperty("type", kPropertyType_Enum, "float", "enum={float,vec3,int,bool,texture}");  
   paramname = pInstance->CreateProperty("param", kPropertyType_String, "param", "");  
   float_value = pInstance->CreateProperty("float", kPropertyType_Float, "0", "");
   vec3_value = pInstance->CreateProperty("vec3", kPropertyType_Vector, "0,0,0", "");
   int_value = pInstance->CreateProperty("int", kPropertyType_Integer, "0", "");
   bool_value = pInstance->CreateProperty("bool", kPropertyType_Bool, "false", "");
+  texture_value = pInstance->CreateProperty("texture", kPropertyType_Integer, "0", "");
   this->ySys = ySys;
   not_found_warning_issued = false;
 }
@@ -67,7 +68,7 @@ ShaderParamType OpenGLShaderParameter::GetType() {
 }
 
 std::string OpenGLShaderParameter::GetTypeName() {
-  static std::string names[] = {"float", "vec3", "int", "bool"};
+  static std::string names[] = {"float", "vec3", "int", "bool","texture"};
   return names[typeconverter->v->int_val];
 }
 
@@ -86,6 +87,10 @@ float *OpenGLShaderParameter::GetVec3(float *out_vec3) {
 
 int OpenGLShaderParameter::GetInt() {
   return int_value->v->int_val;
+}
+
+int OpenGLShaderParameter::GetTexture() {
+  return texture_value->v->int_val;
 }
 
 bool OpenGLShaderParameter::GetBool() {

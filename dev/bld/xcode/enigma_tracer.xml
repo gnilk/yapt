@@ -53,10 +53,10 @@
 			</object>
 
 			<object class="Animation.ExpSolver" name="time_fraczoom">
-				<property name="expression">t>10?t-10:0</property>
+				<property name="expression">t>5?t-5:0</property>
 			</object>
 			<object class="Animation.ExpSolver" name="time_blend">
-				<property name="expression">t>5?t-5:0</property>
+				<property name="expression">t>7?t-7:0</property>
 			</object>
 
 
@@ -131,11 +131,24 @@
 							<property name="target">0,0,0</property>
 							<property name="upvector">0,1,0</property>
 						</object>
+						<object class="Animation.VectorExpression" name="tracer_screen_pos">
+							<property name="x">0</property>
+							<!-- <property name="y">t>1?t>14?smooth(t-14):0:smooth(t)-1</property> -->
+							<property name="y">t>1?0:smooth(t)-1</property>
+							<property name="z">0</property>
+						</object>
+
 						<object class="gl.Transform" name="prs_ball">
-							<property name="position">0,0,0</property>
+							<property name="position" source="tracer_screen_pos" />
 							<property name="rotation">0,0,0</property>
 							<property name="scale">1.,-0.9,1</property>
 						</object>
+
+						<object class="Animation.ExpSolver" name="tracer_fade">
+							<property name="expression">t>14?(15-t):1</property>
+							<!-- <property name="expression">1</property> -->
+						</object>
+
 
 						<object class="gl.DrawQuads" name="render_tracer">
 							<property name="vertexCount" source="data.tracer.quad.vertexCount" />
@@ -149,8 +162,13 @@
 							<property name="texture" source="tracer_target.texture" />
 							<property name="lighting">false</property>
 
+							<property name="solidcolor">1,1,1,1</property>
+							<property name="blend_func">alpha</property>
+							<property name="alpha" source="tracer_fade" />
+
+<!-- 
 							<property name="fragmentShader">blur.frag.glsl</property>
-							<property name="vertexShader">blur.vtx.glsl</property>					
+							<property name="vertexShader">blur.vtx.glsl</property>			 -->		
 
 						</object>
 					</object>
@@ -172,6 +190,12 @@
 							<property name="rotation">0,0,0</property>
 						</object>
 
+						<object class="Animation.ExpSolver" name="logo_fade">
+							<property name="expression">t>1?1:t</property>
+							<!-- <property name="expression">1</property> -->
+						</object>
+
+
 						<object class="gl.DrawQuads" name="render_logo">
 							<property name="vertexCount" source="data.logo.quad.vertexCount" />
 							<property name="vertexData" source="data.logo.quad.vertexData" />
@@ -179,9 +203,13 @@
 							<property name="quadCount" source="data.logo.quad.quadCount" />
 							<property name="quadData" source="data.logo.quad.quadData" />
 							<property name="ignoreZBuffer">true</property>
+
 							<!-- <property name="wireframe">true</property> -->
 							<property name="texture" source="data.logo.texture" />
 							<property name="lighting">false</property>
+							<property name="solidcolor">1,1,1,1</property>
+							<property name="blend_func">alpha</property>
+							<property name="alpha" source="logo_fade" />
 						</object>
 					</object>
 				</object>
@@ -209,7 +237,7 @@
 						<property name="fontsize">32</property>
 						<property name="alignment">none</property>
 						<property name="position" source="text1.scrollpos" />
-						<property name="text">     DO WE HAVE YOUR ATTENTION...   WE JUST ADDED SOME 20TH CENTURY UPGRADES TO IT...    HOPE YOU LIKE THIS DEMO</property>
+						<property name="text">DO WE HAVE YOUR ATTENTION...     </property>
 						<property name="useblend">true</property>
 						<property name="color">1.0, 1.0, 1.0, 1.0</property>					
 					</object>

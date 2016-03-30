@@ -18,6 +18,8 @@ using namespace yapt;
 void OpenGLShaderQuad::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
   width = ySys->GetConfigInt(kConfig_ResolutionWidth,1280);  
   height = ySys->GetConfigInt(kConfig_ResolutionWidth,720);  
+  useblend = pInstance->CreateProperty("useblend", kPropertyType_Bool,"false","");
+
   texture = pInstance->CreateProperty("texture", kPropertyType_Integer, "0", "");  
   pixelshader_source = pInstance->CreateProperty("pixelshader", kPropertyType_String, "", "");
   vertexshader_source = pInstance->CreateProperty("vertexshader", kPropertyType_String, "", "");
@@ -56,14 +58,17 @@ void OpenGLShaderQuad::SetParametersFromList(IPluginObjectInstance *pInstance) {
     OpenGLShaderParameter *param = shaderParams[i];
     std::string name = param->GetName();
 
-    unsigned int idParam = program->GetUniform(name.c_str());
+    int idParam = program->GetUniform(name.c_str());
     if (idParam == -1) {  // missing in shader
       if (!param->WarningIssued()) {
         pInstance->GetLogger()->Error("Parameter '%s' not found in shader!", name.c_str());
         param->SetWarningFlag();
+        exit(1);
       }
       continue;
     }
+
+    // printf("%d:%s\n",i,name.c_str());
 
     switch(param->GetType()) {
       case kParamType_Float :
@@ -76,6 +81,18 @@ void OpenGLShaderQuad::SetParametersFromList(IPluginObjectInstance *pInstance) {
           glUniform3f(idParam, tmp[0], tmp[1], tmp[2]);
         }
         break;
+      case kParamType_Texture :
+        {
+          glActiveTexture(GL_TEXTURE0+texture_count);        
+          glBindTexture(GL_TEXTURE_2D,param->GetTexture());
+          glUniform1i(idParam, texture_count); // texture_count);  
+          int err = glGetError();
+          if (err != GL_NO_ERROR) {
+            pInstance->GetLogger()->Error("Unable to bind texture for param: %s (error=%d)",name.c_str(),err);
+          }
+          texture_count++;
+
+        }
       default :
         // not supported just yet...
         break;
@@ -94,11 +111,15 @@ void OpenGLShaderQuad::Render(double t, IPluginObjectInstance *pInstance) {
   BeginOrtho();
 
   OpenGLShaderBase::ReloadIfNeeded();
+  texture_count = 0;
 
-
+  glGetError();
   program->Attach();
   unsigned int idResolution = program->GetUniform("iResolution");
   unsigned int idGlobalTime = program->GetUniform("iGlobalTime");
+
+  // set user parameters
+  SetParametersFromList(pInstance);
 
   if (idResolution != -1) {
     glUniform2f(idResolution, (float)width, (float)height);    
@@ -107,8 +128,15 @@ void OpenGLShaderQuad::Render(double t, IPluginObjectInstance *pInstance) {
     glUniform1f(idGlobalTime, (float)t);    
   }
 
-  // set user parameters
-  SetParametersFromList(pInstance);
+
+  if (useblend->v->boolean) {
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      // glColor4f(1,1,1, alpha->v->float_val);
+      // glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);    
+      //glBlendFunc(GL_ONE, GL_ONE);
+      //printf("%f:%f\n",t,alpha->v->float_val);
+    }
 
 
   if (depthwrite->v->boolean) {
@@ -117,15 +145,16 @@ void OpenGLShaderQuad::Render(double t, IPluginObjectInstance *pInstance) {
     glDepthMask(GL_FALSE);
   }
 
-  bool bUseTexture = false;
   if (texture->v->int_val != 0) {
+      glActiveTexture(GL_TEXTURE0+texture_count);
       glBindTexture(GL_TEXTURE_2D,texture->v->int_val);
-      glEnable(GL_TEXTURE_2D);
-      bUseTexture = true;
+      texture_count++;
   }
 
 
+
   glBegin(GL_QUADS);
+  /*
     glTexCoord2f(0.0f,0.0f);
     glVertex2f(-1.0f, -1.0f);
     glTexCoord2f(1.0f,0.0f);
@@ -134,15 +163,34 @@ void OpenGLShaderQuad::Render(double t, IPluginObjectInstance *pInstance) {
     glVertex2f(1.0f, 1.0f);
     glTexCoord2f(0.0f,1.0f);
     glVertex2f(-1.0f, 1.0f);
+    */
+    for(int i=0;i<texture_count;i++) glMultiTexCoord2f(GL_TEXTURE0+i,0.0f,0.0f);
+    glVertex2f(-1.0f, -1.0f);
+    for(int i=0;i<texture_count;i++) glMultiTexCoord2f(GL_TEXTURE0+i,1.0f,0.0f);
+    glVertex2f(1, -1.0f);
+    for(int i=0;i<texture_count;i++) glMultiTexCoord2f(GL_TEXTURE0+i,1.0f,1.0f);
+    glVertex2f(1.0f, 1.0f);
+    for(int i=0;i<texture_count;i++) glMultiTexCoord2f(GL_TEXTURE0+i,0.0f,1.0f);
+    glVertex2f(-1.0f, 1.0f);
   glEnd();  //glBegin(GL_QUADS);
 
-  if (bUseTexture) {
+
+  if (texture_count > 0) {
+      for(int i=0;i<texture_count;i++) {
+        glActiveTexture(GL_TEXTURE0+i);
+        glBindTexture(GL_TEXTURE_2D, 0);
+      }
+      glActiveTexture(GL_TEXTURE0);    // set this back to 0 other wise the active texture is still valid
       glDisable(GL_TEXTURE_2D);
+
+  }
+  if (useblend->v->boolean) {
+      glDisable(GL_BLEND);
   }
 
+  program->Detach();
 
   EndOrtho();
-  program->Detach();
   //glDisable(GL_TEXTURE_2D);
   glDepthMask(GL_TRUE);
 }

@@ -40,8 +40,8 @@ void blur_3x3_kernel() {
 	vec4 col = vec4(0,0,0,0);
 	vec2 uv = vTexCoord;
 
-	float x_step = 1/iResolution.x;
-	float y_step = 1/iResolution.y;
+	float x_step = blurdist/iResolution.x;
+	float y_step = blurdist/iResolution.y;
 
 	uv.y = vTexCoord.y - (1 * y_step);
 	for (int j=0;j<3;j++) {
@@ -63,8 +63,8 @@ void passthrough() {
 }
 void main(void) 
 {
-	blur_9x9_kernel();
-	//blur_3x3_kernel();
+	//blur_9x9_kernel();
+	blur_3x3_kernel();
 	//passthrough();
 	// gl_FragColor = vec4(1,1,1, 0);	
 }

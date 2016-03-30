@@ -449,6 +449,7 @@ void FontChar::Draw(float x, float y, float sx, float sy) {
 	};
 
     glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0);    
   	glBindTexture(GL_TEXTURE_2D,idTexture);
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f,0.0f);

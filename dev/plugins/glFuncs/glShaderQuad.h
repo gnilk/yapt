@@ -34,7 +34,9 @@ protected:
 	Property *depthwrite;
 	Property *texture;
 	Property *flipy;
+	Property *useblend;
 
+	int texture_count;
 	std::vector<OpenGLShaderParameter *> shaderParams;
 
 };

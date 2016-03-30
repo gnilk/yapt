@@ -44,13 +44,51 @@
 				<property name="vector" source="troll.anim.alpha" />
 			</object>
 
-			<object class="gl.FullScreenImage" name="image">
-				<property name="texture" source="image.troll" />
-				<property name="flip">true</property>
-				<property name="useblend">true</property>
-				<property name="alpha" source="troll.alpha" />
 
-			</object>		
+			<object class="gl.RenderToTexture" name="troll_screen">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>
+				<property name="clear">true</property>	
+
+
+				<object class="gl.FullScreenImage" name="image">
+					<property name="texture" source="image.troll" />
+					<property name="flip">true</property>
+					<property name="useblend">true</property>
+					<property name="alpha" source="troll.alpha" />
+
+				</object>		
+			</object>
+
+				<!-- apply noise to picture when fading out -->
+
+				<object class="Animation.ExpSolver" name="noise_scale_param">
+					<property name="expression">t>4?1*(t-4):0</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="noise_offset_param">
+					<property name="expression">t>4?1-(t-4):1</property>
+				</object>
+
+
+				<object class="gl.ShaderQuad">
+					<property name="texture" source="troll_screen.texture" />
+					<property name="flipvertical">false</property>
+					<property name="pixelshader">noise.frag.glsl</property>
+					<property name="vertexshader">noise.vtx.glsl</property>
+					<object class="gl.ShaderParam" name="noise_scale">
+						<property name="param">noise_scale</property>
+						<property name="type">float</property>
+						<property name="float" source="noise_scale_param" />
+					</object>
+					<object class="gl.ShaderParam" name="noise_offset">
+						<property name="param">noise_offset</property>
+						<property name="type">float</property>
+						<property name="float" source="noise_offset_param" />
+					</object>
+				</object>
+
 		</object>
 	</render>	
 

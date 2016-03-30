@@ -32,6 +32,7 @@ private:
 	Property *light_specular;
 
 	Property *blend_func;
+	Property *alpha;
 
 	bool useShaders;
 public:

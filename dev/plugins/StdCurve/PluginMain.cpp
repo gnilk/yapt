@@ -492,7 +492,10 @@ double YaptExpSolverFacade::OnFunctionExpression(const char *data, int args, dou
     } else  if ((!strcmp(data,"pow")) && (args == 2)) {
         *bOk_out = 1;
         result = pow(arg[0],arg[1]);
-    }    
+    } else if (!strcmp(data, "smooth")) {
+    	*bOk_out = 1;
+    	result = SMOOTHSTEP(arg[0]);
+    }
     
     return result;
 }

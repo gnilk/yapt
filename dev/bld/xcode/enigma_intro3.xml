@@ -308,6 +308,27 @@
 					<property name="text">GOAT ASSOCIATION</property>
 	 			</object>
 	 		</object>
+	 			<!-- blurring causing drastic performance drop -->
+	 			<!--
+				<object class="Animation.ExpSolver" name="blurparam">
+					<property name="expression">2.0</property>
+				</object>
+
+				<object class="gl.ShaderQuad">
+					<property name="texture" source="text_1.texture" />
+					<property name="flipvertical">false</property>
+					<property name="useblend">true</property>
+					<property name="pixelshader">blur.frag.glsl</property>
+					<property name="vertexshader">blur.vtx.glsl</property>
+					<object class="gl.ShaderParam" name="blurdist">
+						<property name="param">blurdist</property>							
+						<property name="type">float</property>
+						<property name="float" source="blurparam" />
+					</object>
+
+				</object>
+			-->
+
 	 		<object class="gl.RenderContext" name="render_text">
 	 			<property name="clear">false</property>
 	 			<object class="gl.FullScreenImage">

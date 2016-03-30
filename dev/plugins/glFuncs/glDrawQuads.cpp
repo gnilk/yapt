@@ -47,7 +47,8 @@ void OpenGLDrawQuads::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance
 	light_diffuse = pInstance->CreateProperty("light_diffuse", kPropertyType_Color, "1.0, 1.0, 1.0, 1.0","");
 	light_specular = pInstance->CreateProperty("light_specular", kPropertyType_Color, "1.0, 1.0, 1.0, 1.0","");
 
-	blend_func = pInstance->CreateProperty("blend_func", kPropertyType_Enum, "none", "enum={none, add}");	
+	blend_func = pInstance->CreateProperty("blend_func", kPropertyType_Enum, "none", "enum={none, add, alpha}");	
+	alpha = pInstance->CreateProperty("alpha", kPropertyType_Float,"1","");
 
 	vshader = pInstance->CreateProperty("vertexShader", kPropertyType_String, "","");
 	fshader = pInstance->CreateProperty("fragmentShader", kPropertyType_String, "","");
@@ -99,6 +100,7 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
     	glBindTexture(GL_TEXTURE_2D,texture->v->int_val);
     	glEnable(GL_TEXTURE_2D);
     	bUseTexture = true;
+    	//printf("texture!\n");
 	}
 	
 	if (ignoreZBuffer->v->boolean == true) {
@@ -160,6 +162,13 @@ void OpenGLDrawQuads::Render(double t, IPluginObjectInstance *pInstance) {
 			case 1 : // add
 				glBlendFunc(GL_ONE, GL_ONE);
 				break;
+			case 2 : // alpha
+				//printf("ALPHA BLEND, a=%f!\n",alpha->v->float_val);
+      			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      			glColor4f(solidcolor->v->rgba[0], solidcolor->v->rgba[1], solidcolor->v->rgba[2], alpha->v->float_val);
+      			//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);    
+      			break;
+
 		}
 	}
 
@@ -217,6 +226,7 @@ void OpenGLDrawQuads::DrawWireFrame(int num, float *pVertex, int *pQuads) {
 void OpenGLDrawQuads::DrawSolidPoly(int num, float *pVertex, float *pUVData, bool bUseTexture, int *pQuads) {
 	float normal[3];
 	float v1[3], v2[3];
+
 
 	glBegin(GL_QUADS);
 	for(int i=0;i<numQuads->v->int_val;i++) {
