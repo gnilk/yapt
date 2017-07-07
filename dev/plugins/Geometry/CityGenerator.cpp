@@ -72,14 +72,6 @@ void CityGenerator::GenerateRoads() {
 	logger->Debug("Road Lines : %d", numRoadLines);
 	logger->Debug("Road Quads : %d", numRoadQuads);
 
-	// for(int i=0;i<numRoadVertex;i++) {
-	// 	printf("%d: %f, %f, %f\n", i, roadvertex[i*3+0], roadvertex[i*3+1], roadvertex[i*3+2]);
-	// }
-
-	// for(int i=0;i<numRoadLines;i++) {
-	// 	printf("L%d (%d - %d)\n",i, roadlines[i*2+0], roadlines[i*2+1]);
-	// }
-
 	out_roadVertexCount->v->int_val = numRoadVertex;
   	out_roadVertexData->v->userdata = (void *)roadvertex;
 
@@ -201,13 +193,6 @@ int CityGenerator::AddRoadQuad(int idxFrom, int idxTo) {
 		swap = true;
 	}
 
-	// Rotate 90 degres for direction = swap x/z
-
-	// printf("from: %f, %f, %f\n",pVFrom[0], pVFrom[1], pVFrom[2]);
-	// printf("..to: %f, %f, %f\n",pVTo[0], pVTo[1], pVTo[2]);
-	// printf("dir: %f,%f, %f\n", dir[0], dir[1], dir[2]);
-
-
 	float p1[3];
 	float p2[3];
 	float p3[3];
@@ -229,8 +214,6 @@ int CityGenerator::AddRoadQuad(int idxFrom, int idxTo) {
 	tmp = dir[0];
 	dir[0] = dir[2];
 	dir[2] = tmp;
-//	printf("mod: %f,%f, %f\n", dir[0], dir[1], dir[2]);
-
 
 	vAdd(p1,p1,dir);
 	vSub(p2,p2,dir);

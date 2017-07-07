@@ -28,6 +28,8 @@ PLUGIN_SRC_DIR = $(ROOT)/plugins
 
 STDCURVE_PLUGIN = $(PLUGIN_SRC_DIR)/StdCurve
 
+SDK = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+
 PLUGIN_DEST_DIR = plugins
 PLUGINS = StdCurve utils glFuncs Geometry Enigma
 PLUGINS_DIRS = \
@@ -43,11 +45,11 @@ LIB_FILES = -framework Cocoa -framework OpenGL -framework IOKit -framework CoreV
 
 
 CPPFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11
-CPPFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+CPPFLAGS += -isysroot $(SDK)
 CPPFLAGS += $(INCLUDE_FILES)
 
 CFLAGS = -g -arch x86_64 -std=c99
-CFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+CFLAGS += -isysroot $(SDK)
 CFLAGS += $(INCLUDE_FILES)
 
 # Linker settings

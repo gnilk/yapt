@@ -1,0 +1,117 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">640</property>
+			<property name="screen.resolution.height">360</property>
+		</object>
+
+		<object class="gl.LoadTexture2D" name="gradient">
+			<property name="fileName">gradient3.png</property>
+		</object>
+
+
+		<object class="geom.Quad" name="data.quad">
+			<property name="scale">1.0, 1.0, 1.0</property>
+			<property name="generatequads">true</property>
+			<property name="generatelines">true</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="utils.Container" name="render">
+
+			<object class="gl.RenderToTexture" name="ts1">
+				<property name="width">640</property>
+				<property name="height">360</property>
+				<property name="clearcol">0,0,0,0</property>
+				<property name="clear">true</property>	
+
+ 				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,-4</property>
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+
+				<object class="gl.DrawText" name="printtext">
+					<property name="font">Army.ttf</property>
+					<property name="fontsize">64</property>
+					<property name="alignment">center</property>
+					<property name="position">0,0.70,0</property>
+					<property name="text">ok, that was fun\ \what about a trip to mars\new stylee</property>
+				</object>
+ 			</object>
+
+			<object class="gl.RenderContext" name="render_to_screen">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>
+
+				<object class="Animation.ExpSolver" name="rotspeed">
+					<property name="expression">40 * t + (sin(t))</property>
+				</object>
+
+				<object class="gl.Camera" name="camera">
+					<property name="position">0,0,2</property>
+					<property name="target">0,0,0</property>
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="raster_offset">
+					<property name="expression">0.0+t*3.0</property>
+				</object>
+				<object class="Animation.ExpSolver" name="gamma_anim">
+					<property name="expression">t>0.5?sin((t-0.5)*1.5):0</property>
+				</object>
+
+				<object class="gl.ShaderQuad">
+					<property name="flipvertical">false</property>
+					
+					<property name="pixelshader">enigma_transraster.frag.glsl</property>
+					<property name="vertexshader">enigma_transraster.vtx.glsl</property>
+
+					<object class="gl.ShaderParam" name="offset">
+						<property name="param">raster_offset</property>
+						<property name="type">float</property>
+						<property name="float" source="raster_offset" />
+					</object>
+
+					<object class="gl.ShaderParam" name="gamma">
+						<property name="param">gamma</property>
+						<property name="type">float</property>
+						<property name="float" source="gamma_anim" />
+					</object>
+
+					<object class="gl.ShaderParam" name="texture1">
+						<property name="param">texture1</property>
+						<property name="type">texture</property>
+						<property name="texture" source="gradient.texture" />
+					</object>
+
+					<object class="gl.ShaderParam" name="texture2">
+						<property name="param">texture2</property>
+						<property name="type">texture</property>
+						<property name="texture" source="ts1.texture" />
+					</object>
+				</object>
+
+			</object>
+
+
+ <!-- 			<object class="gl.RenderContext" name="render">
+				<property name="fov">35.0</property>
+
+				<object class="gl.FullScreenImage">
+						<property name="texture" source="ts1.texture" />
+						<property name="flip">true</property>
+						<property name="useblend">false</property>
+				</object>		
+			</object>
+  -->		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="render" />
+	</timeline>
+</yapt2>				

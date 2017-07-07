@@ -61,7 +61,7 @@
 				<!-- apply noise to picture when fading out -->
 
 				<object class="Animation.ExpSolver" name="noise_scale_param">
-					<property name="expression">t>3?2*(t-3):0</property>
+					<property name="expression">t>3?0.5*(t-3):0</property>
 				</object>
 
 				<object class="Animation.ExpSolver" name="noise_offset_param">

@@ -57,6 +57,7 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
   width = contextParams->GetFrameBufferWidth();
   height = contextParams->GetFrameBufferHeight();
 
+  float height_pixel = 1.0f / height;
 
   BeginOrtho();
   if (texture->v->int_val != 0) {
@@ -81,9 +82,10 @@ void OpenGLFullScreenImage::Render(double t, IPluginObjectInstance *pInstance) {
       glVertex2f(0.0f, 0.0f);
       glTexCoord2f(1.0f,0.0f);
       glVertex2f(width, 0.0f);
-      glTexCoord2f(1.0f,1.0f);
+      
+      glTexCoord2f(1.0f,1.0f-height_pixel);
       glVertex2f(width, height);
-      glTexCoord2f(0.0f,1.0f);
+      glTexCoord2f(0.0f,1.0f-height_pixel);
       glVertex2f(0.0f, height);
     glEnd();  //glBegin(GL_QUADS);
     glDisable(GL_TEXTURE_2D);

@@ -1,7 +1,13 @@
 dev/ext/*
+dev/bld/xcode/assest_in_progress/*
+dev/bld/xcode/plugins/*
+*.mp3
+*.avi
 *.ilk
 *.log
 *.suo
 *.tlog
 *.idb
 *.pdb
+*.o
+*.dylib

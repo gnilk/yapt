@@ -503,6 +503,8 @@ namespace yapt
     virtual void Render(double sample_time) = 0;
     virtual void RenderResources() = 0;
     virtual void RenderNode(IDocNode *node, bool bForce) = 0;
+
+    virtual float GetTimeLineMaxTime() = 0;
     
   };
 

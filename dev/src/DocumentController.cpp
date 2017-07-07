@@ -63,7 +63,9 @@ void DocumentController::SetDocument(IDocument *pDocument)
   this->pDocument = pDocument;
 }
 
-
+float DocumentController::GetTimeLineMaxTime() {
+  return timelineMaxTime;  
+}
 //
 // Updates the rendering parameters
 //
@@ -227,6 +229,25 @@ bool DocumentController::Initialize() {
     }
   }
   dirtyNodes.clear();
+  
+  if (pDocument->HasTimeline()) {
+    ITimeline *pTimeline = pDocument->GetTimeline();    
+    int n = pTimeline->GetNumExecutors();
+  //  pLogger->Debug("RenderTimeLine, t=%f exec=%d, doc=%p",renderVars->GetTime(), n, pDocument);
+
+    float maxTime = 0;
+    for(int i=0;i<n;i++) {
+      TimelineExecute *pExec = dynamic_cast<TimelineExecute *>(pTimeline->GetExecutorAtIndex(i));
+      float tStart = pExec->GetStart();
+      float tEnd = tStart + pExec->GetDuration();
+      if (tEnd > maxTime) {
+        maxTime = tEnd;
+      }
+    }
+    timelineMaxTime = maxTime;
+  }
+  
+
   return result;
 }
 

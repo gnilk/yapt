@@ -570,6 +570,7 @@ namespace yapt
     ISystem *pSys;
     IDocument *pDocument;
     std::vector<IDocNode *> dirtyNodes;
+    float timelineMaxTime;
   private:
     void UpdateRenderVars(double sample_time);
     bool BindAllProperties(IDocNode *node);
@@ -594,6 +595,7 @@ namespace yapt
     virtual void RenderResources();
     virtual void RenderNode(IDocNode *pNode, bool bForce);
     virtual void RenderTimeline();
+    virtual float GetTimeLineMaxTime();
      // internal
   public:
     void SetDocument(IDocument *pDocument);

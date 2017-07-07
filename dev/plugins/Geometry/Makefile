@@ -8,6 +8,7 @@ OBJDIR 	 = obj
 
 ROOT		 = ../..
 EXT_ROOT	 = $(ROOT)/ext
+SDK = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 
 NOICE_IO_SRC = $(EXT_ROOT)/noice.io/dev/src
 NOICE_IO_INC = $(EXT_ROOT)/noice.io/dev/inc
@@ -17,7 +18,7 @@ YAPT_INC_DIR = $(ROOT)/inc
 
 CFLAGS = -g -arch x86_64 -stdlib=libc++
 #CFLAGS += -macosx_version_min 10.8
-CFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+CFLAGS += -isysroot $(SDK)
 CFLAGS += -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NOICE_IO_INC) -I$(EXPAT_ROOT)
 
 

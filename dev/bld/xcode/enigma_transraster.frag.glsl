@@ -54,9 +54,12 @@ void main(void)
 	float tx = -1*filmUv.y;// + t*0.4;
 	uv1.x = tx+raster_offset*0.2;
 	
+	vec4 col1 = vec4(0,0,0,0);
+	if ((uv1.x > 0) && (uv1.x < 1)) {
+		col1 = texture2D(texture1, uv1).rgba;
+	}
 	vec4 col2 = texture2D(texture2, uv2).rgba;
-	vec4 col1 = texture2D(texture1, uv1).rgba;
-
+	
 	//float gamma = sin(raster_offset);	// should come from XML
 
 	col1.r = min(col1.r + gamma,1);

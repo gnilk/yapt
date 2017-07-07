@@ -292,7 +292,10 @@ void ConsoleWindow::RenderLastTextureToScreen() {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glViewport(0,0,width,height); // Ensure,if someone did change it
+
+  	//printf("screen WxH: %dx%d, fb WxH: %dx%d\n", px_width, px_height, frameBufferWidth, frameBufferHeight);
+
+	glViewport(0,0,px_width,px_height); // Ensure,if someone did change it
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0, width, 0, height);
@@ -725,12 +728,19 @@ public:
 	static IConsoleCommandHandler *GetInstance();
 };
 
+class ConsoleCommandHelp : IConsoleCommandHandler
+{
+public:
+	virtual bool Execute(IConsole *pConsole, std::string raw, std::vector<std::string> arguments);
+	static IConsoleCommandHandler *GetInstance();
+};
 
 static CONSOLE_COMMAND consoleCommandFactoryList[] =
 {
 	"dump", ConsoleCommandDumpDoc::GetInstance,
 	"watch", ConsoleCommandWatch::GetInstance,
 	"set", ConsoleCommandSet::GetInstance,
+	"help", ConsoleCommandHelp::GetInstance,
 	"", NULL,
 };
 
@@ -845,7 +855,7 @@ bool ConsoleCommandWatch::Execute(IConsole *pConsole, std::string raw, std::vect
 		if (arguments[i][0]=='-' || arguments[i][0]=='/') {
 			switch(arguments[i][1]) {
 				case 'a' : addAll = true; break;
-				case 'v' : setValue = std::string(arguments[++i]); break;
+				case 'v' : setValue = std::string(arguments[++i]); break;				
 				default :
 					pConsole->WriteLine("Unknown option: "+arguments[i]);
 					pConsole->WriteLine("Usage: "+GetCommandName()+" [-a] [-v <value>] <filter> ");
@@ -936,6 +946,20 @@ void ConsoleCommandSet::HandleSearchResult() {
 IConsoleCommandHandler *ConsoleCommandSet::GetInstance() {
 	return new ConsoleCommandSet();
 }
+
+
+IConsoleCommandHandler *ConsoleCommandHelp::GetInstance() {
+	return new ConsoleCommandHelp();
+}
+
+bool ConsoleCommandHelp::Execute(IConsole *pConsole, std::string raw, std::vector<std::string> arguments) {
+	pConsole->WriteLine("GL Console Commands");
+	pConsole->WriteLine("dump  - dump current document");
+	pConsole->WriteLine("set   - set property value");
+	pConsole->WriteLine("watch - add property to list of watches");
+	return true;
+}
+
 
 
 // Well, this is a copy from logger.cpp

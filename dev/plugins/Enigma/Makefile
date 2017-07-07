@@ -3,6 +3,7 @@
 
 # Compiler settings
 CC     = g++
+SDK = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 
 OBJDIR 	 = obj
 
@@ -17,7 +18,7 @@ YAPT_INC_DIR = $(ROOT)/inc
 
 CFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11
 #CFLAGS += -macosx_version_min 10.8
-CFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+CFLAGS += -isysroot $(SDK)
 CFLAGS += -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NOICE_IO_INC) -I$(EXPAT_ROOT)
 
 

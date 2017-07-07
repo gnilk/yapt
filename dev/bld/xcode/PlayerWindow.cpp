@@ -31,6 +31,7 @@ PlayerWindow::PlayerWindow() {
 	pausePlayer = false;
 	recordMovie = false;
 	isFirstFrame = true;
+	playerDone = false;
 }
 PlayerWindow::~PlayerWindow() {
 }
@@ -51,6 +52,9 @@ bool PlayerWindow::ShouldClose()
 			recordMovie = false;
 		}
 		res = true;	
+	}
+	if (playerDone == true) {
+		res = true;
 	}
 	return res;
 }
@@ -161,6 +165,11 @@ void PlayerWindow::Render()
 	system->GetActiveDocumentController()->Render(tRender);
 	pContext->PopContextParamObject();	// Need to pop
 	// Swap buffers done by base window
+
+	float maxTime = system->GetActiveDocumentController()->GetTimeLineMaxTime();
+	if (tRender > maxTime) {
+		playerDone = true;
+	}
 }
 
 void PlayerWindow::OnKeyDown(int key, int scancode, int mods) {

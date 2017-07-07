@@ -9,18 +9,20 @@
     <include url="file://enigma_troll_intropic.xml" prefix="preintro2"/>
     <include url="file://enigma_intro3.xml" prefix="intro"/>
     <include url="file://enigma_logopic.xml" prefix="logo" />
-    <include url="file://enigma_transtext_1.xml" prefix="transtext1" />
+    <include url="file://enigma_transraster_1.xml" prefix="transtext1b" />
     <include url="file://enigma_plotball.xml" prefix="plotball" />
     <include url="file://enigma_lineball.xml" prefix="lineball" />
     <include url="file://enigma_olleball.xml" prefix="olleball" />
-    <include url="file://enigma_transtext_2.xml" prefix="transtext2" />
+    <include url="file://enigma_transraster_2.xml" prefix="transtext2b" />
     <include url="file://enigma_tracer.xml" prefix="tracer" />
+    <include url="file://enigma_transraster_3.xml" prefix="transtext3b" />
     <include url="file://enigma_lightworld.xml" prefix="lsworld" />
     <include url="file://enigma_tvbox.xml" prefix="tvbox" />
     <include url="file://enigma_starwarsscroll.xml" prefix="starwars" />
     <include url="file://enigma_work_in_progress.xml" prefix="wip" />
     <include url="file://enigma_city_scape.xml" prefix="cityscape" />
     <include url="file://enigma_endscreen_separate.xml" prefix="endscreen" />
+
 
     <render>
     	<object class="utils.BassMP3Player" name="music">
@@ -29,24 +31,25 @@
     </render>
 
 	<timeline>
-		<execute start="0" duration="1000" object="music" />
+		<execute start="0" duration="230" object="music" />
 	   <execute start="0" duration="5" object="preintro1.part" />
 	   <execute start="5" duration="7" object="preintro2.part" />	   
 	   <!-- starfield intro texts -->
-	   <execute start="15" duration="43" object="intro.mycontext" />
+	   <execute start="15" duration="42" object="intro.mycontext" />
 	   <execute start="20" duration="4" object="intro.intro_text_screen_1" />
 	   <execute start="24" duration="4" object="intro.intro_text_screen_2" />
 	   <execute start="28" duration="4" object="intro.intro_text_screen_3" />
 	   <execute start="32" duration="4" object="intro.intro_text_screen_4" />
 	   <execute start="36" duration="4" object="intro.intro_text_screen_5" />
 	   <!-- text transition screen here 'lets go' -->
-	   <execute start="58" duration="1.5" object="transtext1.text_screen_1" />
+<!-- 	   <execute start="58" duration="1.5" object="transtext1.text_screen_1" />
+ -->	   <execute start="57" duration="2.5" object="transtext1b.render" />
 	   <!-- plot/line/olles ball(s)  -->	   
 	   <execute start="59.5" duration="7.5" object="plotball.part_plotball" /> 
 	   <execute start="67" duration="7" object="lineball.part_lineball" />
 	   <execute start="74" duration="11" object="olleball.part_ollesball" />
 	   <!-- text transition screen here 'trip to mars' -->
-	   <execute start="85" duration="4" object="transtext2.text_screen_2" />
+	   <execute start="85" duration="4" object="transtext2b.render" />
 
 	   <!-- trip to mars part -->
 	   <execute start="89" duration="15" object="tracer.render" />
@@ -61,14 +64,14 @@
 	   <execute start="122.5" duration="25.5" object="cityscape.render" />
 
 	   <!-- text transition screen here 'xyz' -->
-	   <execute start="148" duration="2" object="transtext2.text_screen_2" />
+	   <execute start="148" duration="3" object="transtext3b.render" />
 	   <!-- light source ship -->
 <!--	   <execute start="150" duration="13" object="tracer.render" /> -->
-	   <execute start="150" duration="13" object="lsworld.render" />
+	   <execute start="151" duration="13" object="lsworld.render" />
 	   <execute start="163" duration="29" object="tvbox.render" />
 
 	   <!-- end screen with messages -->
-	   <execute start="192" duration="200" object="endscreen.render_to_screen" />
+	   <execute start="192" duration="40" object="endscreen.render_to_screen" />
 	   <execute start="196" duration="8" object="endscreen.text_1" />
 	   <execute start="204" duration="8" object="endscreen.text_2" />
 	   <execute start="212" duration="8" object="endscreen.text_3" />

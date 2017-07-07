@@ -44,6 +44,7 @@ private:
 	double tPause;
 	double tRecord;
 	FILE* ffmpeg; 
+	bool playerDone;
 
 
 
