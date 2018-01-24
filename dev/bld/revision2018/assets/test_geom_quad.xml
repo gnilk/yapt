@@ -1,0 +1,82 @@
+<yapt2>
+	<resources>
+  		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">1280</property>
+			<property name="screen.resolution.height">720</property>
+		</object>
+
+		<object class="gl.LoadTexture2D" name="image">
+			<property name="fileName">assets/goat.png</property>	
+		</object>
+
+		<object class="geom.Quad" name="data.quad">
+			<property name="scale">1.0, 1.0, 1.0</property>
+			<property name="generatequads">true</property>
+			<property name="generatelines">true</property>
+		</object>
+	</resources>
+	
+	<render>
+		<object class="utils.Container" name="render">
+
+			<object class="gl.RenderContext" name="render_to_screen">
+				<property name="fov">35.0</property>
+				<property name="width">640</property>
+				<property name="height">360</property>
+
+				<object class="Animation.ExpSolver" name="rotspeed">
+					<property name="expression">40 * t + (sin(t))</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="campos">
+					<property name="x">0</property>
+					<property name="y">0</property>
+					<property name="z">4</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="camtarget">
+					<property name="x">0</property>
+					<property name="y">0</property>
+					<property name="z">0</property>
+				</object>
+
+				<object class="gl.Camera" name="camera">
+					<property name="position" source="campos" />
+					<property name="target" source="camtarget" />
+					<property name="upvector">0,1,0</property>
+				</object>
+
+				<object class="Animation.ExpSolver" name="quad.alpha">
+					<property name="expression">0.5+0.5*sin(t)</property>
+				</object>
+
+				<object class="Animation.VectorExpression" name="quad.rotation">
+					<property name="z">10*t</property>
+				</object>
+				<object class="gl.Transform" name="prs">
+					<property name="position">0,0,0</property>
+					<property name="rotation" source="quad.rotation" />
+				</object>
+
+
+				<object class="gl.DrawQuads" name="render_object">
+					<property name="vertexData" source="data.quad.vertexData" />			
+					<property name="vertexUVData" source="data.quad.vertexUVData" />
+					<property name="quadCount" source="data.quad.quadCount" />
+					<property name="quadData" source="data.quad.quadData" />
+					<property name="texture" source="image.texture" />
+					<property name="blend_func">alpha</property>
+					<property name="alpha" source="quad.alpha" />
+					<property name="lighting">false</property>
+				</object>
+
+			</object>
+
+		</object>
+	</render>
+	
+	<timeline>
+	   <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+	   <execute start="0" duration="1000" object="render" />
+	</timeline>
+</yapt2>				

@@ -1,0 +1,53 @@
+<yapt2 name="doc">
+  <resources name="resources">
+    <object class="System.Config" name="Config">
+      <property name="screen.resolution.width">1280</property>
+      <property name="screen.resolution.height">720</property>
+    </object>
+    <object class="gl.LoadTexture2D" name="image.goat">
+      <property name="fileName">assets/approved.png</property>
+    </object>
+  </resources>
+  <render>
+    <object class="gl.RenderContext" name="render">
+      <object class="Animation.GenericCurve" name="goat.anim.alpha">
+          <property name="channels">1</property>
+          <property name="type">linearsmooth</property>
+          <object class="Animation.Key">
+            <property name="t">0</property>
+            <property name="values">0</property>
+          </object>
+          <object class="Animation.Key">
+            <property name="t">2</property>
+            <property name="values">1</property>
+          </object>
+          <object class="Animation.Key">
+            <property name="t">3</property>
+            <property name="values">1</property>
+          </object>
+          <object class="Animation.Key">
+            <property name="t">3.75</property>
+            <property name="values">0</property>
+          </object>
+          <object class="Animation.Key">
+            <property name="t">4</property>
+            <property name="values">0</property>
+          </object>
+      </object>
+      <object class="Numeric.VectorElement" name="goat.alpha">
+        <property name="vector" source="goat.anim.alpha"/>
+      </object>
+      <object class="gl.FullScreenImage">
+        <property name="texture" source="image.goat"/>
+        <property name="flip">true</property>
+        <property name="useblend">true</property>
+        <property name="alpha" source="goat.alpha"/>
+      </object>
+    </object>
+  </render>
+  <timeline>
+     <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+     <execute start="0" duration="1000" object="render" />
+  </timeline>
+
+</yapt2>

@@ -1,0 +1,22 @@
+<yapt2>
+	<resources>
+		<object class="System.Config" name="Config">
+			<property name="screen.resolution.width">1280</property>
+			<property name="screen.resolution.height">720</property>
+		</object>
+	</resources>
+    <include url="file://assets/test_animplayer.xml" prefix="main"/>
+    <include url="file://assets/intro_goat.xml" prefix="goat"/>
+    <include url="file://assets/intro_trailer.xml" prefix="approved"/>
+    <render>
+		<object class="utils.BassMP3Player" name="music">
+    		<property name="mp3file">assets/music.mp3</property>
+    	</object>
+    </render>
+	<timeline>
+		<execute start="0" duration="4" object="goat.render" />
+		<execute start="4" duration="4" object="approved.render" />
+		<execute start="8" duration="230" object="music" />
+		<execute start="8" duration="230" object="main.anim" />
+	</timeline>
+</yapt2>

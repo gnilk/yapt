@@ -1,0 +1,215 @@
+<yapt2 name="doc">
+
+  <resources name="resources">
+    <object class="System.Config" name="Config">
+      <property name="screen.resolution.width">1280</property>
+      <property name="screen.resolution.height">720</property>
+    </object>
+
+    <object class="geom.Quad" name="data.quad">
+      <property name="scale">1.0, 0.75, 0</property>
+      <property name="generatequads">true</property>
+      <property name="generatelines">true</property>
+    </object>
+  </resources>
+
+  <render>
+    <object class="utils.Container" name="anim">
+      <!--    render to texture    -->
+      <!--   
+	TODO: 
+		- Render to big backbuffer
+		- Render glow to smaller backbuffer
+		   - Better glow, col*col + blur
+		- Mix together with blend
+   -->
+      <object class="Animation.VectorExpression" name="rotation">
+        <property name="y">48*sin(t)</property>
+      </object>
+
+      <object class="Animation.VectorExpression" name="campos">
+        <property name="x">0</property>
+        <property name="y">0</property>
+        <property name="z">-3</property>
+      </object>
+
+
+      <object class="gl.RenderToTexture" name="backbuffer">
+        <property name="fov">45.0</property>
+        <property name="width">640</property>
+        <property name="height">360</property>
+        <object class="gl.Camera" name="camera">
+          <property name="position" source="campos" />
+          <property name="target">0,0,0</property>
+          <property name="upvector">0,-1,0</property>
+        </object>
+        <object class="gl.Transform">
+          <property name="rotation" source="rotation"/>
+        </object>
+        <object class="gl.PreserveState" >
+          <object class="gl.Transform">
+            <property name="position">0,0.25,0</property>
+          </object>
+          <object class="gl.AnimPlayer" name="animplayer">
+            <property name="filename">assets/strips_full_movie_0.95_opt.db</property>
+            <property name="linewidth">4.0</property>
+            <property name="color">0.65,0.65,1.0</property>
+          </object>
+          <object class="gl.Transform">
+            <property name="position">0,-0.25,0</property>
+          </object>
+          <object class="gl.DrawQuads" name="animframe">
+            <property name="vertexData" source="data.quad.vertexData"/>
+            <property name="quadCount" source="data.quad.quadCount"/>
+            <property name="quadData" source="data.quad.quadData"/>
+            <property name="lighting">false</property>
+            <property name="wireframe">true</property>
+          </object>
+        </object>
+      </object>
+
+      <object class="gl.RenderToTexture" name="blur_pass1">
+        <property name="width">640</property>
+        <property name="height">360</property>
+        <object class="gl.ShaderQuad">
+          <property name="texture" source="backbuffer.texture"/>
+          <property name="flipvertical">false</property>
+          <property name="pixelshader">assets/blur.frag.glsl</property>
+          <property name="vertexshader">assets/blur.vtx.glsl</property>
+          <object class="gl.ShaderParam">
+            <property name="param">blurdist</property>
+            <property name="type">float</property>
+            <property name="float">3</property>
+          </object>
+        </object>
+      </object>
+
+      <!--    Increase contrast    -->
+      <object class="gl.RenderToTexture" name="contrast">
+        <property name="width">640</property>
+        <property name="height">360</property>
+
+        <object class="gl.ShaderQuad">
+          <property name="texture" source="blur_pass1.texture"/>
+          <property name="flipvertical">false</property>
+          <property name="pixelshader">assets/contrast.frag.glsl</property>
+          <property name="vertexshader">assets/contrast.vtx.glsl</property>
+          <object class="gl.ShaderParam" name="contrastfactor">
+            <property name="param">contrastfactor</property>
+            <property name="type">float</property>
+            <property name="float">2</property>
+          </object>
+          <object class="gl.ShaderParam" name="contrastscale">
+            <property name="param">contrastscale</property>
+            <property name="type">float</property>
+            <property name="float">4</property>
+          </object>
+        </object>        
+      </object>
+
+      <object class="gl.RenderToTexture" name="blur_pass2">
+        <property name="width">640</property>
+        <property name="height">360</property>
+        <object class="gl.ShaderQuad">
+          <property name="texture" source="contrast.texture"/>
+          <property name="flipvertical">false</property>
+          <property name="pixelshader">assets/blur.frag.glsl</property>
+          <property name="vertexshader">assets/blur.vtx.glsl</property>
+          <object class="gl.ShaderParam">
+            <property name="param">blurdist</property>
+            <property name="type">float</property>
+            <property name="float">2</property>
+          </object>
+        </object>
+      </object>
+
+      <!--    Compose final image - this will blended with all blur/contrast passes    -->
+      <object class="gl.RenderToTexture" name="final">
+        <property name="fov">45</property>
+        <property name="width">640</property>
+        <property name="height">360</property>
+        <object class="gl.PreserveState">
+          <object class="gl.Camera" name="camera">
+            <property name="position" source="campos" />
+            <property name="target">0,0,0</property>
+            <property name="upvector">0,-1,0</property>
+          </object>
+          <object class="gl.Transform">
+            <property name="rotation" source="rotation"/>
+          </object>
+          <object class="gl.Transform">
+            <property name="position">0,0.25,0</property>
+          </object>
+
+          <object class="gl.AnimPlayer" name="animplayer">
+            <property name="filename">assets/strips_full_movie_0.95_opt.db</property>
+            <property name="linewidth">2.0</property>
+            <property name="color">0.75,0.75,1.0</property>
+          </object>
+          <object class="gl.Transform">
+            <property name="position">0,-0.25,0</property>
+          </object>
+          <object class="gl.DrawQuads" name="animframe">
+            <property name="vertexData" source="data.quad.vertexData"/>
+            <property name="quadCount" source="data.quad.quadCount"/>
+            <property name="quadData" source="data.quad.quadData"/>
+            <property name="lighting">false</property>
+            <property name="wireframe">true</property>
+          </object>
+        </object>
+      </object>
+
+      <object class="gl.RenderToTexture" name="final_blur">
+        <property name="width">1280</property>
+        <property name="height">720</property>
+        <object class="gl.ShaderQuad">
+          <property name="texture" source="final.texture"/>
+          <property name="flipvertical">false</property>
+          <property name="pixelshader">assets/blur.frag.glsl</property>
+          <property name="vertexshader">assets/blur.vtx.glsl</property>
+          <object class="gl.ShaderParam">
+            <property name="param">blurdist</property>
+            <property name="type">float</property>
+            <property name="float">1</property>
+          </object>
+        </object>
+      </object>
+ 
+
+      <!--    Render to screen    -->
+      <object class="gl.RenderContext" name="render_to_screen">
+        <object class="gl.ShaderQuad">
+          <property name="texture" source="contrast.texture"/>
+          <property name="flipvertical">false</property>
+          <property name="pixelshader">assets/blend.frag.glsl</property>
+          <property name="vertexshader">assets/blend.vtx.glsl</property>
+          <object class="gl.ShaderParam">
+            <property name="param">texA</property>
+            <property name="type">texture</property>
+            <property name="texture" source="final_blur.texture"/>
+          </object>
+          <object class="gl.ShaderParam" >
+            <property name="param">blendFactorTexA</property>
+            <property name="type">float</property>
+            <property name="float">0.1</property>
+          </object>
+          <object class="gl.ShaderParam">
+            <property name="param">texB</property>
+            <property name="type">texture</property>
+            <property name="texture" source="blur_pass2.texture"/>
+          </object>
+          <object class="gl.ShaderParam">
+            <property name="param">blendFactorTexB</property>
+            <property name="type">float</property>
+            <property name="float">2.0</property>
+          </object>
+        </object>
+      </object>
+    </object>
+  </render>
+  <timeline>
+     <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+     <execute start="0" duration="1000" object="anim" />
+  </timeline>
+
+</yapt2>
