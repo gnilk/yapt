@@ -142,8 +142,6 @@ void AnimPlayer::Initialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
 	linewidth = pInstance->CreateProperty("linewidth", kPropertyType_Float, "2.0", "");
 	color = pInstance->CreateProperty("color", kPropertyType_Color,"1,1,1,1","");
 	depthtest = pInstance->CreateProperty("depthtest",kPropertyType_Bool,"false","");
-	ySys->GetLogger("AnimPlayer")->Error("Load animation file from: %s", filename->v->string);
-	anim.LoadFromFile(filename->v->string);
 }
 void AnimPlayer::Render(double t, IPluginObjectInstance *pInstance) {
 	int frameCounter = (int)(t * 30.0);
@@ -165,6 +163,8 @@ void AnimPlayer::Render(double t, IPluginObjectInstance *pInstance) {
 
 }
 void AnimPlayer::PostInitialize(ISystem *ySys, IPluginObjectInstance *pInstance) {
+	ySys->GetLogger("AnimPlayer")->Error("Load animation file from: %s", filename->v->string);
+	anim.LoadFromFile(filename->v->string);
 
 }
 void AnimPlayer::PostRender(double t, IPluginObjectInstance *pInstance) {

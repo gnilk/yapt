@@ -9,7 +9,7 @@
 
 using namespace yapt;
 
-static char* cmd = "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s 1280x720 -i - " \
+static char* cmd = "ffmpeg -r 30 -f rawvideo -pix_fmt rgba -s 1280x720 -i - " \
 	                  "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
 
 static 	int* framebuffer = NULL;
@@ -100,7 +100,7 @@ void PlayerWindow::Render()
 		if (framebuffer) {
 			glReadPixels(0, 0, px_width, px_height, GL_RGBA, GL_UNSIGNED_BYTE, framebuffer);
 			fwrite(framebuffer, sizeof(int)*px_width*px_height, 1, ffmpeg);			
-			tRecord += 1.0 / 60.0;
+			tRecord += 1.0 / 30.0;
 		} else {
 			ffmpeg = popen(cmd, "w");
 			if (ffmpeg == NULL) {

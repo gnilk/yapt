@@ -11,6 +11,10 @@
       <property name="generatequads">true</property>
       <property name="generatelines">true</property>
     </object>
+
+    <object class="utils.Constant" name="anim.filename">
+      <property name="string">assets/strips_0.97.db</property>
+    </object>
   </resources>
 
   <render>
@@ -51,9 +55,9 @@
             <property name="position">0,0.25,0</property>
           </object>
           <object class="gl.AnimPlayer" name="animplayer">
-            <property name="filename">assets/strips_full_movie_0.95_opt.db</property>
+            <property name="filename" source="anim.filename.string" />
             <property name="linewidth">4.0</property>
-            <property name="color">0.65,0.65,1.0</property>
+            <property name="color">1.0,0.65,0.30</property>
           </object>
           <object class="gl.Transform">
             <property name="position">0,-0.25,0</property>
@@ -142,9 +146,9 @@
           </object>
 
           <object class="gl.AnimPlayer" name="animplayer">
-            <property name="filename">assets/strips_full_movie_0.95_opt.db</property>
+            <property name="filename" source="anim.filename.string" />
             <property name="linewidth">2.0</property>
-            <property name="color">0.75,0.75,1.0</property>
+            <property name="color">1.0,0.75,0.60</property>
           </object>
           <object class="gl.Transform">
             <property name="position">0,-0.25,0</property>
