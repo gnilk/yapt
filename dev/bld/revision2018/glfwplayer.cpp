@@ -282,11 +282,6 @@ int main(int argc, char **argv) {
 	  	window_height = system->GetConfigInt(kConfig_ResolutionHeight,720); 
 	}
 
-	if (saveName != NULL) {
-		pLogger->Info("Saving document to: %s", saveName);
-		system->SaveDocumentAs(saveName, system->GetActiveDocument());
-	}
-
 #ifndef WIN32
 	ConsoleWindow console;
 	if (showConsoleWindow) {
@@ -324,13 +319,20 @@ int main(int argc, char **argv) {
 	}
 #endif
 
-  // Need to initialize late if GL plugins are using GLEW - initialized by player window
+	// Need to initialize late if GL plugins are using GLEW - initialized by player window
 	if (system->GetActiveDocument()) {
 		pLogger->Debug("Initialize");
 		if (!system->GetActiveDocumentController()->Initialize()) {
 			perror();
 		}
 	}
+
+	// Can only save document after it has been initalized.
+	if (saveName != NULL) {
+		pLogger->Info("Saving document to: %s", saveName);
+		system->SaveDocumentAs(saveName, system->GetActiveDocument());
+	}
+
 
 	if (system->GetActiveDocument()) {
 		system->GetActiveDocumentController()->RenderResources();

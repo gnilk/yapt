@@ -13,7 +13,7 @@
     </object>
 
     <object class="utils.Constant" name="anim.filename">
-      <property name="string">assets/strips_0.97.db</property>
+      <property name="string">assets/strips_0.97_ccd16_high_contrast.db</property>      
     </object>
   </resources>
 
