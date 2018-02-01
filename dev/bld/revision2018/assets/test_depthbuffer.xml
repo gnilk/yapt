@@ -1,0 +1,90 @@
+<yapt2 name="doc">
+
+  <resources name="resources">
+    <object class="System.Config" name="Config">
+      <property name="screen.resolution.width">1280</property>
+      <property name="screen.resolution.height">720</property>
+    </object>
+
+    <object class="geom.Quad" name="data.quad">
+      <property name="scale">1.0, 0.75, 0</property>
+      <property name="generatequads">true</property>
+      <property name="generatelines">true</property>
+    </object>
+
+    <object class="utils.Constant" name="anim.filename">
+      <property name="string">assets/strips_0.97_ccd16_high_contrast.db</property>      
+    </object>
+  </resources>
+
+  <render>
+    <object class="utils.Container" name="anim">
+      <!--    render to texture    -->
+      <!--   
+	TODO: 
+		- Render to big backbuffer
+		- Render glow to smaller backbuffer
+		   - Better glow, col*col + blur
+		- Mix together with blend
+   -->
+      <object class="Animation.VectorExpression" name="rotation">
+        <property name="y">48*sin(t)</property>
+      </object>
+
+      <object class="Animation.VectorExpression" name="campos">
+        <property name="x">0</property>
+        <property name="y">0</property>
+        <property name="z">-3</property>
+      </object>
+
+
+      <!--    Render to screen    -->
+      <object class="gl.RenderToTexture" name="texture">
+        <property name="width">1280</property>
+        <property name="height">720</property>
+        <property name="fov">45.0</property>
+        <object class="gl.Camera" name="camera">
+          <property name="position" source="campos" />
+          <property name="target">0,0,0</property>
+          <property name="upvector">0,-1,0</property>
+        </object>
+        <object class="gl.Transform">
+          <property name="rotation" source="rotation"/>
+        </object>
+        <object class="gl.PreserveState" >
+          <object class="gl.Transform">
+            <property name="position">0,0.25,0</property>
+          </object>
+          <object class="gl.AnimPlayer" name="animplayer">
+            <property name="filename" source="anim.filename.string" />
+            <property name="linewidth">4.0</property>
+            <property name="color">1.0,0.65,0.30</property>
+          </object>
+          <object class="gl.Transform">
+            <property name="position">0,-0.25,0</property>
+          </object>
+          <object class="gl.DrawQuads" name="animframe">
+            <property name="vertexData" source="data.quad.vertexData"/>
+            <property name="quadCount" source="data.quad.quadCount"/>
+            <property name="quadData" source="data.quad.quadData"/>
+            <property name="lighting">false</property>
+            <property name="wireframe">true</property>
+          </object>
+        </object>
+      </object>        
+      <object class="gl.RenderContext">
+        <object class="gl.ShaderQuad">
+          <property name="texture" source="texture.depthtexture"/>
+          <property name="flipvertical">false</property>
+          <property name="pixelshader">assets/depthbuffer.frag.glsl</property>
+          <property name="vertexshader">assets/passthrough.vtx.glsl</property>
+        </object>
+      </object>    
+    </object>
+  </render>
+  <timeline>
+     <!-- <execute start="0" duration="1000" object="fscreen" /> -->
+     <execute start="0" duration="1000" object="anim" />
+  </timeline>
+
+</yapt2>

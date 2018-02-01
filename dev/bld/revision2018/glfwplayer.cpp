@@ -109,7 +109,7 @@ static void printHelp(char *execname) {
 
 	printf("Usage: %s [options] <filename>\n", execname);
 	printf("Options\n");
-	printf(" w Window mode\n");
+	printf(" f fullScreen \n");
 	printf(" d  Show debug/console window\n");
 	printf(" m <num>    Select monitor\n");
 	printf(" l <num>    Set log level (higher means less, default is 0)\n");
@@ -185,15 +185,15 @@ int main(int argc, char **argv) {
 	char *objName = NULL;
 	char *movieName = NULL;
 	bool showConsoleWindow = false;
-	bool fullScreen = true;
+	bool fullScreen = false;
 	int fullscreen_width = 0;
 	int fullscreen_height = 0;
 	if (argc > 1) {
 		for (int i = 1; i < argc; i++) {
 			if ((argv[i][0] == '-') || (argv[i][0] == '/')) {
 				switch (argv[i][1]) {
-				case 'w' :
-					fullScreen = false;
+				case 'f' :
+					fullScreen = true;
 					break;
 				case 'x' :
 					fullscreen_width = atoi(argv[++i]);

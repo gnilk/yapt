@@ -39,12 +39,12 @@ PLUGINS_DIRS = \
 	$(PLUGIN_SRC_DIR)/Geometry	\
 	$(PLUGIN_SRC_DIR)/Enigma	\
 
-INCLUDE_FILES = -I/opt/local/include/freetype2 -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NOICE_IO_INC) -I$(EXPAT_ROOT) -I$(MONGOOSE_ROOT)
+INCLUDE_FILES = -I/opt/local/include/freetype2 -I/opt/local/include -I/usr/local/include -I. -I$(YAPT_INC_DIR) -I$(NOICE_IO_INC) -I$(EXPAT_ROOT) -I$(MONGOOSE_ROOT) -Icontour
 LIB_FILES = -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo -L/opt/local/lib -lGLEW -lglfw -lexpat -lfreetype
 
 
 
-CPPFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11
+CPPFLAGS = -g -arch x86_64 -stdlib=libc++ -std=c++11 -O3
 CPPFLAGS += -isysroot $(SDK)
 CPPFLAGS += $(INCLUDE_FILES)
 
@@ -68,6 +68,11 @@ PLAYER_SRC_FILES = \
 	BaseWindow.cpp \
 	PlayerWindow.cpp \
 	AnimPlayer.cpp \
+	contour/bitmap.cpp \
+	contour/contour.cpp \
+	contour/timer.cpp \
+	contour/picopng.cpp \
+	contour/lodepng.cpp \
 
 MONGOOSE_SRC_FILES = \
 	$(MONGOOSE_ROOT)/mongcpp.cpp \
