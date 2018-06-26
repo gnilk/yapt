@@ -16,8 +16,9 @@ Depends on GLFW for core OpenGL.
 
 The Engine itself has no dependency on OpenGL can be replaced with DirectX/Vulcan or Metal.
 
-Example (renders a point cloud):
---------------------------------
+**Example** (renders a point cloud):
+
+```xml
 <yapt2>
 	<resources>
 		<object class="geom.PointCloud" name="data.starfield">
@@ -40,3 +41,4 @@ Example (renders a point cloud):
 		<execute start="0" duration="1000" object="mycontext" />
 	</timeline>
 </yapt2>
+```
